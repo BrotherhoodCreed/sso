@@ -1,0 +1,4 @@
+server:
+  context-path: /sso #路径
+  port: 8010 #端口
+  tomcat.uri-encoding: utf-8
