@@ -8,4 +8,6 @@ public interface TestDao {
 
     @Select("select count(*) from tb_user")
     int select();
+
+
 }
