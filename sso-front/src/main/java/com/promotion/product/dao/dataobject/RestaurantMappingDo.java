@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class RestaurantMappingDo {
 
-    private Integer id;
+    private Long id;
 
     private Integer promotionBaseInfoId;
 

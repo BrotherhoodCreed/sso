@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class DictionaryDo {
 
-    private Integer id;
+    private Long id;
 
     private String description;
 

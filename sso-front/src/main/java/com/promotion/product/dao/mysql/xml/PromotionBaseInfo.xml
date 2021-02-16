@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.promotion.product.dao.mysql.PromotionBaseInfoDao">
+
+    <resultMap id="BaseResultMap" type="com.promotion.product.dao.dataobject.PromotionBaseInfoDo">
+        <!--@Table tbl_track_region_config-->
+        <result property="id" column="id" />
+        <result property="activityCode" column="activity_code" />
+        <result property="activityType" column="activity_type" />
+        <result property="salesStartTime" column="sales_start_time" />
+        <result property="salesEndTime" column="sales_end_time" />
+        <result property="amount" column="amount" />
+        <result property="billCycle" column="bill_cycle" />
+        <result property="description" column="description" />
+        <result property="introduction" column="introduction" />
+        <result property="channel" column="channel" />
+        <result property="theWay" column="the_way" />
+        <result property="sharedActivity" column="shared_activity" />
+        <result property="sellingPrice" column="selling_price" />
+        <result property="billPrice" column="bill_price" />
+        <result property="handlingFee" column="handling_fee"/>
+        <result property="taxRate" column="tax_rate" />
+        <result property="other" column="other" />
+        <result property="createdTime" column="created_time" />
+        <result property="createdUser" column="created_user" />
+        <result property="deleted" column="deleted" />
+        <result property="updatedTime" column="updated_user"/>
+        <result property="updatedUser" column="updated_time" />
+        <result property="submit" column="submit" />
+        <result property="type" column="type" />
+    </resultMap>
+
+
+
+    <resultMap id="listResultMap" type="com.promotion.product.dao.dataobject.queryPromotionListDo">
+        <!--@Table tbl_track_region_config-->
+        <result property="id" column="id" />
+        <result property="activityCode" column="activity_code" />
+        <result property="activityType" column="activity_type" />
+        <result property="salesStartTime" column="sales_start_time" />
+        <result property="salesEndTime" column="sales_end_time" />
+        <result property="restaurantCode" column="restaurant_code" />
+        <result property="restaurantName" column="restaurant_name" />
+        <result property="area" column="area" />
+        <result property="city" column="city" />
+    </resultMap>
+    <select id="queryPromotionList" resultMap="BaseResultMap">
+        SELECT
+        a.id,
+        b.area,
+        b.city,
+        b.restaurant_code as restaurantCode,
+        b.restaurant_name as restaurantName,
+        a.activity_code as activityCode,
+        a.activity_type as activityType,
+        a.sales_start_time as salesStartTime,
+        a.sales_end_time as salesEndTime
+        FROM
+        tb_promotion_base_info AS a
+        INNER JOIN tb_promotion_mapper AS b ON a.activity_code = b.restaurant_code
+        AND a.deleted = 0
+        AND b.deleted = 0
+        <where>
+            AND 1=1
+            <if test="activityCode !=null and activityCode!=''">
+                a.activity_code =#{activityCode}
+            </if>
+        </where>
+        order by a.created_time desc
+    </select>
+
+
+    <update id="update" parameterMap="com.promotion.product.dao.dataobject.PromotionBaseInfoDo">
+        update tb_promotion_base_info set
+        <if test="activityType != null and activityType !=''">
+            activity_type=#{activityType}
+        </if>
+        <if test="sales_start_time != null and sales_start_time !=''">
+            sales_start_time=#{salesStartTime}
+        </if>
+        <if test="sales_end_time != null and sales_end_time !=''">
+            sales_end_time=#{salesEndTime}
+        </if>
+        <if test="amount != null">
+            amount=#{amount}
+        </if>
+        <if test="bill_cycle != null">
+            bill_cycle=#{billCycle}
+        </if>
+        <if test="description != null and description !=''">
+            description=#{description}
+        </if>
+        <if test="introduction != null and introduction !=''">
+            introduction=#{introduction}
+        </if>
+        <if test="channel != null and channel !=''">
+            channel=#{channel}
+        </if>
+        <if test="the_way != null and the_way !=''">
+            the_way=#{theWay}
+        </if>
+        <if test="shared_activity != null and shared_activity !=''">
+            shared_activity=#{sharedActivity}
+        </if>
+        <if test="selling_price != null ">
+            selling_price=#{sellingPrice}
+        </if>
+        <if test="bill_price != null">
+            bill_price=#{billPrice}
+        </if>
+        <if test="handling_fee != null ">
+            handling_fee=#{handlingFee}
+        </if>
+        <if test="tax_rate != null ">
+            tax_rate=#{taxRate}
+        </if>
+        <if test="other != null and other!='' ">
+            other=#{other}
+        </if>
+        where id=#{id}
+    </update>
+
+</mapper>
