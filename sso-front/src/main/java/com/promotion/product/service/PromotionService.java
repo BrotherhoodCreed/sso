@@ -7,11 +7,14 @@ import com.promotion.product.dao.dataobject.*;
 import com.promotion.product.dao.mysql.PromotionBaseInfoDao;
 import com.promotion.product.dao.mysql.PromotionMapperDao;
 import com.promotion.product.entity.BasePageResponse;
+import com.promotion.product.entity.FormTypeEnums;
+import com.promotion.product.entity.SubmitEnums;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -47,8 +50,6 @@ public class PromotionService {
             Map.Entry<String,List<queryPromotionListDo>> entry= iterator.next();
             List<queryPromotionListDo> queryPromotionListDoList=entry.getValue();
             queryPromotionListDo queryPromotionListDo =queryPromotionListDoList.get(0);
-            queryPromotionListRespone.setArea(queryPromotionListDo.getArea());
-            queryPromotionListRespone.setCity(queryPromotionListDo.getCity());
             queryPromotionListRespone.setActivityCode(queryPromotionListDo.getActivityCode());
             queryPromotionListRespone.setActivityType(queryPromotionListDo.getActivityType());
             queryPromotionListRespone.setSalesStartTime(queryPromotionListDo.getSalesStartTime());
@@ -57,6 +58,8 @@ public class PromotionService {
                 queryPromotionListRespone.PromotionMapper promotionMapper=new queryPromotionListRespone.PromotionMapper();
                 promotionMapper.setRestaurantName(queryPromotionListDo1.getRestaurantName());
                 promotionMapper.setRestaurantCode(queryPromotionListDo1.getRestaurantCode());
+                promotionMapper.setArea(queryPromotionListDo1.getArea());
+                promotionMapper.setCity(queryPromotionListDo1.getCity());
                 queryPromotionListRespone.getPromotionMappers().add(promotionMapper);
             }
             queryPromotionListResponeList.add(queryPromotionListRespone);
@@ -68,11 +71,17 @@ public class PromotionService {
     @Transactional(value = "promotionBaseInfoTransactionManager", rollbackFor = Exception.class)
     public Boolean savePromotionBaseInfo(SavePromotionBaseInfoRequery savePromotionBaseInfoRequery) {
         Boolean result = Boolean.FALSE;
-
         PromotionBaseInfoDo promotionBaseInfoDo = savePromotionBaseInfoRequery.getPromotionBaseInfoDo();
-        promotionBaseInfoDo.setActivityCode("");
+        Calendar calendar = Calendar.getInstance();
+        Date date=calendar.getTime();
+        SimpleDateFormat format = new SimpleDateFormat("YYYYMM");
+        String code ="01"+ FormTypeEnums.TAKE_OUT.getIndex()+ format.format(date);
+
+        promotionBaseInfoDo.setActivityCode(code);
         promotionBaseInfoDo.setCreatedTime(new Date());
         promotionBaseInfoDo.setUpdatedTime(new Date());
+        promotionBaseInfoDo.setSubmit(SubmitEnums.SAVE.getCode());
+        promotionBaseInfoDo.setType(FormTypeEnums.TAKE_OUT.getIndex());
         Integer row=0 ;
         row=  promotionBaseInfoDao.insert(promotionBaseInfoDo);
         if (!CollectionUtils.isEmpty(savePromotionBaseInfoRequery.getPromotionMapperDo())) {

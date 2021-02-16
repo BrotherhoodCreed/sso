@@ -8,14 +8,7 @@ import java.util.List;
 
 @Data
 public class queryPromotionListRespone {
-    /**
-     *区域
-     */
-    private String area;
-    /**
-     *城市
-     */
-    private String city;
+
     /**
      *餐厅编码
      */
@@ -44,6 +37,14 @@ public class queryPromotionListRespone {
 
     @Data
     public static class  PromotionMapper{
+        /**
+         *区域
+         */
+        private String area;
+        /**
+         *城市
+         */
+        private String city;
         private String restaurantName;
         private String restaurantCode;
     }
