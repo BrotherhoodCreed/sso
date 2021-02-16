@@ -9,10 +9,11 @@ import com.promotion.product.dao.mysql.PromotionMapperDao;
 import com.promotion.product.entity.BasePageResponse;
 import com.promotion.product.entity.FormTypeEnums;
 import com.promotion.product.entity.SubmitEnums;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
+
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -85,7 +86,7 @@ public class PromotionService {
         promotionBaseInfoDo.setType(FormTypeEnums.TAKE_OUT.getIndex());
         Integer row=0;
         row=  promotionBaseInfoDao.insert(promotionBaseInfoDo);
-        if (!CollectionUtils.isEmpty(savePromotionBaseInfoRequery.getPromotionMapperDo())) {
+        if (CollectionUtils.isNotEmpty(savePromotionBaseInfoRequery.getPromotionMapperDo())) {
             savePromotionBaseInfoRequery.getPromotionMapperDo().forEach(item -> {
                 item.setActivityCode(promotionBaseInfoDo.getActivityCode());
                 promotionMapperDao.insert(item);

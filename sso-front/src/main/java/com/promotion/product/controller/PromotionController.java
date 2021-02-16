@@ -1,19 +1,23 @@
 package com.promotion.product.controller;
 
-import com.mchange.lang.LongUtils;
+import com.promotion.product.common.ExcelUtils;
 import com.promotion.product.dao.dataobject.*;
 import com.promotion.product.entity.BaseEntityResponse;
 import com.promotion.product.entity.BasePageResponse;
+import com.promotion.product.entity.ExeclRespone;
 import com.promotion.product.service.DictionarySerivce;
 import com.promotion.product.service.PromotionService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,6 +72,20 @@ public class PromotionController {
             response.setMessage(e.getMessage());
         }
         return response;
+    }
+
+    @RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
+    public void exportExcel(HttpServletResponse response)  throws IOException {
+        List<ExeclRespone> resultList = new ArrayList<>();
+        ExeclRespone execlRespone = new ExeclRespone();
+        execlRespone.setArea("aaa");
+        //查询数据
+        resultList.add(execlRespone);
+
+        long t1 = System.currentTimeMillis();
+        ExcelUtils.writeExcel(response, resultList, ExeclRespone.class);
+        long t2 = System.currentTimeMillis();
+        System.out.println(String.format("write over! cost:%sms", (t2 - t1)));
     }
 
     /**
