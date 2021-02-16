@@ -10,10 +10,7 @@ import com.promotion.product.service.PromotionService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -56,7 +53,7 @@ public class PromotionController {
      * 根据id查询促销基本信息
      */
     @PostMapping("savePromotionBaseInfo")
-    public BaseEntityResponse<Boolean> savePromotionBaseInfo(SavePromotionBaseInfoRequery requery) {
+    public BaseEntityResponse<Boolean> savePromotionBaseInfo(@RequestBody  SavePromotionBaseInfoRequery requery) {
         BaseEntityResponse<Boolean> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
             if(Objects.isNull(requery.getPromotionBaseInfoDo())){
