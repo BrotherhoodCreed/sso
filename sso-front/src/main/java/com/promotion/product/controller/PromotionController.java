@@ -51,7 +51,7 @@ public class PromotionController {
     /**
      * 根据id查询促销基本信息
      */
-    @PostMapping("queryPromotionBaseInfo")
+    @PostMapping("savePromotionBaseInfo")
     public BaseEntityResponse<Boolean> savePromotionBaseInfo(SavePromotionBaseInfoRequery requery) {
         BaseEntityResponse<Boolean> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
@@ -73,7 +73,7 @@ public class PromotionController {
     /**
      * 根据id查询促销基本信息
      */
-    @PostMapping("queryPromotionBaseInfo")
+    @PostMapping("updatePromotionBaseInfo")
     public BaseEntityResponse<Boolean> updatePromotionBaseInfo(UpdatePromotionBaseInfoRequery requery) {
         BaseEntityResponse<Boolean> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
