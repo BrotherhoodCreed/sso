@@ -58,6 +58,10 @@ public class PromotionBaseInfoDo {
      * '共享活动'
      */
     private String  sharedActivity;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date usageStartTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date usageEndTime;
     /**
      * '销售单价'
      */
@@ -191,6 +195,22 @@ public class PromotionBaseInfoDo {
         this.sharedActivity = sharedActivity;
     }
 
+    public Date getUsageStartTime() {
+        return usageStartTime;
+    }
+
+    public void setUsageStartTime(Date usageStartTime) {
+        this.usageStartTime = usageStartTime;
+    }
+
+    public Date getUsageEndTime() {
+        return usageEndTime;
+    }
+
+    public void setUsageEndTime(Date usageEndTime) {
+        this.usageEndTime = usageEndTime;
+    }
+
     public BigDecimal getSellingPrice() {
         return sellingPrice;
     }
@@ -302,6 +322,8 @@ public class PromotionBaseInfoDo {
                 ", channel='" + channel + '\'' +
                 ", theWay='" + theWay + '\'' +
                 ", sharedActivity='" + sharedActivity + '\'' +
+                ", usageStartTime=" + usageStartTime +
+                ", usageEndTime=" + usageEndTime +
                 ", sellingPrice=" + sellingPrice +
                 ", billPrice=" + billPrice +
                 ", handlingFee=" + handlingFee +

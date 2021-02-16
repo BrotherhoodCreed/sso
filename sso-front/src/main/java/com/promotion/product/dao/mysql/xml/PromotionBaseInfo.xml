@@ -29,6 +29,8 @@
         <result property="updatedUser" column="updated_time" />
         <result property="submit" column="submit" />
         <result property="type" column="type" />
+        <result property="usageStartTime" column="usage_start_time" />
+        <result property="usageEndTime" column="usage_end_time" />
     </resultMap>
 
 
@@ -121,6 +123,12 @@
         </if>
         <if test="other != null and other!='' ">
             other=#{other}
+        </if>
+        <if test="usageStartTime !=null and usageStartTime!=''">
+            usage_start_time =#{usageStartTime}
+        </if>
+        <if test="usageEndTime !=null and usageEndTime!=''">
+            usage_end_time =#{usageEndTime}
         </if>
         where id=#{id}
     </update>

@@ -40,6 +40,8 @@ public interface PromotionBaseInfoDao {
             "created_user as 'createdUser',\n" +
             "updated_time as 'updatedTime',\n" +
             "updated_user as 'updatedUser'\n" +
+            "usage_start_time as 'usageStartTime'\n" +
+            "usage_end_time as 'usageEndTime'\n" +
             "from tb_promotion_base_info  \n" +
             "where deleted=0   AND   id =#{id}")
     PromotionBaseInfoDo selectOneData(@Param("id") Long id);
@@ -68,6 +70,8 @@ public interface PromotionBaseInfoDao {
             "created_user as 'createdUser',\n" +
             "updated_time as 'updatedTime',\n" +
             "updated_user as 'updatedUser'\n" +
+            "usage_start_time as 'usageStartTime'\n" +
+            "usage_end_time as 'usageEndTime'\n" +
             "from tb_promotion_base_info  \n" +
             "where deleted=0   AND   activity_code =#{aivityCode}")
     PromotionBaseInfoDo selectByAivityCode(@Param("aivityCode") String  aivityCode);
@@ -97,6 +101,8 @@ public interface PromotionBaseInfoDao {
             " 'created_user',\n" +
             " 'updated_time',\n" +
             " 'updated_user'\n" +
+            " 'usage_start_time'\n" +
+            " 'usage_end_time'\n" +
             " )\n" +
             " values(" +
             "#{item.aivityCode}," +
@@ -121,6 +127,8 @@ public interface PromotionBaseInfoDao {
             "#{item.createdUser}," +
             "#{item.updatedTime}," +
             "#{item.updatedUser}," +
+            "#{item.usageStartTime}," +
+            "#{item.usageEndTime}," +
             ")")
     Integer insert(@Param("item")PromotionBaseInfoDo promotionBaseInfoDo);
 
