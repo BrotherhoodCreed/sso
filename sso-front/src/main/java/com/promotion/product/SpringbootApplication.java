@@ -1,4 +1,4 @@
-package com.soso.product1;
+package com.promotion.product;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 
 @MapperScan("com.soso.product1")
 @SpringBootApplication(exclude={HibernateJpaAutoConfiguration.class})
-public class Springboot1Application {
+public class SpringbootApplication {
 
 
     public static void main(String[] args) {
-        SpringApplication.run(Springboot1Application.class, args);
+        SpringApplication.run(SpringbootApplication.class, args);
     }
 }
