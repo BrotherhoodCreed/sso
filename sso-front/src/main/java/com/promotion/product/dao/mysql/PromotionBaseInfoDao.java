@@ -105,8 +105,8 @@ public interface PromotionBaseInfoDao {
             " 'usage_end_time'\n" +
             " )\n" +
             " values(" +
-            "#{item.aivityCode}," +
-            "#{item.aivityType}," +
+            "#{item.activityCode}," +
+            "#{item.activityType}," +
             "#{item.salesStartTime}," +
             "#{item.salesEndTime}," +
             "#{item.amount}," +
