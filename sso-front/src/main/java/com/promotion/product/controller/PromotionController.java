@@ -33,7 +33,8 @@ public class PromotionController {
     /**
      * 根据id查询促销基本信息
      */
-    @PostMapping("queryPromotionBaseInfo")
+    @RequestMapping("queryPromotionBaseInfo")
+    @ResponseBody
     public BaseEntityResponse<PromotionBaseInfoDo> queryPromotionBaseInfo(Long id) {
         BaseEntityResponse<PromotionBaseInfoDo> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
@@ -52,7 +53,9 @@ public class PromotionController {
     /**
      * 根据id查询促销基本信息
      */
-    @PostMapping("savePromotionBaseInfo")
+//    @PostMapping("savePromotionBaseInfo")
+    @RequestMapping("savePromotionBaseInfo")
+    @ResponseBody
     public BaseEntityResponse<Boolean> savePromotionBaseInfo(@RequestBody  SavePromotionBaseInfoRequery requery) {
         BaseEntityResponse<Boolean> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
@@ -88,7 +91,8 @@ public class PromotionController {
     /**
      * 根据id查询促销基本信息
      */
-    @PostMapping("updatePromotionBaseInfo")
+    @RequestMapping("updatePromotionBaseInfo")
+    @ResponseBody
     public BaseEntityResponse<Boolean> updatePromotionBaseInfo(UpdatePromotionBaseInfoRequery requery) {
         BaseEntityResponse<Boolean> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
@@ -104,7 +108,8 @@ public class PromotionController {
         return response;
     }
 
-    @PostMapping("queryPromotionList")
+    @RequestMapping("queryPromotionList")
+    @ResponseBody
     public BasePageResponse<queryPromotionListRespone> queryPromotionList(queryPromotionListRequest request){
         BasePageResponse<queryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
         try {
@@ -122,7 +127,8 @@ public class PromotionController {
     /**
      * 根据类型查询下拉框数据
      */
-    @PostMapping("queryDictionary")
+    @RequestMapping("queryDictionary")
+    @ResponseBody
     public BaseEntityResponse<List<DictionaryDo>> queryDictionary(String descriptionType){
         BaseEntityResponse<List<DictionaryDo>> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
