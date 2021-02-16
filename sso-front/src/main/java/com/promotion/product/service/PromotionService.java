@@ -75,14 +75,15 @@ public class PromotionService {
         Calendar calendar = Calendar.getInstance();
         Date date=calendar.getTime();
         SimpleDateFormat format = new SimpleDateFormat("YYYYMM");
-        String code ="01"+ FormTypeEnums.TAKE_OUT.getIndex()+ format.format(date);
-
+        Integer index= promotionBaseInfoDao.querySerialNumber();
+        //01 区域号
+        String code ="01"+ FormTypeEnums.TAKE_OUT.getIndex()+ format.format(date)+String.format("%03d",index);
         promotionBaseInfoDo.setActivityCode(code);
         promotionBaseInfoDo.setCreatedTime(new Date());
         promotionBaseInfoDo.setUpdatedTime(new Date());
         promotionBaseInfoDo.setSubmit(SubmitEnums.SAVE.getCode());
         promotionBaseInfoDo.setType(FormTypeEnums.TAKE_OUT.getIndex());
-        Integer row=0 ;
+        Integer row=0;
         row=  promotionBaseInfoDao.insert(promotionBaseInfoDo);
         if (!CollectionUtils.isEmpty(savePromotionBaseInfoRequery.getPromotionMapperDo())) {
             savePromotionBaseInfoRequery.getPromotionMapperDo().forEach(item -> {

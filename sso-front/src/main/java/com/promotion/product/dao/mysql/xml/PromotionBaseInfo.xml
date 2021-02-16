@@ -70,6 +70,10 @@
         order by a.created_time desc
     </select>
 
+    <select id="querySerialNumber" resultType="Integer">
+        select count(1)+1 as activity_code from tb_promotion_base_info where to_days(created_time) = to_days(now());
+    </select>
+
 
     <update id="update" parameterMap="com.promotion.product.dao.dataobject.PromotionBaseInfoDo">
         update tb_promotion_base_info set

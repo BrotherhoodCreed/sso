@@ -128,5 +128,7 @@ public interface PromotionBaseInfoDao {
 
     Integer update(UpdatePromotionBaseInfoRequery requery);
 
+    Integer querySerialNumber();
+
     List<queryPromotionListDo> queryPromotionList(queryPromotionListRequest request);
 }

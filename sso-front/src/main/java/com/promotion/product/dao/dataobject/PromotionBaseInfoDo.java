@@ -1,6 +1,8 @@
 package com.promotion.product.dao.dataobject;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -21,10 +23,12 @@ public class PromotionBaseInfoDo {
     /**
      * '促销开始时间'
      */
-    private String  salesStartTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date  salesStartTime;
     /**
      * '促销结束时间'
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date    salesEndTime;
     /**
      * '每台限制张数'
@@ -83,12 +87,13 @@ public class PromotionBaseInfoDo {
      * '单据类型'
      */
     private String      type;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date        createdTime;
     private String      createdUser;
     private Boolean     deleted;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date        updatedTime;
-    private Date        updatedUser;
+    private String        updatedUser;
 
     public Long getId() {
         return id;
@@ -114,11 +119,11 @@ public class PromotionBaseInfoDo {
         this.activityType = activityType;
     }
 
-    public String getSalesStartTime() {
+    public Date getSalesStartTime() {
         return salesStartTime;
     }
 
-    public void setSalesStartTime(String salesStartTime) {
+    public void setSalesStartTime(Date salesStartTime) {
         this.salesStartTime = salesStartTime;
     }
 
@@ -274,11 +279,11 @@ public class PromotionBaseInfoDo {
         this.updatedTime = updatedTime;
     }
 
-    public Date getUpdatedUser() {
+    public String getUpdatedUser() {
         return updatedUser;
     }
 
-    public void setUpdatedUser(Date updatedUser) {
+    public void setUpdatedUser(String updatedUser) {
         this.updatedUser = updatedUser;
     }
 
@@ -288,7 +293,7 @@ public class PromotionBaseInfoDo {
                 "id=" + id +
                 ", activityCode='" + activityCode + '\'' +
                 ", activityType='" + activityType + '\'' +
-                ", salesStartTime='" + salesStartTime + '\'' +
+                ", salesStartTime=" + salesStartTime +
                 ", salesEndTime=" + salesEndTime +
                 ", amount=" + amount +
                 ", billCycle=" + billCycle +
@@ -308,7 +313,7 @@ public class PromotionBaseInfoDo {
                 ", createdUser='" + createdUser + '\'' +
                 ", deleted=" + deleted +
                 ", updatedTime=" + updatedTime +
-                ", updatedUser=" + updatedUser +
+                ", updatedUser='" + updatedUser + '\'' +
                 '}';
     }
 }

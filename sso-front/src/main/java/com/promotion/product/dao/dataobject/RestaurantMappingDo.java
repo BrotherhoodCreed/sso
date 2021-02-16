@@ -1,5 +1,6 @@
 package com.promotion.product.dao.dataobject;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
