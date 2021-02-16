@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@include file="/WEB-INF/taglib.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,139 +9,290 @@
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<%--<div class="row" style="padding-top: 1rem;padding-bottom: 1rem;width: 60rem;">--%>
-<%--    <div class="col-lg-6">--%>
-<%--        <div class="input-group">--%>
-<%--            <span class="input-group-btn">--%>
-<%--                <button class="btn btn-default" type="button">--%>
-<%--                    促销编码--%>
-<%--                </button>--%>
-<%--            </span>--%>
-<%--            <input type="text" class="form-control">--%>
-<%--        </div><!-- /input-group -->--%>
-<%--    </div><!-- /.col-lg-6 --><br>--%>
-<%--</div><!-- /.row -->--%>
-<%--<div class="col-lg-6">--%>
-<%--    <div class="input-group">--%>
-<%--        <div class="input-group-btn">--%>
-<%--            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">--%>
-<%--                下拉菜单--%>
-<%--                <span class="caret"></span>--%>
-<%--            </button>--%>
-<%--            <ul class="dropdown-menu">--%>
-<%--                <li><a href="#">功能</a></li>--%>
-<%--                <li><a href="#">另一个功能</a></li>--%>
-<%--                <li><a href="#">其他</a></li>--%>
-<%--                <li class="divider"></li>--%>
-<%--                <li><a href="#">分离的链接</a></li>--%>
-<%--            </ul>--%>
-<%--        </div><!-- /btn-group -->--%>
-<%--        <input type="text" class="form-control">--%>
-<%--    </div><!-- /input-group -->--%>
-<%--</div><!-- /.col-lg-6 -->--%>
-
-<%--<div class="form-group">--%>
-<%--    <label for="name">其他</label>--%>
-<%--    <textarea class="form-control" rows="3"></textarea>--%>
-<%--</div>--%>
-
-<div class="container-fluid">
+<body id="app">
+    <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
             <table class="table table-striped">
                 <thead>
                 <tr>
                     <th>
-                        编号
+                        区域
                     </th>
                     <th>
-                        产品
+                        城市
                     </th>
                     <th>
-                        交付时间
+                        餐厅编码
                     </th>
                     <th>
-                        状态
+                        促销编码
+                    </th>
+                    <th>
+                        活动类型
+                    </th>
+                    <th>
+                        开始时间
+                    </th>
+                    <th>
+                        结束时间
+                    </th>
+                    <th>
+                        所有对解表栏位
                     </th>
                 </tr>
                 </thead>
                 <tbody>
+                <tr @click="toDetail()">
+                    <td>
+                       1
+                    </td>
+                    <td>
+                       2
+                    </td>
+                    <td>
+                       3
+                    </td>
+                    <td>
+                        4
+                    </td>
+                    <td>
+                        5
+                    </td>
+                    <td>
+                        6
+                    </td>
+                    <td>
+                        7
+                    </td>
+                    <td>
+                        8
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         1
                     </td>
                     <td>
-                        TB - Monthly
-                    </td>
-                    <td>
-                        01/04/2012
-                    </td>
-                    <td>
-                        Default
-                    </td>
-                </tr>
-                <tr class="success">
-                    <td>
-                        1
-                    </td>
-                    <td>
-                        TB - Monthly
-                    </td>
-                    <td>
-                        01/04/2012
-                    </td>
-                    <td>
-                        Approved
-                    </td>
-                </tr>
-                <tr class="error">
-                    <td>
                         2
                     </td>
-                    <td>
-                        TB - Monthly
-                    </td>
-                    <td>
-                        02/04/2012
-                    </td>
-                    <td>
-                        Declined
-                    </td>
-                </tr>
-                <tr class="warning">
                     <td>
                         3
                     </td>
                     <td>
-                        TB - Monthly
+                        4
                     </td>
                     <td>
-                        03/04/2012
+                        5
                     </td>
                     <td>
-                        Pending
+                        6
+                    </td>
+                    <td>
+                        7
+                    </td>
+                    <td>
+                        8
                     </td>
                 </tr>
-                <tr class="info">
+                <tr>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        2
+                    </td>
+                    <td>
+                        3
+                    </td>
                     <td>
                         4
                     </td>
                     <td>
-                        TB - Monthly
+                        5
                     </td>
                     <td>
-                        04/04/2012
+                        6
                     </td>
                     <td>
-                        Call in to confirm
+                        7
+                    </td>
+                    <td>
+                        8
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        2
+                    </td>
+                    <td>
+                        3
+                    </td>
+                    <td>
+                        4
+                    </td>
+                    <td>
+                        5
+                    </td>
+                    <td>
+                        6
+                    </td>
+                    <td>
+                        7
+                    </td>
+                    <td>
+                        8
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        2
+                    </td>
+                    <td>
+                        3
+                    </td>
+                    <td>
+                        4
+                    </td>
+                    <td>
+                        5
+                    </td>
+                    <td>
+                        6
+                    </td>
+                    <td>
+                        7
+                    </td>
+                    <td>
+                        8
                     </td>
                 </tr>
                 </tbody>
             </table>
+            <ul class="pager">
+                <li class="previous"><a href="#">&larr; 上一页</a></li>
+                <li>当前页面 1,跳转至<input style="width: 2.5rem;"/></li>
+                <li class="next"><a href="#">下一页 &rarr;</a></li>
+            </ul>
         </div>
     </div>
 </div>
+</body>
 
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            querydata: []
+        },
+        created:function(){
+            this.getList();
+        },
+        methods:{
+            getList:function(){
+                this.$http.get('<%=request.getContextPath()%>/index/list').then(function(response) {
+                        this.querydata = response.data;
+                    },
+                    function(response) {
+                        console.log("网络异常");
+                    });
+            },
+            toDetail:function(index){
+                window.location.href='<%=request.getContextPath()%>/detail?index='+index;
+            },
+            modify:function () {
+                if (isNaN(this.modifyKey)) {
+                    alert('innerBusinessCatetoryType值不是数字');
+                    return;
+                }
+                this.modifyKey = parseInt(this.modifyKey);
 
+                if (isNaN(this.modifyValue)) {
+                    alert('stationWindowType值不是数字');
+                    return;
+                }
+                this.modifyValue = parseInt(this.modifyValue);
+                //校验重复
+                var check = app.querydata.some(function(item,index,array){
+                    if(item.innerBusinessCatetoryType==app.modifyKey && index != app.modifyIndex)
+                        return true
+                });
+                if (check){
+                    alert("innerBusinessCatetoryType（"+this.modifyKey+"）值已存在");
+                    return;
+                }
+                this.querydata[this.modifyIndex].innerBusinessCatetoryType = this.modifyKey;
+                this.querydata[this.modifyIndex].stationWindowType = this.modifyValue;
+                var param = JSON.stringify(this.querydata);
+                this.$http.post('<%=request.getContextPath()%>/data-query/station_window/modify',{str:param},{emulateJSON:true}).then(function(response) {
+                        if ("0" != response.data.code){
+                            alert("修改失败("+response.data.msg+")");
+                            return;
+                        }
+                    },
+                    function(response) {
+                        console.log("网络异常");
+                    });
+            },
+            toAdd:function () {
+                if (isNaN(this.addKey)) {
+                    alert('新增innerBusinessCatetoryType值不是数字');
+                    return;
+                }
+                this.addKey = parseInt(this.addKey);
+
+                if (isNaN(this.addValue)) {
+                    alert('新增stationWindowType值不是数字');
+                    return;
+                }
+                this.addValue = parseInt(this.addValue);
+
+                var check = app.querydata.some(function(item,index,array){
+                    if(item.innerBusinessCatetoryType==app.addKey)
+                        return true
+                });
+                if (check){
+                    alert("innerBusinessCatetoryType（"+this.addKey+"）值已存在");
+                    return;
+                }
+                var a = {innerBusinessCatetoryType:this.addKey,stationWindowType:this.addValue};
+                this.querydata.push(a);
+                var param = JSON.stringify(this.querydata);
+                this.$http.post('<%=request.getContextPath()%>/data-query/station_window/modify',{str:param},{emulateJSON:true}).then(function(response) {
+                        if ("0" != response.data.code){
+                            alert("添加失败("+response.data.msg+")");
+                            return;
+                        }
+                    },
+                    function(response) {
+                        console.log("网络异常");
+                    });
+            },
+            delete:function (index) {
+                var r=confirm("确定要删除吗?");
+                if (r==false){
+                    return;
+                }
+                this.querydata.splice(index,1);
+                var param = JSON.stringify(this.querydata);
+                this.$http.post('<%=request.getContextPath()%>/data-query/station_window/modify',{str:param},{emulateJSON:true}).then(function(response) {
+                        if ("0" != response.data.code){
+                            alert("删除失败("+response.data.msg+")");
+                            return;
+                        }
+                    },
+                    function(response) {
+                        console.log("网络异常");
+                    });
+            }
+        }
+    });
+</script>
 
 </html>
