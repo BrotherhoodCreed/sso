@@ -119,12 +119,17 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.12</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -144,7 +149,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass></mainClass>
+                    <mainClass>com.promotion.product.SpringbootApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
