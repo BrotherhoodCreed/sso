@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 
 public class PromotionBaseInfoDo {
@@ -57,7 +58,7 @@ public class PromotionBaseInfoDo {
     /**
      * '共享活动'
      */
-    private String  sharedActivity;
+    private List<String>  sharedActivity;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date usageStartTime;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
@@ -187,11 +188,11 @@ public class PromotionBaseInfoDo {
         this.theWay = theWay;
     }
 
-    public String getSharedActivity() {
+    public List<String> getSharedActivity() {
         return sharedActivity;
     }
 
-    public void setSharedActivity(String sharedActivity) {
+    public void setSharedActivity(List<String> sharedActivity) {
         this.sharedActivity = sharedActivity;
     }
 
