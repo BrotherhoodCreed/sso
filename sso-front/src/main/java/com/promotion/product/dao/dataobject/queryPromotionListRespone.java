@@ -10,6 +10,7 @@ import java.util.List;
 @Data
 public class queryPromotionListRespone {
 
+    private Long id;
     /**
      *促销编码
      */

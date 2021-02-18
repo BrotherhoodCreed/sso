@@ -4,12 +4,16 @@ import com.promotion.product.dao.dataobject.PromotionMapperDo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public interface PromotionMapperDao {
+
+    @Update("update tb_promotion_mapper set deleted=1 where id=#{id}")
+    Integer deletePromotionById(@Param("id")Long id);
 
     @Select("select  \n" +
             "id,\n" +

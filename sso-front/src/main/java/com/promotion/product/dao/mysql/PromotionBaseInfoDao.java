@@ -12,6 +12,10 @@ import java.util.List;
 
 @Component
 public interface PromotionBaseInfoDao {
+
+    @Update("update tb_promotion_base_info set deleted=1 where id=#{id}")
+    Integer deletePromotionBaseById(@Param("id") Long id);
+
     @Select("select count(1) as count from tb_promotion_base_info where deleted=0  ")
     int selectCount();
 

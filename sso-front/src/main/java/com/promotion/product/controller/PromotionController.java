@@ -75,6 +75,8 @@ public class PromotionController {
         return response;
     }
 
+
+
     @RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
     public void exportExcel(HttpServletResponse response)  throws IOException {
         List<ExeclRespone> resultList = new ArrayList<>();
@@ -118,6 +120,42 @@ public class PromotionController {
         }
         catch (Exception e){
             response = BasePageResponse.failure(BasePageResponse.class);
+            response.setMessage(e.getMessage());
+        }
+        return response;
+
+    }
+
+    /**
+     * 删除活动与
+     */
+    @RequestMapping("deletePromotion")
+    @ResponseBody
+    public BaseEntityResponse<Boolean> deletePromotionBaseById(Long id){
+        BaseEntityResponse<Boolean> response=BaseEntityResponse.success(BaseEntityResponse.class);
+        try {
+            response.setData(promotionService.deletePromotionBaseById(id));
+        }
+        catch (Exception e){
+            response = BaseEntityResponse.failure(BaseEntityResponse.class);
+            response.setMessage(e.getMessage());
+        }
+        return response;
+
+    }
+
+    /**
+     * 删除活动与门店映射关系
+     */
+    @RequestMapping("deletePromotionMapper")
+    @ResponseBody
+    public BaseEntityResponse<Boolean> deletePromotionMapper(Long id){
+        BaseEntityResponse<Boolean> response=BaseEntityResponse.success(BaseEntityResponse.class);
+        try {
+            response.setData(promotionService.deletePromotionById(id));
+        }
+        catch (Exception e){
+            response = BaseEntityResponse.failure(BaseEntityResponse.class);
             response.setMessage(e.getMessage());
         }
         return response;

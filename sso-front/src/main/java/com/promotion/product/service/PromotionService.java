@@ -33,6 +33,14 @@ public class PromotionService {
     }
 
 
+    public Boolean deletePromotionBaseById(Long id){
+        return promotionBaseInfoDao.deletePromotionBaseById(id)>0;
+    }
+
+    public Boolean deletePromotionById(Long id){
+        return promotionMapperDao.deletePromotionById(id)>0;
+    }
+
     public   BasePageResponse<queryPromotionListRespone>queryPromotionList(queryPromotionListRequest request){
         BasePageResponse<queryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
         PageHelper.startPage(request.getPageIndex(), request.getPageSize());
@@ -46,6 +54,7 @@ public class PromotionService {
         List<queryPromotionListRespone> queryPromotionListResponeList =new ArrayList<>();
         for (queryPromotionListDo queryPromotionListDo : queryPromotionList) {
             queryPromotionListRespone queryPromotionListRespone =new queryPromotionListRespone();
+            queryPromotionListRespone.setId(queryPromotionListDo.getId());
             queryPromotionListRespone.setActivityCode(queryPromotionListDo.getActivityCode());
             queryPromotionListRespone.setActivityType(queryPromotionListDo.getActivityType());
             queryPromotionListRespone.setSalesStartTime(queryPromotionListDo.getSalesStartTime());
