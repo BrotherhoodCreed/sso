@@ -8,6 +8,7 @@ import com.promotion.product.entity.ExeclRespone;
 import com.promotion.product.service.DictionarySerivce;
 import com.promotion.product.service.PromotionService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.reflect.MethodUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -51,21 +52,21 @@ public class PromotionController {
     }
 
     /**
-     * 根据id查询促销基本信息
+     * 保存促销基本信息
      */
 //    @PostMapping("savePromotionBaseInfo")
     @RequestMapping("savePromotionBaseInfo")
     @ResponseBody
-    public BaseEntityResponse<Boolean> savePromotionBaseInfo(@RequestBody  SavePromotionBaseInfoRequery requery) {
+    public BaseEntityResponse<Boolean> savePromotionBaseInfo(@RequestBody  SavePromotionBaseInfoRequery request) {
         BaseEntityResponse<Boolean> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
-            if(Objects.isNull(requery.getPromotionBaseInfoDo())){
+            if(Objects.isNull(request.getPromotionBaseInfoDo())){
                 throw  new Exception("参数为空");
             }
-            if(CollectionUtils.isEmpty(requery.getPromotionMapperDo())){
+            if(CollectionUtils.isEmpty(request.getPromotionMapperDo())){
                 throw  new Exception("参数为空");
             }
-            response.setData(promotionService.savePromotionBaseInfo(requery));
+            response.setData(promotionService.savePromotionBaseInfo(request));
         }
         catch (Exception e){
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
@@ -89,7 +90,7 @@ public class PromotionController {
     }
 
     /**
-     * 根据id查询促销基本信息
+     * 修改id查询促销基本信息
      */
     @RequestMapping("updatePromotionBaseInfo")
     @ResponseBody

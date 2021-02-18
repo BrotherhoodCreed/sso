@@ -37,32 +37,19 @@ public class PromotionService {
         BasePageResponse<queryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
         PageHelper.startPage(request.getPageIndex(), request.getPageSize());
         List<queryPromotionListDo> queryPromotionList=promotionBaseInfoDao.queryPromotionList(request);
-        if(queryPromotionList==null ||queryPromotionList.size()==0){
+        if(CollectionUtils.isEmpty(queryPromotionList)){
             return response;
         }
-        Map<String,List<queryPromotionListDo>> map=queryPromotionList.stream().collect(Collectors.groupingBy(item->item.getActivityCode(),Collectors.toList()));
         PageInfo<queryPromotionListRespone> pageInfo=new PageInfo<>();
         response.setTotal(pageInfo.getTotal());
         response.setPages(pageInfo.getPageNum());
-        Iterator<Map.Entry<String,List<queryPromotionListDo>>> iterator=map.entrySet().iterator();
         List<queryPromotionListRespone> queryPromotionListResponeList =new ArrayList<>();
-        while (iterator.hasNext()){
+        for (queryPromotionListDo queryPromotionListDo : queryPromotionList) {
             queryPromotionListRespone queryPromotionListRespone =new queryPromotionListRespone();
-            Map.Entry<String,List<queryPromotionListDo>> entry= iterator.next();
-            List<queryPromotionListDo> queryPromotionListDoList=entry.getValue();
-            queryPromotionListDo queryPromotionListDo =queryPromotionListDoList.get(0);
             queryPromotionListRespone.setActivityCode(queryPromotionListDo.getActivityCode());
             queryPromotionListRespone.setActivityType(queryPromotionListDo.getActivityType());
             queryPromotionListRespone.setSalesStartTime(queryPromotionListDo.getSalesStartTime());
             queryPromotionListRespone.setSalesEndTime(queryPromotionListDo.getSalesEndTime());
-            for (queryPromotionListDo queryPromotionListDo1 : queryPromotionListDoList) {
-                queryPromotionListRespone.PromotionMapper promotionMapper=new queryPromotionListRespone.PromotionMapper();
-                promotionMapper.setRestaurantName(queryPromotionListDo1.getRestaurantName());
-                promotionMapper.setRestaurantCode(queryPromotionListDo1.getRestaurantCode());
-                promotionMapper.setArea(queryPromotionListDo1.getArea());
-                promotionMapper.setCity(queryPromotionListDo1.getCity());
-                queryPromotionListRespone.getPromotionMappers().add(promotionMapper);
-            }
             queryPromotionListResponeList.add(queryPromotionListRespone);
         }
          response.setData(queryPromotionListResponeList);

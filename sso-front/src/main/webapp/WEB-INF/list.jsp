@@ -42,12 +42,10 @@
             ,page: true //开启分页
             ,cols: [[ //表头
                 {type:'checkbox',field: 'id', title: 'ID',  sort: true, fixed: 'left'}
-                ,{field: 'restaurantCode', title: '餐厅编码'}
                 ,{field: 'activityCode', title: '促销编码', sort: true}
                 ,{field: 'activityType', title: '活动类型' }
                 ,{field: 'salesStartTime', title: '开始时间'}
                 ,{field: 'salesEndTime', title: '结束时间',  sort: true}
-                ,{field: 'promotionMappers', title: '对位栏',  sort: true}
                 ,{fixed: 'right', align:'center', toolbar: '#opt'} //这里的toolbar值是模板元素的选择器
             ]]
             ,toolbar:'#barDemo'

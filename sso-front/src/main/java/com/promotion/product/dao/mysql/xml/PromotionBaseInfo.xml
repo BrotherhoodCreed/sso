@@ -50,19 +50,13 @@
     <select id="queryPromotionList" resultMap="BaseResultMap">
         SELECT
         a.id,
-        b.area,
-        b.city,
-        b.restaurant_code as restaurantCode,
-        b.restaurant_name as restaurantName,
         a.activity_code as activityCode,
         a.activity_type as activityType,
         a.sales_start_time as salesStartTime,
         a.sales_end_time as salesEndTime
         FROM
         tb_promotion_base_info AS a
-        INNER JOIN tb_promotion_mapper AS b ON a.activity_code = b.restaurant_code
         AND a.deleted = 0
-        AND b.deleted = 0
         <where>
             AND 1=1
             <if test="activityCode !=null and activityCode!=''">

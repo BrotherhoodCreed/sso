@@ -9,18 +9,6 @@ import java.util.List;
 public class queryPromotionListDo {
     private Long id;
     /**
-     *区域
-     */
-    private String area;
-    /**
-     *城市
-     */
-    private String city;
-    /**
-     *餐厅编码
-     */
-    private String restaurantCode;
-    /**
      *促销编码
      */
     private String activityCode;
@@ -31,38 +19,18 @@ public class queryPromotionListDo {
     /**
      *开始时间
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date salesStartTime;
     /**
      *结束时间
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date salesEndTime;
 
-    private String restaurantName;
-
-    public String getArea() {
-        return area;
+    public Long getId() {
+        return id;
     }
 
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getRestaurantCode() {
-        return restaurantCode;
-    }
-
-    public void setRestaurantCode(String restaurantCode) {
-        this.restaurantCode = restaurantCode;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getActivityCode() {
@@ -97,34 +65,14 @@ public class queryPromotionListDo {
         this.salesEndTime = salesEndTime;
     }
 
-    public String getRestaurantName() {
-        return restaurantName;
-    }
-
-    public void setRestaurantName(String restaurantName) {
-        this.restaurantName = restaurantName;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
         return "queryPromotionListDo{" +
                 "id=" + id +
-                ", area='" + area + '\'' +
-                ", city='" + city + '\'' +
-                ", restaurantCode='" + restaurantCode + '\'' +
                 ", activityCode='" + activityCode + '\'' +
                 ", activityType='" + activityType + '\'' +
                 ", salesStartTime=" + salesStartTime +
                 ", salesEndTime=" + salesEndTime +
-                ", restaurantName='" + restaurantName + '\'' +
                 '}';
     }
 }

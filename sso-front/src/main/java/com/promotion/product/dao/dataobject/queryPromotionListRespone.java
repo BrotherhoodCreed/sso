@@ -11,10 +11,6 @@ import java.util.List;
 public class queryPromotionListRespone {
 
     /**
-     *餐厅编码
-     */
-    private String restaurantCode;
-    /**
      *促销编码
      */
     private String activityCode;
@@ -32,25 +28,7 @@ public class queryPromotionListRespone {
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date salesEndTime;
-    /**
-     *对位栏
-     */
-    private List<PromotionMapper> promotionMappers =new ArrayList<>();
 
-
-    @Data
-    public static class  PromotionMapper{
-        /**
-         *区域
-         */
-        private String area;
-        /**
-         *城市
-         */
-        private String city;
-        private String restaurantName;
-        private String restaurantCode;
-    }
 
 
 
