@@ -18,21 +18,8 @@ public class IndexController {
     @Autowired
     private TestDao testDao;
 
-    @RequestMapping("/index")
-    public String test(){
-        return "index";
-    }
 
-
-    @RequestMapping("/index/list")
-    @ResponseBody
-    public String getList(){
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("1","2");
-        return jsonObject.toJSONString();
-    }
-
-    @RequestMapping("/detail")
+    @RequestMapping("/add")
     public String detail(){
         return "detail";
     }
@@ -47,5 +34,10 @@ public class IndexController {
     @RequestMapping("/list")
     public String list(){
         return "list";
+    }
+
+    @RequestMapping("/tree")
+    public String tree(){
+        return "tree";
     }
 }

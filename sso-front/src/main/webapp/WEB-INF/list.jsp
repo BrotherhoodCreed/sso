@@ -12,11 +12,11 @@
 
 <script src="${ctx}/static/layui/layui.all.js" type="text/javascript"></script>
 <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="add">新增</a>
     <a class="layui-btn layui-btn-xs" lay-event="upload">导出</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
 </script>
 <script type="text/html" id="opt">
-    <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
 </script>
 <script>
@@ -58,7 +58,6 @@
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
-            console.log('1');
             if(layEvent === 'detail'){ //查看
 
             } else if(layEvent === 'edit'){ //编辑
@@ -68,10 +67,10 @@
 
         table.on('toolbar(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var checkStatus = table.checkStatus(obj.config.id);
-            console.log(checkStatus.data) //获取选中行的数据
-            console.log(checkStatus.data.length) //获取选中行数量，可作为是否有选中行的条件
-            console.log(checkStatus.isAll ) //表格是否全选
             switch(obj.event){
+                case 'add':
+                    location.href = '<%=request.getContextPath()%>/add';
+                    break;
                 case 'upload':
                     app.upload();
                     break;

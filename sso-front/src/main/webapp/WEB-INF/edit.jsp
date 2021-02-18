@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>修改活动</title>
     <style>
         * {
             margin: 0;
@@ -37,7 +37,7 @@
 
 <body>
     <form action="" id="app">
-        <div><span>促销编码</span> <input type="number" v-model="detail.activityCode"  style="width: 110px;"> <span>活动类型</span> <select v-model="detail.activityType"  style="width: 100px;"><option value="1">团购</option></select>
+        <div><span>促销编码</span> <input type="number" v-model="detail.activityCode"  readonly="readonly" style="width: 110px;"> <span>活动类型</span> <select v-model="detail.activityType"  style="width: 100px;"><option value="1">团购</option></select>
             <span>销售开始时间</span>
             <input type="text" id="test1">
 
@@ -109,8 +109,8 @@
 <script type="text/javascript" src="${ctx}/static/bootstrap/bootstrap-select.min.js"></script>
 <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
-<script type="text/javascript">
-    <%--var id =[[${id}]]--%>
+<script type="text/javascript">;
+
     var app = new Vue({
         el: "#app",
         data: {
@@ -125,9 +125,7 @@
                 channel:'',
                 theWay:'',
                 saleBegain:"",
-                saleBegainTime:"",
                 saleEnd:"",
-                saleEndTime:"",
                 writeBegain:"",
                 writeEnd:"",
                 sharedActivity:[],
@@ -163,7 +161,7 @@
                     "$1$2.$3"
                 );
             },
-            save:function () {
+            edit:function () {
                 var actives = ($(".selectpicker").val());
                 this.detail.sharedActivity = actives;
                 if (this.detail.activityCode == ''){
@@ -174,8 +172,12 @@
                     layer.msg('活动类型为空');
                     return;
                 }
-                if (this.detail.saleBegain == ''
-                    || this.detail.saleBegainTime == ''){
+                var startTimestamp = new Date(this.detail.saleBegain.replace(/-/g, "/"));
+                var saleBegainTime = new Date(startTimestamp).getTime();
+                var endTimestamp = new Date(this.detail.saleEnd.replace(/-/g, "/"));
+                var saleEndTime = new Date(endTimestamp).getTime();
+
+                if (this.detail.saleBegain == ''){
                     layer.msg('销售开始时间为空');
                     return;
                 }
@@ -184,7 +186,7 @@
                     layer.msg('销售结束时间为空');
                     return;
                 }
-                if (this.detail.saleEndTime < this.detail.saleBegainTime){
+                if (saleEndTime < saleBegainTime){
                     layer.msg('销售结束时间不能小于销售开始时间');
                     return;
                 }
@@ -237,13 +239,8 @@
                     layer.msg('手续费率为空');
                     return;
                 }
-                var param = {
-                    promotionBaseInfoDo: this.detail,
-                    // promotionMapperDo:[{city:'222'}]
-                };
-                console.log(param);
-                this.$http.post('<%=request.getContextPath()%>/PromotionController/savePromotionBaseInfo',
-                    JSON.stringify(param),{emulateJSON:false}).then(function(response) {
+                this.$http.post('<%=request.getContextPath()%>/PromotionController/updatePromotionBaseInfo',
+                    JSON.stringify(this.detail),{emulateJSON:false}).then(function(response) {
 
                     },
                     function(response) {
@@ -261,6 +258,11 @@
             queryDetail:function () {
                 this.$http.post('<%=request.getContextPath()%>/PromotionController/queryPromotionBaseInfo',{id:this.detail.id},{emulateJSON:true}).then(function(response) {
                         console.log(response.data);
+                        if (10000 == response.code){
+                            this.detail = response.data.data;
+                        }else {
+                            layer.msg('查询异常');
+                        }
                     },
                     function(response) {
                         console.log("网络异常");
@@ -297,13 +299,11 @@
         elem: '#test1' //指定元素
         ,show: false //直    接显示
         ,trigger: 'click' //采用click弹出
+        ,value: app.detail.saleBegain
         ,btns: ['clear', 'confirm']
         // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
-            var startTimestamp = new Date(value.replace(/-/g, "/"));
-            var begainTime = new Date(startTimestamp).getTime();
             app.detail.saleBegain=value;
-            app.detail.saleBegainTime=begainTime;
             if (value == '' || value == undefined){
                 bMinDate = defaultMinDate
             }else {
@@ -326,13 +326,11 @@
         elem: '#test2' //指定元素
         ,show: false //直接显示
         ,trigger: 'click' //采用click弹出
+        ,value: app.detail.saleEnd
         ,btns: ['clear', 'confirm']
         // ,closeStop: '#test2' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
-            var startTimestamp = new Date(value.replace(/-/g, "/"));
-            var endTime = new Date(startTimestamp).getTime();
             app.detail.saleEnd=value;
-            app.detail.saleEndTime=endTime;
             if (value == '' || value == undefined){
                 aMaxDate = defaultMaxDate
             }else {
