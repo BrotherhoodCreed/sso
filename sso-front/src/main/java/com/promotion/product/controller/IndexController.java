@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class IndexController {
@@ -25,7 +26,7 @@ public class IndexController {
 
     @RequestMapping("/index/list")
     @ResponseBody
-    public String list(){
+    public String getList(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("1","2");
         return jsonObject.toJSONString();
@@ -36,4 +37,15 @@ public class IndexController {
         return "detail";
     }
 
+    @RequestMapping("/edit")
+    public ModelAndView edit(String id){
+        ModelAndView mv = new ModelAndView("edit");
+        mv.addObject("id",id);
+        return mv;
+    }
+
+    @RequestMapping("/list")
+    public String list(){
+        return "list";
+    }
 }
