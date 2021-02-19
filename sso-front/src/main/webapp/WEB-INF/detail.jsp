@@ -23,17 +23,18 @@
             margin-right: 14px;
         }
         
-        div {
-            margin-bottom: 10px;
+        #app div {
+            margin-bottom: 10px !important;
         }
-        
-        form {
-            margin-top: 30px;
-            margin-left: 50px;
+
+        #app {
+            margin-top: 30px !important;
+            margin-left: 50px !important;
         }
     </style>
     <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/bootstrap/bootstrap-select.min.css">
+    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css" media="all">
 
 <body>
     <form action="" id="app">
@@ -97,9 +98,23 @@
             <textarea v-model="detail.other"  style="width: 895px; height: 35px; resize: none;"></textarea>
         </div>
         <div>
+            <button type="button" class="btn btn-default" id="addActive">添加活动</button>
+        </div>
+        <div>
             <button type="button" class="btn btn-default" @click="save()">保存</button>
         </div>
     </form>
+    <div class="showChooseDiv" style="display: none;  padding: 20px">
+            <div id="dept_main" style="margin-right: 2%;">
+                <div id="dept_tree">
+                </div>
+                <div class="layui-form-item float-right">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-normal layui-btn-sm" id="lay-submit-Choose">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
 
 <script src="${ctx}/js/jquery-3.3.1.js" type="text/javascript"></script>
@@ -393,6 +408,145 @@
         $('.selectpicker').selectpicker({
             'selectedText': '请选择'
         });
+    });
+</script>
+
+<script>
+    var str = [{
+        id:1,
+        title: '江西' //一级菜单
+        ,children: [{
+            id:3,
+            title: '南昌' //二级菜单
+            ,children: [{
+                id:4,
+                title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                //…… //以此类推，可无限层级
+            },
+            {
+                id:7,
+                title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                //…… //以此类推，可无限层级
+            },
+            {
+                id:5,
+                title: '高新区2厦门市那萨克斯看' //三级菜单
+                //…… //以此类推，可无限层级
+            }
+            ]
+        }]
+    },
+        {
+            id:8,
+            title: '陕西' //一级菜单
+            ,children: [{
+                id:9,
+                title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                //…… //以此类推，可无限层级
+            },
+                {
+                    id:10,
+                    title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                    //…… //以此类推，可无限层级
+                },
+                {
+                    id:11,
+                    title: '高新区2厦门市那萨克斯看' //三级菜单
+                    //…… //以此类推，可无限层级
+                }
+            ]
+        },{
+        id:2,
+        title: '陕西' //一级菜单
+        ,children: [{
+            id:6,
+            title: '西安' //二级菜单
+        }]
+    }];
+
+    layui.use(['layer','tree'], function() {
+        var $ = layui.jquery;
+        layer = layui.layer;
+        var tree = layui.tree;
+        //树形组件复选框
+        tree.render({
+            elem: '#dept_tree',
+            data: str,
+            id: 'checkTree',
+            showCheckbox: true,     //是否显示复选框
+            onlyIconControl: true
+        });
+        function getData(){
+            var data = [];
+            $.ajax({
+                url : "/PtRole/allRole",//后台数据请求地址
+                dataType : 'json',
+                type : 'GET',
+                async : false,
+                success: function(resut){
+                    data = resut;
+                }
+            });
+            return data;
+        }
+
+        //打开选择页
+        $("body").on("click", "#addActive", function() {
+            var dataInto=$(this).prev().attr("name");
+            $("#lay-submit-Choose").attr("data-into",dataInto);
+            layer.open({
+                type: 1,
+                title: "选择",
+                area: '40%',
+                content: $(".showChooseDiv"),
+                maxmin: false,
+                shadeClose: true,
+                shade: false,
+            });
+        });
+        //选择页确定
+        $("#lay-submit-Choose").on("click", function() {
+            var getData = tree.getChecked('checkTree');
+            console.log(getData);
+            if (getData.length<1) {
+                layer.alert("请选择一项");
+            }else{
+                var datas = getCheckedId(getData);
+                console.log(datas);
+                layer.close(layer.index);
+            }
+            return false;
+        });
+        //渲染字典项选择
+        function renderChoose(dataDicType) {
+            layer.alert("请选择一项");
+        };
+
+        function getCheckedId(jsonObj) {
+            var id = "";
+            $.each(jsonObj, function (index, item) {
+                if(undefined == item.children){
+                    console.log('当前id'+item.id+'是叶子节点');
+                    //到了叶子节点
+                    if (id != ""){
+                        id = id + "," + item.id;
+                    }
+                    else {
+                        id = item.id;
+                    }
+                }else {
+                    console.log('当前id'+item.id+'存在子节点');
+                    if (id != ""){
+                        id = id + "," + getCheckedId(item.children);
+                    }
+                    else {
+                        id = getCheckedId(item.children);
+                    }
+                }
+            });
+            return id;
+        }
+
     });
 </script>
 </html>
