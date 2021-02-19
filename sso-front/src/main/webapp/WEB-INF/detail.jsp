@@ -100,9 +100,12 @@
         <div>
             <button type="button" class="btn btn-default" id="addActive">添加活动</button>
         </div>
+        <table id="demo" lay-filter="test"></table>
+
         <div>
             <button type="button" class="btn btn-default" @click="save()">保存</button>
         </div>
+
     </form>
     <div class="showChooseDiv" style="display: none;  padding: 20px">
             <div id="dept_main" style="margin-right: 2%;">
@@ -541,9 +544,9 @@
                 maxmin: false,
                 shadeClose: true,
                 shade: false,
-                area:['auto','80%'],
+                area:['auto',"auto"],
                 // maxHeight:'50%',
-                offset: 'auto'
+                offset: '100px'
             });
             $("#layui-layer-content").attr("height","auto");
         });
@@ -590,6 +593,39 @@
             return id;
         }
 
+    });
+</script>
+<script>
+    layui.use('table', function(){
+        var id ='1';
+        var table = layui.table;
+        //第一个实例
+        var tableIn = table.render({
+            elem: '#demo'
+            ,id:'list'
+            // ,height: 'full-20'
+            ,url: '<%=request.getContextPath()%>/PromotionController/queryPromotionList?id='+id //数据接口
+            ,request: {
+                pageName: 'pageIndex' //页码的参数名称，默认：page
+                ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+            }
+            ,response: {
+                statusName: 'code' //规定数据状态的字段名称，默认：code
+                ,statusCode: 10000 //规定成功的状态码，默认：0
+                ,msgName: 'message' //规定状态信息的字段名称，默认：msg
+                // ,countName: 'total' //规定数据总数的字段名称，默认：count
+                // ,dataName: 'rows' //规定数据列表的字段名称，默认：data
+            }
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                // {type:'checkbox',field: 'id', title: 'ID',  sort: true, fixed: 'left'}，
+                 {field: 'activityCode', title: '促销编码', sort: true}
+                ,{field: 'activityType', title: '活动类型' }
+                ,{field: 'salesStartTime', title: '开始时间'}
+                ,{field: 'salesEndTime', title: '结束时间',  sort: true}
+                ,{fixed: 'right', align:'center', toolbar: '#opt'} //这里的toolbar值是模板元素的选择器
+            ]]
+        });
     });
 </script>
 </html>

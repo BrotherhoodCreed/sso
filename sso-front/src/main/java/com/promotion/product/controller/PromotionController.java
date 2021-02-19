@@ -113,16 +113,87 @@ public class PromotionController {
 
     @RequestMapping("queryPromotionList")
     @ResponseBody
-    public BasePageResponse<queryPromotionListRespone> queryPromotionList(queryPromotionListRequest request){
+    public String queryPromotionList(queryPromotionListRequest request){
         BasePageResponse<queryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
         try {
-            response=promotionService.queryPromotionList(request);
+//            response=promotionService.queryPromotionList(request);
         }
         catch (Exception e){
             response = BasePageResponse.failure(BasePageResponse.class);
             response.setMessage(e.getMessage());
         }
-        return response;
+        return "{\n" +
+                "\t\"code\": 10000,\n" +
+                "\t\"message\": \"\",\n" +
+                "\t\"count\": 1000,\n" +
+                "\t\"data\": [{\n" +
+                "\t\t\"id\": 10000,\n" +
+                "\t\t\"restaurantCode\": \"user-0\",\n" +
+                "\t\t\"activityCode\": \"女\",\n" +
+                "\t\t\"activityType\": \"城市-0\",\n" +
+                "\t\t\"salesStartTime\": \"签名-0\",\n" +
+                "\t\t\"experience\": 255,\n" +
+                "\t\t\"logins\": 24,\n" +
+                "\t\t\"wealth\": 82830700,\n" +
+                "\t\t\"classify\": \"作家\",\n" +
+                "\t\t\"score\": 57\n" +
+                "\t}, {\n" +
+                "\t\t\"id\": 10001,\n" +
+                "\t\t\"restaurantCode\": \"user-1\",\n" +
+                "\t\t\"activityCode\": \"男\",\n" +
+                "\t\t\"activityType\": \"城市-1\",\n" +
+                "\t\t\"salesStartTime\": \"签名-1\",\n" +
+                "\t\t\"experience\": 884,\n" +
+                "\t\t\"logins\": 58,\n" +
+                "\t\t\"wealth\": 64928690,\n" +
+                "\t\t\"classify\": \"词人\",\n" +
+                "\t\t\"score\": 27\n" +
+                "\t}, {\n" +
+                "\t\t\"id\": 10002,\n" +
+                "\t\t\"restaurantCode\": \"user-2\",\n" +
+                "\t\t\"activityCode\": \"女\",\n" +
+                "\t\t\"activityType\": \"城市-2\",\n" +
+                "\t\t\"salesStartTime\": \"签名-2\",\n" +
+                "\t\t\"experience\": 650,\n" +
+                "\t\t\"logins\": 77,\n" +
+                "\t\t\"wealth\": 6298078,\n" +
+                "\t\t\"classify\": \"酱油\",\n" +
+                "\t\t\"score\": 31\n" +
+                "\t}, {\n" +
+                "\t\t\"id\": 10003,\n" +
+                "\t\t\"restaurantCode\": \"user-3\",\n" +
+                "\t\t\"activityCode\": \"女\",\n" +
+                "\t\t\"activityType\": \"城市-3\",\n" +
+                "\t\t\"salesStartTime\": \"签名-3\",\n" +
+                "\t\t\"experience\": 362,\n" +
+                "\t\t\"logins\": 157,\n" +
+                "\t\t\"wealth\": 37117017,\n" +
+                "\t\t\"classify\": \"诗人\",\n" +
+                "\t\t\"score\": 68\n" +
+                "\t}, {\n" +
+                "\t\t\"id\": 10004,\n" +
+                "\t\t\"restaurantCode\": \"user-4\",\n" +
+                "\t\t\"activityCode\": \"男\",\n" +
+                "\t\t\"activityType\": \"城市-4\",\n" +
+                "\t\t\"salesStartTime\": \"签名-4\",\n" +
+                "\t\t\"experience\": 807,\n" +
+                "\t\t\"logins\": 51,\n" +
+                "\t\t\"wealth\": 76263262,\n" +
+                "\t\t\"classify\": \"作家\",\n" +
+                "\t\t\"score\": 6\n" +
+                "\t}, {\n" +
+                "\t\t\"id\": 10005,\n" +
+                "\t\t\"restaurantCode\": \"user-5\",\n" +
+                "\t\t\"activityCode\": \"女\",\n" +
+                "\t\t\"activityType\": \"城市-5\",\n" +
+                "\t\t\"salesStartTime\": \"签名-5\",\n" +
+                "\t\t\"experience\": 173,\n" +
+                "\t\t\"logins\": 68,\n" +
+                "\t\t\"wealth\": 60344147,\n" +
+                "\t\t\"classify\": \"作家\",\n" +
+                "\t\t\"score\": 87\n" +
+                "\t}]\n" +
+                "}";
 
     }
 
