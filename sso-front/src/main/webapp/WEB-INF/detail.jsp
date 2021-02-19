@@ -106,6 +106,10 @@
     </form>
     <div class="showChooseDiv" style="display: none;  padding: 20px">
             <div id="dept_main" style="margin-right: 2%;">
+                <span>
+                    <input type="text" />
+                    <button type="button" style="width: 10%;">搜索</button>
+                </span>
                 <div id="dept_tree">
                 </div>
                 <div class="layui-form-item float-right">
@@ -450,10 +454,46 @@
                     //…… //以此类推，可无限层级
                 },
                 {
+                    id:14,
+                    title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                    //…… //以此类推，可无限层级
+                },
+                {
+                    id:15,
+                    title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                    //…… //以此类推，可无限层级
+                },
+                {
+                    id:16,
+                    title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                    //…… //以此类推，可无限层级
+                },
+                {
+                    id:17,
+                    title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                    //…… //以此类推，可无限层级
+                },
+                {
+                    id:18,
+                    title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                    //…… //以此类推，可无限层级
+                },
+                {
+                    id:19,
+                    title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                    //…… //以此类推，可无限层级
+                },
+                {
+                    id:20,
+                    title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                    //…… //以此类推，可无限层级
+                },
+                {
                     id:11,
                     title: '高新区2厦门市那萨克斯看' //三级菜单
                     //…… //以此类推，可无限层级
                 }
+
             ]
         },{
         id:2,
@@ -492,17 +532,20 @@
 
         //打开选择页
         $("body").on("click", "#addActive", function() {
-            var dataInto=$(this).prev().attr("name");
-            $("#lay-submit-Choose").attr("data-into",dataInto);
+            // var dataInto=$(this).prev().attr("name");
             layer.open({
                 type: 1,
                 title: "选择",
-                area: '40%',
+                // area: '40%',
                 content: $(".showChooseDiv"),
                 maxmin: false,
                 shadeClose: true,
                 shade: false,
+                area:['auto','80%'],
+                // maxHeight:'50%',
+                offset: 'auto'
             });
+            $("#layui-layer-content").attr("height","auto");
         });
         //选择页确定
         $("#lay-submit-Choose").on("click", function() {
