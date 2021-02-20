@@ -43,17 +43,17 @@ public interface PromotionBaseInfoDao {
             "created_time as 'createdTime',\n" +
             "created_user as 'createdUser',\n" +
             "updated_time as 'updatedTime',\n" +
-            "updated_user as 'updatedUser'\n" +
-            "usage_start_time as 'usageStartTime'\n" +
-            "usage_end_time as 'usageEndTime'\n" +
+            "updated_user as 'updatedUser',\n" +
+            "usage_start_time as 'usageStartTime',\n" +
+            "usage_end_time as 'usageEndTime',\n" +
             "from tb_promotion_base_info  \n" +
             "where deleted=0   AND   activity_code =#{activityCode}")
     PromotionBaseInfoDo selectOneData(@Param("activityCode") String activityCode);
 
     @Select("select \n" +
             "id,\n" +
-            "activity_code as 'aivityCode',\n" +
-            "activity_type as 'aivityType',\n" +
+            "activity_code as 'activityCode',\n" +
+            "activity_type as 'activityType',\n" +
             "sales_start_time as 'salesStartTime',\n" +
             "sales_end_time as 'salesEndTime',\n" +
             "amount as 'amount',\n" +
@@ -73,9 +73,9 @@ public interface PromotionBaseInfoDao {
             "created_time as 'createdTime',\n" +
             "created_user as 'createdUser',\n" +
             "updated_time as 'updatedTime',\n" +
-            "updated_user as 'updatedUser'\n" +
-            "usage_start_time as 'usageStartTime'\n" +
-            "usage_end_time as 'usageEndTime'\n" +
+            "updated_user as 'updatedUser',\n" +
+            "usage_start_time as 'usageStartTime',\n" +
+            "usage_end_time as 'usageEndTime',\n" +
             "from tb_promotion_base_info  \n" +
             "where deleted=0   AND   activity_code =#{aivityCode}")
     PromotionBaseInfoDo selectByAivityCode(@Param("aivityCode") String  aivityCode);

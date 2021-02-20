@@ -27,8 +27,14 @@ public class PromotionService {
     private PromotionMapperDao promotionMapperDao;
 
 
-    public PromotionBaseInfoDo queryPromotionBaseInfo(String activityCode) {
-        return promotionBaseInfoDao.selectOneData(activityCode);
+    public PromotionBaseInfoRespone queryPromotionBaseInfo(String activityCode) {
+        PromotionBaseInfoDo promotionBaseInfoDo =promotionBaseInfoDao.selectOneData(activityCode);
+        PromotionBaseInfoRespone promotionBaseInfoRespone=ModelCopier.copy(promotionBaseInfoDo,PromotionBaseInfoRespone.class);
+        if(StringUtils.isNotEmpty(promotionBaseInfoDo.getSharedActivity())){
+            promotionBaseInfoRespone.setSharedActivity(Arrays.asList(promotionBaseInfoDo.getSharedActivity(),","));
+        }
+
+        return promotionBaseInfoRespone;
     }
 
     @Transactional

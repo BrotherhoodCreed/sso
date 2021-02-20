@@ -6,6 +6,7 @@ import com.promotion.product.entity.*;
 import com.promotion.product.service.DictionarySerivce;
 import com.promotion.product.service.PromotionService;
 import com.promotion.product.service.ShopService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Slf4j
 @RestController
 @RequestMapping("PromotionController")
 public class PromotionController {
@@ -37,8 +39,8 @@ public class PromotionController {
      */
     @RequestMapping("queryPromotionBaseInfo")
     @ResponseBody
-    public BaseEntityResponse<PromotionBaseInfoDo> queryPromotionBaseInfo(String  activityCode) {
-        BaseEntityResponse<PromotionBaseInfoDo> response =BaseEntityResponse.success(BaseEntityResponse.class);
+    public BaseEntityResponse<PromotionBaseInfoRespone> queryPromotionBaseInfo(String  activityCode) {
+        BaseEntityResponse<PromotionBaseInfoRespone> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
             if(StringUtils.isEmpty(activityCode)){
                 throw  new Exception("参数为空");
@@ -47,7 +49,7 @@ public class PromotionController {
         }
         catch (Exception e){
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
-            response.setMessage(e.getMessage());
+            log.error("queryPromotionBaseInfo 接口异常",e);
         }
         return response;
     }
@@ -66,7 +68,7 @@ public class PromotionController {
         catch (Exception e){
             e.printStackTrace();
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
-            response.setMessage(e.getMessage());
+            log.error("queryPromotionBaseInfo 接口异常",e);
         }
         return response;
     }
