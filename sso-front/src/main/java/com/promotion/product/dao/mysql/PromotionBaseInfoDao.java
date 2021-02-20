@@ -104,8 +104,8 @@ public interface PromotionBaseInfoDao {
             " 'created_time',\n" +
             " 'created_user',\n" +
             " 'updated_time',\n" +
-            " 'updated_user'\n" +
-            " 'usage_start_time'\n" +
+            " 'updated_user',\n" +
+            " 'usage_start_time',\n" +
             " 'usage_end_time'\n" +
             " )\n" +
             " values(" +
@@ -132,7 +132,7 @@ public interface PromotionBaseInfoDao {
             "#{item.updatedTime}," +
             "#{item.updatedUser}," +
             "#{item.usageStartTime}," +
-            "#{item.usageEndTime}," +
+            "#{item.usageEndTime}" +
             ")")
     Integer insert(@Param("item")PromotionBaseInfoDo promotionBaseInfoDo);
 

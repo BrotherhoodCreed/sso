@@ -30,15 +30,15 @@ public interface PromotionMapperDao {
             " `activity_code`,\n" +
             " `area`,\n" +
             " `city`,\n" +
-            " `restaurant_code`\n" +
-            " `restaurant_name`\n" +
+            " `restaurant_code`,\n" +
+            " `restaurant_name`,\n" +
             " )\n" +
             " values(" +
             "#{item.activityCode}," +
             "#{item.area}," +
             "#{item.city}," +
             "#{item.restaurantCode}," +
-            "#{item.restaurantName}," +
+            "#{item.restaurantName}" +
             ")")
     Integer insert(@Param("item")PromotionMapperDo promotionMapperDo);
 

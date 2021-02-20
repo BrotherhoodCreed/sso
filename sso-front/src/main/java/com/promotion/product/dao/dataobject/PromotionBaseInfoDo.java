@@ -4,7 +4,7 @@ package com.promotion.product.dao.dataobject;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 
 public class PromotionBaseInfoDo {
@@ -28,7 +28,7 @@ public class PromotionBaseInfoDo {
     /**
      * '促销结束时间'
      */
-    private Date    salesEndTime;
+    private Date salesEndTime;
     /**
      * '每台限制张数'
      */
