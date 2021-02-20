@@ -13,6 +13,6 @@ public class PromotionMapperSeriver {
     private PromotionMapperDao promotionMapperDao;
 
     public List<PromotionMapperDo> queryByPromotionBaseInfoId(String activityCode){
-         return promotionMapperDao.selectByPromotionBaseInfoId(activityCode);
+         return promotionMapperDao.selectByActivityCode(activityCode);
     }
 }

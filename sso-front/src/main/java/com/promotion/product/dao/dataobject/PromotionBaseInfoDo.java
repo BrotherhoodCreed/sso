@@ -58,7 +58,7 @@ public class PromotionBaseInfoDo {
     /**
      * '共享活动'
      */
-    private List<String>  sharedActivity;
+    private String sharedActivity;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date usageStartTime;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
@@ -188,11 +188,11 @@ public class PromotionBaseInfoDo {
         this.theWay = theWay;
     }
 
-    public List<String> getSharedActivity() {
+    public String getSharedActivity() {
         return sharedActivity;
     }
 
-    public void setSharedActivity(List<String> sharedActivity) {
+    public void setSharedActivity(String sharedActivity) {
         this.sharedActivity = sharedActivity;
     }
 
