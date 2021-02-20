@@ -35,15 +35,8 @@
 
 
 
-    <resultMap id="listResultMap" type="com.promotion.product.dao.dataobject.queryPromotionListDo">
-        <!--@Table tbl_track_region_config-->
-        <result property="id" column="id" />
-        <result property="activityCode" column="activity_code" />
-        <result property="activityType" column="activity_type" />
-        <result property="salesStartTime" column="sales_start_time" />
-        <result property="salesEndTime" column="sales_end_time" />
-    </resultMap>
-    <select id="queryPromotionList" resultMap="BaseResultMap">
+
+    <select id="queryPromotionList" resultType="com.promotion.product.dao.dataobject.queryPromotionListDo">
         SELECT
         a.id,
         a.activity_code as activityCode,
@@ -67,7 +60,7 @@
     </select>
 
 
-    <update id="update" parameterMap="com.promotion.product.dao.dataobject.PromotionBaseInfoDo">
+    <update id="update" parameterType="com.promotion.product.dao.dataobject.PromotionBaseInfoDo">
         update tb_promotion_base_info set
         <if test="activityType != null and activityType !=''">
             activity_type=#{activityType}
