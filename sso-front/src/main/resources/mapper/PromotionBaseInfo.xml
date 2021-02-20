@@ -45,21 +45,20 @@
     <!--</resultMap>-->
     <select id="queryPromotionList" resultType="com.promotion.product.dao.dataobject.PromotionBaseInfoDo">
         SELECT
-        a.id,
-        a.activity_code as activityCode,
-        a.activity_type as activityType,
-        a.sales_start_time as salesStartTime,
-        a.sales_end_time as salesEndTime
+        id,
+        activity_code as activityCode,
+        activity_type as activityType,
+        sales_start_time as salesStartTime,
+        sales_end_time as salesEndTime
         FROM
-        tb_promotion_base_info AS a
-        AND a.deleted = 0
+        tb_promotion_base_info
         <where>
-            AND 1=1
+            deleted = 0
             <if test="activityCode !=null and activityCode!=''">
-                a.activity_code =#{activityCode}
+                activity_code =#{activityCode}
             </if>
         </where>
-        order by a.created_time desc
+        order by created_time desc
     </select>
 
     <select id="querySerialNumber" resultType="Integer">
