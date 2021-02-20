@@ -24,11 +24,11 @@ public class PromotionBaseInfoRespone {
      * '促销开始时间'
      */
 
-    private Date salesStartTime;
+    private String salesStartTime;
     /**
      * '促销结束时间'
      */
-    private Date salesEndTime;
+    private String salesEndTime;
     /**
      * '每台限制张数'
      */
@@ -57,8 +57,8 @@ public class PromotionBaseInfoRespone {
      * '共享活动'
      */
     private List<String> sharedActivity;
-    private Date usageStartTime;
-    private Date usageEndTime;
+    private String usageStartTime;
+    private String usageEndTime;
     /**
      * '销售单价'
      */
@@ -88,9 +88,9 @@ public class PromotionBaseInfoRespone {
      * '单据类型'
      */
     private String      type;
-    private Date        createdTime;
+    private String        createdTime;
     private String      createdUser;
     private Boolean     deleted;
-    private Date        updatedTime;
+    private String        updatedTime;
     private String        updatedUser;
 }

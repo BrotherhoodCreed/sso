@@ -22,8 +22,8 @@ public interface PromotionBaseInfoDao {
 
     @Select("select \n" +
             "id,\n" +
-            "activity_code as 'aivityCode',\n" +
-            "activity_type as 'aivityType',\n" +
+            "activity_code as 'activityCode',\n" +
+            "activity_type as 'activityType',\n" +
             "sales_start_time as 'salesStartTime',\n" +
             "sales_end_time as 'salesEndTime',\n" +
             "amount as 'amount',\n" +
