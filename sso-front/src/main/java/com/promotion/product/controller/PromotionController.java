@@ -219,7 +219,7 @@ public class PromotionController {
     /**
      * 删除活动与门店映射关系
      */
-    @RequestMapping("deletePromotionMapper")
+    @RequestMapping("deletePromotionRel")
     @ResponseBody
     public BaseEntityResponse<Boolean> deletePromotionMapper(Long id){
         BaseEntityResponse<Boolean> response=BaseEntityResponse.success(BaseEntityResponse.class);
@@ -227,6 +227,7 @@ public class PromotionController {
             response.setData(promotionService.deletePromotionById(id));
         }
         catch (Exception e){
+            e.printStackTrace();
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
             response.setMessage(e.getMessage());
         }

@@ -22,18 +22,19 @@
         select {
             margin-right: 14px;
         }
-        
-        div {
-            margin-bottom: 10px;
+
+        #app div {
+            margin-bottom: 10px !important;
         }
-        
-        form {
-            margin-top: 30px;
-            margin-left: 50px;
+
+        #app {
+            margin-top: 30px !important;
+            margin-left: 50px !important;
         }
     </style>
     <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/bootstrap/bootstrap-select.min.css">
+    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css" media="all">
 
 <body>
     <form action="" id="app">
@@ -96,12 +97,32 @@
             <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">其他</h3>
             <textarea v-model="detail.other"  style="width: 895px; height: 35px; resize: none;"></textarea>
         </div>
+
         <div>
-            <button type="button" class="btn btn-default" @click="save()">保存</button>
+            <button type="button" class="btn btn-default" id="addActive">添加活动</button>
         </div>
     </form>
     <table id="demo" lay-filter="test"></table>
+
+    <div class="showChooseDiv" style="display: none;  padding: 20px">
+        <div id="dept_main" style="margin-right: 2%;">
+                <span>
+                    <input type="text" />
+                    <button type="button" style="width: 10%;">搜索</button>
+                </span>
+            <div id="dept_tree">
+            </div>
+            <div class="layui-form-item float-right">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-normal layui-btn-sm" id="lay-submit-Choose">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+<script type="text/html" id="opt">
+    <a class="layui-btn layui-btn-xs" lay-event="del">删除</a>
+</script>
 
 <script src="${ctx}/js/jquery-3.3.1.js" type="text/javascript"></script>
 <script src="${ctx}/static/laydate/laydate.js" type="text/javascript"></script>
@@ -125,10 +146,10 @@
                 introduction:"",
                 channel:'',
                 theWay:'',
-                saleBegain:"",
-                saleEnd:"",
-                writeBegain:"",
-                writeEnd:"",
+                salesStartTime:"",
+                salesEndTime:"",
+                usageStartTime:"",
+                usageEndTime:"",
                 sharedActivity:[],
                 other:"",
                 handlingFee:"",
@@ -139,7 +160,7 @@
             items:[{id:'我'},{id:'我是你爹'},{id:'你的'}],
         },
         created:function(){
-            this.queryDetail();
+            // this.queryDetail();
         },
         methods: {
             valueChange(e){
@@ -173,20 +194,18 @@
                     layer.msg('活动类型为空');
                     return;
                 }
-                var startTimestamp = new Date(this.detail.saleBegain.replace(/-/g, "/"));
-                var saleBegainTime = new Date(startTimestamp).getTime();
-                var endTimestamp = new Date(this.detail.saleEnd.replace(/-/g, "/"));
-                var saleEndTime = new Date(endTimestamp).getTime();
-
-                if (this.detail.saleBegain == ''){
+                if (this.detail.salesStartTime == ''){
                     layer.msg('销售开始时间为空');
                     return;
                 }
-                if (this.detail.saleEnd == ''
-                    || this.detail.saleEndTime == ''){
+                if (this.detail.salesEndTime == ''){
                     layer.msg('销售结束时间为空');
                     return;
                 }
+                var startTimestamp = new Date(this.detail.salesStartTime.replace(/-/g, "/"));
+                var saleBegainTime = new Date(startTimestamp).getTime();
+                var endTimestamp = new Date(this.detail.salesEndTime.replace(/-/g, "/"));
+                var saleEndTime = new Date(endTimestamp).getTime();
                 if (saleEndTime < saleBegainTime){
                     layer.msg('销售结束时间不能小于销售开始时间');
                     return;
@@ -211,11 +230,11 @@
                     layer.msg('请选择团购网站');
                     return;
                 }
-                if (this.detail.writeBegain == ''){
+                if (this.detail.usageStartTime == ''){
                     layer.msg('核销开始时间为空');
                     return;
                 }
-                if (this.detail.writeEnd == ''){
+                if (this.detail.usageEndTime == ''){
                     layer.msg('核销结束时间为空');
                     return;
                 }
@@ -317,11 +336,11 @@
         elem: '#test1' //指定元素
         ,show: false //直    接显示
         ,trigger: 'click' //采用click弹出
-        ,value: app.detail.saleBegain
+        ,value: app.detail.salesStartTime
         ,btns: ['clear', 'confirm']
         // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
-            app.detail.saleBegain=value;
+            app.detail.salesStartTime=value;
             if (value == '' || value == undefined){
                 bMinDate = defaultMinDate
             }else {
@@ -344,11 +363,11 @@
         elem: '#test2' //指定元素
         ,show: false //直接显示
         ,trigger: 'click' //采用click弹出
-        ,value: app.detail.saleEnd
+        ,value: app.detail.salesEndTime
         ,btns: ['clear', 'confirm']
         // ,closeStop: '#test2' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
-            app.detail.saleEnd=value;
+            app.detail.salesEndTime=value;
             if (value == '' || value == undefined){
                 aMaxDate = defaultMaxDate
             }else {
@@ -374,7 +393,7 @@
         ,btns: ['clear', 'confirm']
         // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
-            app.detail.writeBegain=value;
+            app.detail.usageStartTime=value;
             if (value == '' || value == undefined){
                 dMinDate = defaultMinDate
             }else {
@@ -399,7 +418,7 @@
         ,btns: ['clear', 'confirm']
         // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
-            app.detail.writeEnd=value;
+            app.detail.usageEndTime=value;
             if (value == '' || value == undefined){
                 dMinDate = defaultMinDate
             }else {
@@ -421,6 +440,242 @@
         $('.selectpicker').selectpicker({
             'selectedText': '请选择'
         });
+    });
+</script>
+
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        var tableIn = table.render({
+            elem: '#demo'
+            ,id:'list'
+            ,height: 'full-20'
+            ,url: '<%=request.getContextPath()%>/PromotionController/queryPromotionList' //数据接口
+            ,request: {
+                pageName: 'pageIndex' //页码的参数名称，默认：page
+                ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+            }
+            ,response: {
+                statusName: 'code' //规定数据状态的字段名称，默认：code
+                ,statusCode: 10000 //规定成功的状态码，默认：0
+                ,msgName: 'message' //规定状态信息的字段名称，默认：msg
+                // ,countName: 'total' //规定数据总数的字段名称，默认：count
+                // ,dataName: 'rows' //规定数据列表的字段名称，默认：data
+            }
+            ,page: false //开启分页
+            ,cols: [[ //表头
+                // {type:'checkbox',field: 'id', title: 'ID',  sort: true, fixed: 'left'}
+                {field: 'activityCode', title: '促销编码', sort: true}
+                ,{field: 'activityType', title: '活动类型' }
+                ,{field: 'salesStartTime', title: '开始时间'}
+                ,{field: 'salesEndTime', title: '结束时间',  sort: true}
+                ,{fixed: 'right', align:'center', toolbar: '#opt'} //这里的toolbar值是模板元素的选择器
+            ]]
+        });
+
+        table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+            if(layEvent === 'del'){ //查看
+                $.ajax({
+                    url : '<%=request.getContextPath()%>/PromotionController/deletePromotionRel?id='+data.id, //数据接口
+                    dataType : 'json',
+                    type : 'GET',
+                    async : false,
+                    success: function(resut){
+                        if('10000' == resut.data.code){
+                            layer.msg('删除成功');
+                            obj.del();
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<script>
+    var str = [{
+        id:1,
+        title: '江西' //一级菜单
+        ,children: [{
+            id:3,
+            title: '南昌' //二级菜单,
+            ,children: [{
+                id:4,
+                title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                //…… //以此类推，可无限层级
+            },
+                {
+                    id:7,
+                    title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                    ,check:true
+                    //…… //以此类推，可无限层级
+                },
+                {
+                    id:5,
+                    title: '高新区2厦门市那萨克斯看' //三级菜单
+                    //…… //以此类推，可无限层级
+                }
+            ]
+        }]
+    },
+        {
+            id:8,
+            title: '陕西' //一级菜单
+            ,children: [{
+                id:9,
+                title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                //…… //以此类推，可无限层级
+            },
+                {
+                    id:10,
+                    // restaurantName: '高新区', //三级菜单
+                    restaurantCode: '高新区' //三级菜单
+                    //…… //以此类推，可无限层级
+                },
+                {
+                    id:14,
+                    // restaurantName: '高新区', //三级菜单
+                    restaurantCode: '高新区' //三级菜单
+                },
+                {
+                    id:15,
+                    title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                    //…… //以此类推，可无限层级
+                },
+                {
+                    id:16,
+                    title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                    //…… //以此类推，可无限层级
+                },
+                {
+                    id:17,
+                    title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                    //…… //以此类推，可无限层级
+                },
+                {
+                    id:18,
+                    title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                    //…… //以此类推，可无限层级
+                },
+                {
+                    id:19,
+                    title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                    //…… //以此类推，可无限层级
+                },
+                {
+                    id:20,
+                    title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
+                    //…… //以此类推，可无限层级
+                },
+                {
+                    id:11,
+                    title: '高新区2厦门市那萨克斯看' //三级菜单
+                    //…… //以此类推，可无限层级
+                }
+
+            ]
+        },{
+            id:2,
+            title: '陕西' //一级菜单
+            ,children: [{
+                id:6,
+                title: '西安' //二级菜单
+            }]
+        }];
+
+    layui.use(['layer','tree'], function() {
+        var $ = layui.jquery;
+        layer = layui.layer;
+        var tree = layui.tree;
+        //树形组件复选框
+        tree.render({
+            elem: '#dept_tree',
+            data: str,
+            id: 'checkTree',
+            showCheckbox: true,     //是否显示复选框
+            onlyIconControl: true
+        });
+        function getData(){
+            var data = [];
+            $.ajax({
+                url : "/PtRole/allRole",//后台数据请求地址
+                dataType : 'json',
+                type : 'GET',
+                async : false,
+                success: function(resut){
+                    data = resut;
+                }
+            });
+            return data;
+        }
+
+        //打开选择页
+        $("body").on("click", "#addActive", function() {
+            // var dataInto=$(this).prev().attr("name");
+            layer.open({
+                type: 1,
+                title: "选择",
+                // area: '40%',
+                content: $(".showChooseDiv"),
+                maxmin: false,
+                shadeClose: true,
+                shade: false,
+                area:['auto',"auto"],
+                // maxHeight:'50%',
+                offset: '100px'
+            });
+            $("#layui-layer-content").attr("height","auto");
+        });
+        //选择页确定
+        $("#lay-submit-Choose").on("click", function() {
+            var getData = tree.getChecked('checkTree');
+            console.log(getData);
+            if (getData.length<1) {
+                layer.alert("请选择一项");
+            }else{
+                getCheckedId(getData);
+                console.log(app.promotionMapper);
+                layer.close(layer.index);
+                app.save();
+            }
+            return false;
+        });
+
+        function getCheckedId(jsonObj) {
+            var activityCode = app.detail.activityCode;
+            //循环区域
+            $.each(jsonObj, function (index, item) {
+                var area = item.title;
+                if(undefined == item.children){
+
+                }else {
+                    //循环城市
+                    $.each(item.children, function (index, item1) {
+                        var city = item1.title;
+                        if(undefined == item1.children){
+
+                        }else {
+                            //循环门店
+                            $.each(item1.children, function (index, item2) {
+                                var data = {
+                                    activityCode:activityCode,
+                                    area : area,
+                                    city : city,
+                                    restaurantCode : item2.id,
+                                    restaurantName : item2.title
+                                }
+                                app.promotionMapper.push(data);
+                            });
+                        }
+                    });
+                }
+            });
+            return;
+        }
+
     });
 </script>
 </html>

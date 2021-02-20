@@ -24,10 +24,12 @@ public class PromotionBaseInfoDo {
     /**
      * '促销开始时间'
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date  salesStartTime;
     /**
      * '促销结束时间'
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date    salesEndTime;
     /**
      * '每台限制张数'
@@ -57,9 +59,9 @@ public class PromotionBaseInfoDo {
      * '共享活动'
      */
     private List<String>  sharedActivity;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date usageStartTime;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date usageEndTime;
     /**
      * '销售单价'
@@ -90,11 +92,11 @@ public class PromotionBaseInfoDo {
      * '单据类型'
      */
     private String      type;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date        createdTime;
     private String      createdUser;
     private Boolean     deleted;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date        updatedTime;
     private String        updatedUser;
 
