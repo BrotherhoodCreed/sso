@@ -98,7 +98,10 @@
             <textarea v-model="detail.other"  style="width: 895px; height: 35px; resize: none;"></textarea>
         </div>
         <div>
-            <button type="button" class="btn btn-default" id="addActive">添加活动</button>
+            <button type="button" class="btn btn-default" @click="save()">保存活动</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-default" id="addActive">添加门店</button>
         </div>
         <table id="demo" lay-filter="test"></table>
 
@@ -254,13 +257,13 @@
                     layer.msg('手续费率为空');
                     return;
                 }
-                var param = {
-                    promotionBaseInfoDo: this.detail,
-                    promotionMapperDo:this.promotionMapper
-                };
-                console.log(param);
+                // var param = {
+                //     promotionBaseInfoDo: this.detail,
+                //     promotionMapperDo:this.promotionMapper
+                // };
+                // console.log(param);
                 this.$http.post('<%=request.getContextPath()%>/PromotionController/savePromotionBaseInfo',
-                    JSON.stringify(param),{emulateJSON:false}).then(function(response) {
+                    JSON.stringify(this.detail),{emulateJSON:false}).then(function(response) {
                         if('10000' == response.data.code){
                             layer.msg('保存成功');
                             location.href='<%=request.getContextPath()%>/PromotionController/edit?id='+response.data.id;
@@ -560,7 +563,11 @@
                 getCheckedId(getData);
                 console.log(app.promotionMapper);
                 layer.close(layer.index);
-                app.save();
+                if(''==app.detail.activityCode){
+                    layer.message("请先添加活动");
+                    return;
+                }
+                // app.save();
             }
             return false;
         });

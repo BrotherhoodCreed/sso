@@ -64,6 +64,7 @@ public class PromotionController {
             response.setData(promotionService.savePromotionBaseInfo(request));
         }
         catch (Exception e){
+            e.printStackTrace();
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
             response.setMessage(e.getMessage());
         }
@@ -81,6 +82,7 @@ public class PromotionController {
             response.setData(promotionService.savePromotionMapperInfo(request));
         }
         catch (Exception e){
+            e.printStackTrace();
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
             response.setMessage(e.getMessage());
         }
