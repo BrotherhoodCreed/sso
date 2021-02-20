@@ -10,6 +10,7 @@ import com.promotion.product.dao.mysql.PromotionMapperDao;
 import com.promotion.product.entity.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +28,31 @@ public class PromotionService {
     private PromotionMapperDao promotionMapperDao;
 
 
-    public PromotionBaseInfoDo queryPromotionBaseInfo(String activityCode) {
-        return promotionBaseInfoDao.selectOneData(activityCode);
+    public PromotionBaseInfoRespone queryPromotionBaseInfo(String activityCode) {
+        PromotionBaseInfoDo promotionBaseInfoDo =promotionBaseInfoDao.selectOneData(activityCode);
+        PromotionBaseInfoRespone promotionBaseInfoRespone=ModelCopier.copy(promotionBaseInfoDo,PromotionBaseInfoRespone.class);
+        if(StringUtils.isNotEmpty(promotionBaseInfoDo.getSharedActivity())){
+            promotionBaseInfoRespone.setSharedActivity(Arrays.asList(promotionBaseInfoDo.getSharedActivity(),","));
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd ");
+            if(promotionBaseInfoDo.getSalesStartTime()!=null){
+                String salesStartTime = formatter.format(promotionBaseInfoDo.getSalesStartTime());
+                promotionBaseInfoRespone.setSalesStartTime(salesStartTime);
+            }
+            if(promotionBaseInfoDo.getSalesEndTime()!=null){
+                String salesEndTime = formatter.format(promotionBaseInfoDo.getSalesEndTime());
+                promotionBaseInfoRespone.setSalesEndTime(salesEndTime);
+            }
+            if(promotionBaseInfoDo.getUsageStartTime()!=null){
+                String usageStartTime = formatter.format(promotionBaseInfoDo.getUsageStartTime());
+                promotionBaseInfoRespone.setUsageStartTime(usageStartTime);
+
+            }
+            if(promotionBaseInfoDo.getUsageEndTime()!=null){
+                String usageEndTime = formatter.format(promotionBaseInfoDo.getUsageEndTime());
+                promotionBaseInfoRespone.setUsageEndTime(usageEndTime);
+            }
+        }
+        return promotionBaseInfoRespone;
     }
 
     @Transactional
@@ -95,6 +119,7 @@ public class PromotionService {
     }
 
     public Boolean savePromotionMapperInfo(savePromotionMapperInfoRequest req){
+
         Integer row=0;
         for (PromotionMapperDo promotionMapperDo : req.getPromotionMapperDos()) {
             row+= promotionMapperDao.insert(promotionMapperDo);
