@@ -4,8 +4,7 @@ package com.promotion.product.dao.dataobject;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
 
 
 public class PromotionBaseInfoDo {
@@ -25,7 +24,7 @@ public class PromotionBaseInfoDo {
      * '促销开始时间'
      */
 
-    private Date  salesStartTime;
+    private Date salesStartTime;
     /**
      * '促销结束时间'
      */

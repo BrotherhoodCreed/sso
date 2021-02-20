@@ -3,7 +3,8 @@ package com.promotion.product.dao.dataobject;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import java.util.Date;
+import java.sql.Date;
+
 
 @Data
 public class RestaurantMappingDo {
