@@ -83,30 +83,30 @@ public interface PromotionBaseInfoDao {
 
 
     @Insert(" insert into tb_promotion_base_info(\n" +
-            " 'activity_code',\n" +
-            " 'activity_type',\n" +
-            " 'sales_start_time',\n" +
-            " 'sales_end_time',\n" +
-            " 'amount',\n" +
-            " 'bill_cycle',\n" +
-            " 'description',\n" +
-            " 'introduction',\n" +
-            " 'channel',\n" +
-            " 'the_way',\n" +
-            " 'shared_activity',\n" +
-            " 'selling_price',\n" +
-            " 'bill_price',\n" +
-            " 'handling_fee',\n" +
-            " 'tax_rate',\n" +
-            " 'other',\n" +
-            " 'submit',\n" +
-            " 'type',\n" +
-            " 'created_time',\n" +
-            " 'created_user',\n" +
-            " 'updated_time',\n" +
-            " 'updated_user',\n" +
-            " 'usage_start_time',\n" +
-            " 'usage_end_time'\n" +
+            " activity_code,\n" +
+            " activity_type,\n" +
+            " sales_start_time,\n" +
+            " sales_end_time,\n" +
+            " amount,\n" +
+            " bill_cycle,\n" +
+            " description,\n" +
+            " introduction,\n" +
+            " channel,\n" +
+            " the_way,\n" +
+            " shared_activity,\n" +
+            " selling_price,\n" +
+            " bill_price,\n" +
+            " handling_fee,\n" +
+            " tax_rate,\n" +
+            " other,\n" +
+            " submit,\n" +
+            " type,\n" +
+            " created_time,\n" +
+            " created_user,\n" +
+            " updated_time,\n" +
+            " updated_user,\n" +
+            " usage_start_time,\n" +
+            " usage_end_time\n" +
             " )\n" +
             " values(" +
             "#{item.activityCode}," +

@@ -3,40 +3,47 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.promotion.product.dao.mysql.PromotionBaseInfoDao">
 
-    <resultMap id="BaseResultMap" type="com.promotion.product.dao.dataobject.PromotionBaseInfoDo">
-        <!--@Table tbl_track_region_config-->
-        <result property="id" column="id" />
-        <result property="activityCode" column="activity_code" />
-        <result property="activityType" column="activity_type" />
-        <result property="salesStartTime" column="sales_start_time" />
-        <result property="salesEndTime" column="sales_end_time" />
-        <result property="amount" column="amount" />
-        <result property="billCycle" column="bill_cycle" />
-        <result property="description" column="description" />
-        <result property="introduction" column="introduction" />
-        <result property="channel" column="channel" />
-        <result property="theWay" column="the_way" />
-        <result property="sharedActivity" column="shared_activity" />
-        <result property="sellingPrice" column="selling_price" />
-        <result property="billPrice" column="bill_price" />
-        <result property="handlingFee" column="handling_fee"/>
-        <result property="taxRate" column="tax_rate" />
-        <result property="other" column="other" />
-        <result property="createdTime" column="created_time" />
-        <result property="createdUser" column="created_user" />
-        <result property="deleted" column="deleted" />
-        <result property="updatedTime" column="updated_user"/>
-        <result property="updatedUser" column="updated_time" />
-        <result property="submit" column="submit" />
-        <result property="type" column="type" />
-        <result property="usageStartTime" column="usage_start_time" />
-        <result property="usageEndTime" column="usage_end_time" />
-    </resultMap>
+    <!--<resultMap id="BaseResultMap" type="com.promotion.product.dao.dataobject.PromotionBaseInfoDo">-->
+        <!--&lt;!&ndash;@Table tbl_track_region_config&ndash;&gt;-->
+        <!--<result property="id" column="id" />-->
+        <!--<result property="activityCode" column="activity_code" />-->
+        <!--<result property="activityType" column="activity_type" />-->
+        <!--<result property="salesStartTime" column="sales_start_time" />-->
+        <!--<result property="salesEndTime" column="sales_end_time" />-->
+        <!--<result property="amount" column="amount" />-->
+        <!--<result property="billCycle" column="bill_cycle" />-->
+        <!--<result property="description" column="description" />-->
+        <!--<result property="introduction" column="introduction" />-->
+        <!--<result property="channel" column="channel" />-->
+        <!--<result property="theWay" column="the_way" />-->
+        <!--<result property="sharedActivity" column="shared_activity" />-->
+        <!--<result property="sellingPrice" column="selling_price" />-->
+        <!--<result property="billPrice" column="bill_price" />-->
+        <!--<result property="handlingFee" column="handling_fee"/>-->
+        <!--<result property="taxRate" column="tax_rate" />-->
+        <!--<result property="other" column="other" />-->
+        <!--<result property="createdTime" column="created_time" />-->
+        <!--<result property="createdUser" column="created_user" />-->
+        <!--<result property="deleted" column="deleted" />-->
+        <!--<result property="updatedTime" column="updated_user"/>-->
+        <!--<result property="updatedUser" column="updated_time" />-->
+        <!--<result property="submit" column="submit" />-->
+        <!--<result property="type" column="type" />-->
+        <!--<result property="usageStartTime" column="usage_start_time" />-->
+        <!--<result property="usageEndTime" column="usage_end_time" />-->
+    <!--</resultMap>-->
 
 
 
-
-    <select id="queryPromotionList" resultType="com.promotion.product.dao.dataobject.queryPromotionListDo">
+    <!--<resultMap id="listResultMap" type="com.promotion.product.dao.dataobject.queryPromotionListDo">-->
+        <!--&lt;!&ndash;@Table tbl_track_region_config&ndash;&gt;-->
+        <!--<result property="id" column="id" />-->
+        <!--<result property="activityCode" column="activity_code" />-->
+        <!--<result property="activityType" column="activity_type" />-->
+        <!--<result property="salesStartTime" column="sales_start_time" />-->
+        <!--<result property="salesEndTime" column="sales_end_time" />-->
+    <!--</resultMap>-->
+    <select id="queryPromotionList" resultType="com.promotion.product.dao.dataobject.PromotionBaseInfoDo">
         SELECT
         id,
         activity_code as activityCode,
