@@ -7,7 +7,7 @@ import java.util.Date;
 
 
 @Data
-public class queryPromotionListRespone {
+public class QueryPromotionListRespone {
 
     private Long id;
     /**

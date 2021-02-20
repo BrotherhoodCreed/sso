@@ -45,7 +45,7 @@ public interface PromotionBaseInfoDao {
             "updated_time as 'updatedTime',\n" +
             "updated_user as 'updatedUser',\n" +
             "usage_start_time as 'usageStartTime',\n" +
-            "usage_end_time as 'usageEndTime',\n" +
+            "usage_end_time as 'usageEndTime'\n" +
             "from tb_promotion_base_info  \n" +
             "where deleted=0   AND   activity_code =#{activityCode}")
     PromotionBaseInfoDo selectOneData(@Param("activityCode") String activityCode);
@@ -142,5 +142,5 @@ public interface PromotionBaseInfoDao {
 
     Integer querySerialNumber();
 
-    List<queryPromotionListDo> queryPromotionList(queryPromotionListRequest request);
+    List<QueryPromotionListDo> queryPromotionList(QueryPromotionListRequest request);
 }

@@ -137,8 +137,8 @@
         el: "#app",
         data: {
             detail:{
-                id:'${id}',
-                activityCode:'',
+                id:'',
+                activityCode:'${activeCode}',
                 activityType:"",
                 amount:"",
                 billCycle:"",
@@ -160,7 +160,6 @@
             items:[{id:'我'},{id:'我是你爹'},{id:'你的'}],
         },
         created:function(){
-            // this.queryDetail();
         },
         methods: {
             valueChange(e){
@@ -276,9 +275,9 @@
                     });
             },
             queryDetail:function () {
-                this.$http.post('<%=request.getContextPath()%>/PromotionController/queryPromotionBaseInfo',{id:this.detail.id},{emulateJSON:true}).then(function(response) {
+                this.$http.post('<%=request.getContextPath()%>/PromotionController/queryPromotionBaseInfo',{activityCode:this.detail.activityCode},{emulateJSON:true}).then(function(response) {
                         console.log(response.data);
-                        if (10000 == response.code){
+                        if (10000 == response.data.code){
                             this.detail = response.data.data;
                         }else {
                             layer.msg('查询异常');
@@ -307,7 +306,11 @@
         }
     });
 
-
+    $(window).on('load', function () {
+        $('.selectpicker').selectpicker({
+            'selectedText': '请选择'
+        });
+    });
 
     //日期控件
     var bMinDate;
@@ -436,11 +439,7 @@
         }
     });
 
-    $(window).on('load', function () {
-        $('.selectpicker').selectpicker({
-            'selectedText': '请选择'
-        });
-    });
+
 </script>
 
 <script>

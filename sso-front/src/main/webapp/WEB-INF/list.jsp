@@ -60,7 +60,7 @@
             if(layEvent === 'detail'){ //查看
 
             } else if(layEvent === 'edit'){ //编辑
-                location.href = '<%=request.getContextPath()%>/edit?id='+data.id;
+                location.href = '<%=request.getContextPath()%>/edit?id='+data.activityCode;
             }
         });
 

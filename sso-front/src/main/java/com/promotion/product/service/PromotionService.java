@@ -68,25 +68,25 @@ public class PromotionService {
         return promotionMapperDao.deletePromotionById(id)>0;
     }
 
-    public   BasePageResponse<queryPromotionListRespone>queryPromotionList(queryPromotionListRequest request){
-        BasePageResponse<queryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
+    public   BasePageResponse<QueryPromotionListRespone>queryPromotionList(QueryPromotionListRequest request){
+        BasePageResponse<QueryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
         PageHelper.startPage(request.getPageIndex(), request.getPageSize());
-        List<queryPromotionListDo> queryPromotionList=promotionBaseInfoDao.queryPromotionList(request);
+        List<QueryPromotionListDo> queryPromotionList=promotionBaseInfoDao.queryPromotionList(request);
         if(CollectionUtils.isEmpty(queryPromotionList)){
             return response;
         }
-        PageInfo<queryPromotionListRespone> pageInfo=new PageInfo<>();
+        PageInfo<QueryPromotionListRespone> pageInfo=new PageInfo<>();
         response.setTotal(pageInfo.getTotal());
         response.setPages(pageInfo.getPageNum());
-        List<queryPromotionListRespone> queryPromotionListResponeList =new ArrayList<>();
-        for (queryPromotionListDo queryPromotionListDo : queryPromotionList) {
-            queryPromotionListRespone queryPromotionListRespone =new queryPromotionListRespone();
-            queryPromotionListRespone.setId(queryPromotionListDo.getId());
-            queryPromotionListRespone.setActivityCode(queryPromotionListDo.getActivityCode());
-            queryPromotionListRespone.setActivityType(queryPromotionListDo.getActivityType());
-            queryPromotionListRespone.setSalesStartTime(queryPromotionListDo.getSalesStartTime());
-            queryPromotionListRespone.setSalesEndTime(queryPromotionListDo.getSalesEndTime());
-            queryPromotionListResponeList.add(queryPromotionListRespone);
+        List<QueryPromotionListRespone> queryPromotionListResponeList =new ArrayList<>();
+        for (QueryPromotionListDo QueryPromotionListDo : queryPromotionList) {
+            QueryPromotionListRespone QueryPromotionListRespone =new QueryPromotionListRespone();
+            QueryPromotionListRespone.setId(QueryPromotionListDo.getId());
+            QueryPromotionListRespone.setActivityCode(QueryPromotionListDo.getActivityCode());
+            QueryPromotionListRespone.setActivityType(QueryPromotionListDo.getActivityType());
+            QueryPromotionListRespone.setSalesStartTime(QueryPromotionListDo.getSalesStartTime());
+            QueryPromotionListRespone.setSalesEndTime(QueryPromotionListDo.getSalesEndTime());
+            queryPromotionListResponeList.add(QueryPromotionListRespone);
         }
          response.setData(queryPromotionListResponeList);
        return response;

@@ -129,8 +129,8 @@ public class PromotionController {
 
     @RequestMapping("queryPromotionList")
     @ResponseBody
-    public  BasePageResponse<queryPromotionListRespone> queryPromotionList(queryPromotionListRequest request){
-        BasePageResponse<queryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
+    public  BasePageResponse<QueryPromotionListRespone> queryPromotionList(QueryPromotionListRequest request){
+        BasePageResponse<QueryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
         try {
             response=promotionService.queryPromotionList(request);
         }
