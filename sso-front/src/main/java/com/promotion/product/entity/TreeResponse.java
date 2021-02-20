@@ -7,17 +7,8 @@ import java.util.List;
 @Data
 public class TreeResponse {
     private String title;
-    private String nodeCode;
+    private String id;
     private Integer level;
-    private List<Children> children;
-
-
-    @Data
-    public static class Children{
-        private String title;
-        private Integer level;
-        private String nodeCode;
-        private List<Children> children;
-    }
-
+    private Boolean checked=false;
+    private List<TreeResponse> children;
 }
