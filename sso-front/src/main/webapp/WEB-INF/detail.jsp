@@ -590,7 +590,7 @@
                 layer.close(layer.index);
                 var result = app.saveMerch()
                 if(result){
-                    location.href='<%=request.getContextPath()%>/PromotionController/edit?id='+app.detail.activityCode;
+                    location.href='<%=request.getContextPath()%>/PromotionController/list?id='+app.detail.activityCode;
                 }
             }
             return false;
@@ -598,6 +598,7 @@
 
         function getCheckedId(jsonObj) {
             var activityCode = app.detail.activityCode;
+            app.promotionMapper=[];
             //循环区域
             $.each(jsonObj, function (index, item) {
                 var area = item.title;

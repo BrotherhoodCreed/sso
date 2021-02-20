@@ -133,6 +133,7 @@ public class PromotionController {
             response=promotionService.queryPromotionList(request);
         }
         catch (Exception e){
+            e.printStackTrace();
             response = BasePageResponse.failure(BasePageResponse.class);
             response.setMessage(e.getMessage());
         }

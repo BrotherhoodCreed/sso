@@ -31,7 +31,7 @@ public interface PromotionMapperDao {
             " `area`,\n" +
             " `city`,\n" +
             " `restaurant_code`,\n" +
-            " `restaurant_name`,\n" +
+            " `restaurant_name`\n" +
             " )\n" +
             " values(" +
             "#{item.activityCode}," +
