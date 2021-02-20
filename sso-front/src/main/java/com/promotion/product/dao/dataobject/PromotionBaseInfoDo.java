@@ -56,7 +56,7 @@ public class PromotionBaseInfoDo {
     /**
      * '共享活动'
      */
-    private List<String>  sharedActivity;
+    private String  sharedActivity;
 
     private Date usageStartTime;
 
@@ -186,11 +186,11 @@ public class PromotionBaseInfoDo {
         this.theWay = theWay;
     }
 
-    public List<String> getSharedActivity() {
+    public String getSharedActivity() {
         return sharedActivity;
     }
 
-    public void setSharedActivity(List<String> sharedActivity) {
+    public void setSharedActivity(String sharedActivity) {
         this.sharedActivity = sharedActivity;
     }
 

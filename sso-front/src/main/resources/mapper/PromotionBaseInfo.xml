@@ -42,10 +42,6 @@
         <result property="activityType" column="activity_type" />
         <result property="salesStartTime" column="sales_start_time" />
         <result property="salesEndTime" column="sales_end_time" />
-        <result property="restaurantCode" column="restaurant_code" />
-        <result property="restaurantName" column="restaurant_name" />
-        <result property="area" column="area" />
-        <result property="city" column="city" />
     </resultMap>
     <select id="queryPromotionList" resultMap="BaseResultMap">
         SELECT
@@ -124,7 +120,7 @@
         <if test="usageEndTime !=null and usageEndTime!=''">
             usage_end_time =#{usageEndTime}
         </if>
-        where id=#{id}
+        where activity_code=#{activityCode}
     </update>
 
 </mapper>

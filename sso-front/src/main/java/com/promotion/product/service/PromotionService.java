@@ -2,13 +2,12 @@ package com.promotion.product.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.mchange.v1.lang.BooleanUtils;
+import com.google.common.base.Joiner;
+import com.promotion.product.common.ModelCopier;
 import com.promotion.product.dao.dataobject.*;
 import com.promotion.product.dao.mysql.PromotionBaseInfoDao;
 import com.promotion.product.dao.mysql.PromotionMapperDao;
-import com.promotion.product.entity.BasePageResponse;
-import com.promotion.product.entity.FormTypeEnums;
-import com.promotion.product.entity.SubmitEnums;
+import com.promotion.product.entity.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class PromotionService {
@@ -28,8 +26,8 @@ public class PromotionService {
     private PromotionMapperDao promotionMapperDao;
 
 
-    public PromotionBaseInfoDo queryPromotionBaseInfo(Long id) {
-        return promotionBaseInfoDao.selectOneData(id);
+    public PromotionBaseInfoDo queryPromotionBaseInfo(String activityCode) {
+        return promotionBaseInfoDao.selectOneData(activityCode);
     }
 
     @Transactional
@@ -69,10 +67,10 @@ public class PromotionService {
        return response;
     }
 
-    @Transactional(value = "promotionBaseInfoTransactionManager", rollbackFor = Exception.class)
-    public Boolean savePromotionBaseInfo(SavePromotionBaseInfoRequery savePromotionBaseInfoRequery) {
-        Boolean result = Boolean.FALSE;
-        PromotionBaseInfoDo promotionBaseInfoDo = savePromotionBaseInfoRequery.getPromotionBaseInfoDo();
+    public SavePromotionBaseInfoRespone savePromotionBaseInfo(SavePromotionBaseInfoRequery savePromotionBaseInfoRequery)  throws Exception{
+        SavePromotionBaseInfoRespone savePromotionBaseInfoRespone =new SavePromotionBaseInfoRespone();
+        PromotionBaseInfoDo promotionBaseInfoDo =ModelCopier.copy(savePromotionBaseInfoRequery,PromotionBaseInfoDo.class);
+
         Calendar calendar = Calendar.getInstance();
         Date date=calendar.getTime();
         SimpleDateFormat format = new SimpleDateFormat("YYYYMM");
@@ -84,16 +82,22 @@ public class PromotionService {
         promotionBaseInfoDo.setUpdatedTime(new Date());
         promotionBaseInfoDo.setSubmit(SubmitEnums.SAVE.getCode());
         promotionBaseInfoDo.setType(FormTypeEnums.TAKE_OUT.getIndex());
-        Integer row=0;
-        row=  promotionBaseInfoDao.insert(promotionBaseInfoDo);
-        if (CollectionUtils.isNotEmpty(savePromotionBaseInfoRequery.getPromotionMapperDo())) {
-            savePromotionBaseInfoRequery.getPromotionMapperDo().forEach(item -> {
-                item.setActivityCode(promotionBaseInfoDo.getActivityCode());
-                promotionMapperDao.insert(item);
-            });
+        String string=Joiner.on(",").join(savePromotionBaseInfoRequery.getSharedActivity());
+        promotionBaseInfoDo.setSharedActivity(string);
+        Boolean result=  promotionBaseInfoDao.insert(promotionBaseInfoDo)>0;
+        if(result){
+            savePromotionBaseInfoRespone.setActivityCode(code);
         }
-        result =row>0;
-        return result;
+        return savePromotionBaseInfoRespone;
+    }
+
+    public Boolean savePromotionMapperInfo(savePromotionMapperInfoRequest req){
+        Integer row=0;
+        for (PromotionMapperDo promotionMapperDo : req.getPromotionMapperDos()) {
+            row+= promotionMapperDao.insert(promotionMapperDo);
+        }
+        return  row>0;
+
     }
 
 

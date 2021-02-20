@@ -12,7 +12,7 @@ public class PromotionMapperSeriver {
     @Autowired
     private PromotionMapperDao promotionMapperDao;
 
-    public List<PromotionMapperDo> queryByPromotionBaseInfoId(Long promotionBaseInfoId){
-         return promotionMapperDao.selectByPromotionBaseInfoId(promotionBaseInfoId);
+    public List<PromotionMapperDo> queryByPromotionBaseInfoId(String activityCode){
+         return promotionMapperDao.selectByPromotionBaseInfoId(activityCode);
     }
 }

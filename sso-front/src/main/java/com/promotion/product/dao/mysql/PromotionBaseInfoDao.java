@@ -47,8 +47,8 @@ public interface PromotionBaseInfoDao {
             "usage_start_time as 'usageStartTime'\n" +
             "usage_end_time as 'usageEndTime'\n" +
             "from tb_promotion_base_info  \n" +
-            "where deleted=0   AND   id =#{id}")
-    PromotionBaseInfoDo selectOneData(@Param("id") Long id);
+            "where deleted=0   AND   activity_code =#{activityCode}")
+    PromotionBaseInfoDo selectOneData(@Param("activityCode") String activityCode);
 
     @Select("select \n" +
             "id,\n" +
