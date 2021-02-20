@@ -6,8 +6,6 @@ import com.promotion.product.entity.*;
 import com.promotion.product.service.DictionarySerivce;
 import com.promotion.product.service.PromotionService;
 import com.promotion.product.service.ShopService;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.reflect.MethodUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +44,7 @@ public class PromotionController {
             response.setData(promotionService.queryPromotionBaseInfo(activityCode));
         }
         catch (Exception e){
+            e.printStackTrace();
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
             response.setMessage(e.getMessage());
         }
@@ -127,8 +126,8 @@ public class PromotionController {
 
     @RequestMapping("queryPromotionList")
     @ResponseBody
-    public  BasePageResponse<queryPromotionListRespone> queryPromotionList(queryPromotionListRequest request){
-        BasePageResponse<queryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
+    public  BasePageResponse<QueryPromotionListRespone> queryPromotionList(QueryPromotionListRequest request){
+        BasePageResponse<QueryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
         try {
             response=promotionService.queryPromotionList(request);
         }

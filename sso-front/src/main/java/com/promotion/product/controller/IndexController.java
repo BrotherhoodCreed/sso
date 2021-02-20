@@ -16,7 +16,7 @@ public class IndexController {
     @RequestMapping("/edit")
     public ModelAndView edit(String id){
         ModelAndView mv = new ModelAndView("edit");
-        mv.addObject("id",id);
+        mv.addObject("activeCode",id);
         return mv;
     }
 

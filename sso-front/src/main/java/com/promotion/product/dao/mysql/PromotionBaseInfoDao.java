@@ -43,8 +43,8 @@ public interface PromotionBaseInfoDao {
             "created_time as 'createdTime',\n" +
             "created_user as 'createdUser',\n" +
             "updated_time as 'updatedTime',\n" +
-            "updated_user as 'updatedUser'\n" +
-            "usage_start_time as 'usageStartTime'\n" +
+            "updated_user as 'updatedUser',\n" +
+            "usage_start_time as 'usageStartTime',\n" +
             "usage_end_time as 'usageEndTime'\n" +
             "from tb_promotion_base_info  \n" +
             "where deleted=0   AND   activity_code =#{activityCode}")
@@ -142,5 +142,5 @@ public interface PromotionBaseInfoDao {
 
     Integer querySerialNumber();
 
-    List<queryPromotionListDo> queryPromotionList(queryPromotionListRequest request);
+    List<QueryPromotionListDo> queryPromotionList(QueryPromotionListRequest request);
 }

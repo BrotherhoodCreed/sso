@@ -43,7 +43,7 @@
         <!--<result property="salesStartTime" column="sales_start_time" />-->
         <!--<result property="salesEndTime" column="sales_end_time" />-->
     <!--</resultMap>-->
-    <select id="queryPromotionList" resultType="com.promotion.product.dao.dataobject.PromotionBaseInfoDo">
+    <select id="queryPromotionList" resultType="com.promotion.product.dao.dataobject.QueryPromotionListDo">
         SELECT
         id,
         activity_code as activityCode,

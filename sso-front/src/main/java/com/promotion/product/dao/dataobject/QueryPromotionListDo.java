@@ -6,7 +6,7 @@ import lombok.Data;
 import java.sql.Date;
 
 
-public class queryPromotionListDo {
+public class QueryPromotionListDo {
     private Long id;
     /**
      *促销编码
