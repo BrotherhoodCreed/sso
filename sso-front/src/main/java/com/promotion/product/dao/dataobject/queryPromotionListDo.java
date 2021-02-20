@@ -3,8 +3,8 @@ package com.promotion.product.dao.dataobject;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
+
 
 public class queryPromotionListDo {
     private Long id;
