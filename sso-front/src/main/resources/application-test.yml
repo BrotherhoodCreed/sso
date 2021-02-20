@@ -6,7 +6,7 @@
 
 spring:
   datasource:
-#    ds1: #数据源1
+    ds1:
       type: com.mchange.v2.c3p0.ComboPooledDataSource
       driver-class-name: com.mysql.jdbc.Driver
       url: jdbc:mysql://192.168.2.131:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
@@ -17,15 +17,15 @@ spring:
       minIdle: 10
       maxWait: 5000
 
-#     ds2: # 数据源2
-#       type: com.mchange.v2.c3p0.ComboPooledDataSource
-#       driver-class-name: com.mysql.jdbc.Driver
-#       url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
-#       username: root
-#       password: 12345678
-#       initialSize: 3
-#       maxActive: 100
-#       minIdle: 10
-#       maxWait: 5000
+    ds2:
+      type: com.mchange.v2.c3p0.ComboPooledDataSource
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://47.92.35.78:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+      username: YUKUCONNECT
+      password: 012345
+      initialSize: 3
+      maxActive: 100
+      minIdle: 10
+      maxWait: 5000
 
 
