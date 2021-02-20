@@ -142,5 +142,5 @@ public interface PromotionBaseInfoDao {
 
     Integer querySerialNumber();
 
-    List<queryPromotionListDo> queryPromotionList(queryPromotionListRequest request);
+    List<QueryPromotionListDo> queryPromotionList(QueryPromotionListRequest request);
 }

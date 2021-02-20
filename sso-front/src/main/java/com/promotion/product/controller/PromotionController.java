@@ -39,8 +39,8 @@ public class PromotionController {
      */
     @RequestMapping("queryPromotionBaseInfo")
     @ResponseBody
-    public BaseEntityResponse<PromotionBaseInfoDo> queryPromotionBaseInfo(String  activityCode) {
-        BaseEntityResponse<PromotionBaseInfoDo> response =BaseEntityResponse.success(BaseEntityResponse.class);
+    public BaseEntityResponse<PromotionBaseInfoRespone> queryPromotionBaseInfo(String  activityCode) {
+        BaseEntityResponse<PromotionBaseInfoRespone> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
             if(StringUtils.isEmpty(activityCode)){
                 throw  new Exception("参数为空");
