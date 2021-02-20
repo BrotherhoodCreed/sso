@@ -14,6 +14,7 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="add">新增</a>
     <a class="layui-btn layui-btn-xs" lay-event="upload">导出</a>
+    <a class="layui-btn layui-btn-xs" lay-event="sumbit">提交OA</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
 </script>
 <script type="text/html" id="opt">
@@ -66,6 +67,9 @@
         table.on('toolbar(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
+                case 'sumbit':
+
+                    break;
                 case 'add':
                     location.href = '<%=request.getContextPath()%>/add';
                     break;

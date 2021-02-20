@@ -89,9 +89,9 @@
             </select>
         </div>
         <div><span>销售单价</span> <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 5rem;">
-            <span>回款单价</span> <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="changeCount"  style="width: 5rem;margin-right: 62px;">
-            <span>手续费</span><input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="changeCount" style="width: 5rem; margin-right: 46px;">
-            <span>手续费率(%)</span> <input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="changeCount"   style="width: 10rem;"></div>
+            <span>回款单价</span> <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount"  style="width: 5rem;margin-right: 62px;">
+            <span>手续费</span><input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="handlingFeechangeCount" style="width: 5rem; margin-right: 46px;">
+            <span>手续费率(%)</span> <input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="taxRatechangeCount"   style="width: 10rem;"></div>
         <div>
             <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">其他</h3>
             <textarea v-model="detail.other"  style="width: 895px; height: 35px; resize: none;"></textarea>
@@ -269,30 +269,21 @@
                         console.log("网络异常");
                     });
             },
-            changeCount:function(event){
-
-                if(this.detail.billPrice!='' && this.detail.handlingFee== '' && this.detail.taxRate != ''){
-                    debugger
+            billPricechangeCount:function(event){
+                if(this.detail.billPrice!=''  && this.detail.taxRate != ''){
                     this.detail.handlingFee= this.detail.billPrice * this.detail.taxRate;
                 }
+            },
+            handlingFeechangeCount:function (){
+                //detail.billPrice 回款单价
+                //detail.handlingFee  手续费
+                //detail.taxRate  手续费率
+                if(this.detail.billPrice!='' && this.detail.handlingFee!='' ){
+                    this.detail.taxRate= detail.billPrice /detail.handlingFee;
+                }
 
-                // if(this.detail.billPrice!='' && this.detail.handlingFee!= '' && this.detail.taxRate == ''){
-                //
-                // }
-                // //回款单价
-                // if(this.detail.billPrice!=''){
-                //     alert("aaa");
-                // }
-                // //手续费为空
-                // if (this.detail.handlingFee == ''){
-                //     layer.msg('手续费为空');
-                //     return;
-                // }
-                // //手续费为空税率
-                // if (this.detail.taxRate == ''){
-                //
-                // }
             }
+
 
         }
     });

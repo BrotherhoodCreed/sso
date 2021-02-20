@@ -5,6 +5,7 @@ import com.promotion.product.dao.dataobject.*;
 import com.promotion.product.entity.BaseEntityResponse;
 import com.promotion.product.entity.BasePageResponse;
 import com.promotion.product.entity.ExeclRespone;
+import com.promotion.product.entity.TreeResponse;
 import com.promotion.product.service.DictionarySerivce;
 import com.promotion.product.service.PromotionService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -129,9 +130,9 @@ public class PromotionController {
                 "\t\"data\": [{\n" +
                 "\t\t\"id\": 10000,\n" +
                 "\t\t\"restaurantCode\": \"user-0\",\n" +
-                "\t\t\"activityCode\": \"女\",\n" +
+                "\t\t\"activityCode\": \"01020210220001\",\n" +
                 "\t\t\"activityType\": \"城市-0\",\n" +
-                "\t\t\"salesStartTime\": \"签名-0\",\n" +
+                "\t\t\"salesStartTime\": \"2021-2-20 11:19:29\",\n" +
                 "\t\t\"experience\": 255,\n" +
                 "\t\t\"logins\": 24,\n" +
                 "\t\t\"wealth\": 82830700,\n" +
@@ -140,9 +141,9 @@ public class PromotionController {
                 "\t}, {\n" +
                 "\t\t\"id\": 10001,\n" +
                 "\t\t\"restaurantCode\": \"user-1\",\n" +
-                "\t\t\"activityCode\": \"男\",\n" +
+                "\t\t\"activityCode\": \"01020210220002\",\n" +
                 "\t\t\"activityType\": \"城市-1\",\n" +
-                "\t\t\"salesStartTime\": \"签名-1\",\n" +
+                "\t\t\"salesStartTime\": \"2021-2-20 11:19:29\",\n" +
                 "\t\t\"experience\": 884,\n" +
                 "\t\t\"logins\": 58,\n" +
                 "\t\t\"wealth\": 64928690,\n" +
@@ -151,9 +152,9 @@ public class PromotionController {
                 "\t}, {\n" +
                 "\t\t\"id\": 10002,\n" +
                 "\t\t\"restaurantCode\": \"user-2\",\n" +
-                "\t\t\"activityCode\": \"女\",\n" +
+                "\t\t\"activityCode\": \"01020210220003\",\n" +
                 "\t\t\"activityType\": \"城市-2\",\n" +
-                "\t\t\"salesStartTime\": \"签名-2\",\n" +
+                "\t\t\"salesStartTime\": \"2021-2-20 11:19:29\",\n" +
                 "\t\t\"experience\": 650,\n" +
                 "\t\t\"logins\": 77,\n" +
                 "\t\t\"wealth\": 6298078,\n" +
@@ -162,9 +163,9 @@ public class PromotionController {
                 "\t}, {\n" +
                 "\t\t\"id\": 10003,\n" +
                 "\t\t\"restaurantCode\": \"user-3\",\n" +
-                "\t\t\"activityCode\": \"女\",\n" +
+                "\t\t\"activityCode\": \"01020210220004\",\n" +
                 "\t\t\"activityType\": \"城市-3\",\n" +
-                "\t\t\"salesStartTime\": \"签名-3\",\n" +
+                "\t\t\"salesStartTime\": \"2021-2-20 11:19:29\",\n" +
                 "\t\t\"experience\": 362,\n" +
                 "\t\t\"logins\": 157,\n" +
                 "\t\t\"wealth\": 37117017,\n" +
@@ -173,9 +174,9 @@ public class PromotionController {
                 "\t}, {\n" +
                 "\t\t\"id\": 10004,\n" +
                 "\t\t\"restaurantCode\": \"user-4\",\n" +
-                "\t\t\"activityCode\": \"男\",\n" +
+                "\t\t\"activityCode\": \"01020210220005\",\n" +
                 "\t\t\"activityType\": \"城市-4\",\n" +
-                "\t\t\"salesStartTime\": \"签名-4\",\n" +
+                "\t\t\"salesStartTime\": \"2021-2-20 11:19:29\",\n" +
                 "\t\t\"experience\": 807,\n" +
                 "\t\t\"logins\": 51,\n" +
                 "\t\t\"wealth\": 76263262,\n" +
@@ -183,10 +184,10 @@ public class PromotionController {
                 "\t\t\"score\": 6\n" +
                 "\t}, {\n" +
                 "\t\t\"id\": 10005,\n" +
-                "\t\t\"restaurantCode\": \"user-5\",\n" +
-                "\t\t\"activityCode\": \"女\",\n" +
+                "\t\t\"restaurantCode\": \"01020210220006\",\n" +
+                "\t\t\"activityCode\": \"01020210220006\",\n" +
                 "\t\t\"activityType\": \"城市-5\",\n" +
-                "\t\t\"salesStartTime\": \"签名-5\",\n" +
+                "\t\t\"salesStartTime\": \"2021-2-20 11:19:29\",\n" +
                 "\t\t\"experience\": 173,\n" +
                 "\t\t\"logins\": 68,\n" +
                 "\t\t\"wealth\": 60344147,\n" +
@@ -253,4 +254,14 @@ public class PromotionController {
         return response;
     }
 
+    private BaseEntityResponse<TreeResponse> queryTree(String nodeCode,Integer level){
+        BaseEntityResponse<TreeResponse> response =BaseEntityResponse.success(BaseEntityResponse.class);
+        try {
+            //response.setData(dictionarySerivce.queryDictionary(descriptionType));
+        }catch (Exception e){
+            response = BaseEntityResponse.failure(BaseEntityResponse.class);
+            response.setMessage(e.getMessage());
+        }
+        return response;
+    }
 }
