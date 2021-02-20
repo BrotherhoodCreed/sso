@@ -95,6 +95,7 @@ public class PromotionService {
     }
 
     public Boolean savePromotionMapperInfo(savePromotionMapperInfoRequest req){
+
         Integer row=0;
         for (PromotionMapperDo promotionMapperDo : req.getPromotionMapperDos()) {
             row+= promotionMapperDao.insert(promotionMapperDo);
