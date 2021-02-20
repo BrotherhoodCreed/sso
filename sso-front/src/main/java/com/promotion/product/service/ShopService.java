@@ -20,12 +20,12 @@ public class ShopService {
     @Autowired
     private PromotionMapperDao promotionMapperDao;
 
-    public  List<TreeResponse> queryTree(Long promotionBaseInfoId){
+    public  List<TreeResponse> queryTree(String activityCode){
         List<TreeResponse> treeResponseList =new ArrayList<>();
         List<PromotionMapperDo> promotionMapperDos =new ArrayList<>();
         List<String> shopCode=new ArrayList<>();
-        if(null!=promotionBaseInfoId){
-            promotionMapperDos= promotionMapperDao.selectByPromotionBaseInfoId(promotionBaseInfoId);
+        if(StringUtils.isNotEmpty(activityCode)){
+            promotionMapperDos= promotionMapperDao.selectByActivityCode(activityCode);
             shopCode= promotionMapperDos.stream().map(item->item.getRestaurantCode()).collect(Collectors.toList());
         }
 

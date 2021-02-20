@@ -17,14 +17,14 @@ public interface PromotionMapperDao {
 
     @Select("select  \n" +
             "id,\n" +
-            "promotion_base_info as 'promotionBaseInfoId',\n" +
+            "activity_code as 'activityCode',\n" +
             "area,\n" +
             "city,\n" +
             "restaurant_code as 'restaurantCode',\n" +
             "restaurant_name as 'restaurantName',\n" +
             "deleted\n" +
-            "from  tb_promotion_mapper where deleted=0 and promotion_base_info= #{promotionBaseInfo}")
-    List<PromotionMapperDo> selectByPromotionBaseInfoId(Long promotionBaseInfoId);
+            "from  tb_promotion_mapper where deleted=0 and activityCode= #{activityCode}")
+    List<PromotionMapperDo> selectByActivityCode(@Param("activityCode")  String activityCode);
 
     @Insert(" insert into tb_promotion_mapper(\n" +
             " `activity_code`,\n" +
