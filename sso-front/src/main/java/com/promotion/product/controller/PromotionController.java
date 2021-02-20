@@ -8,6 +8,7 @@ import com.promotion.product.entity.ExeclRespone;
 import com.promotion.product.entity.TreeResponse;
 import com.promotion.product.service.DictionarySerivce;
 import com.promotion.product.service.PromotionService;
+import com.promotion.product.service.ShopService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class PromotionController {
     @Autowired
     private DictionarySerivce dictionarySerivce;
 
+    @Autowired
+    private ShopService shopService;
 
 
     /**
@@ -203,7 +206,7 @@ public class PromotionController {
      */
     @RequestMapping("deletePromotion")
     @ResponseBody
-    public BaseEntityResponse<Boolean> deletePromotionBaseById(Long id){
+    public BaseEntityResponse<Boolean> deletePromotionBaseById(List<Long> id){
         BaseEntityResponse<Boolean> response=BaseEntityResponse.success(BaseEntityResponse.class);
         try {
             response.setData(promotionService.deletePromotionBaseById(id));
@@ -255,10 +258,24 @@ public class PromotionController {
         return response;
     }
 
-    private BaseEntityResponse<TreeResponse> queryTree(String nodeCode,Integer level){
-        BaseEntityResponse<TreeResponse> response =BaseEntityResponse.success(BaseEntityResponse.class);
+    /**
+     * 查询树形结构
+     */
+    private BaseEntityResponse<List<TreeResponse>> queryTree(Long promotionBaseInfoId){
+        BaseEntityResponse<List<TreeResponse>> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
-            //response.setData(dictionarySerivce.queryDictionary(descriptionType));
+            response.setData(shopService.queryTree(promotionBaseInfoId));
+        }catch (Exception e){
+            response = BaseEntityResponse.failure(BaseEntityResponse.class);
+            response.setMessage(e.getMessage());
+        }
+        return response;
+    }
+
+    private BaseEntityResponse<List<TreeResponse>> queryShopInfo(Long promotionBaseInfoId){
+        BaseEntityResponse<List<TreeResponse>> response =BaseEntityResponse.success(BaseEntityResponse.class);
+        try {
+            response.setData(shopService.queryTree(promotionBaseInfoId));
         }catch (Exception e){
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
             response.setMessage(e.getMessage());

@@ -32,9 +32,13 @@ public class PromotionService {
         return promotionBaseInfoDao.selectOneData(id);
     }
 
-
-    public Boolean deletePromotionBaseById(Long id){
-        return promotionBaseInfoDao.deletePromotionBaseById(id)>0;
+    @Transactional
+    public Boolean deletePromotionBaseById(List<Long> id){
+        Integer row=0;
+        for (Long aLong : id) {
+            promotionBaseInfoDao.deletePromotionBaseById(aLong);
+        }
+        return row>0;
     }
 
     public Boolean deletePromotionById(Long id){
