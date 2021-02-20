@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap;
 import com.promotion.product.dao.dataobject.PromotionMapperDo;
 import com.promotion.product.dao.dataobject.ShopDo;
 import com.promotion.product.dao.mysql.PromotionMapperDao;
+import com.promotion.product.dao.mysql2.YuKuDao;
 import com.promotion.product.entity.TreeResponse;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,9 @@ public class ShopService {
     @Autowired
     private PromotionMapperDao promotionMapperDao;
 
+    @Autowired
+    private YuKuDao yuKuDao;
+
     public  List<TreeResponse> queryTree(String activityCode){
         List<TreeResponse> treeResponseList =new ArrayList<>();
         List<PromotionMapperDo> promotionMapperDos =new ArrayList<>();
@@ -29,7 +33,7 @@ public class ShopService {
             shopCode= promotionMapperDos.stream().map(item->item.getRestaurantCode()).collect(Collectors.toList());
         }
 
-        List<ShopDo> shopDoList =new ArrayList<>();
+        List<ShopDo> shopDoList =yuKuDao.selectShop();
 
         Multimap<String,Multimap<String, TreeResponse>> multimap = ArrayListMultimap.create();
         Multimap<String, TreeResponse> childrenMultimap=ArrayListMultimap.create();
