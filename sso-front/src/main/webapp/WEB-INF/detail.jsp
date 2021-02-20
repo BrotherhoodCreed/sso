@@ -38,7 +38,9 @@
 
 <body>
     <form action="" id="app">
-        <div><span>促销编码</span> <input type="number" v-model="detail.activityCode"  style="width: 110px;"> <span>活动类型</span> <select v-model="detail.activityType"  style="width: 100px;"><option value="1">团购</option></select>
+        <div>
+            <%--<span>促销编码</span> <input type="hidden" v-model="detail.activityCode"  style="width: 110px;"> --%>
+            <span>活动类型</span> <select v-model="detail.activityType"  style="width: 100px;"><option value="1">团购</option></select>
             <span>销售开始时间</span>
             <input type="text" id="test1">
 
@@ -184,10 +186,10 @@
             save:function () {
                 var actives = ($(".selectpicker").val());
                 this.detail.sharedActivity = actives;
-                if (this.detail.activityCode == ''){
-                    layer.msg('促销编码为空');
-                    return;
-                }
+                // if (this.detail.activityCode == ''){
+                //     layer.msg('促销编码为空');
+                //     return;
+                // }
                 if (this.detail.activityType == ''){
                     layer.msg('活动类型为空');
                     return;
@@ -266,13 +268,32 @@
                     JSON.stringify(this.detail),{emulateJSON:false}).then(function(response) {
                         if('10000' == response.data.code){
                             layer.msg('保存成功');
-                            location.href='<%=request.getContextPath()%>/PromotionController/edit?id='+response.data.id;
+                            this.detail.activityCode = response.data.data.activityCode;
                         }else {
                             layer.msg('保存失败');
                         }
                     },
                     function(response) {
                         console.log("网络异常");
+                    });
+            },
+            saveMerch:function () {
+                var param = {
+                    promotionMapperDos:this.promotionMapper
+                };
+                this.$http.post('<%=request.getContextPath()%>/PromotionController/savePromotionMapperInfo',
+                    JSON.stringify(param),{emulateJSON:false}).then(function(response) {
+                        if('10000' == response.data.code){
+                            layer.msg('保存成功');
+                            return true;
+                        }else {
+                            layer.msg('保存失败');
+                            return false;
+                        }
+                    },
+                    function(response) {
+                        console.log("网络异常");
+                        return false;
                     });
             },
             query:function (type) {
@@ -539,6 +560,10 @@
         //打开选择页
         $("body").on("click", "#addActive", function() {
             // var dataInto=$(this).prev().attr("name");
+            if(''==app.detail.activityCode){
+                layer.msg("请先保存活动");
+                return;
+            }
             layer.open({
                 type: 1,
                 title: "选择",
@@ -563,11 +588,10 @@
                 getCheckedId(getData);
                 console.log(app.promotionMapper);
                 layer.close(layer.index);
-                if(''==app.detail.activityCode){
-                    layer.message("请先添加活动");
-                    return;
+                var result = app.saveMerch()
+                if(result){
+                    location.href='<%=request.getContextPath()%>/PromotionController/edit?id='+app.detail.activityCode;
                 }
-                // app.save();
             }
             return false;
         });
