@@ -205,6 +205,8 @@ public class PromotionController {
     /**
      * 查询树形结构
      */
+    @RequestMapping("queryTree")
+    @ResponseBody
     private BaseEntityResponse<List<TreeResponse>> queryTree(String  activityCode){
         BaseEntityResponse<List<TreeResponse>> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
