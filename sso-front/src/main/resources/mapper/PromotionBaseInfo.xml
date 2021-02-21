@@ -61,6 +61,50 @@
         order by created_time desc
     </select>
 
+
+    <select id="exportExcel" resultType="com.promotion.product.entity.ExeclDto" parameterType="list">
+        select
+            a.activity_code as 'activityCode',
+            a.activity_type as 'activityType',
+            a.sales_start_time as 'salesStartTime',
+            a.sales_end_time as 'salesEndTime',
+            a.amount as 'amount',
+            a.bill_cycle as 'billCycle',
+            a.description as 'description',
+            a.introduction as 'introduction',
+            a.channel as 'channel',
+            a.the_way as 'theWay',
+            a.shared_activity as 'sharedActivity',
+            a.selling_price as 'sellingPrice',
+            a.bill_price as 'billPrice',
+            a.handling_fee as 'handlingFee',
+            a.tax_rate as 'taxRate',
+            a.other as 'other',
+            a.submit as 'submit',
+            a.type as 'type',
+            a.created_time as 'createdTime',
+            a.created_user as 'createdUser',
+            a.updated_time as 'updatedTime',
+            a.updated_user as 'updatedUser',
+            a.usage_start_time as 'usageStartTime',
+            a.usage_end_time as 'usageEndTime',
+            b.area,
+            b.city,
+            b.restaurant_code as 'restaurantCode',
+            b.restaurant_name as 'restaurantName'
+        from  tb_promotion_base_info as a
+        left join  tb_promotion_mapper as b
+        ON  a.activity_code=b.activity_code
+        ANd a.deleted=0 AND b.deleted=0
+        <where>
+            a.activity_code in
+            <foreach collection="list" item="valueList" open="(" close=")" separator=",">
+                #{valueList}
+            </foreach>
+        </where>
+
+    </select>
+
     <select id="querySerialNumber" resultType="Integer">
         select count(1)+1 as activity_code from tb_promotion_base_info where to_days(created_time) = to_days(now());
     </select>

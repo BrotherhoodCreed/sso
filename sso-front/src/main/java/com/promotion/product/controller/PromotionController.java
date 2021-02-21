@@ -100,12 +100,9 @@ public class PromotionController {
 
 
     @RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
-    public void exportExcel(HttpServletResponse response,List<Long> id)  throws IOException {
-        List<ExeclRespone> resultList = new ArrayList<>();
-        ExeclRespone execlRespone = new ExeclRespone();
-        execlRespone.setArea("aaa");
+    public void exportExcel(HttpServletResponse response,List<String> codes)  throws IOException {
         //查询数据
-        resultList.add(execlRespone);
+        List<ExeclRespone> resultList = promotionService.exportExcel(codes);
 
         long t1 = System.currentTimeMillis();
         ExcelUtils.writeExcel(response, resultList, ExeclRespone.class);

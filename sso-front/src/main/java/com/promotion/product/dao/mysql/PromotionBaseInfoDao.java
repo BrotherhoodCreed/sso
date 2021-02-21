@@ -2,6 +2,7 @@ package com.promotion.product.dao.mysql;
 
 
 import com.promotion.product.dao.dataobject.*;
+import com.promotion.product.entity.ExeclDto;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -81,6 +82,37 @@ public interface PromotionBaseInfoDao {
     PromotionBaseInfoDo selectByAivityCode(@Param("aivityCode") String  aivityCode);
 
 
+    @Select("select \n" +
+            "id,\n" +
+            "activity_code as 'activityCode',\n" +
+            "activity_type as 'activityType',\n" +
+            "sales_start_time as 'salesStartTime',\n" +
+            "sales_end_time as 'salesEndTime',\n" +
+            "amount as 'amount',\n" +
+            "bill_cycle as 'billCycle',\n" +
+            "description as 'description',\n" +
+            "introduction as 'introduction',\n" +
+            "channel as 'channel',\n" +
+            "the_way as 'theWay',\n" +
+            "shared_activity as 'sharedActivity',\n" +
+            "selling_price as 'sellingPrice',\n" +
+            "bill_price as 'billPrice',\n" +
+            "handling_fee as 'handlingFee',\n" +
+            "tax_rate as 'taxRate',\n" +
+            "other as 'other',\n" +
+            "submit as 'submit',\n" +
+            "type as 'type',\n" +
+            "created_time as 'createdTime',\n" +
+            "created_user as 'createdUser',\n" +
+            "updated_time as 'updatedTime',\n" +
+            "updated_user as 'updatedUser',\n" +
+            "usage_start_time as 'usageStartTime',\n" +
+            "usage_end_time as 'usageEndTime',\n" +
+            "from tb_promotion_base_info  \n" +
+            "where deleted=0   AND    activity_code =#{aivityCode}")
+    PromotionBaseInfoDo selectByAivityCodes(@Param("aivityCode") List<String>  aivityCode);
+
+
 
     @Insert(" insert into tb_promotion_base_info(\n" +
             " activity_code,\n" +
@@ -143,4 +175,5 @@ public interface PromotionBaseInfoDao {
     Integer querySerialNumber();
 
     List<QueryPromotionListDo> queryPromotionList(QueryPromotionListRequest request);
+    List<ExeclDto> exportExcel(@Param("list") List<String> list);
 }
