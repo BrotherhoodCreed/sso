@@ -104,7 +104,7 @@ public class PromotionService {
             area=promotionMapperDo.get(0).getArea();
         }
         //01 区域号
-        String code =area+ FormTypeEnums.TAKE_OUT.getIndex()+ format.format(date)+String.format("%03d",index);
+        String code ="01"+ FormTypeEnums.TAKE_OUT.getIndex()+ format.format(date)+String.format("%03d",index);
         promotionBaseInfoDo.setActivityCode(code);
         promotionBaseInfoDo.setCreatedTime(new Date());
         promotionBaseInfoDo.setUpdatedTime(new Date());
