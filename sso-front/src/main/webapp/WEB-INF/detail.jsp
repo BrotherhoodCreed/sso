@@ -40,7 +40,11 @@
     <form action="" id="app">
         <div>
             <%--<span>促销编码</span> <input type="hidden" v-model="detail.activityCode"  style="width: 110px;"> --%>
-            <span>活动类型</span> <select v-model="detail.activityType"  style="width: 100px;"><option value="1">团购</option></select>
+            <span>活动类型</span>
+                <select v-model="detail.activityType"  style="width: 100px;">
+                    <option value="" >请选择</option>
+                    <option  v-bind:value="item.id" v-for="item in activityType" >{{item.description}}</option>
+                </select>
             <span>销售开始时间</span>
             <input type="text" id="test1">
 
@@ -75,8 +79,7 @@
         <div><span>七字描述</span> <input type="text " v-model="detail.introduction" @input="valueChange" style="width: 110px;">
             <span>团购网站</span> <select v-model="detail.theWay"  style="width: 100px;">
                 <option value="" >请选择</option>
-                <option value="1" >美团</option>
-                <option value="2" >饿了么</option>
+                <option  v-bind:value="item.id" v-for="item in channel" >{{item.description}}</option>
             </select>
             <span>核销开始时间</span>
             <input type="text" id="test3">
@@ -99,9 +102,9 @@
             <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">其他</h3>
             <textarea v-model="detail.other"  style="width: 895px; height: 35px; resize: none;"></textarea>
         </div>
-        <div>
-            <button type="button" class="btn btn-default" @click="save()">保存活动</button>
-        </div>
+        <%--<div>--%>
+            <%--<button type="button" class="btn btn-default" @click="save()">保存活动</button>--%>
+        <%--</div>--%>
         <div>
             <button type="button" class="btn btn-default" id="addActive">添加门店</button>
         </div>
@@ -161,13 +164,18 @@
             },
             promotionMapper : [],
             items:[],
+            activityType:[],
+            channel:[],
             saveReturn:false
         },
         created:function(){
             this.queryRelActive();
+            this.query("activity_type");
+            this.query("channel");
+
         },
         methods: {
-            valueChange(e){
+            valueChange:function (e){
                 e.target.value = e.target.value.replace(/(^\s*)|(\s*$)/g, "");
                 const reg = /[^\d.]/g;
 
@@ -268,11 +276,13 @@
                 //     promotionMapperDo:this.promotionMapper
                 // };
                 // console.log(param);
+                this.detail.promotionMapperDo = this.promotionMapper;
                 this.$http.post('<%=request.getContextPath()%>/PromotionController/savePromotionBaseInfo',
                     JSON.stringify(this.detail),{emulateJSON:false}).then(function(response) {
                         if('10000' == response.data.code){
                             layer.msg('保存成功');
                             this.detail.activityCode = response.data.data.activityCode;
+                            <%--location.href='<%=request.getContextPath()%>/PromotionController/list?id='+app.detail.activityCode;--%>
                         }else {
                             layer.msg('保存失败');
                         }
@@ -281,24 +291,24 @@
                         console.log("网络异常");
                     });
             },
-            saveMerch:function () {
-                var param = {
-                    promotionMapperDos:this.promotionMapper
-                };
-                this.$http.post('<%=request.getContextPath()%>/PromotionController/savePromotionMapperInfo',
-                    JSON.stringify(param),{emulateJSON:false}).then(function(response) {
-                        if('10000' == response.data.code){
-                            layer.msg('保存成功');
-                            this.saveReturn = true;
-                            location.href='<%=request.getContextPath()%>/PromotionController/list?id='+app.detail.activityCode;
-                        }else {
-                            layer.msg('保存失败');
-                        }
-                    },
-                    function(response) {
-                        console.log("网络异常");
-                    });
-            },
+            <%--saveMerch:function () {--%>
+                <%--var param = {--%>
+                    <%--promotionMapperDos:this.promotionMapper--%>
+                <%--};--%>
+                <%--this.$http.post('<%=request.getContextPath()%>/PromotionController/savePromotionMapperInfo',--%>
+                    <%--JSON.stringify(param),{emulateJSON:false}).then(function(response) {--%>
+                        <%--if('10000' == response.data.code){--%>
+                            <%--layer.msg('保存成功');--%>
+                            <%--this.saveReturn = true;--%>
+                            <%--location.href='<%=request.getContextPath()%>/PromotionController/list?id='+app.detail.activityCode;--%>
+                        <%--}else {--%>
+                            <%--layer.msg('保存失败');--%>
+                        <%--}--%>
+                    <%--},--%>
+                    <%--function(response) {--%>
+                        <%--console.log("网络异常");--%>
+                    <%--});--%>
+            <%--},--%>
             queryRelActive:function () {
                 this.$http.post('<%=request.getContextPath()%>/PromotionController/activeList',{},{emulateJSON:true}).then(function(response) {
                         this.items = response.data;
@@ -315,7 +325,11 @@
             },
             query:function (type) {
                 this.$http.post('<%=request.getContextPath()%>/PromotionController/queryDictionary',{descriptionType:type},{emulateJSON:true}).then(function(response) {
-                        console.log(response.data);
+                        if('activity_type' == type){
+                            this.activityType = response.data.data;
+                        }else if('channel' == type){
+                            this.channel = response.data.data;
+                        }
                     },
                     function(response) {
                         console.log("网络异常");
@@ -577,10 +591,10 @@
         //打开选择页
         $("body").on("click", "#addActive", function() {
             // var dataInto=$(this).prev().attr("name");
-            if(''==app.detail.activityCode){
-                layer.msg("请先保存活动");
-                return;
-            }
+            // if(''==app.detail.activityCode){
+            //     layer.msg("请先保存活动");
+            //     return;
+            // }
             layer.open({
                 type: 1,
                 title: "选择",
@@ -605,7 +619,7 @@
                 getCheckedId(getData);
                 console.log(app.promotionMapper);
                 layer.close(layer.index);
-                app.saveMerch();
+                app.save();
             }
             return false;
         });
