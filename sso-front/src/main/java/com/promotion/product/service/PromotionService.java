@@ -123,7 +123,7 @@ public class PromotionService {
             if(CollectionUtils.isNotEmpty(promotionMapperDo)){
                 List<PromotionMapperDo> promotionMapperDos=promotionMapperDao.selectByActivityCode(code);
                 if(CollectionUtils.isNotEmpty(promotionMapperDos)){
-                    List<String> stringListi = promotionMapperDos.stream().map(item -> item.getActivityCode()).collect(Collectors.toList());
+                    List<String> stringListi = promotionMapperDos.stream().map(item -> item.getRestaurantCode()).collect(Collectors.toList());
                     promotionMapperDo.removeIf(item->stringListi.contains(item.getRestaurantCode()));
                 }
                 for (PromotionMapperDo mapperDo : promotionMapperDo) {
