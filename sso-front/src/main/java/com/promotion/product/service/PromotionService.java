@@ -123,8 +123,8 @@ public class PromotionService {
             if(CollectionUtils.isNotEmpty(promotionMapperDo)){
                 List<PromotionMapperDo> promotionMapperDos=promotionMapperDao.selectByActivityCode(code);
                 if(CollectionUtils.isNotEmpty(promotionMapperDos)){
-                    List<String> collect = promotionMapperDos.stream().map(item -> item.getActivityCode()).collect(Collectors.toList());
-                    promotionMapperDo.removeIf(item->collect.contains(item.getRestaurantCode()));
+                    List<String> stringListi = promotionMapperDos.stream().map(item -> item.getActivityCode()).collect(Collectors.toList());
+                    promotionMapperDo.removeIf(item->stringListi.contains(item.getRestaurantCode()));
                 }
                 for (PromotionMapperDo mapperDo : promotionMapperDo) {
                     mapperDo.setActivityCode(code);
@@ -140,8 +140,8 @@ public class PromotionService {
         if(StringUtils.isNotEmpty(activityCode)){
             List<PromotionMapperDo> promotionMapperDos=promotionMapperDao.selectByActivityCode(activityCode);
             if(CollectionUtils.isNotEmpty(promotionMapperDos)){
-                List<String> collect = promotionMapperDos.stream().map(item -> item.getActivityCode()).collect(Collectors.toList());
-                req.getPromotionMapperDos().removeIf(item->collect.contains(item.getRestaurantCode()));
+                List<String> list = promotionMapperDos.stream().map(item -> item.getRestaurantCode()).collect(Collectors.toList());
+                req.getPromotionMapperDos().removeIf(item->list.contains(item.getRestaurantCode()));
             }
         }
         Integer row=0;
