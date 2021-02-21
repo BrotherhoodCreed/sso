@@ -11,6 +11,8 @@ public class PromotionMapperDo {
     private String  city;
     private String  restaurantCode;
     private String  restaurantName;
+    private String  receivingAccount;
+    private String  receivingNumber;
     private Boolean deleted;
 
 }
