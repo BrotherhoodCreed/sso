@@ -87,7 +87,7 @@
             <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">与本活动共存的活动</h3>
             <label for="id_select"></label>
             <select id="id_select" class="selectpicker bla bla bli" multiple data-live-search="true">
-                <option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>
+                <%--<option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>--%>
                 </optgroup>
             </select>
         </div>
@@ -160,7 +160,11 @@
                 billPrice:'',
             },
             promotionMapper : [],
-            items:[{id:'我'},{id:'我是你爹'},{id:'你的'}]
+            items:[],
+            saveReturn:false
+        },
+        created:function(){
+            this.queryRelActive();
         },
         methods: {
             valueChange(e){
@@ -285,15 +289,28 @@
                     JSON.stringify(param),{emulateJSON:false}).then(function(response) {
                         if('10000' == response.data.code){
                             layer.msg('保存成功');
-                            return true;
+                            this.saveReturn = true;
+                            location.href='<%=request.getContextPath()%>/PromotionController/list?id='+app.detail.activityCode;
                         }else {
                             layer.msg('保存失败');
-                            return false;
                         }
                     },
                     function(response) {
                         console.log("网络异常");
-                        return false;
+                    });
+            },
+            queryRelActive:function () {
+                this.$http.post('<%=request.getContextPath()%>/PromotionController/activeList',{},{emulateJSON:true}).then(function(response) {
+                        this.items = response.data;
+                        var html = "";
+                        for (var i = 0; i < this.items.length; i++) {
+                            html += "<option value='" +this.items[i].id+ "'>" +this.items[i].name+"</option>";
+                        }
+                        $('#id_select').html(html);
+                        $('#id_select').selectpicker('refresh');     //设置好内容后刷新，  多用于异步请求
+                    },
+                    function(response) {
+                        console.log("网络异常");
                     });
             },
             query:function (type) {
@@ -588,10 +605,7 @@
                 getCheckedId(getData);
                 console.log(app.promotionMapper);
                 layer.close(layer.index);
-                var result = app.saveMerch()
-                if(result){
-                    location.href='<%=request.getContextPath()%>/PromotionController/list?id='+app.detail.activityCode;
-                }
+                app.saveMerch();
             }
             return false;
         });

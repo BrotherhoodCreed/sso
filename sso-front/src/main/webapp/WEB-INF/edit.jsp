@@ -40,10 +40,10 @@
     <form action="" id="app">
         <div><span>促销编码</span> <input type="number" v-model="detail.activityCode"  readonly="readonly" style="width: 110px;"> <span>活动类型</span> <select v-model="detail.activityType"  style="width: 100px;"><option value="1">团购</option></select>
             <span>销售开始时间</span>
-            <input type="text" id="test1">
+            <input type="text" id="test1" v-model="detail.salesStartTime">
 
             <span>销售结束时间</span>
-            <input type="text" id="test2">
+            <input type="text" id="test2"  v-model="detail.salesEndTime">
         </div>
         <div><span>每台现用张数/金额</span> <input type="number" @input="valueChange"  v-model="detail.amount" style="width: 5rem; text-align: center;">
             <span>回款周期</span>
@@ -77,15 +77,15 @@
                 <option value="2" >饿了么</option>
             </select>
             <span>核销开始时间</span>
-            <input type="text" id="test3">
+            <input type="text" id="test3"  v-model="detail.usageStartTime">
             <span>核销结束时间</span>
-            <input type="text" id="test4">
+            <input type="text" id="test4" v-model="detail.usageEndTime">
         </div>
         <div>
             <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">与本活动共存的活动</h3>
             <label for="id_select"></label>
             <select id="id_select" class="selectpicker bla bla bli" multiple data-live-search="true">
-                <option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>
+                <%--<option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>--%>
                 </optgroup>
             </select>
         </div>
@@ -99,7 +99,10 @@
         </div>
 
         <div>
-            <button type="button" class="btn btn-default" id="addActive">添加活动</button>
+            <button type="button" class="btn btn-default" @click="edit()">修改活动</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-default" id="addActive">添加门店</button>
         </div>
     </form>
     <table id="demo" lay-filter="test"></table>
@@ -155,11 +158,15 @@
                 handlingFee:"",
                 taxRate:'',
                 sellingPrice:'',
-                billPrice:'',
+                billPrice:''
             },
-            items:[{id:'我'},{id:'我是你爹'},{id:'你的'}],
+            promotionMapper : [],
+            items:[]
         },
         created:function(){
+            this.queryRelActive();
+            this.queryDetail();
+            // $('.selectpicker').selectpicker('refresh');     //设置好内容后刷新，  多用于异步请求
         },
         methods: {
             valueChange(e){
@@ -258,9 +265,16 @@
                     layer.msg('手续费率为空');
                     return;
                 }
+                var param = {
+                    promotionBaseInfoDo:this.detail
+                };
                 this.$http.post('<%=request.getContextPath()%>/PromotionController/updatePromotionBaseInfo',
-                    JSON.stringify(this.detail),{emulateJSON:false}).then(function(response) {
-
+                    JSON.stringify(param),{emulateJSON:false}).then(function(response) {
+                        if('10000' == response.data.code){
+                            layer.msg('修改成功');
+                        }else {
+                            layer.msg('修改失败');
+                        }
                     },
                     function(response) {
                         console.log("网络异常");
@@ -274,11 +288,30 @@
                         console.log("网络异常");
                     });
             },
+            queryRelActive:function () {
+                this.$http.post('<%=request.getContextPath()%>/PromotionController/activeList',{},{emulateJSON:true}).then(function(response) {
+                        this.items = response.data;
+                        var html = "";
+                        for (var i = 0; i < this.items.length; i++) {
+                            html += "<option value='" +this.items[i].id+ "'>" +this.items[i].name+"</option>";
+                        }
+                        $('#id_select').html(html);
+                        $('#id_select').selectpicker('refresh');     //设置好内容后刷新，  多用于异步请求
+                    },
+                    function(response) {
+                        console.log("网络异常");
+                    });
+            },
             queryDetail:function () {
                 this.$http.post('<%=request.getContextPath()%>/PromotionController/queryPromotionBaseInfo',{activityCode:this.detail.activityCode},{emulateJSON:true}).then(function(response) {
                         console.log(response.data);
                         if (10000 == response.data.code){
                             this.detail = response.data.data;
+                            for (var i = 0; i < this.detail.sharedActivity.length; i++) {
+                                $('#id_select').selectpicker('val',this.detail.sharedActivity);
+                                $('#id_select').selectpicker('refresh');     //设置好内容后刷新，  多用于异步请求
+                            }
+
                         }else {
                             layer.msg('查询异常');
                         }
@@ -307,9 +340,7 @@
     });
 
     $(window).on('load', function () {
-        $('.selectpicker').selectpicker({
-            'selectedText': '请选择'
-        });
+        $('.selectpicker').selectpicker();
     });
 
     //日期控件

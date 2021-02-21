@@ -1,5 +1,7 @@
 package com.promotion.product.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.promotion.product.common.ExcelUtils;
 import com.promotion.product.dao.dataobject.*;
 import com.promotion.product.entity.*;
@@ -116,7 +118,7 @@ public class PromotionController {
      */
     @RequestMapping("updatePromotionBaseInfo")
     @ResponseBody
-    public BaseEntityResponse<Boolean> updatePromotionBaseInfo(UpdatePromotionBaseInfoRequery requery) {
+    public BaseEntityResponse<Boolean> updatePromotionBaseInfo(@RequestBody UpdatePromotionBaseInfoRequery requery) {
         BaseEntityResponse<Boolean> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
             if(Objects.isNull(requery.getPromotionBaseInfoDo())){
@@ -220,7 +222,7 @@ public class PromotionController {
         return response;
     }
 
-    @RequestMapping("queryShopBind")
+    @RequestMapping("activeList")
     @ResponseBody
     private BaseEntityResponse<List<PromotionMapperDo>> queryShopBind(String  activityCode){
         BaseEntityResponse<List<PromotionMapperDo>> response =BaseEntityResponse.success(BaseEntityResponse.class);
