@@ -120,6 +120,11 @@ public class PromotionService {
         if(result){
             savePromotionBaseInfoRespone.setActivityCode(code);
             if(CollectionUtils.isNotEmpty(promotionMapperDo)){
+                List<PromotionMapperDo> promotionMapperDos=promotionMapperDao.selectByActivityCode(code);
+                if(CollectionUtils.isNotEmpty(promotionMapperDos)){
+                    List<String> collect = promotionMapperDos.stream().map(item -> item.getActivityCode()).collect(Collectors.toList());
+                    promotionMapperDo.removeIf(item->collect.contains(item.getRestaurantCode()));
+                }
                 for (PromotionMapperDo mapperDo : promotionMapperDo) {
                     mapperDo.setActivityCode(code);
                     promotionMapperDao.insert(mapperDo);
