@@ -282,7 +282,7 @@
                         if('10000' == response.data.code){
                             layer.msg('保存成功');
                             this.detail.activityCode = response.data.data.activityCode;
-                            <%--location.href='<%=request.getContextPath()%>/PromotionController/list?id='+app.detail.activityCode;--%>
+                            location.href='<%=request.getContextPath()%>/list?id='+app.detail.activityCode;
                         }else {
                             layer.msg('保存失败');
                         }

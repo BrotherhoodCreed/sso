@@ -1,5 +1,6 @@
 package com.promotion.product.service;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Joiner;
@@ -71,12 +72,12 @@ public class PromotionService {
 
     public   BasePageResponse<QueryPromotionListRespone>queryPromotionList(QueryPromotionListRequest request){
         BasePageResponse<QueryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
-        PageHelper.startPage(request.getPageIndex(), request.getPageSize());
+        Page pageInfo = PageHelper.startPage(request.getPageIndex(), request.getPageSize());
+        PageHelper.orderBy("created_time desc");
         List<QueryPromotionListDo> queryPromotionList=promotionBaseInfoDao.queryPromotionList(request);
         if(CollectionUtils.isEmpty(queryPromotionList)){
             return response;
         }
-        PageInfo<QueryPromotionListRespone> pageInfo=new PageInfo<>();
         response.setTotal(pageInfo.getTotal());
         response.setPages(pageInfo.getPageNum());
         List<QueryPromotionListRespone> queryPromotionListResponeList =new ArrayList<>();
