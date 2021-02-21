@@ -1,5 +1,7 @@
 package com.promotion.product.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.promotion.product.common.ExcelUtils;
 import com.promotion.product.dao.dataobject.*;
 import com.promotion.product.entity.*;
@@ -112,7 +114,7 @@ public class PromotionController {
      */
     @RequestMapping("updatePromotionBaseInfo")
     @ResponseBody
-    public BaseEntityResponse<Boolean> updatePromotionBaseInfo(UpdatePromotionBaseInfoRequery requery) {
+    public BaseEntityResponse<Boolean> updatePromotionBaseInfo(@RequestBody UpdatePromotionBaseInfoRequery requery) {
         BaseEntityResponse<Boolean> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
             if(Objects.isNull(requery.getPromotionBaseInfoDo())){
@@ -214,4 +216,26 @@ public class PromotionController {
         return response;
     }
 
+
+    /**
+     * 保存促销门店
+     */
+    @RequestMapping("activeList")
+    @ResponseBody
+    public String activeList(){
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id",1);
+        jsonObject.put("name","我哦SD卡");
+        JSONObject jsonObject2 = new JSONObject();
+        jsonObject2.put("id",2);
+        jsonObject2.put("name","ad上线");
+        JSONObject jsonObject3 = new JSONObject();
+        jsonObject3.put("id",3);
+        jsonObject3.put("name","撒大声地股份");
+        jsonArray.add(jsonObject);
+        jsonArray.add(jsonObject2);
+        jsonArray.add(jsonObject3);
+        return jsonArray.toJSONString();
+    }
 }
