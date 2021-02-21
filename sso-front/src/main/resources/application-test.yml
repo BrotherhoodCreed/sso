@@ -27,9 +27,11 @@ spring:
       maxActive: 100
       minIdle: 10
       maxWait: 5000
-mybatis:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+logging:
+  level:
+    com.promotion.product.dao: debug
 
 
 
