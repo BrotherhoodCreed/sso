@@ -138,7 +138,7 @@ public interface PromotionBaseInfoDao {
 
 
 
-    Integer update(UpdatePromotionBaseInfoRequery requery);
+    Integer update(PromotionBaseInfoDo requery);
 
     Integer querySerialNumber();
 

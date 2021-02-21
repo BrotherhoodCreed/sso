@@ -10,7 +10,6 @@ import com.promotion.product.dao.mysql.PromotionMapperDao;
 import com.promotion.product.entity.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -92,7 +91,7 @@ public class PromotionService {
        return response;
     }
 
-    public SavePromotionBaseInfoRespone savePromotionBaseInfo(SavePromotionBaseInfoRequery savePromotionBaseInfoRequery)  throws Exception{
+    public SavePromotionBaseInfoRespone savePromotionBaseInfo(SavePromotionBaseInfoRequery savePromotionBaseInfoRequery,List<PromotionMapperDo> promotionMapperDo)  throws Exception{
         SavePromotionBaseInfoRespone savePromotionBaseInfoRespone =new SavePromotionBaseInfoRespone();
         PromotionBaseInfoDo promotionBaseInfoDo =ModelCopier.copy(savePromotionBaseInfoRequery,PromotionBaseInfoDo.class);
 
@@ -100,8 +99,12 @@ public class PromotionService {
         Date date=calendar.getTime();
         SimpleDateFormat format = new SimpleDateFormat("YYYYMM");
         Integer index= promotionBaseInfoDao.querySerialNumber();
+        String area="";
+        if(promotionMapperDo.get(0)!=null){
+            area=promotionMapperDo.get(0).getArea();
+        }
         //01 区域号
-        String code ="01"+ FormTypeEnums.TAKE_OUT.getIndex()+ format.format(date)+String.format("%03d",index);
+        String code =area+ FormTypeEnums.TAKE_OUT.getIndex()+ format.format(date)+String.format("%03d",index);
         promotionBaseInfoDo.setActivityCode(code);
         promotionBaseInfoDo.setCreatedTime(new Date());
         promotionBaseInfoDo.setUpdatedTime(new Date());
@@ -114,6 +117,11 @@ public class PromotionService {
         Boolean result=  promotionBaseInfoDao.insert(promotionBaseInfoDo)>0;
         if(result){
             savePromotionBaseInfoRespone.setActivityCode(code);
+            if(CollectionUtils.isNotEmpty(promotionMapperDo)){
+                for (PromotionMapperDo mapperDo : promotionMapperDo) {
+                    promotionMapperDao.insert(mapperDo);
+                }
+            }
         }
         return savePromotionBaseInfoRespone;
     }
@@ -130,7 +138,11 @@ public class PromotionService {
 
 
     public Boolean updatePromotionBaseInfo(UpdatePromotionBaseInfoRequery requery) {
-         Boolean result  = promotionBaseInfoDao.update(requery) > 0;
+        PromotionBaseInfoDo promotionBaseInfoDo=ModelCopier.copy(requery,PromotionBaseInfoDo.class);
+        if(CollectionUtils.isNotEmpty( requery.getPromotionBaseInfoDo().getSharedActivity())){
+            promotionBaseInfoDo.setSharedActivity(String.join(",",requery.getPromotionBaseInfoDo().getSharedActivity()));
+        }
+         Boolean result  = promotionBaseInfoDao.update(promotionBaseInfoDo) > 0;
          return result;
     }
 }

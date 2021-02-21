@@ -8,7 +8,7 @@ spring:
   datasource:
     ds1:
       type: com.mchange.v2.c3p0.ComboPooledDataSource
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
       jdbc-url: jdbc:mysql://192.168.2.131:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
       username: root
       password: 12345678
@@ -19,8 +19,8 @@ spring:
 
     ds2:
       type: com.mchange.v2.c3p0.ComboPooledDataSource
-      driver-class-name: com.mysql.jdbc.Driver
-      jdbc-url: jdbc:mysql://47.92.35.78:3306/finebi_dw?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://47.92.35.78:3306/finebi_dw?zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
       username: YUKUCONNECT
       password: 012345
       initialSize: 3

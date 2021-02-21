@@ -4,6 +4,7 @@ import com.promotion.product.common.ExcelUtils;
 import com.promotion.product.dao.dataobject.*;
 import com.promotion.product.entity.*;
 import com.promotion.product.service.DictionarySerivce;
+import com.promotion.product.service.PromotionMapperSeriver;
 import com.promotion.product.service.PromotionService;
 import com.promotion.product.service.ShopService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,9 @@ public class PromotionController {
 
     @Autowired
     private DictionarySerivce dictionarySerivce;
+
+    @Autowired
+    private PromotionMapperSeriver promotionMapperSeriver;
 
     @Autowired
     private ShopService shopService;
@@ -60,10 +64,10 @@ public class PromotionController {
 //    @PostMapping("savePromotionBaseInfo")
     @RequestMapping("savePromotionBaseInfo")
     @ResponseBody
-    public BaseEntityResponse<SavePromotionBaseInfoRespone> savePromotionBaseInfo(@RequestBody  SavePromotionBaseInfoRequery request) {
+    public BaseEntityResponse<SavePromotionBaseInfoRespone> savePromotionBaseInfo(@RequestBody  SavePromotionBaseInfoRequery request,List<PromotionMapperDo> promotionMapperDo) {
         BaseEntityResponse<SavePromotionBaseInfoRespone> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
-            response.setData(promotionService.savePromotionBaseInfo(request));
+            response.setData(promotionService.savePromotionBaseInfo(request,promotionMapperDo));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -94,7 +98,7 @@ public class PromotionController {
 
 
     @RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
-    public void exportExcel(HttpServletResponse response)  throws IOException {
+    public void exportExcel(HttpServletResponse response,List<Long> id)  throws IOException {
         List<ExeclRespone> resultList = new ArrayList<>();
         ExeclRespone execlRespone = new ExeclRespone();
         execlRespone.setArea("aaa");
@@ -215,5 +219,19 @@ public class PromotionController {
         }
         return response;
     }
+
+    @RequestMapping("queryShopBind")
+    @ResponseBody
+    private BaseEntityResponse<List<PromotionMapperDo>> queryShopBind(String  activityCode){
+        BaseEntityResponse<List<PromotionMapperDo>> response =BaseEntityResponse.success(BaseEntityResponse.class);
+        try {
+            response.setData(promotionMapperSeriver.queryByPromotionBaseInfoId(activityCode));
+        }catch (Exception e){
+            response = BaseEntityResponse.failure(BaseEntityResponse.class);
+            response.setMessage(e.getMessage());
+        }
+        return response;
+    }
+
 
 }
