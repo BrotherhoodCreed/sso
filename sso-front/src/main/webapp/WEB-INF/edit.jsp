@@ -165,7 +165,10 @@
         },
         created:function(){
             this.queryRelActive();
+            this.query("activity_type");
+            this.query("channel");
             this.queryDetail();
+
             // $('.selectpicker').selectpicker('refresh');     //设置好内容后刷新，  多用于异步请求
         },
         methods: {
@@ -280,9 +283,29 @@
                         console.log("网络异常");
                     });
             },
-            queryType:function (type) {
+            saveMerch:function () {
+                var param = {
+                    promotionMapperDos:this.promotionMapper
+                };
+                this.$http.post('<%=request.getContextPath()%>/PromotionController/savePromotionMapperInfo',
+                JSON.stringify(param),{emulateJSON:false}).then(function(response) {
+                    if('10000' == response.data.code){
+                        layer.msg('保存成功');
+                        location.reload();
+                    }else {
+                        layer.msg('保存失败');
+                    }
+                }, function(response) {
+                    console.log("网络异常");
+                });
+            },
+            query:function (type) {
                 this.$http.post('<%=request.getContextPath()%>/PromotionController/queryDictionary',{descriptionType:type},{emulateJSON:true}).then(function(response) {
-                        console.log(response.data);
+                        if('activity_type' == type){
+                            this.activityType = response.data.data;
+                        }else if('channel' == type){
+                            this.channel = response.data.data;
+                        }
                     },
                     function(response) {
                         console.log("网络异常");
@@ -495,10 +518,10 @@
             ,page: false //开启分页
             ,cols: [[ //表头
                 // {type:'checkbox',field: 'id', title: 'ID',  sort: true, fixed: 'left'}
-                {field: 'activityCode', title: '促销编码', sort: true}
-                ,{field: 'activityType', title: '活动类型' }
-                ,{field: 'salesStartTime', title: '开始时间'}
-                ,{field: 'salesEndTime', title: '结束时间',  sort: true}
+                {field: 'area', title: '区域', sort: true}
+                ,{field: 'city', title: '城市' }
+                ,{field: 'restaurantCode', title: '门店编号'}
+                ,{field: 'restaurantName', title: '门店名称',  sort: true}
                 ,{fixed: 'right', align:'center', toolbar: '#opt'} //这里的toolbar值是模板元素的选择器
             ]]
         });
@@ -514,7 +537,8 @@
                     type : 'GET',
                     async : false,
                     success: function(resut){
-                        if('10000' == resut.data.code){
+                        console.log(resut)
+                        if(10000 == resut.code){
                             layer.msg('删除成功');
                             obj.del();
                         }
@@ -669,7 +693,7 @@
                 getCheckedId(getData);
                 console.log(app.promotionMapper);
                 layer.close(layer.index);
-                app.save();
+                app.saveMerch();
             }
             return false;
         });

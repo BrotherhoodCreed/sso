@@ -252,6 +252,7 @@ public class PromotionController {
         try {
             response.setData(promotionMapperSeriver.queryByPromotionBaseInfoId(activityCode));
         }catch (Exception e){
+            e.printStackTrace();
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
             response.setMessage(e.getMessage());
         }
