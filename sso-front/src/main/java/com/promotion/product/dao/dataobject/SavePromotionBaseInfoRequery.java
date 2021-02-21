@@ -13,6 +13,7 @@ import java.util.List;
 public class SavePromotionBaseInfoRequery {
 //    private  PromotionBaseInfoDo promotionBaseInfoDo;
 //    private List<PromotionMapperDo> promotionMapperDo;
+    private  List<PromotionMapperDo> promotionMapperDo;
 
     /**
      * 主键

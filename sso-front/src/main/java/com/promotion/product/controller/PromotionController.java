@@ -66,10 +66,10 @@ public class PromotionController {
 //    @PostMapping("savePromotionBaseInfo")
     @RequestMapping("savePromotionBaseInfo")
     @ResponseBody
-    public BaseEntityResponse<SavePromotionBaseInfoRespone> savePromotionBaseInfo(@RequestBody  SavePromotionBaseInfoRequery request,List<PromotionMapperDo> promotionMapperDo) {
+    public BaseEntityResponse<SavePromotionBaseInfoRespone> savePromotionBaseInfo(@RequestBody  SavePromotionBaseInfoRequery request) {
         BaseEntityResponse<SavePromotionBaseInfoRespone> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
-            response.setData(promotionService.savePromotionBaseInfo(request,promotionMapperDo));
+            response.setData(promotionService.savePromotionBaseInfo(request,request.getPromotionMapperDo()));
         }
         catch (Exception e){
             e.printStackTrace();
