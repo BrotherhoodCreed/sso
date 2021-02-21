@@ -43,7 +43,7 @@
             <span>活动类型</span>
                 <select v-model="detail.activityType"  style="width: 100px;">
                     <option value="" >请选择</option>
-                    <option  v-bind:value="item.id" v-for="item in activityType" >{{item.description}}</option>
+                    <option  v-bind:value="item.descriptionCode" v-for="item in activityType" >{{item.description}}</option>
                 </select>
             <span>销售开始时间</span>
             <input type="text" id="test1">
@@ -79,7 +79,7 @@
         <div><span>七字描述</span> <input type="text " v-model="detail.introduction" @input="valueChange" style="width: 110px;">
             <span>团购网站</span> <select v-model="detail.theWay"  style="width: 100px;">
                 <option value="" >请选择</option>
-                <option  v-bind:value="item.id" v-for="item in channel" >{{item.description}}</option>
+                <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
             </select>
             <span>核销开始时间</span>
             <input type="text" id="test3">

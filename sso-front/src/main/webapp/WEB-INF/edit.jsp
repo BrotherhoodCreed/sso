@@ -38,7 +38,12 @@
 
 <body>
     <form action="" id="app">
-        <div><span>促销编码</span> <input type="number" v-model="detail.activityCode"  readonly="readonly" style="width: 110px;"> <span>活动类型</span> <select v-model="detail.activityType"  style="width: 100px;"><option value="1">团购</option></select>
+        <div><span>促销编码</span> <input type="number" v-model="detail.activityCode"  readonly="readonly" style="width: 110px;">
+            <span>活动类型</span>
+            <select v-model="detail.activityType"  style="width: 100px;">
+                <option value="" >请选择</option>
+                <option  v-bind:value="item.descriptionCode" v-for="item in activityType" >{{item.description}}</option>
+            </select>
             <span>销售开始时间</span>
             <input type="text" id="test1" v-model="detail.salesStartTime">
 
@@ -73,8 +78,7 @@
         <div><span>七字描述</span> <input type="text " v-model="detail.introduction" @input="valueChange" style="width: 110px;">
             <span>团购网站</span> <select v-model="detail.theWay"  style="width: 100px;">
                 <option value="" >请选择</option>
-                <option value="1" >美团</option>
-                <option value="2" >饿了么</option>
+                <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
             </select>
             <span>核销开始时间</span>
             <input type="text" id="test3"  v-model="detail.usageStartTime">
@@ -161,6 +165,8 @@
                 billPrice:''
             },
             promotionMapper : [],
+            activityType:[],
+            channel:[],
             items:[]
         },
         created:function(){
@@ -273,7 +279,7 @@
                 };
                 this.$http.post('<%=request.getContextPath()%>/PromotionController/updatePromotionBaseInfo',
                     JSON.stringify(param),{emulateJSON:false}).then(function(response) {
-                        if('10000' == response.data.code){
+                        if(10000 == response.data.code){
                             layer.msg('修改成功');
                         }else {
                             layer.msg('修改失败');
@@ -289,7 +295,7 @@
                 };
                 this.$http.post('<%=request.getContextPath()%>/PromotionController/savePromotionMapperInfo',
                 JSON.stringify(param),{emulateJSON:false}).then(function(response) {
-                    if('10000' == response.data.code){
+                    if(10000 == response.data.code){
                         layer.msg('保存成功');
                         location.reload();
                     }else {
