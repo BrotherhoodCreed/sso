@@ -2,7 +2,6 @@ package com.promotion.product.service;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.google.common.base.Joiner;
 import com.promotion.product.common.ModelCopier;
 import com.promotion.product.dao.dataobject.*;
@@ -10,7 +9,6 @@ import com.promotion.product.dao.mysql.DictionaryDao;
 import com.promotion.product.dao.mysql.PromotionBaseInfoDao;
 import com.promotion.product.dao.mysql.PromotionMapperDao;
 import com.promotion.product.entity.*;
-import lombok.var;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -185,7 +182,7 @@ public class PromotionService {
         return savePromotionBaseInfoRespone;
     }
 
-    public Boolean savePromotionMapperInfo(savePromotionMapperInfoRequest req){
+    public Boolean savePromotionMapperInfo(SavePromotionMapperInfoRequest req){
         String activityCode=req.getPromotionMapperDos().get(0).getActivityCode();
         if(StringUtils.isNotEmpty(activityCode)){
             List<PromotionMapperDo> promotionMapperDos=promotionMapperDao.selectByActivityCode(activityCode);

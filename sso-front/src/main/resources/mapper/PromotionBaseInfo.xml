@@ -4,44 +4,43 @@
 <mapper namespace="com.promotion.product.dao.mysql.PromotionBaseInfoDao">
 
     <!--<resultMap id="BaseResultMap" type="com.promotion.product.dao.dataobject.PromotionBaseInfoDo">-->
-        <!--&lt;!&ndash;@Table tbl_track_region_config&ndash;&gt;-->
-        <!--<result property="id" column="id" />-->
-        <!--<result property="activityCode" column="activity_code" />-->
-        <!--<result property="activityType" column="activity_type" />-->
-        <!--<result property="salesStartTime" column="sales_start_time" />-->
-        <!--<result property="salesEndTime" column="sales_end_time" />-->
-        <!--<result property="amount" column="amount" />-->
-        <!--<result property="billCycle" column="bill_cycle" />-->
-        <!--<result property="description" column="description" />-->
-        <!--<result property="introduction" column="introduction" />-->
-        <!--<result property="channel" column="channel" />-->
-        <!--<result property="theWay" column="the_way" />-->
-        <!--<result property="sharedActivity" column="shared_activity" />-->
-        <!--<result property="sellingPrice" column="selling_price" />-->
-        <!--<result property="billPrice" column="bill_price" />-->
-        <!--<result property="handlingFee" column="handling_fee"/>-->
-        <!--<result property="taxRate" column="tax_rate" />-->
-        <!--<result property="other" column="other" />-->
-        <!--<result property="createdTime" column="created_time" />-->
-        <!--<result property="createdUser" column="created_user" />-->
-        <!--<result property="deleted" column="deleted" />-->
-        <!--<result property="updatedTime" column="updated_user"/>-->
-        <!--<result property="updatedUser" column="updated_time" />-->
-        <!--<result property="submit" column="submit" />-->
-        <!--<result property="type" column="type" />-->
-        <!--<result property="usageStartTime" column="usage_start_time" />-->
-        <!--<result property="usageEndTime" column="usage_end_time" />-->
+    <!--&lt;!&ndash;@Table tbl_track_region_config&ndash;&gt;-->
+    <!--<result property="id" column="id" />-->
+    <!--<result property="activityCode" column="activity_code" />-->
+    <!--<result property="activityType" column="activity_type" />-->
+    <!--<result property="salesStartTime" column="sales_start_time" />-->
+    <!--<result property="salesEndTime" column="sales_end_time" />-->
+    <!--<result property="amount" column="amount" />-->
+    <!--<result property="billCycle" column="bill_cycle" />-->
+    <!--<result property="description" column="description" />-->
+    <!--<result property="introduction" column="introduction" />-->
+    <!--<result property="channel" column="channel" />-->
+    <!--<result property="theWay" column="the_way" />-->
+    <!--<result property="sharedActivity" column="shared_activity" />-->
+    <!--<result property="sellingPrice" column="selling_price" />-->
+    <!--<result property="billPrice" column="bill_price" />-->
+    <!--<result property="handlingFee" column="handling_fee"/>-->
+    <!--<result property="taxRate" column="tax_rate" />-->
+    <!--<result property="other" column="other" />-->
+    <!--<result property="createdTime" column="created_time" />-->
+    <!--<result property="createdUser" column="created_user" />-->
+    <!--<result property="deleted" column="deleted" />-->
+    <!--<result property="updatedTime" column="updated_user"/>-->
+    <!--<result property="updatedUser" column="updated_time" />-->
+    <!--<result property="submit" column="submit" />-->
+    <!--<result property="type" column="type" />-->
+    <!--<result property="usageStartTime" column="usage_start_time" />-->
+    <!--<result property="usageEndTime" column="usage_end_time" />-->
     <!--</resultMap>-->
 
 
-
     <!--<resultMap id="listResultMap" type="com.promotion.product.dao.dataobject.queryPromotionListDo">-->
-        <!--&lt;!&ndash;@Table tbl_track_region_config&ndash;&gt;-->
-        <!--<result property="id" column="id" />-->
-        <!--<result property="activityCode" column="activity_code" />-->
-        <!--<result property="activityType" column="activity_type" />-->
-        <!--<result property="salesStartTime" column="sales_start_time" />-->
-        <!--<result property="salesEndTime" column="sales_end_time" />-->
+    <!--&lt;!&ndash;@Table tbl_track_region_config&ndash;&gt;-->
+    <!--<result property="id" column="id" />-->
+    <!--<result property="activityCode" column="activity_code" />-->
+    <!--<result property="activityType" column="activity_type" />-->
+    <!--<result property="salesStartTime" column="sales_start_time" />-->
+    <!--<result property="salesEndTime" column="sales_end_time" />-->
     <!--</resultMap>-->
     <select id="queryPromotionList" resultType="com.promotion.product.dao.dataobject.QueryPromotionListDo">
         SELECT
@@ -64,37 +63,37 @@
 
     <select id="exportExcel" resultType="com.promotion.product.entity.ExeclDto" parameterType="list">
         select
-            a.activity_code as 'activityCode',
-            a.activity_type as 'activityType',
-            a.sales_start_time as 'salesStartTime',
-            a.sales_end_time as 'salesEndTime',
-            a.amount as 'amount',
-            a.bill_cycle as 'billCycle',
-            a.description as 'description',
-            a.introduction as 'introduction',
-            a.channel as 'channel',
-            a.the_way as 'theWay',
-            a.shared_activity as 'sharedActivity',
-            a.selling_price as 'sellingPrice',
-            a.bill_price as 'billPrice',
-            a.handling_fee as 'handlingFee',
-            a.tax_rate as 'taxRate',
-            a.other as 'other',
-            a.submit as 'submit',
-            a.type as 'type',
-            a.created_time as 'createdTime',
-            a.created_user as 'createdUser',
-            a.updated_time as 'updatedTime',
-            a.updated_user as 'updatedUser',
-            a.usage_start_time as 'usageStartTime',
-            a.usage_end_time as 'usageEndTime',
-            b.area,
-            b.city,
-            b.restaurant_code as 'restaurantCode',
-            b.restaurant_name as 'restaurantName'
-        from  tb_promotion_base_info as a
-        left join  tb_promotion_mapper as b
-        ON  a.activity_code=b.activity_code
+        a.activity_code as 'activityCode',
+        a.activity_type as 'activityType',
+        a.sales_start_time as 'salesStartTime',
+        a.sales_end_time as 'salesEndTime',
+        a.amount as 'amount',
+        a.bill_cycle as 'billCycle',
+        a.description as 'description',
+        a.introduction as 'introduction',
+        a.channel as 'channel',
+        a.the_way as 'theWay',
+        a.shared_activity as 'sharedActivity',
+        a.selling_price as 'sellingPrice',
+        a.bill_price as 'billPrice',
+        a.handling_fee as 'handlingFee',
+        a.tax_rate as 'taxRate',
+        a.other as 'other',
+        a.submit as 'submit',
+        a.type as 'type',
+        a.created_time as 'createdTime',
+        a.created_user as 'createdUser',
+        a.updated_time as 'updatedTime',
+        a.updated_user as 'updatedUser',
+        a.usage_start_time as 'usageStartTime',
+        a.usage_end_time as 'usageEndTime',
+        b.area,
+        b.city,
+        b.restaurant_code as 'restaurantCode',
+        b.restaurant_name as 'restaurantName'
+        from tb_promotion_base_info as a
+        left join tb_promotion_mapper as b
+        ON a.activity_code=b.activity_code
         ANd a.deleted=0 AND b.deleted=0
         <where>
             a.activity_code in
@@ -106,64 +105,72 @@
     </select>
 
     <select id="querySerialNumber" resultType="Integer">
-        select count(1)+1 as activity_code from tb_promotion_base_info where to_days(created_time) = to_days(now());
+        select count(1) + 1 as activity_code
+        from tb_promotion_base_info
+        where to_days(created_time) = to_days(now());
     </select>
 
 
     <update id="update" parameterType="com.promotion.product.dao.dataobject.PromotionBaseInfoDo">
-        update tb_promotion_base_info set
-        <if test="activityType != null and activityType !=''">
-            activity_type=#{activityType}
-        </if>
-        <if test="sales_start_time != null and sales_start_time !=''">
-            sales_start_time=#{salesStartTime}
-        </if>
-        <if test="sales_end_time != null and sales_end_time !=''">
-            sales_end_time=#{salesEndTime}
-        </if>
-        <if test="amount != null">
-            amount=#{amount}
-        </if>
-        <if test="bill_cycle != null">
-            bill_cycle=#{billCycle}
-        </if>
-        <if test="description != null and description !=''">
-            description=#{description}
-        </if>
-        <if test="introduction != null and introduction !=''">
-            introduction=#{introduction}
-        </if>
-        <if test="channel != null and channel !=''">
-            channel=#{channel}
-        </if>
-        <if test="the_way != null and the_way !=''">
-            the_way=#{theWay}
-        </if>
-        <if test="shared_activity != null and shared_activity !=''">
-            shared_activity=#{sharedActivity}
-        </if>
-        <if test="selling_price != null ">
-            selling_price=#{sellingPrice}
-        </if>
-        <if test="bill_price != null">
-            bill_price=#{billPrice}
-        </if>
-        <if test="handling_fee != null ">
-            handling_fee=#{handlingFee}
-        </if>
-        <if test="tax_rate != null ">
-            tax_rate=#{taxRate}
-        </if>
-        <if test="other != null and other!='' ">
-            other=#{other}
-        </if>
-        <if test="usageStartTime !=null and usageStartTime!=''">
-            usage_start_time =#{usageStartTime}
-        </if>
-        <if test="usageEndTime !=null and usageEndTime!=''">
-            usage_end_time =#{usageEndTime}
-        </if>
-        where activity_code=#{activityCode}
+        update tb_promotion_base_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="activityType != null and activityType !=''">
+                activity_type=#{activityType},
+            </if>
+
+            <if test="amount != null">
+                amount=#{amount},
+            </if>
+            <if test="billCycle != null">
+                bill_cycle=#{billCycle},
+            </if>
+            <if test="description != null and description !=''">
+                description=#{description},
+            </if>
+            <if test="introduction != null and introduction !=''">
+                introduction=#{introduction},
+            </if>
+            <if test="channel != null and channel !=''">
+                channel=#{channel},
+            </if>
+            <if test="theWay != null and theWay !=''">
+                the_way=#{theWay},
+            </if>
+            <if test="sharedActivity != null and sharedActivity !=''">
+                shared_activity=#{sharedActivity},
+            </if>
+            <if test="sellingPrice != null ">
+                selling_price=#{sellingPrice},
+            </if>
+            <if test="billPrice != null">
+                bill_price=#{billPrice},
+            </if>
+            <if test="handlingFee != null ">
+                handling_fee=#{handlingFee},
+            </if>
+            <if test="taxRate != null ">
+                tax_rate=#{taxRate},
+            </if>
+            <if test="other != null and other!='' ">
+                other=#{other},
+            </if>
+            <if test="usageStartTime !=null ">
+                usage_start_time =  #{usageStartTime},
+            </if>
+            <if test="usageEndTime !=null ">
+                usage_end_time =  #{usageEndTime},
+            </if>
+            <if test="salesStartTime != null">
+                sales_start_time=   #{salesStartTime} ,
+            </if>
+            <if test="salesEndTime != null ">
+                sales_end_time=  #{salesEndTime} ,
+            </if>
+        </trim>
+        <where>
+            activity_code=#{activityCode}
+        </where>
+
     </update>
 
 </mapper>

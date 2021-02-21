@@ -10,15 +10,12 @@ import com.promotion.product.service.PromotionMapperSeriver;
 import com.promotion.product.service.PromotionService;
 import com.promotion.product.service.ShopService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.reflect.MethodUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -84,7 +81,7 @@ public class PromotionController {
      */
     @RequestMapping("savePromotionMapperInfo")
     @ResponseBody
-    public BaseEntityResponse<Boolean> savePromotionMapperInfo(@RequestBody  savePromotionMapperInfoRequest request){
+    public BaseEntityResponse<Boolean> savePromotionMapperInfo(@RequestBody SavePromotionMapperInfoRequest request){
         BaseEntityResponse<Boolean> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
             response.setData(promotionService.savePromotionMapperInfo(request));
@@ -126,6 +123,7 @@ public class PromotionController {
         catch (Exception e){
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
             response.setMessage(e.getMessage());
+            log.error("异常",e);
         }
         return response;
     }
