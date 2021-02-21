@@ -8,6 +8,7 @@ import com.promotion.product.dao.dataobject.*;
 import com.promotion.product.dao.mysql.PromotionBaseInfoDao;
 import com.promotion.product.dao.mysql.PromotionMapperDao;
 import com.promotion.product.entity.*;
+import lombok.var;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PromotionService {
@@ -119,6 +121,7 @@ public class PromotionService {
             savePromotionBaseInfoRespone.setActivityCode(code);
             if(CollectionUtils.isNotEmpty(promotionMapperDo)){
                 for (PromotionMapperDo mapperDo : promotionMapperDo) {
+                    mapperDo.setActivityCode(code);
                     promotionMapperDao.insert(mapperDo);
                 }
             }
@@ -127,7 +130,14 @@ public class PromotionService {
     }
 
     public Boolean savePromotionMapperInfo(savePromotionMapperInfoRequest req){
-
+        String activityCode=req.getPromotionMapperDos().get(0).getActivityCode();
+        if(StringUtils.isNotEmpty(activityCode)){
+            List<PromotionMapperDo> promotionMapperDos=promotionMapperDao.selectByActivityCode(activityCode);
+            if(CollectionUtils.isNotEmpty(promotionMapperDos)){
+                List<String> collect = promotionMapperDos.stream().map(item -> item.getActivityCode()).collect(Collectors.toList());
+                req.getPromotionMapperDos().removeIf(item->collect.contains(item.getRestaurantCode()));
+            }
+        }
         Integer row=0;
         for (PromotionMapperDo promotionMapperDo : req.getPromotionMapperDos()) {
             row+= promotionMapperDao.insert(promotionMapperDo);
