@@ -33,7 +33,7 @@ public interface YuKuDao {
             "\tSYSINITDATE AS 'sysinitdate',\n" +
             "\tiscomparable AS 'iscomparable' \n" +
             "FROM\n" +
-            "\tstoreinfo")
+            "\tstoreinfo where AM is not null")
     List<ShopDo> selectShop();
 
 

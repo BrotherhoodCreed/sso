@@ -206,10 +206,10 @@ public class PromotionController {
      */
     @RequestMapping("queryTree")
     @ResponseBody
-    private BaseEntityResponse<List<TreeResponse>> queryTree(String  activityCode){
+    private BaseEntityResponse<List<TreeResponse>> queryTree(String  activityCode,String shopName){
         BaseEntityResponse<List<TreeResponse>> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
-            response.setData(shopService.queryTree(activityCode));
+            response.setData(shopService.queryTree(activityCode,shopName));
         }catch (Exception e){
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
             response.setMessage(e.getMessage());
