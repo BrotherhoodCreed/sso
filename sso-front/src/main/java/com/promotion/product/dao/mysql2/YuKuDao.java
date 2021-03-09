@@ -31,7 +31,8 @@ public interface YuKuDao {
             "\tADRS AS 'adrs',\n" +
             "\tDEF5 AS 'def5',\n" +
             "\tSYSINITDATE AS 'sysinitdate',\n" +
-            "\tiscomparable AS 'iscomparable' \n" +
+            "\tiscomparable AS 'iscomparable', \n" +
+            "\tAMCD AS 'amcd' \n" +
             "FROM\n" +
             "\tstoreinfo where AM is not null")
     List<ShopDo> selectShop();

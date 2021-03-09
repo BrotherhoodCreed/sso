@@ -101,6 +101,9 @@ public class ShopDo {
      */
     private String       iscomparable;
 
+
+    private String amcd;
+
     public String getStcd() {
         return stcd;
     }
