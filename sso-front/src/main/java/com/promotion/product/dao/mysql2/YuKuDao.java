@@ -1,6 +1,7 @@
 package com.promotion.product.dao.mysql2;
 
 import com.promotion.product.dao.dataobject.ShopDo;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +38,9 @@ public interface YuKuDao {
             "\tstoreinfo where AM is not null")
     List<ShopDo> selectShop();
 
+
+    @Select("Select AMCD from storeinfo where STCD=#{shopAreaId}")
+    String selectShopAreaId(@Param("shopAreaId") String shopAreaId);
 
 
 }

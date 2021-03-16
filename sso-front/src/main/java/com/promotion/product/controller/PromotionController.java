@@ -254,5 +254,10 @@ public class PromotionController {
         return response;
     }
 
+    private Boolean startProcess(List<String> activityCode){
+        promotionService.startProcess(activityCode);
+
+        return  false;
+    }
 
 }

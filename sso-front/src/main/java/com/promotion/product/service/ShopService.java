@@ -10,6 +10,7 @@ import com.promotion.product.dao.mysql2.YuKuDao;
 import com.promotion.product.entity.TreeResponse;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -90,6 +91,10 @@ public class ShopService {
         treeResponse.setTitle(key);
         treeResponse.setId(key);
         return treeResponse;
+    }
+
+    public String queryShopAreaId( String restaurantCode){
+        return yuKuDao.selectShopAreaId(restaurantCode);
     }
 
 }
