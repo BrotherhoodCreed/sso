@@ -30,6 +30,9 @@ public class PromotionService {
     @Autowired
     private DictionaryDao dictionaryDao;
 
+    @Autowired
+    private  ShopService shopService;
+
     public  List<ExeclRespone>  exportExcel(List<String> codes){
         List<ExeclRespone> resultList = new ArrayList<>();
         List<ExeclDto> exportExcel =promotionBaseInfoDao.exportExcel(codes);
@@ -153,8 +156,14 @@ public class PromotionService {
         if(promotionMapperDo.get(0)!=null){
             area=promotionMapperDo.get(0).getArea();
         }
+        String codePrefix="00";
+        if(CollectionUtils.isNotEmpty(promotionMapperDo)){
+            if(!(promotionMapperDo.stream().map(item->item.getRestaurantCode()).distinct().count()>1)){
+                codePrefix=  shopService.queryShopAreaId(promotionMapperDo.get(0).getRestaurantCode());
+            }
+        }
         //01 区域号
-        String code ="01"+ FormTypeEnums.TAKE_OUT.getIndex()+ format.format(date)+String.format("%03d",index);
+        String code =codePrefix+ FormTypeEnums.TAKE_OUT.getIndex()+ format.format(date)+String.format("%03d",index);
         promotionBaseInfoDo.setActivityCode(code);
         promotionBaseInfoDo.setCreatedTime(new Date());
         promotionBaseInfoDo.setUpdatedTime(new Date());
@@ -207,5 +216,11 @@ public class PromotionService {
         }
          Boolean result  = promotionBaseInfoDao.update(promotionBaseInfoDo) > 0;
          return result;
+    }
+
+
+    public  List<PromotionBaseInfoDo> startProcess(List<String> activityCode){
+        List<PromotionBaseInfoDo> promotionBaseInfoDoList= promotionBaseInfoDao.selectByAivityCodes(activityCode);
+        return promotionBaseInfoDoList;
     }
 }

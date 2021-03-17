@@ -16,4 +16,5 @@ public class PromotionMapperSeriver {
         List<PromotionMapperDo> promotionMapperDoList=   promotionMapperDao.selectByActivityCode(activityCode);
         return promotionMapperDoList;
     }
+
 }

@@ -109,8 +109,11 @@ public interface PromotionBaseInfoDao {
             "usage_start_time as 'usageStartTime',\n" +
             "usage_end_time as 'usageEndTime',\n" +
             "from tb_promotion_base_info  \n" +
-            "where deleted=0   AND    activity_code =#{aivityCode}")
-    PromotionBaseInfoDo selectByAivityCodes(@Param("aivityCode") List<String>  aivityCode);
+            "where deleted=0   AND    " +
+            "activity_code in <foreach item='item' index='index' collection='aivityCode' open='(' separator=',' close=')'> " +
+            "   #{item}" +
+            "</foreach>")
+    List<PromotionBaseInfoDo> selectByAivityCodes(@Param("aivityCode") List<String>  aivityCode);
 
 
 
