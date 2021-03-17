@@ -69,55 +69,55 @@
     <update id="update" parameterType="com.promotion.product.dao.dataobject.PromotionBaseInfoDo">
         update tb_promotion_base_info set
         <if test="activityType != null and activityType !=''">
-            activity_type=#{activityType}
+            activity_type=#{activityType},
         </if>
-        <if test="sales_start_time != null and sales_start_time !=''">
-            sales_start_time=#{salesStartTime}
+        <if test="salesStartTime != null and salesStartTime !=''">
+            sales_start_time=#{salesStartTime},
         </if>
-        <if test="sales_end_time != null and sales_end_time !=''">
-            sales_end_time=#{salesEndTime}
+        <if test="salesEndTime != null and salesEndTime !=''">
+            sales_end_time=#{salesEndTime},
         </if>
         <if test="amount != null">
-            amount=#{amount}
+            amount=#{amount},
         </if>
-        <if test="bill_cycle != null">
-            bill_cycle=#{billCycle}
+        <if test="billCycle != null">
+            bill_cycle=#{billCycle},
         </if>
         <if test="description != null and description !=''">
-            description=#{description}
+            description=#{description},
         </if>
         <if test="introduction != null and introduction !=''">
-            introduction=#{introduction}
+            introduction=#{introduction},
         </if>
         <if test="channel != null and channel !=''">
-            channel=#{channel}
+            channel=#{channel},
         </if>
-        <if test="the_way != null and the_way !=''">
-            the_way=#{theWay}
+        <if test="theWay != null and the_way !=''">
+            the_way=#{theWay},
         </if>
-        <if test="shared_activity != null and shared_activity !=''">
-            shared_activity=#{sharedActivity}
+        <if test="sharedActivity != null and sharedActivity !=''">
+            shared_activity=#{sharedActivity},
         </if>
-        <if test="selling_price != null ">
-            selling_price=#{sellingPrice}
+        <if test="sellingPrice != null ">
+            selling_price=#{sellingPrice},
         </if>
-        <if test="bill_price != null">
-            bill_price=#{billPrice}
+        <if test="billPrice != null">
+            bill_price=#{billPrice},
         </if>
-        <if test="handling_fee != null ">
-            handling_fee=#{handlingFee}
+        <if test="handlingFee != null ">
+            handling_fee=#{handlingFee},
         </if>
-        <if test="tax_rate != null ">
-            tax_rate=#{taxRate}
+        <if test="taxRate != null ">
+            tax_rate=#{taxRate},
         </if>
         <if test="other != null and other!='' ">
-            other=#{other}
+            other=#{other},
         </if>
         <if test="usageStartTime !=null and usageStartTime!=''">
-            usage_start_time =#{usageStartTime}
+            usage_start_time =#{usageStartTime},
         </if>
         <if test="usageEndTime !=null and usageEndTime!=''">
-            usage_end_time =#{usageEndTime}
+            usage_end_time =#{usageEndTime},
         </if>
         where activity_code=#{activityCode}
     </update>
