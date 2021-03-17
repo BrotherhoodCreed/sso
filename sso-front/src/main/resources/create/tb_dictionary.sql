@@ -28,7 +28,7 @@ CREATE TABLE `tb_dictionary` (
   `description_type` varchar(64) NOT NULL,
   `deleted` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 ;
 
 -- ----------------------------
 -- Records of tb_dictionary

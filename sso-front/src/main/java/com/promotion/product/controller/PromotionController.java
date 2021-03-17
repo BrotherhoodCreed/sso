@@ -1,5 +1,6 @@
 package com.promotion.product.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.promotion.product.common.ExcelUtils;
@@ -97,13 +98,15 @@ public class PromotionController {
 
 
     @RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
-    public void exportExcel(HttpServletResponse response,List<String> codes)  throws IOException {
+    public void exportExcel(HttpServletResponse response,String codestr)  throws IOException {
         //查询数据
+        List<String>codes = JSON.parseArray(codestr,String.class);
         List<ExeclRespone> resultList = promotionService.exportExcel(codes);
 
         long t1 = System.currentTimeMillis();
         ExcelUtils.writeExcel(response, resultList, ExeclRespone.class);
         long t2 = System.currentTimeMillis();
+
         System.out.println(String.format("write over! cost:%sms", (t2 - t1)));
     }
 
@@ -149,7 +152,8 @@ public class PromotionController {
      */
     @RequestMapping("deletePromotion")
     @ResponseBody
-    public BaseEntityResponse<Boolean> deletePromotionBaseById(List<Long> id){
+    public BaseEntityResponse<Boolean> deletePromotionBaseById(String ids){
+        List<Long>id = JSON.parseArray(ids,Long.class);
         BaseEntityResponse<Boolean> response=BaseEntityResponse.success(BaseEntityResponse.class);
         try {
             response.setData(promotionService.deletePromotionBaseById(id));

@@ -54,4 +54,4 @@ INSERT INTO `tb_template` VALUES ('19', 'fd_3860f1e3be2472', null, '0', '促销�
 INSERT INTO `tb_template` VALUES ('20', 'fd_3860f1ee6933f0', null, '0', '上传促销编码表（Excel）', '177f1dc707d68acbb117e1c4364b253b');
 INSERT INTO `tb_template` VALUES ('21', 'fd_3860f1ee6933f0', null, '0', '上传促销编码表（Excel）', '177f1dc707d68acbb117e1c4364b253b');
 INSERT INTO `tb_template` VALUES ('22', 'fd_3860f21481f73c', null, '0', '确认外卖网站产品已建立', '177f1dc707d68acbb117e1c4364b253b');
-INSERT INTO `tb_template` VALUES ('23', 'fd_3860f21271bcf8', null, '0', '确认系统对接完毕（1、是 2、否）', '177f1dc707d68acbb117e1c4364b253b');
+INSERT INTO `tb_template` VALUES ('24', 'fd_3860f21271bcf8', null, '0', '确认系统对接完毕（1、是 2、否）', '177f1dc707d68acbb117e1c4364b253b');

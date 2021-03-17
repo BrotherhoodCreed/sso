@@ -23,7 +23,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `tb_promotion_base_info`;
 CREATE TABLE `tb_promotion_base_info` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `activity_code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '促销编码',
+  `activity_code` varchar(32) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '促销编码',
   `activity_type` varchar(32) DEFAULT NULL COMMENT '活动类型',
   `sales_start_time` datetime DEFAULT NULL COMMENT '促销开始时间',
   `sales_end_time` datetime DEFAULT NULL COMMENT '促销结束时间',
@@ -33,7 +33,7 @@ CREATE TABLE `tb_promotion_base_info` (
   `introduction` varchar(32) DEFAULT NULL COMMENT '七字描述',
   `channel` varchar(32) DEFAULT NULL COMMENT '团购网站',
   `the_way` varchar(32) DEFAULT NULL COMMENT '团购形式',
-  `shared_activity` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '共享活动',
+  `shared_activity` varchar(32) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '共享活动',
   `selling_price` decimal(10,2) DEFAULT NULL COMMENT '销售单价',
   `bill_price` decimal(10,2) DEFAULT NULL COMMENT '回款单价',
   `handling_fee` decimal(10,2) DEFAULT NULL COMMENT '手续费',
@@ -49,6 +49,6 @@ CREATE TABLE `tb_promotion_base_info` (
   `usage_start_time` datetime DEFAULT NULL COMMENT '核销开始时间',
   `usage_end_time` datetime DEFAULT NULL COMMENT '核销结束时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='促销基本信息表 ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COMMENT='促销基本信息表 ';
 
 SET FOREIGN_KEY_CHECKS = 1;

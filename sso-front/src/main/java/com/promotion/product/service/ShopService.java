@@ -49,60 +49,70 @@ public class ShopService {
         if(CollectionUtils.isEmpty(shopDoList)){
             return treeResponseList;
         }
-        Multimap<String,Multimap<String, TreeResponse>> multimap = ArrayListMultimap.create();
+        Map<String,Map<String,Collection<TreeResponse>>> multimap = new HashMap<>();
         Multimap<String, TreeResponse> childrenMultimap=ArrayListMultimap.create();
-        for (ShopDo shopDo : shopDoList) {
+
+        Multimap<String, String> mapper=ArrayListMultimap.create();
+        for (ShopDo shopDo : shopDoList){
+            //  A    A1  01
+            //  A    A1  02
             TreeResponse children =new TreeResponse();
             if(CollectionUtils.isNotEmpty(shopCode)){
-               Boolean isAny= shopCode.stream().filter(item-> StringUtils.equals(shopDo.getStcd(), item)).findAny().isPresent();
-               children.setChecked(isAny);
+                Boolean isAny= shopCode.stream().filter(item-> StringUtils.equals(shopDo.getStcd(), item)).findAny().isPresent();
+                children.setChecked(isAny);
             }
-//            children.setLevel(3);
+            children.setLevel(3);
             children.setTitle(shopDo.getStnm());
             children.setId(shopDo.getStcd());
+            children.setAm(shopDo.getAm());
+            children.setCity(shopDo.getCity());
+            //城市 门店信息
+            //A1   01,02 03
             childrenMultimap.put(shopDo.getCity(),children);
-            multimap.put(shopDo.getAm(),childrenMultimap);
+            //区域 + 二三级
+            // A1    A1  01,02
+            //       A1  01,02
+            mapper.put(shopDo.getAm(),shopDo.getCity());
+
         }
-        Iterator<Map.Entry<String,Multimap<String, TreeResponse>>>iterator=multimap.entries().iterator();
+        Map<String, Collection<TreeResponse>> cityMap= childrenMultimap.asMap();
+        Iterator<Map.Entry<String, Collection<TreeResponse>>> iterator1= cityMap.entrySet().iterator();
+        while (iterator1.hasNext()){
+            Map<String,  Collection<TreeResponse>> data= new HashMap<>();
+            Map.Entry<String, Collection<TreeResponse>> entity=iterator1.next();
+            data.put(entity.getKey(), entity.getValue());
+            multimap.put(entity.getValue().iterator().next().getAm(),data);
+        }
+
+
+
+        Iterator<Map.Entry<String, Map<String,Collection<TreeResponse>>>> iterator=multimap.entrySet().iterator();
         Map<String,TreeResponse> map =new HashMap<>();
-        Map<String,TreeResponse> map2 =new HashMap<>();
-        Map<String,TreeResponse> map3 =new HashMap<>();
         while (iterator.hasNext()){
-            Map.Entry<String,Multimap<String, TreeResponse>> entry= iterator.next();
+            Map.Entry<String, Map<String, Collection<TreeResponse>>> entry= iterator.next();
             TreeResponse treeResponse =treeResponse(entry.getKey(),1);
-            Multimap<String, TreeResponse> multimap2=  entry.getValue();
-            Iterator<Map.Entry<String, TreeResponse>>iterator2=multimap2.entries().iterator();
-            map.put(entry.getKey(),treeResponse);
+            Map<String, Collection<TreeResponse>> multimap2=  entry.getValue();
+            Iterator<Map.Entry<String, Collection<TreeResponse>>>iterator2=multimap2.entrySet().iterator();
+            if(map.get(entry.getKey())!=null){
+                continue;
+            }
+            List<TreeResponse> treeResponseList1 =new ArrayList<>();
             while (iterator2.hasNext()){
-                Map.Entry<String, TreeResponse> entry2= iterator2.next();
+                Map.Entry<String, Collection<TreeResponse>> entry2= iterator2.next();
                 TreeResponse treeResponse2 =treeResponse(entry2.getKey(),2);
+                Map<String,TreeResponse> map2 =new HashMap<>();
                 if(map2.get(entry2.getKey())==null){
                     map2.put(entry2.getKey(),treeResponse2);
+                    Collection<TreeResponse> level3=entry2.getValue();
+                    treeResponse2.getChildren().addAll(level3);
+                    treeResponseList1.add(treeResponse2);
                 }
-                //第三层
-                treeResponse.getChildren().add(entry2.getValue());
-                TreeResponse level3=entry2.getValue();
-                if(map3.get(level3.getId())==null){
-                    level3.setLevel(3);
-                    map3.put(level3.getId(),level3);
-                }
-//                //第二层
-//                treeResponse.getChildren().add(treeResponse2);
             }
-//            treeResponseList.addAll(list2);
-//            treeResponseList.add(treeResponse);
+            treeResponse.getChildren().addAll(treeResponseList1);
+            treeResponseList1=new ArrayList<>();
+            treeResponseList.add(treeResponse);
         }
-//        Set<TreeResponse> set = new HashSet<>(treeResponseList);
-//        List<TreeResponse> list_1 = new ArrayList<>(set);
-        Collection<TreeResponse> valueCollection = map.values();
-        Collection<TreeResponse> valueCollection2 = map2.values();
-        Collection<TreeResponse> valueCollection3 = map3.values();
-        List<TreeResponse> valueList1 = new ArrayList<TreeResponse>(valueCollection);
-        List<TreeResponse> valueList2 = new ArrayList<TreeResponse>(valueCollection2);
-        List<TreeResponse> valueList3 = new ArrayList<TreeResponse>(valueCollection3);
-        treeResponseList.addAll(valueList1);
-        treeResponseList.addAll(valueList2);
-        treeResponseList.addAll(valueList3);
+
         return treeResponseList;
 
     }

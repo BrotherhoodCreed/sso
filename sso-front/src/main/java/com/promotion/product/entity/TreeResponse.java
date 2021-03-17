@@ -9,6 +9,8 @@ import java.util.List;
 public class TreeResponse {
     private String title;
     private String id;
+    private String am;
+    private String city;
     private Integer level;
     private Boolean checked=false;
     private List<TreeResponse> children=new ArrayList<>();

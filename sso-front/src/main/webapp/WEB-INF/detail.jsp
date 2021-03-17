@@ -46,10 +46,10 @@
                     <option  v-bind:value="item.descriptionCode" v-for="item in activityType" >{{item.description}}</option>
                 </select>
             <span>销售开始时间</span>
-            <input type="text" id="test1">
+            <input type="text" id="test1" autocomplete="off">
 
             <span>销售结束时间</span>
-            <input type="text" id="test2">
+            <input type="text" id="test2" autocomplete="off">
         </div>
         <div><span>每台现用张数/金额</span> <input type="number" @input="valueChange"  v-model="detail.amount" style="width: 5rem; text-align: center;">
             <span>回款周期</span>
@@ -76,28 +76,28 @@
             <textarea style="width: 895px; height: 55px; resize: none;" v-model="detail.description">
             </textarea>
         </div>
-        <div><span>七字描述</span> <input type="text " v-model="detail.introduction" @input="valueChange" style="width: 110px;">
+        <div><span>七字描述</span> <input type="text " v-model="detail.introduction"  style="width: 110px;">
             <span>团购网站</span> <select v-model="detail.theWay"  style="width: 100px;">
                 <option value="" >请选择</option>
                 <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
             </select>
             <span>核销开始时间</span>
-            <input type="text" id="test3">
+            <input type="text" id="test3" autocomplete="off">
             <span>核销结束时间</span>
-            <input type="text" id="test4">
+            <input type="text" id="test4" autocomplete="off">
         </div>
-        <div>
-            <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">与本活动共存的活动</h3>
-            <label for="id_select"></label>
-            <select id="id_select" class="selectpicker bla bla bli" multiple data-live-search="true">
-                <%--<option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>--%>
-                </optgroup>
-            </select>
-        </div>
-        <div><span>销售单价</span> <input type="number" v-model="detail.sellingPrice" @input="valueChange"  style="width: 5rem;">
-            <span>回款单价</span> <input type="number " v-model="detail.billPrice" @input="valueChange" style="width: 5rem;margin-right: 62px;">
-            <span>手续费</span><input type="number " v-model="detail.handlingFee" @input="valueChange"  style="width: 5rem; margin-right: 46px;">
-            <span>手续费率</span> <input type="number" v-model="detail.taxRate" @input="valueChange"    style="width: 10rem;"></div>
+        <%--<div>--%>
+            <%--<h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">与本活动共存的活动</h3>--%>
+            <%--<label for="id_select"></label>--%>
+            <%--<select id="id_select" class="selectpicker bla bla bli" multiple data-live-search="true">--%>
+                <%--&lt;%&ndash;<option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>&ndash;%&gt;--%>
+                <%--</optgroup>--%>
+            <%--</select>--%>
+        <%--</div>--%>
+        <div><span>销售单价</span> <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 5rem;">
+            <span>回款单价</span> <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 5rem;margin-right: 62px;">
+            <span>手续费</span><input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width: 5rem; margin-right: 46px;">
+            <span>手续费率(%)</span> <input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 10rem;"></div>
         <div>
             <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">其他</h3>
             <textarea v-model="detail.other"  style="width: 895px; height: 35px; resize: none;"></textarea>
@@ -117,7 +117,7 @@
             <div id="dept_main" style="margin-right: 2%;">
                 <span>
                     <input type="text" />
-                    <button type="button" style="width: 10%;">搜索</button>
+                    <button type="button" style="width: 10%;" id="queryShop">搜索</button>
                 </span>
                 <div id="dept_tree">
                 </div>
@@ -251,10 +251,10 @@
                     return;
                 }
 
-                if (this.detail.sharedActivity == ''){
-                    layer.msg('请选择共存活动');
-                    return;
-                }
+                // if (this.detail.sharedActivity == ''){
+                //     layer.msg('请选择共存活动');
+                //     return;
+                // }
                 if (this.detail.sellingPrice == ''){
                     layer.msg('销售价为空');
                     return;
@@ -335,7 +335,27 @@
                         console.log("网络异常");
                     });
             },
+            billPricechangeCount:function(type) {
+                if(1==type){
+                    if (this.detail.billPrice != '' && this.detail.handlingFee != '') {
+                        this.detail.taxRate = parseFloat(this.detail.handlingFee) / parseFloat(this.detail.billPrice)*100;
+                    }
+                }
+               if(2==type){
+                   if (this.detail.billPrice != '' && this.detail.taxRate != '') {
+                       this.detail.handlingFee = parseFloat(this.detail.billPrice) * parseFloat(this.detail.taxRate) * 0.01;
+                   }
+               }
+            }
         },
+        //     handlingFeechangeCount:function (){
+        //         //detail.billPrice 回款单价
+        //         //detail.handlingFee  手续费
+        //         //detail.taxRate  手续费率
+        //         if(this.detail.billPrice!='' && this.detail.handlingFee!='' ){
+        //             this.detail.taxRate= detail.billPrice /detail.handlingFee;
+        //         }
+        // },
     });
 
 
@@ -473,7 +493,7 @@
 
 <script>
     var str = [{
-        id:1,
+        id:'',
         title: '江西' //一级菜单
         ,children: [{
             id:3,
@@ -574,20 +594,29 @@
             showCheckbox: true,     //是否显示复选框
             onlyIconControl: true
         });
-        function getData(){
+        function getData(shopName){
             var data = [];
             $.ajax({
                 url : "/PtRole/allRole",//后台数据请求地址
                 dataType : 'json',
                 type : 'GET',
                 async : false,
+                data: {shopName: shopName},
                 success: function(resut){
                     data = resut;
                 }
             });
             return data;
-        }
-
+        };
+        $("#queryShop").on("click", function() {
+            tree.reload('checkTree', {
+                elem: '#dept_tree',
+                data: str,
+                id: 'checkTree',
+                showCheckbox: true,     //是否显示复选框
+                onlyIconControl: true
+            });
+        });
         //打开选择页
         $("body").on("click", "#addActive", function() {
             // var dataInto=$(this).prev().attr("name");

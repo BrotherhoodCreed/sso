@@ -83,8 +83,8 @@ public class PromotionService {
     public PromotionBaseInfoRespone queryPromotionBaseInfo(String activityCode) {
         PromotionBaseInfoDo promotionBaseInfoDo =promotionBaseInfoDao.selectOneData(activityCode);
         PromotionBaseInfoRespone promotionBaseInfoRespone=ModelCopier.copy(promotionBaseInfoDo,PromotionBaseInfoRespone.class);
-        if(StringUtils.isNotEmpty(promotionBaseInfoDo.getSharedActivity())){
-            promotionBaseInfoRespone.setSharedActivity(Arrays.asList(promotionBaseInfoDo.getSharedActivity().split(",")));
+//        if(StringUtils.isNotEmpty(promotionBaseInfoDo.getSharedActivity())){
+//            promotionBaseInfoRespone.setSharedActivity(Arrays.asList(promotionBaseInfoDo.getSharedActivity().split(",")));
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             if(promotionBaseInfoDo.getSalesStartTime()!=null){
                 String salesStartTime = formatter.format(promotionBaseInfoDo.getSalesStartTime());
@@ -103,7 +103,7 @@ public class PromotionService {
                 String usageEndTime = formatter.format(promotionBaseInfoDo.getUsageEndTime());
                 promotionBaseInfoRespone.setUsageEndTime(usageEndTime);
             }
-        }
+//        }
         return promotionBaseInfoRespone;
     }
 

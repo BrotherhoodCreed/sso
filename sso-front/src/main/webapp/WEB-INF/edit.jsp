@@ -45,10 +45,10 @@
                 <option  v-bind:value="item.descriptionCode" v-for="item in activityType" >{{item.description}}</option>
             </select>
             <span>销售开始时间</span>
-            <input type="text" id="test1" v-model="detail.salesStartTime">
+            <input type="text" id="test1" v-model="detail.salesStartTime" autocomplete="off">
 
             <span>销售结束时间</span>
-            <input type="text" id="test2"  v-model="detail.salesEndTime">
+            <input type="text" id="test2"  v-model="detail.salesEndTime" autocomplete="off">
         </div>
         <div><span>每台现用张数/金额</span> <input type="number" @input="valueChange"  v-model="detail.amount" style="width: 5rem; text-align: center;">
             <span>回款周期</span>
@@ -81,22 +81,23 @@
                 <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
             </select>
             <span>核销开始时间</span>
-            <input type="text" id="test3"  v-model="detail.usageStartTime">
+            <input type="text" id="test3"  v-model="detail.usageStartTime" autocomplete="off">
             <span>核销结束时间</span>
-            <input type="text" id="test4" v-model="detail.usageEndTime">
+            <input type="text" id="test4" v-model="detail.usageEndTime" autocomplete="off">
         </div>
-        <div>
-            <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">与本活动共存的活动</h3>
-            <label for="id_select"></label>
-            <select id="id_select" class="selectpicker bla bla bli" multiple data-live-search="true">
-                <%--<option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>--%>
-                </optgroup>
-            </select>
-        </div>
+        <%--<div>--%>
+            <%--<h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">与本活动共存的活动</h3>--%>
+            <%--<label for="id_select"></label>--%>
+            <%--<select id="id_select" class="selectpicker bla bla bli" multiple data-live-search="true">--%>
+                <%--&lt;%&ndash;<option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>&ndash;%&gt;--%>
+                <%--</optgroup>--%>
+            <%--</select>--%>
+        <%--</div>--%>
         <div><span>销售单价</span> <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 5rem;">
-            <span>回款单价</span> <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount"  style="width: 5rem;margin-right: 62px;">
-            <span>手续费</span><input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="handlingFeechangeCount" style="width: 5rem; margin-right: 46px;">
-            <span>手续费率(%)</span> <input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="taxRatechangeCount"   style="width: 10rem;"></div>
+            <span>回款单价</span> <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 5rem;margin-right: 62px;">
+            <span>手续费</span><input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width: 5rem; margin-right: 46px;">
+            <span>手续费率(%)</span> <input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 10rem;">
+        </div>
         <div>
             <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">其他</h3>
             <textarea v-model="detail.other"  style="width: 895px; height: 35px; resize: none;"></textarea>
@@ -115,7 +116,7 @@
         <div id="dept_main" style="margin-right: 2%;">
                 <span>
                     <input type="text" />
-                    <button type="button" style="width: 10%;">搜索</button>
+                    <button type="button" style="width: 10%;" id="queryShop">搜索</button>
                 </span>
             <div id="dept_tree">
             </div>
@@ -254,10 +255,10 @@
                     return;
                 }
 
-                if (this.detail.sharedActivity == ''){
-                    layer.msg('请选择共存活动');
-                    return;
-                }
+                // if (this.detail.sharedActivity == ''){
+                //     layer.msg('请选择共存活动');
+                //     return;
+                // }
                 if (this.detail.sellingPrice == ''){
                     layer.msg('销售价为空');
                     return;
@@ -336,10 +337,10 @@
                         console.log(response.data);
                         if (10000 == response.data.code){
                             this.detail = response.data.data;
-                            for (var i = 0; i < this.detail.sharedActivity.length; i++) {
-                                $('#id_select').selectpicker('val',this.detail.sharedActivity);
-                                $('#id_select').selectpicker('refresh');     //设置好内容后刷新，  多用于异步请求
-                            }
+                            // for (var i = 0; i < this.detail.sharedActivity.length; i++) {
+                            //     $('#id_select').selectpicker('val',this.detail.sharedActivity);
+                            //     $('#id_select').selectpicker('refresh');     //设置好内容后刷新，  多用于异步请求
+                            // }
 
                         }else {
                             layer.msg('查询异常');
@@ -349,22 +350,18 @@
                         console.log("网络异常");
                     });
             },
-            billPricechangeCount:function(event){
-                if(this.detail.billPrice!=''  && this.detail.taxRate != ''){
-                    this.detail.handlingFee= this.detail.billPrice * this.detail.taxRate;
+            billPricechangeCount:function(type){
+                if(1==type){
+                    if (this.detail.billPrice != '' && this.detail.handlingFee != '') {
+                        this.detail.taxRate = parseFloat(this.detail.handlingFee) / parseFloat(this.detail.billPrice)*100;
+                    }
+                }
+                if(2==type){
+                    if (this.detail.billPrice != '' && this.detail.taxRate != '') {
+                        this.detail.handlingFee = parseFloat(this.detail.billPrice) * parseFloat(this.detail.taxRate) * 0.01;
+                    }
                 }
             },
-            handlingFeechangeCount:function (){
-                //detail.billPrice 回款单价
-                //detail.handlingFee  手续费
-                //detail.taxRate  手续费率
-                if(this.detail.billPrice!='' && this.detail.handlingFee!='' ){
-                    this.detail.taxRate= detail.billPrice /detail.handlingFee;
-                }
-
-            }
-
-
         }
     });
 
@@ -508,7 +505,7 @@
         var tableIn = table.render({
             elem: '#demo'
             ,id:'list'
-            ,height: 'full-20'
+            ,height: '350'
             ,url: '<%=request.getContextPath()%>/PromotionController/queryShopBind?activityCode='+app.detail.activityCode //数据接口
             ,request: {
                 pageName: 'pageIndex' //页码的参数名称，默认：page
@@ -653,24 +650,37 @@
         //树形组件复选框
         tree.render({
             elem: '#dept_tree',
-            data: str,
+            data: getData().data,
             id: 'checkTree',
             showCheckbox: true,     //是否显示复选框
             onlyIconControl: true
         });
-        function getData(){
+        function getData(shopName){
             var data = [];
             $.ajax({
-                url : "/PtRole/allRole",//后台数据请求地址
+                url :'<%=request.getContextPath()%>/PromotionController/queryTree',//后台数据请求地址
                 dataType : 'json',
                 type : 'GET',
                 async : false,
+                data: {shopName: shopName},
                 success: function(resut){
                     data = resut;
+                    console.log(data);
                 }
             });
             return data;
-        }
+        };
+
+        $("#queryShop").on("click", function() {
+            tree.reload('checkTree', {
+                elem: '#dept_tree',
+                data: str,
+                id: 'checkTree',
+                showCheckbox: true,     //是否显示复选框
+                onlyIconControl: true
+            });
+        });
+
 
         //打开选择页
         $("body").on("click", "#addActive", function() {
@@ -683,7 +693,7 @@
                 maxmin: false,
                 shadeClose: true,
                 shade: false,
-                area:['auto',"auto"],
+                area:['auto',"50%"],
                 // maxHeight:'50%',
                 offset: '100px'
             });

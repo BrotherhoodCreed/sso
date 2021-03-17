@@ -74,12 +74,21 @@
                     location.href = '<%=request.getContextPath()%>/add';
                     break;
                 case 'upload':
-                    app.upload();
+                    var ids = [];
+                    if (checkStatus.data.length == 0){
+                        layer.msg("请至少勾选一条");
+                        return;
+                    }
+                    for(j = 0; j < checkStatus.data.length; j++) {
+                        ids.push(checkStatus.data[j].activityCode);
+                    }
+                    app.upload(ids);
                     break;
                 case 'delete':
                     var ids = [];
                     if (checkStatus.data.length == 0){
                         layer.msg("请至少勾选一条");
+                        return;
                     }
                     layer.confirm('确定要删除吗',{icon: 3, title:'提示'}, function(index){
                         for(j = 0; j < checkStatus.data.length; j++) {
@@ -87,7 +96,7 @@
                         }
                         layer.close(index);
                         //向服务端发送删除指令
-
+                        app.delete(ids);
                         tableIn.reload();
                     });
 
@@ -105,8 +114,18 @@
             // this.getList();
         },
         methods: {
-            upload: function () {
-               console.log('upload');
+            upload:function (data) {
+                var idstr =  JSON.stringify(data);
+                window.location.href = '<%=request.getContextPath()%>/PromotionController/exportExcel?codestr='+encodeURIComponent(idstr);
+            },
+            delete:function (data) {
+                var idstr =  JSON.stringify(data);
+                this.$http.post('<%=request.getContextPath()%>/PromotionController/deletePromotion',{ids:idstr},{emulateJSON:true}).then(function(response) {
+                        console.log(response.data);
+                    },
+                    function(response) {
+                        console.log("网络异常");
+                    });
             },
         }
 
