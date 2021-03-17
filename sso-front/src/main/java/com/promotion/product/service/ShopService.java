@@ -1,5 +1,6 @@
 package com.promotion.product.service;
 
+import com.github.benmanes.caffeine.cache.Cache;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.promotion.product.dao.dataobject.PromotionMapperDo;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 @Service
 public class ShopService {
     @Autowired
@@ -24,7 +26,10 @@ public class ShopService {
     @Autowired
     private YuKuDao yuKuDao;
 
-    public  List<TreeResponse> queryTree(String activityCode){
+    @Autowired
+    Cache<String, Object> caffeineCache;
+
+    public  List<TreeResponse> queryTree(String activityCode,String shopName){
         List<TreeResponse> treeResponseList =new ArrayList<>();
         List<PromotionMapperDo> promotionMapperDos =new ArrayList<>();
         List<String> shopCode=new ArrayList<>();
@@ -34,6 +39,12 @@ public class ShopService {
         }
 
         List<ShopDo> shopDoList =yuKuDao.selectShop();
+        if(StringUtils.isNotBlank(shopName)){
+            shopDoList.removeIf(item->!item.getStnm().contains(shopName));
+        }
+        if(CollectionUtils.isEmpty(shopDoList)){
+            return treeResponseList;
+        }
 
         Multimap<String,Multimap<String, TreeResponse>> multimap = ArrayListMultimap.create();
         Multimap<String, TreeResponse> childrenMultimap=ArrayListMultimap.create();
@@ -60,14 +71,16 @@ public class ShopService {
             while (iterator2.hasNext()){
                 Map.Entry<String, TreeResponse> entry2= iterator2.next();
                 TreeResponse treeResponse2 =treeResponse(entry2.getKey(),2);
-                //第二层
-                treeResponse.setChildren(Collections.singletonList(treeResponse2));
                 //第三层
-                treeResponse2.setChildren(Collections.singletonList(entry2.getValue()));
-            }
+                treeResponse.getChildren().add(entry2.getValue());
+                //第二层
+                treeResponse.getChildren().add(treeResponse2);
 
+            }
             treeResponseList.add(treeResponse);
         }
+
+
         return treeResponseList;
 
     }

@@ -6,6 +6,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class savePromotionMapperInfoRequest {
+public class SavePromotionMapperInfoRequest {
     private List<PromotionMapperDo> promotionMapperDos;
 }

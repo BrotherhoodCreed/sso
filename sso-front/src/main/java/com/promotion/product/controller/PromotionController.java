@@ -10,15 +10,12 @@ import com.promotion.product.service.PromotionMapperSeriver;
 import com.promotion.product.service.PromotionService;
 import com.promotion.product.service.ShopService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.reflect.MethodUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -84,7 +81,7 @@ public class PromotionController {
      */
     @RequestMapping("savePromotionMapperInfo")
     @ResponseBody
-    public BaseEntityResponse<Boolean> savePromotionMapperInfo(@RequestBody  savePromotionMapperInfoRequest request){
+    public BaseEntityResponse<Boolean> savePromotionMapperInfo(@RequestBody SavePromotionMapperInfoRequest request){
         BaseEntityResponse<Boolean> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
             response.setData(promotionService.savePromotionMapperInfo(request));
@@ -100,12 +97,9 @@ public class PromotionController {
 
 
     @RequestMapping(value = "/exportExcel", method = RequestMethod.GET)
-    public void exportExcel(HttpServletResponse response,List<Long> id)  throws IOException {
-        List<ExeclRespone> resultList = new ArrayList<>();
-        ExeclRespone execlRespone = new ExeclRespone();
-        execlRespone.setArea("aaa");
+    public void exportExcel(HttpServletResponse response,List<String> codes)  throws IOException {
         //查询数据
-        resultList.add(execlRespone);
+        List<ExeclRespone> resultList = promotionService.exportExcel(codes);
 
         long t1 = System.currentTimeMillis();
         ExcelUtils.writeExcel(response, resultList, ExeclRespone.class);
@@ -129,6 +123,7 @@ public class PromotionController {
         catch (Exception e){
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
             response.setMessage(e.getMessage());
+            log.error("异常",e);
         }
         return response;
     }
@@ -211,10 +206,10 @@ public class PromotionController {
      */
     @RequestMapping("queryTree")
     @ResponseBody
-    private BaseEntityResponse<List<TreeResponse>> queryTree(String  activityCode){
+    private BaseEntityResponse<List<TreeResponse>> queryTree(String  activityCode,String shopName){
         BaseEntityResponse<List<TreeResponse>> response =BaseEntityResponse.success(BaseEntityResponse.class);
         try {
-            response.setData(shopService.queryTree(activityCode));
+            response.setData(shopService.queryTree(activityCode,shopName));
         }catch (Exception e){
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
             response.setMessage(e.getMessage());

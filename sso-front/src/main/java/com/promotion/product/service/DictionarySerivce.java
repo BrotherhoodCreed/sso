@@ -17,4 +17,5 @@ public class DictionarySerivce {
     public List<DictionaryDo> queryDictionary(String descriptionType){
        return   dictionaryDao.select(descriptionType);
     }
+
 }

@@ -2,14 +2,13 @@ package com.promotion.product.service;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.google.common.base.Joiner;
 import com.promotion.product.common.ModelCopier;
 import com.promotion.product.dao.dataobject.*;
+import com.promotion.product.dao.mysql.DictionaryDao;
 import com.promotion.product.dao.mysql.PromotionBaseInfoDao;
 import com.promotion.product.dao.mysql.PromotionMapperDao;
 import com.promotion.product.entity.*;
-import lombok.var;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,54 @@ public class PromotionService {
 
     @Autowired
     private PromotionMapperDao promotionMapperDao;
+    @Autowired
+    private DictionaryDao dictionaryDao;
+
+    public  List<ExeclRespone>  exportExcel(List<String> codes){
+        List<ExeclRespone> resultList = new ArrayList<>();
+        List<ExeclDto> exportExcel =promotionBaseInfoDao.exportExcel(codes);
+        Map<String,String> map =dictionaryDao.selectAll().stream().collect(Collectors.toMap(DictionaryDo::getDescriptionCode,DictionaryDo::getDescription));;
+        if(CollectionUtils.isNotEmpty(exportExcel)){
+            for (ExeclDto execlDto : exportExcel) {
+                ExeclRespone execlRespone = new ExeclRespone();
+                execlRespone.setArea(execlDto.getArea());
+                execlRespone.setCity(execlDto.getCity());
+                execlRespone.setAmount(String.valueOf(execlDto.getAmount()));
+                execlRespone.setActivityCode(execlDto.getActivityCode());
+                if(execlDto.getActivityType()!=null){
+                    if(map.containsKey(execlDto.getActivityType())){
+                        execlRespone.setActivityType(map.get(execlDto.getActivityType()));;
+                    }
+                }
+                execlRespone.setRestaurantCode(execlDto.getRestaurantCode());
+                execlRespone.setRestaurantName(execlDto.getRestaurantName());
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                if(execlDto.getSalesStartTime()!=null){
+                    execlRespone.setSalesStartTime(formatter.format(execlDto.getSalesStartTime()));
+                }
+                if(execlDto.getSalesEndTime()!=null){
+                    execlRespone.setSalesEndTime(formatter.format(execlDto.getSalesEndTime()));
+                }
+                execlRespone.setDescription(execlDto.getDescription());
+                execlRespone.setAmount(String.valueOf(execlDto.getAmount()));
+                execlRespone.setBillCycle(String.valueOf(execlDto.getBillCycle()));
+                execlRespone.setIntroduction(execlDto.getIntroduction());
+                if(execlDto.getUsageStartTime()!=null){
+                    execlRespone.setUsageStartTime(formatter.format(execlDto.getUsageStartTime()));
+                }
+                if(execlDto.getUsageEndTime()!=null){
+                    execlRespone.setUsageEndTime(formatter.format(execlDto.getUsageEndTime()));
+                }
+                execlRespone.setSharedActivity(execlDto.getSharedActivity());
+                execlRespone.setSellingPrice(String.valueOf(execlDto.getSellingPrice()));
+                execlRespone.setBillPrice(String.valueOf(execlDto.getBillPrice()));
+                execlRespone.setHandlingFee(String.valueOf(execlDto.getHandlingFee()));
+                resultList.add(execlRespone);
+            }
+        }
+
+        return  resultList;
+    }
 
 
     public PromotionBaseInfoRespone queryPromotionBaseInfo(String activityCode) {
@@ -135,7 +182,7 @@ public class PromotionService {
         return savePromotionBaseInfoRespone;
     }
 
-    public Boolean savePromotionMapperInfo(savePromotionMapperInfoRequest req){
+    public Boolean savePromotionMapperInfo(SavePromotionMapperInfoRequest req){
         String activityCode=req.getPromotionMapperDos().get(0).getActivityCode();
         if(StringUtils.isNotEmpty(activityCode)){
             List<PromotionMapperDo> promotionMapperDos=promotionMapperDao.selectByActivityCode(activityCode);
@@ -154,7 +201,7 @@ public class PromotionService {
 
 
     public Boolean updatePromotionBaseInfo(UpdatePromotionBaseInfoRequery requery) {
-        PromotionBaseInfoDo promotionBaseInfoDo=ModelCopier.copy(requery,PromotionBaseInfoDo.class);
+        PromotionBaseInfoDo promotionBaseInfoDo=ModelCopier.copy(requery.getPromotionBaseInfoDo(),PromotionBaseInfoDo.class);
         if(CollectionUtils.isNotEmpty( requery.getPromotionBaseInfoDo().getSharedActivity())){
             promotionBaseInfoDo.setSharedActivity(String.join(",",requery.getPromotionBaseInfoDo().getSharedActivity()));
         }
