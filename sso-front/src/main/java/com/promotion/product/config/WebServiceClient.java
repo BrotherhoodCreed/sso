@@ -1,11 +1,10 @@
 package com.promotion.product.config;
 
+import com.promotion.product.webservice.IKmReviewWebserviceService;
+import com.promotion.product.webservice.KmReviewParamterForm;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * WebService客户端
@@ -22,8 +21,9 @@ public class WebServiceClient {
 		WebServiceConfig cfg = WebServiceConfig.getInstance();
 
 		Object service = callService(cfg.getAddress(), cfg.getServiceClass());
-		// 请在此处添加业务代码
-		JaxWsProxyFactoryBean a=(JaxWsProxyFactoryBean)service;
+		IKmReviewWebserviceService iKmReviewWebserviceService =(IKmReviewWebserviceService)service;
+		KmReviewParamterForm form =new KmReviewParamterForm();
+		iKmReviewWebserviceService.addReview(form);
 
 	}
 
