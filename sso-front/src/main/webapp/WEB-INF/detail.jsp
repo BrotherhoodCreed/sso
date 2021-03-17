@@ -339,11 +339,13 @@
                 if(1==type){
                     if (this.detail.billPrice != '' && this.detail.handlingFee != '') {
                         this.detail.taxRate = parseFloat(this.detail.handlingFee) / parseFloat(this.detail.billPrice)*100;
+                        this.detail.taxRate = Math.round(this.detail.taxRate*100)/100;
                     }
                 }
                if(2==type){
                    if (this.detail.billPrice != '' && this.detail.taxRate != '') {
                        this.detail.handlingFee = parseFloat(this.detail.billPrice) * parseFloat(this.detail.taxRate) * 0.01;
+                       this.detail.handlingFee = Math.round(handlingFee*100)/100;
                    }
                }
             }
@@ -598,7 +600,7 @@
             var txt = $("#search").val();
             var data = [];
             $.ajax({
-                url : "/PtRole/allRole",//后台数据请求地址
+                url :'<%=request.getContextPath()%>/PromotionController/queryTree',//后台数据请求地址
                 dataType : 'json',
                 type : 'GET',
                 async : false,

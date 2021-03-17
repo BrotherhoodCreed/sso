@@ -91,4 +91,10 @@ public class IKmReviewWebserviceServiceService
         return IKMREVIEWWEBSERVICESERVICESERVICE_WSDL_LOCATION;
     }
 
+    public static void main(String[] args) throws Exception_Exception {
+        IKmReviewWebserviceServiceService fatory = new IKmReviewWebserviceServiceService();
+        IKmReviewWebserviceService iKmReviewWebserviceService = fatory.getIKmReviewWebserviceServicePort();
+        String sring = iKmReviewWebserviceService.addReview(new KmReviewParamterForm());
+        System.out.println(sring);
+    }
 }

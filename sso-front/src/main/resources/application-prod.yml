@@ -1,0 +1,37 @@
+#db:
+#  mysql.url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+#  mysql.username: root
+#  mysql.password: 12345678
+#  mysql.driver: com.mysql.jdbc.Driver
+
+spring:
+  datasource:
+    ds1:
+      type: com.mchange.v2.c3p0.ComboPooledDataSource
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://111.166.21.21:32323/yk_promotion?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+      username: root
+      password: YKsh_021
+      initialSize: 3
+      maxActive: 100
+      minIdle: 10
+      maxWait: 5000
+
+    ds2:
+      type: com.mchange.v2.c3p0.ComboPooledDataSource
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://47.92.35.78:3306/finebi_dw?zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+      username: root
+      password: YkBiTest_191106
+      initialSize: 3
+      maxActive: 100
+      minIdle: 10
+      maxWait: 5000
+
+
+logging:
+  level:
+    com.promotion.product.dao: debug
+
+
+

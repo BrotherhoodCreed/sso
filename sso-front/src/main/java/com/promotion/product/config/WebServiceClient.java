@@ -19,12 +19,10 @@ public class WebServiceClient {
 	 */
 	public static void main(String[] args) throws Exception {
 		WebServiceConfig cfg = WebServiceConfig.getInstance();
-
 		Object service = callService(cfg.getAddress(), cfg.getServiceClass());
 		IKmReviewWebserviceService iKmReviewWebserviceService =(IKmReviewWebserviceService)service;
 		KmReviewParamterForm form =new KmReviewParamterForm();
 		iKmReviewWebserviceService.addReview(form);
-
 	}
 
 	/**
