@@ -115,7 +115,7 @@
     <div class="showChooseDiv" style="display: none;  padding: 20px">
         <div id="dept_main" style="margin-right: 2%;">
                 <span>
-                    <input type="text" />
+                    <input type="text" id="search" />
                     <button type="button" style="width: 10%;" id="queryShop">搜索</button>
                 </span>
             <div id="dept_tree">
@@ -655,14 +655,15 @@
             showCheckbox: true,     //是否显示复选框
             onlyIconControl: true
         });
-        function getData(shopName){
+        function getData(){
             var data = [];
+            var txt = $("#search").val();
             $.ajax({
                 url :'<%=request.getContextPath()%>/PromotionController/queryTree',//后台数据请求地址
                 dataType : 'json',
                 type : 'GET',
                 async : false,
-                data: {shopName: shopName},
+                data: {shopName: txt,activityCode:app.detail.activityCode},
                 success: function(resut){
                     data = resut;
                     console.log(data);
@@ -674,7 +675,7 @@
         $("#queryShop").on("click", function() {
             tree.reload('checkTree', {
                 elem: '#dept_tree',
-                data: str,
+                data:  getData().data,
                 id: 'checkTree',
                 showCheckbox: true,     //是否显示复选框
                 onlyIconControl: true
