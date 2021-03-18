@@ -86,7 +86,11 @@ public class ShopService {
             Map<String,  Collection<TreeResponse>> data= new HashMap<>();
             Map.Entry<String, Collection<TreeResponse>> entity=iterator1.next();
             data.put(entity.getKey(), entity.getValue());
-            multimap.put(entity.getValue().iterator().next().getAm(),data);
+            if (multimap.containsKey(entity.getValue().iterator().next().getAm())){
+                multimap.get(entity.getValue().iterator().next().getAm()).putAll(data);
+            }else {
+                multimap.put(entity.getValue().iterator().next().getAm(),data);
+            }
         }
 
 

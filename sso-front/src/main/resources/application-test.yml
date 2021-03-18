@@ -9,9 +9,9 @@ spring:
     ds1:
       type: com.mchange.v2.c3p0.ComboPooledDataSource
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://192.168.2.131:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+      jdbc-url: jdbc:mysql://111.166.21.21:32323/yk_promotion?zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
       username: root
-      password: 12345678
+      password: YKsh_021
       initialSize: 3
       maxActive: 100
       minIdle: 10

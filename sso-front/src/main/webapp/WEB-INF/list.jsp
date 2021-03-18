@@ -31,7 +31,7 @@
     <%--<i class="layui-icon layui-icon-search"></i>--%>
     <%--</div>--%>
     <%--<input type="text" id="activityCode" style="width:200px;float:right;height:30px;" placeholder="请输入促销编码" autocomplete="off" class="layui-input">--%>
-    <%--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>--%>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
 
 </script>
 <script type="text/html" id="opt">
