@@ -199,7 +199,7 @@
     <div class="showChooseDiv" style="display: none;  padding: 20px">
             <div id="dept_main" style="margin-right: 2%;">
                 <span>
-                    <input type="text" id="search"/>
+                    <input type="text" id="search" style="width: 70%;border: 1px solid gray; border-radius: 4px; outline: none;"/>
                 </span>
                 <div id="dept_tree">
                 </div>

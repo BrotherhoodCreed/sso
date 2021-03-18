@@ -80,7 +80,8 @@
             if (layEvent === 'detail') { //查看
 
             } else if (layEvent === 'edit') { //编辑
-                location.href = '<%=request.getContextPath()%>/edit?id=' + data.activityCode;
+                window.open('<%=request.getContextPath()%>/edit?id=' + data.activityCode);
+                <%--location.href = '<%=request.getContextPath()%>/edit?id=' + data.activityCode;--%>
             }
         });
 
@@ -91,7 +92,8 @@
 
                     break;
                 case 'add':
-                    location.href = '<%=request.getContextPath()%>/add';
+                    window.open('<%=request.getContextPath()%>/add');
+                <%--location.href = '<%=request.getContextPath()%>/add';--%>
                     break;
                 case 'upload':
                     var ids = [];
@@ -136,13 +138,13 @@
 
         $("#query").on("click", function () {
             var saleBegainTime = 0;
-            if(begainTime!=''){
+            if (begainTime != '') {
                 var startTimestamp = new Date(begainTime.replace(/-/g, "/"));
                 saleBegainTime = new Date(startTimestamp).getTime();
 
             }
-            var saleEndTime=0;
-            if(endTime!=''){
+            var saleEndTime = 0;
+            if (endTime != '') {
                 var endTimestamp = new Date(endTime.replace(/-/g, "/"));
                 saleEndTime = new Date(endTimestamp).getTime();
             }

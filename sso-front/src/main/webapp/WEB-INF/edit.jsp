@@ -38,7 +38,7 @@
 
 <body>
     <form action="" id="app">
-        <table style=" width: 70%; max-width: 1000px; border-collapse: separate;border-spacing: 5px;">
+        <table style=" width: 85%; max-width: 1000px; border-collapse: separate;border-spacing: 5px;">
 
             <tr>
                 <td style="width: 150px">促销编码</td>
@@ -106,7 +106,7 @@
                 <td>
                     <select v-model="detail.theWay"  style="width: 100px;">--%>
                         <option value="" >请选择</option>
-                        <option  v-bind:v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
+                        <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
                     </select>
                 </td>
                 <td style="min-width: 120px">核销开始时间</td>
@@ -245,9 +245,7 @@
         <div>
             <button type="button" class="btn btn-default" @click="edit()">修改活动</button>
             <button type="button" class="btn btn-default" id="addActive" style="    margin-left: 3rem;">添加门店</button>
-        </div>
-        <div>
-            <button type="button" class="btn btn-default" @click="toList()">返回列表</button>
+            <button type="button" class="btn btn-default" @click="toList()" style="    margin-left: 3rem;">返回列表</button>
         </div>
     </form>
     <table id="demo" lay-filter="test"></table>
@@ -255,7 +253,7 @@
     <div class="showChooseDiv" style="display: none;  padding: 20px">
         <div id="dept_main" style="margin-right: 2%;">
                 <span>
-                    <input type="text" id="search" />
+                    <input type="text" id="search" style="width: 70%;border: 1px solid gray; border-radius: 4px; outline: none;"/>
                 </span>
             <div id="dept_tree">
             </div>
@@ -677,21 +675,25 @@
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
-            if(layEvent === 'del'){ //查看
-                $.ajax({
-                    url : '<%=request.getContextPath()%>/PromotionController/deletePromotionRel?id='+data.id, //数据接口
-                    dataType : 'json',
-                    type : 'GET',
-                    async : false,
-                    success: function(resut){
-                        console.log(resut)
-                        if(10000 == resut.code){
-                            layer.msg('删除成功');
-                            obj.del();
+            layer.confirm('确定要删除吗', {icon: 3, title: '提示'}, function (index) {
+                layer.close(index);
+                if(layEvent === 'del'){ //查看
+                    $.ajax({
+                        url : '<%=request.getContextPath()%>/PromotionController/deletePromotionRel?id='+data.id, //数据接口
+                        dataType : 'json',
+                        type : 'GET',
+                        async : false,
+                        success: function(resut){
+                            console.log(resut)
+                            if(10000 == resut.code){
+                                layer.msg('删除成功');
+                                obj.del();
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
+            });
+
         });
     });
 </script>
