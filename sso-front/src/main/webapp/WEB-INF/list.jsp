@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css" media="all">
 </head>
 <body id="app">
+<div><input id="test" value=""></div>
 <table id="demo" lay-filter="test"></table>
 
 <script src="${ctx}/static/layui/layui.all.js" type="text/javascript"></script>

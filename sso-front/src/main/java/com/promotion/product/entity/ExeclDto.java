@@ -24,6 +24,7 @@ public class ExeclDto {
     private BigDecimal sellingPrice;
     private BigDecimal billPrice;
     private BigDecimal handlingFee;
+    private BigDecimal  taxRate;
 
     public String getArea() {
         return area;
@@ -169,6 +170,14 @@ public class ExeclDto {
         this.handlingFee = handlingFee;
     }
 
+    public BigDecimal getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(BigDecimal taxRate) {
+        this.taxRate = taxRate;
+    }
+
     @Override
     public String toString() {
         return "ExeclDto{" +
@@ -190,6 +199,7 @@ public class ExeclDto {
                 ", sellingPrice=" + sellingPrice +
                 ", billPrice=" + billPrice +
                 ", handlingFee=" + handlingFee +
+                ", taxRate=" + taxRate +
                 '}';
     }
 }

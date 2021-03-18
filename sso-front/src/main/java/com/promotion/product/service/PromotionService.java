@@ -60,7 +60,7 @@ public class PromotionService {
                 }
                 execlRespone.setDescription(execlDto.getDescription());
                 execlRespone.setAmount(String.valueOf(execlDto.getAmount()));
-                execlRespone.setBillCycle(String.valueOf(execlDto.getBillCycle()));
+                execlRespone.setBillCycle("T+"+String.valueOf(execlDto.getBillCycle()));
                 execlRespone.setIntroduction(execlDto.getIntroduction());
                 if(execlDto.getUsageStartTime()!=null){
                     execlRespone.setUsageStartTime(formatter.format(execlDto.getUsageStartTime()));
@@ -72,6 +72,7 @@ public class PromotionService {
                 execlRespone.setSellingPrice(String.valueOf(execlDto.getSellingPrice()));
                 execlRespone.setBillPrice(String.valueOf(execlDto.getBillPrice()));
                 execlRespone.setHandlingFee(String.valueOf(execlDto.getHandlingFee()));
+                execlRespone.setTaxRate(String.valueOf(execlDto.getTaxRate())+"%");
                 resultList.add(execlRespone);
             }
         }

@@ -14,11 +14,10 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
         input {
             margin-right: 14px;
+            width: 130px;
         }
-        
         select {
             margin-right: 14px;
         }
@@ -38,38 +37,89 @@
 
 <body>
     <form action="" id="app">
-        <div><span>促销编码</span> <input type="number" v-model="detail.activityCode"  readonly="readonly" style="width: 110px;">
-            <span>活动类型</span>
-            <select v-model="detail.activityType"  style="width: 100px;">
-                <option value="" >请选择</option>
-                <option  v-bind:value="item.descriptionCode" v-for="item in activityType" >{{item.description}}</option>
-            </select>
-            <span>销售开始时间</span>
-            <input type="text" id="test1" v-model="detail.salesStartTime" autocomplete="off">
+        <table style=" width: 70%; max-width: 895px; border-collapse: separate;border-spacing: 5px;">
 
-            <span>销售结束时间</span>
-            <input type="text" id="test2"  v-model="detail.salesEndTime" autocomplete="off">
-        </div>
-        <div><span>每台现用张数/金额</span> <input type="number" @input="valueChange"  v-model="detail.amount" style="width: 5rem; text-align: center;">
-            <span>回款周期</span>
-            <select v-model="detail.billCycle"  style="width: 100px; ">
-                <option value="1">T+1</option>
-                <option value="2">T+2</option>
-                <option value="3">T+3</option>
-                <option value="4">T+4</option>
-                <option value="5">T+5</option>
-                <option value="6">T+6</option>
-                <option value="7">T+7</option>
-                <option value="8">T+8</option>
-                <option value="9">T+9</option>
-                <option value="10">T+10</option>
-                <option value="11">T+11</option>
-                <option value="12">T+12</option>
-                <option value="13">T+13</option>
-                <option value="14">T+14</option>
-                <option value="15">T+15</option>
-            </select>
-        </div>
+            <tr>
+                <td style="width: 150px">促销编码</td>
+                <td>
+                    <input type="number" v-model="detail.activityCode"  readonly="readonly" style="width: 130px;">
+                </td>
+                <td style="width: 10%">活动类型</td>
+                <td>
+                    <select v-model="detail.activityType"  style="width: 130px;">
+                        <option value="" >请选择</option>
+                        <option  v-bind:value="item.descriptionCode" v-for="item in activityType" >{{item.description}}</option>
+                    </select>
+                </td>
+                <td  style="width: 120px">销售开始时间</td>
+                <td>  <input type="text" id="test1" autocomplete="off"> </td>
+                <td  style="width: 120px">销售结束时间</td>
+                <td>    <input type="text" id="test2" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td >每台限用张数/金额</td>
+                <td>
+                    <input type="number" @input="valueChange"  v-model="detail.amount" style="width: 130px; text-align: center;">
+                </td>
+                <td>回款周期</td>
+                <td>
+                    <select v-model="detail.billCycle"  style="width: 130px; ">
+                        <option value="1">T+1</option>
+                        <option value="2">T+2</option>
+                        <option value="3">T+3</option>
+                        <option value="4">T+4</option>
+                        <option value="5">T+5</option>
+                        <option value="6">T+6</option>
+                        <option value="7">T+7</option>
+                        <option value="8">T+8</option>
+                        <option value="9">T+9</option>
+                        <option value="10">T+10</option>
+                        <option value="11">T+11</option>
+                        <option value="12">T+12</option>
+                        <option value="13">T+13</option>
+                        <option value="14">T+14</option>
+                        <option value="15">T+15</option>
+                    </select>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>  </td>
+            </tr>
+
+        </table>
+        <%--<div><span>促销编码</span> <input type="number" v-model="detail.activityCode"  readonly="readonly" style="width: 110px;">--%>
+            <%--<span>活动类型</span>--%>
+            <%--<select v-model="detail.activityType"  style="width: 100px;">--%>
+                <%--<option value="" >请选择</option>--%>
+                <%--<option  v-bind:value="item.descriptionCode" v-for="item in activityType" >{{item.description}}</option>--%>
+            <%--</select>--%>
+            <%--<span>销售开始时间</span>--%>
+            <%--<input type="text" id="test1" v-model="detail.salesStartTime" autocomplete="off">--%>
+
+            <%--<span>销售结束时间</span>--%>
+            <%--<input type="text" id="test2"  v-model="detail.salesEndTime" autocomplete="off">--%>
+        <%--</div>--%>
+        <%--<div><span>每台现用张数/金额</span> <input type="number" @input="valueChange"  v-model="detail.amount" style="width: 5rem; text-align: center;">--%>
+            <%--<span>回款周期</span>--%>
+            <%--<select v-model="detail.billCycle"  style="width: 100px; ">--%>
+                <%--<option value="1">T+1</option>--%>
+                <%--<option value="2">T+2</option>--%>
+                <%--<option value="3">T+3</option>--%>
+                <%--<option value="4">T+4</option>--%>
+                <%--<option value="5">T+5</option>--%>
+                <%--<option value="6">T+6</option>--%>
+                <%--<option value="7">T+7</option>--%>
+                <%--<option value="8">T+8</option>--%>
+                <%--<option value="9">T+9</option>--%>
+                <%--<option value="10">T+10</option>--%>
+                <%--<option value="11">T+11</option>--%>
+                <%--<option value="12">T+12</option>--%>
+                <%--<option value="13">T+13</option>--%>
+                <%--<option value="14">T+14</option>--%>
+                <%--<option value="15">T+15</option>--%>
+            <%--</select>--%>
+        <%--</div>--%>
         <div>
             <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">活动描述</h3>
             <textarea style="width: 895px; height: 55px; resize: none;" v-model="detail.description">
@@ -696,7 +746,7 @@
                 maxmin: false,
                 shadeClose: true,
                 shade: false,
-                area:['auto',"50%"],
+                area:['30%',"50%"],
                 // maxHeight:'50%',
                 offset: '100px'
             });
