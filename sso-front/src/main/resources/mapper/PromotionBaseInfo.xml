@@ -56,10 +56,12 @@
             <if test="activityCode !=null and activityCode!=''">
                 AND  activity_code =#{activityCode}
             </if>
-            <if test="begainTime !=null and endTime!=null">
-                AND  sales_start_time &gt;= begainTime AND sales_end_time &lt;= endTime
+            <if test="begainTime !=null ">
+                AND  sales_start_time &gt;= #{begainTime}
             </if>
-
+            <if test="endTime !=null ">
+                AND  sales_end_time &lt;= #{endTime}
+            </if>
         </where>
         order by created_time desc
     </select>

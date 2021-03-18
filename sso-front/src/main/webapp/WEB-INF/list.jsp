@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/WEB-INF/taglib.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,84 +9,84 @@
 </head>
 <script src="${ctx}/static/laydate/laydate.js" type="text/javascript"></script>
 <body id="app">
-    <div style="padding-top: 1rem;">
-        <td  style="width: 120px">销售开始时间</td>
-        <td>  <input type="text" id="test1"   autocomplete="off" readonly="readonly"> </td>
-        <td  style="width: 120px">销售结束时间</td>
-        <td>    <input type="text" id="test2"  autocomplete="off" readonly="readonly"></td>
-        <td  style="width: 120px"></td>
-        <td>  促销编码  <input type="text" id="activityCode"  autocomplete="off"></td>
-        <td>  <input type="button" id="query" value="查询" ></td>
-        <td>  <input type="button" id="reset" value="重置" ></td>
-    </div>
+<div style="padding-top: 1rem;">
+    <td style="width: 120px">销售开始时间</td>
+    <td><input type="text" id="test1" autocomplete="off" readonly="readonly"></td>
+    <td style="width: 120px">销售结束时间</td>
+    <td><input type="text" id="test2" autocomplete="off" readonly="readonly"></td>
+    <td style="width: 120px"></td>
+    <td> 促销编码 <input type="text" id="activityCode" autocomplete="off"></td>
+    <td><input type="button" id="query" value="查询"></td>
+    <td><input type="button" id="reset" value="重置"></td>
+</div>
 
-    <table id="demo" lay-filter="test"></table>
+<table id="demo" lay-filter="test"></table>
 
-    <script src="${ctx}/static/layui/layui.all.js" type="text/javascript"></script>
-    <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="add">新增</a>
-        <a class="layui-btn layui-btn-xs" lay-event="upload">导出</a>
-        <a class="layui-btn layui-btn-xs" lay-event="sumbit">提交OA</a>
-        <%--<div class="layui-inline" style="float:right;height:29px;" title="搜索" lay-event="LAYTABLE_SEARCH">--%>
-            <%--<i class="layui-icon layui-icon-search"></i>--%>
-        <%--</div>--%>
-        <%--<input type="text" id="activityCode" style="width:200px;float:right;height:30px;" placeholder="请输入促销编码" autocomplete="off" class="layui-input">--%>
-        <%--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>--%>
+<script src="${ctx}/static/layui/layui.all.js" type="text/javascript"></script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="add">新增</a>
+    <a class="layui-btn layui-btn-xs" lay-event="upload">导出</a>
+    <a class="layui-btn layui-btn-xs" lay-event="sumbit">提交OA</a>
+    <%--<div class="layui-inline" style="float:right;height:29px;" title="搜索" lay-event="LAYTABLE_SEARCH">--%>
+    <%--<i class="layui-icon layui-icon-search"></i>--%>
+    <%--</div>--%>
+    <%--<input type="text" id="activityCode" style="width:200px;float:right;height:30px;" placeholder="请输入促销编码" autocomplete="off" class="layui-input">--%>
+    <%--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>--%>
 
-    </script>
-    <script type="text/html" id="opt">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    </script>
-    <script>
-        var begainTime;
-        var endTime;
+</script>
+<script type="text/html" id="opt">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+</script>
+<script>
+    var begainTime = '';
+    var endTime = '';
 
-        layui.use('table', function(){
+    layui.use('table', function () {
         var table = layui.table;
         //第一个实例
         var tableIn = table.render({
             elem: '#demo'
-            ,id:'list'
-            ,height: 'full-20'
-            ,url: '<%=request.getContextPath()%>/PromotionController/queryPromotionList' //数据接口
-            ,request: {
+            , id: 'list'
+            , height: 'full-20'
+            , url: '<%=request.getContextPath()%>/PromotionController/queryPromotionList' //数据接口
+            , request: {
                 pageName: 'pageIndex' //页码的参数名称，默认：page
-                ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                , limitName: 'pageSize' //每页数据量的参数名，默认：limit
             }
-            ,response: {
+            , response: {
                 statusName: 'code' //规定数据状态的字段名称，默认：code
-                ,statusCode: 10000 //规定成功的状态码，默认：0
-                ,msgName: 'message' //规定状态信息的字段名称，默认：msg
-                ,countName: 'total' //规定数据总数的字段名称，默认：count
+                , statusCode: 10000 //规定成功的状态码，默认：0
+                , msgName: 'message' //规定状态信息的字段名称，默认：msg
+                , countName: 'total' //规定数据总数的字段名称，默认：count
                 // ,dataName: 'rows' //规定数据列表的字段名称，默认：data
             }
-            ,page: true //开启分页
-            ,cols: [[ //表头
-                {type:'checkbox',field: 'id', title: 'ID',  sort: true, fixed: 'left'}
-                ,{field: 'activityCode', title: '促销编码', sort: true}
-                ,{field: 'activityType', title: '活动类型' }
-                ,{field: 'salesStartTime', title: '开始时间'}
-                ,{field: 'salesEndTime', title: '结束时间',  sort: true}
-                ,{fixed: 'right', align:'center', toolbar: '#opt'} //这里的toolbar值是模板元素的选择器
+            , page: true //开启分页
+            , cols: [[ //表头
+                {type: 'checkbox', field: 'id', title: 'ID', sort: true, fixed: 'left'}
+                , {field: 'activityCode', title: '促销编码', sort: true}
+                , {field: 'activityType', title: '活动类型'}
+                , {field: 'salesStartTime', title: '开始时间'}
+                , {field: 'salesEndTime', title: '结束时间', sort: true}
+                , {fixed: 'right', align: 'center', toolbar: '#opt'} //这里的toolbar值是模板元素的选择器
             ]]
-            ,toolbar:'#barDemo'
-            ,defaultToolbar: ['filter', 'print', 'exports', ]
+            , toolbar: '#barDemo'
+            , defaultToolbar: ['filter', 'print', 'exports',]
         });
 
-        table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+        table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
-            if(layEvent === 'detail'){ //查看
+            if (layEvent === 'detail') { //查看
 
-            } else if(layEvent === 'edit'){ //编辑
-                location.href = '<%=request.getContextPath()%>/edit?id='+data.activityCode;
+            } else if (layEvent === 'edit') { //编辑
+                location.href = '<%=request.getContextPath()%>/edit?id=' + data.activityCode;
             }
         });
 
-        table.on('toolbar(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+        table.on('toolbar(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var checkStatus = table.checkStatus(obj.config.id);
-            switch(obj.event){
+            switch (obj.event) {
                 case 'sumbit':
 
                     break;
@@ -95,23 +95,23 @@
                     break;
                 case 'upload':
                     var ids = [];
-                    if (checkStatus.data.length == 0){
+                    if (checkStatus.data.length == 0) {
                         layer.msg("请至少勾选一条");
                         return;
                     }
-                    for(j = 0; j < checkStatus.data.length; j++) {
+                    for (j = 0; j < checkStatus.data.length; j++) {
                         ids.push(checkStatus.data[j].activityCode);
                     }
                     app.upload(ids);
                     break;
                 case 'delete':
                     var ids = [];
-                    if (checkStatus.data.length == 0){
+                    if (checkStatus.data.length == 0) {
                         layer.msg("请至少勾选一条");
                         return;
                     }
-                    layer.confirm('确定要删除吗',{icon: 3, title:'提示'}, function(index){
-                        for(j = 0; j < checkStatus.data.length; j++) {
+                    layer.confirm('确定要删除吗', {icon: 3, title: '提示'}, function (index) {
+                        for (j = 0; j < checkStatus.data.length; j++) {
                             ids.push(checkStatus.data[j].id);
                         }
                         layer.close(index);
@@ -121,15 +121,33 @@
                     });
 
                     break;
-            };
+            }
+            ;
         });
 
-        $("#query").on("click", function() {
-            var startTimestamp = new Date(begainTime.replace(/-/g, "/"));
-            var saleBegainTime = new Date(startTimestamp).getTime();
-            var endTimestamp = new Date(endTime.replace(/-/g, "/"));
-            var saleEndTime = new Date(endTimestamp).getTime();
-            if (saleEndTime < saleBegainTime){
+
+        $("#reset").on("click", function () {
+            begainTime = '';
+            endTime = '';
+            $('#test1').val('');
+            $('#test2').val('');
+            $("#activityCode").val('');
+        });
+
+        $("#query").on("click", function () {
+            var saleBegainTime = 0;
+            if(begainTime!=''){
+                var startTimestamp = new Date(begainTime.replace(/-/g, "/"));
+                saleBegainTime = new Date(startTimestamp).getTime();
+
+            }
+            var saleEndTime=0;
+            if(endTime!=''){
+                var endTimestamp = new Date(endTime.replace(/-/g, "/"));
+                saleEndTime = new Date(endTimestamp).getTime();
+            }
+
+            if (saleEndTime < saleBegainTime) {
                 layer.msg('结束时间不能小于开始时间');
                 return;
             }
@@ -137,46 +155,15 @@
                 {
                     where: {
                         activityCode: $("#activityCode").val(),
-                        begainTime:begainTime,
-                        endTime:endTime
+                        begainTime: begainTime,
+                        endTime: endTime
                     }
-                    ,page: {
+                    , page: {
                         curr: 1 //重新从第 1 页开始
                     }
                 }
             );
-
-            $("#reset").on("click", function() {
-                begainTime='';
-                endTime='';
-                $('#test1').val('');
-                $('#test2').val('');
-                $("#activityCode").val('');
         });
-
-            $("#query").on("click", function() {
-                var startTimestamp = new Date(begainTime.replace(/-/g, "/"));
-                var saleBegainTime = new Date(startTimestamp).getTime();
-                var endTimestamp = new Date(endTime.replace(/-/g, "/"));
-                var saleEndTime = new Date(endTimestamp).getTime();
-                if (saleEndTime < saleBegainTime) {
-                    layer.msg('结束时间不能小于开始时间');
-                    return;
-                }
-            });
-                tableIn.reload(
-                    {
-                        where: {
-                            activityCode: $("#activityCode").val(),
-                            begainTime:begainTime,
-                            endTime:endTime
-                        }
-                        ,page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                    }
-                );
-            });
 
     });
 
@@ -185,20 +172,20 @@
         data: {
             querydata: []
         },
-        created:function(){
+        created: function () {
             // this.getList();
         },
         methods: {
-            upload:function (data) {
-                var idstr =  JSON.stringify(data);
-                window.location.href = '<%=request.getContextPath()%>/PromotionController/exportExcel?codestr='+encodeURIComponent(idstr);
+            upload: function (data) {
+                var idstr = JSON.stringify(data);
+                window.location.href = '<%=request.getContextPath()%>/PromotionController/exportExcel?codestr=' + encodeURIComponent(idstr);
             },
-            delete:function (data) {
-                var idstr =  JSON.stringify(data);
-                this.$http.post('<%=request.getContextPath()%>/PromotionController/deletePromotion',{ids:idstr},{emulateJSON:true}).then(function(response) {
+            delete: function (data) {
+                var idstr = JSON.stringify(data);
+                this.$http.post('<%=request.getContextPath()%>/PromotionController/deletePromotion', {ids: idstr}, {emulateJSON: true}).then(function (response) {
                         console.log(response.data);
                     },
-                    function(response) {
+                    function (response) {
                         console.log("网络异常");
                     });
             },
@@ -209,10 +196,10 @@
 
     //日期控件
     var bMinDate;
-    var defaultMinDate =   {
+    var defaultMinDate = {
         year: 1900,
         month: 1,
-        date:1,
+        date: 1,
         hours: 0,
         minutes: 0,
         seconds: 0
@@ -221,7 +208,7 @@
     var defaultMaxDate = {
         year: 2222,
         month: 1,
-        date:1,
+        date: 1,
         hours: 0,
         minutes: 0,
         seconds: 0
@@ -230,52 +217,52 @@
 
     var a = laydate.render({
         elem: '#test1' //指定元素
-        ,show: false //直    接显示
-        ,trigger: 'click' //采用click弹出
-        ,btns: ['clear', 'confirm']
+        , show: false //直    接显示
+        , trigger: 'click' //采用click弹出
+        , btns: ['clear', 'confirm']
         // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
-        ,done: function(value, date, endDate){
+        , done: function (value, date, endDate) {
             begainTime = value;
-            if (value == '' || value == undefined){
+            if (value == '' || value == undefined) {
                 bMinDate = defaultMinDate
-            }else {
-                date.month = date.month-1;
+            } else {
+                date.month = date.month - 1;
                 bMinDate = date;
             }
         }
     });
 
-    lay('#test1').on('click', function(e){
-        if(aMaxDate == undefined || aMaxDate == ''){
-            a.config.max=defaultMaxDate;
-        }else {
-            a.config.max=aMaxDate;
+    lay('#test1').on('click', function (e) {
+        if (aMaxDate == undefined || aMaxDate == '') {
+            a.config.max = defaultMaxDate;
+        } else {
+            a.config.max = aMaxDate;
         }
     });
 
 
     var b = laydate.render({
         elem: '#test2' //指定元素
-        ,show: false //直接显示
-        ,trigger: 'click' //采用click弹出
-        ,btns: ['clear', 'confirm']
+        , show: false //直接显示
+        , trigger: 'click' //采用click弹出
+        , btns: ['clear', 'confirm']
         // ,closeStop: '#test2' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
-        ,done: function(value, date, endDate){
+        , done: function (value, date, endDate) {
             endTime = value;
-            if (value == '' || value == undefined){
+            if (value == '' || value == undefined) {
                 aMaxDate = defaultMaxDate
-            }else {
-                date.month = date.month-1
+            } else {
+                date.month = date.month - 1
                 aMaxDate = date;
             }
         }
     });
 
-    lay('#test2').on('click', function(e){
-        if(bMinDate == undefined || bMinDate == ''){
-            b.config.min=defaultMinDate;
-        }else {
-            b.config.min=bMinDate;
+    lay('#test2').on('click', function (e) {
+        if (bMinDate == undefined || bMinDate == '') {
+            b.config.min = defaultMinDate;
+        } else {
+            b.config.min = bMinDate;
         }
 
     });

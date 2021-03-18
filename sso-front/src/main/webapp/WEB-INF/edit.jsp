@@ -1,3 +1,4 @@
+<%@ taglib prefix="v-bind" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/taglib.jsp" %>
 <!DOCTYPE html>
@@ -37,7 +38,7 @@
 
 <body>
     <form action="" id="app">
-        <table style=" width: 70%; max-width: 895px; border-collapse: separate;border-spacing: 5px;">
+        <table style=" width: 70%; max-width: 1000px; border-collapse: separate;border-spacing: 5px;">
 
             <tr>
                 <td style="width: 150px">促销编码</td>
@@ -105,12 +106,12 @@
                 <td>
                     <select v-model="detail.theWay"  style="width: 100px;">--%>
                         <option value="" >请选择</option>
-                        <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
+                        <option  v-bind:v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
                     </select>
                 </td>
-                <td>核销开始时间</td>
+                <td style="min-width: 120px">核销开始时间</td>
                 <td> <input type="text" id="test3"  v-model="detail.usageStartTime" autocomplete="off"></td>
-                <td>核销结束时间</td>
+                <td style="min-width: 120px">核销结束时间</td>
                 <td><input type="text" id="test4" v-model="detail.usageEndTime" autocomplete="off"></td>
             </tr>
 
