@@ -43,8 +43,10 @@ public class ShopService {
         }
 
         List<ShopDo> shopDoList =yuKuDao.selectShop();
+        Boolean sentinel =false;
         if(StringUtils.isNotBlank(shopName)){
             shopDoList.removeIf(item->!item.getStnm().contains(shopName));
+            sentinel=true;
         }
         if(CollectionUtils.isEmpty(shopDoList)){
             return treeResponseList;
@@ -66,6 +68,9 @@ public class ShopService {
             children.setId(shopDo.getStcd());
             children.setAm(shopDo.getAm());
             children.setCity(shopDo.getCity());
+            if(sentinel){
+                children.setSpread(true);
+            }
             //城市 门店信息
             //A1   01,02 03
             childrenMultimap.put(shopDo.getCity(),children);
@@ -90,7 +95,7 @@ public class ShopService {
         Map<String,TreeResponse> map =new HashMap<>();
         while (iterator.hasNext()){
             Map.Entry<String, Map<String, Collection<TreeResponse>>> entry= iterator.next();
-            TreeResponse treeResponse =treeResponse(entry.getKey(),1);
+            TreeResponse treeResponse =treeResponse(entry.getKey(),1,sentinel);
             Map<String, Collection<TreeResponse>> multimap2=  entry.getValue();
             Iterator<Map.Entry<String, Collection<TreeResponse>>>iterator2=multimap2.entrySet().iterator();
             if(map.get(entry.getKey())!=null){
@@ -99,7 +104,7 @@ public class ShopService {
             List<TreeResponse> treeResponseList1 =new ArrayList<>();
             while (iterator2.hasNext()){
                 Map.Entry<String, Collection<TreeResponse>> entry2= iterator2.next();
-                TreeResponse treeResponse2 =treeResponse(entry2.getKey(),2);
+                TreeResponse treeResponse2 =treeResponse(entry2.getKey(),2,sentinel);
                 Map<String,TreeResponse> map2 =new HashMap<>();
                 if(map2.get(entry2.getKey())==null){
                     map2.put(entry2.getKey(),treeResponse2);
@@ -121,11 +126,14 @@ public class ShopService {
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 
-    private  TreeResponse treeResponse(String key ,Integer level){
+    private  TreeResponse treeResponse(String key ,Integer level,Boolean sentinel){
         TreeResponse treeResponse =new TreeResponse();
         treeResponse.setLevel(level);
         treeResponse.setTitle(key);
         treeResponse.setId(key);
+        if(sentinel){
+            treeResponse.setSpread(true);
+        }
         return treeResponse;
     }
 

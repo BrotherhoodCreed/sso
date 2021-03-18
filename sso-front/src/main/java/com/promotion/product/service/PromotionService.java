@@ -129,14 +129,18 @@ public class PromotionService {
         if(CollectionUtils.isEmpty(queryPromotionList)){
             return response;
         }
+        Map<String,String> map =dictionaryDao.selectAll().stream().collect(Collectors.toMap(DictionaryDo::getDescriptionCode,DictionaryDo::getDescription));;
         response.setTotal(pageInfo.getTotal());
         response.setPages(pageInfo.getPageNum());
         List<QueryPromotionListRespone> queryPromotionListResponeList =new ArrayList<>();
         for (QueryPromotionListDo QueryPromotionListDo : queryPromotionList) {
             QueryPromotionListRespone QueryPromotionListRespone =new QueryPromotionListRespone();
             QueryPromotionListRespone.setId(QueryPromotionListDo.getId());
+
             QueryPromotionListRespone.setActivityCode(QueryPromotionListDo.getActivityCode());
-            QueryPromotionListRespone.setActivityType(QueryPromotionListDo.getActivityType());
+            if(map.get(QueryPromotionListDo.getActivityType())!=null){
+                QueryPromotionListRespone.setActivityType(map.get(QueryPromotionListDo.getActivityType()));
+            }
             QueryPromotionListRespone.setSalesStartTime(QueryPromotionListDo.getSalesStartTime());
             QueryPromotionListRespone.setSalesEndTime(QueryPromotionListDo.getSalesEndTime());
             queryPromotionListResponeList.add(QueryPromotionListRespone);

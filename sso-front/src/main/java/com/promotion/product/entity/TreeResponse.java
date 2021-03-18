@@ -13,5 +13,6 @@ public class TreeResponse {
     private String city;
     private Integer level;
     private Boolean checked=false;
+    private Boolean spread=false;
     private List<TreeResponse> children=new ArrayList<>();
 }

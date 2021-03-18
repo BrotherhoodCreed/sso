@@ -183,7 +183,7 @@
             <%--<span>手续费率(%)</span> <input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 10rem;"></div>--%>
         <%--<div>--%>
             <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">其他</h3>
-            <textarea v-model="detail.other"  style="width: 895px; height: 35px; resize: none;"></textarea>
+            <textarea v-model="detail.other"  style="width: 895px; height: 55px; resize: none;"></textarea>
         </div>
         <%--<div>--%>
             <%--<button type="button" class="btn btn-default" @click="save()">保存活动</button>--%>
