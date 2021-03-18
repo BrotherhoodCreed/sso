@@ -54,8 +54,12 @@
         <where>
             deleted = 0
             <if test="activityCode !=null and activityCode!=''">
-                activity_code =#{activityCode}
+                AND  activity_code =#{activityCode}
             </if>
+            <if test="begainTime !=null and endTime!=null">
+                AND  sales_start_time &gt;= begainTime AND sales_end_time &lt;= endTime
+            </if>
+
         </where>
         order by created_time desc
     </select>

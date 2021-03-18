@@ -44,7 +44,7 @@
                 <td>
                     <input type="number" v-model="detail.activityCode"  readonly="readonly" style="width: 130px;">
                 </td>
-                <td style="width: 10%">活动类型</td>
+                <td style="width: 120px">活动类型</td>
                 <td>
                     <select v-model="detail.activityType"  style="width: 130px;">
                         <option value="" >请选择</option>
@@ -52,9 +52,9 @@
                     </select>
                 </td>
                 <td  style="width: 120px">销售开始时间</td>
-                <td>  <input type="text" id="test1" autocomplete="off"> </td>
+                <td> <input type="text" id="test1" v-model="detail.salesStartTime" autocomplete="off"></td>
                 <td  style="width: 120px">销售结束时间</td>
-                <td>    <input type="text" id="test2" autocomplete="off"></td>
+                <td>   <input type="text" id="test2"  v-model="detail.salesEndTime" autocomplete="off"></td>
             </tr>
             <tr>
                 <td >每台限用张数/金额</td>
@@ -85,6 +85,57 @@
                 <td></td>
                 <td></td>
                 <td>  </td>
+            </tr>
+            <tr>
+                <td colspan="8">活动描述</td>
+            </tr>
+            <tr>
+                <td colspan="8">
+                    <textarea style="width: 100%; height: 55px; resize: none;" v-model="detail.description">
+                    </textarea>
+                </td>
+            </tr>
+
+            <tr>
+                <td >七字描述</td>
+                <td>
+                    <input type="text " v-model="detail.introduction"  style="width: 100px;">
+                </td>
+                <td>团购网站</td>
+                <td>
+                    <select v-model="detail.theWay"  style="width: 100px;">--%>
+                        <option value="" >请选择</option>
+                        <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
+                    </select>
+                </td>
+                <td>核销开始时间</td>
+                <td> <input type="text" id="test3"  v-model="detail.usageStartTime" autocomplete="off"></td>
+                <td>核销结束时间</td>
+                <td><input type="text" id="test4" v-model="detail.usageEndTime" autocomplete="off"></td>
+            </tr>
+
+            <tr>
+                <td >销售单价</td>
+                <td>
+                    <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 100px;">
+                </td>
+                <td>回款单价</td>
+                <td>
+                    <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 100px;margin-right: 62px;">
+                </td>
+                <td>手续费</td>
+                <td> <input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width:130px; margin-right: 46px;"></td>
+                <td>手续费率(%)</td>
+                <td><input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 130px;"></td>
+            </tr>
+
+            <tr>
+                <td colspan="8">其他</td>
+            </tr>
+            <tr>
+                <td colspan="8">
+                    <textarea v-model="detail.other"  style="width: 100%; height: 55px; resize: none;"></textarea>
+                </td>
             </tr>
 
         </table>
@@ -120,21 +171,58 @@
                 <%--<option value="15">T+15</option>--%>
             <%--</select>--%>
         <%--</div>--%>
-        <div>
-            <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">活动描述</h3>
-            <textarea style="width: 895px; height: 55px; resize: none;" v-model="detail.description">
-            </textarea>
-        </div>
-        <div><span>七字描述</span> <input type="text " v-model="detail.introduction" @input="valueChange" style="width: 110px;">
-            <span>团购网站</span> <select v-model="detail.theWay"  style="width: 100px;">
-                <option value="" >请选择</option>
-                <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
-            </select>
-            <span>核销开始时间</span>
-            <input type="text" id="test3"  v-model="detail.usageStartTime" autocomplete="off">
-            <span>核销结束时间</span>
-            <input type="text" id="test4" v-model="detail.usageEndTime" autocomplete="off">
-        </div>
+<%--        <div>--%>
+<%--            <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">活动描述</h3>--%>
+<%--            <textarea style="width: 895px; height: 55px; resize: none;" v-model="detail.description">--%>
+<%--            </textarea>--%>
+<%--        </div>--%>
+<%--        <div>--%>
+<%--            <table style=" width: 70%; max-width: 1000px; border-collapse: separate;border-spacing: 5px;">--%>
+<%--                <tr>--%>
+<%--                    <td >七字描述</td>--%>
+<%--                    <td>--%>
+<%--                        <input type="text " v-model="detail.introduction"  style="width: 100px;">--%>
+<%--                    </td>--%>
+<%--                    <td>团购网站</td>--%>
+<%--                    <td>--%>
+<%--                     <select v-model="detail.theWay"  style="width: 100px;">&ndash;%&gt;--%>
+<%--                         <option value="" >请选择</option>--%>
+<%--                         <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>--%>
+<%--                     </select>--%>
+<%--                    </td>--%>
+<%--                    <td>核销开始时间</td>--%>
+<%--                    <td> <input type="text" id="test3"  v-model="detail.usageStartTime" autocomplete="off"></td>--%>
+<%--                    <td>核销结束时间</td>--%>
+<%--                    <td><input type="text" id="test4" v-model="detail.usageEndTime" autocomplete="off"></td>--%>
+<%--                </tr>--%>
+
+<%--                <tr>--%>
+<%--                    <td >销售单价</td>--%>
+<%--                    <td>--%>
+<%--                        <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 100px;">--%>
+<%--                    </td>--%>
+<%--                    <td>回款单价</td>--%>
+<%--                    <td>--%>
+<%--                        <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 100px;margin-right: 62px;">--%>
+<%--                    </td>--%>
+<%--                    <td>手续费</td>--%>
+<%--                    <td> <input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width:130px; margin-right: 46px;"></td>--%>
+<%--                    <td>手续费率(%)</td>--%>
+<%--                    <td><input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 130px;"></td>--%>
+<%--                </tr>--%>
+
+<%--            </table>--%>
+
+<%--            <span>七字描述</span> <input type="text " v-model="detail.introduction" @input="valueChange" style="width: 110px;">--%>
+<%--            <span>团购网站</span> <select v-model="detail.theWay"  style="width: 100px;">--%>
+<%--                <option value="" >请选择</option>--%>
+<%--                <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>--%>
+<%--            </select>--%>
+<%--            <span>核销开始时间</span>--%>
+<%--            <input type="text" id="test3"  v-model="detail.usageStartTime" autocomplete="off">--%>
+<%--            <span>核销结束时间</span>--%>
+<%--            <input type="text" id="test4" v-model="detail.usageEndTime" autocomplete="off">--%>
+<%--        </div>--%>
         <%--<div>--%>
             <%--<h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">与本活动共存的活动</h3>--%>
             <%--<label for="id_select"></label>--%>
@@ -143,15 +231,15 @@
                 <%--</optgroup>--%>
             <%--</select>--%>
         <%--</div>--%>
-        <div><span>销售单价</span> <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 5rem;">
-            <span>回款单价</span> <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 5rem;margin-right: 62px;">
-            <span>手续费</span><input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width: 5rem; margin-right: 46px;">
-            <span>手续费率(%)</span> <input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 10rem;">
-        </div>
-        <div>
-            <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">其他</h3>
-            <textarea v-model="detail.other"  style="width: 895px; height: 35px; resize: none;"></textarea>
-        </div>
+<%--        <div><span>销售单价</span> <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 5rem;">--%>
+<%--            <span>回款单价</span> <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 5rem;margin-right: 62px;">--%>
+<%--            <span>手续费</span><input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width: 5rem; margin-right: 46px;">--%>
+<%--            <span>手续费率(%)</span> <input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 10rem;">--%>
+<%--        </div>--%>
+<%--        <div>--%>
+<%--            <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">其他</h3>--%>
+<%--            <textarea v-model="detail.other"  style="width: 895px; height: 35px; resize: none;"></textarea>--%>
+<%--        </div>--%>
 
         <div>
             <button type="button" class="btn btn-default" @click="edit()">修改活动</button>
