@@ -7,22 +7,41 @@
     <title>管理页面</title>
     <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css" media="all">
 </head>
+<script src="${ctx}/static/laydate/laydate.js" type="text/javascript"></script>
 <body id="app">
-<div><input id="test" value=""></div>
-<table id="demo" lay-filter="test"></table>
+    <div style="padding-top: 1rem;">
+        <td  style="width: 120px">销售开始时间</td>
+        <td>  <input type="text" id="test1"   autocomplete="off" readonly="readonly"> </td>
+        <td  style="width: 120px">销售结束时间</td>
+        <td>    <input type="text" id="test2"  autocomplete="off" readonly="readonly"></td>
+        <td  style="width: 120px"></td>
+        <td>  促销编码  <input type="text" id="activityCode"  autocomplete="off"></td>
+        <td>  <input type="button" id="query" value="查询" ></td>
+        <td>  <input type="button" id="reset" value="重置" ></td>
+    </div>
 
-<script src="${ctx}/static/layui/layui.all.js" type="text/javascript"></script>
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="add">新增</a>
-    <a class="layui-btn layui-btn-xs" lay-event="upload">导出</a>
-    <a class="layui-btn layui-btn-xs" lay-event="sumbit">提交OA</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
-</script>
-<script type="text/html" id="opt">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-</script>
-<script>
-    layui.use('table', function(){
+    <table id="demo" lay-filter="test"></table>
+
+    <script src="${ctx}/static/layui/layui.all.js" type="text/javascript"></script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="add">新增</a>
+        <a class="layui-btn layui-btn-xs" lay-event="upload">导出</a>
+        <a class="layui-btn layui-btn-xs" lay-event="sumbit">提交OA</a>
+        <%--<div class="layui-inline" style="float:right;height:29px;" title="搜索" lay-event="LAYTABLE_SEARCH">--%>
+            <%--<i class="layui-icon layui-icon-search"></i>--%>
+        <%--</div>--%>
+        <%--<input type="text" id="activityCode" style="width:200px;float:right;height:30px;" placeholder="请输入促销编码" autocomplete="off" class="layui-input">--%>
+        <%--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>--%>
+
+    </script>
+    <script type="text/html" id="opt">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    </script>
+    <script>
+        var begainTime;
+        var endTime;
+
+        layui.use('table', function(){
         var table = layui.table;
         //第一个实例
         var tableIn = table.render({
@@ -104,6 +123,61 @@
                     break;
             };
         });
+
+        $("#query").on("click", function() {
+            var startTimestamp = new Date(begainTime.replace(/-/g, "/"));
+            var saleBegainTime = new Date(startTimestamp).getTime();
+            var endTimestamp = new Date(endTime.replace(/-/g, "/"));
+            var saleEndTime = new Date(endTimestamp).getTime();
+            if (saleEndTime < saleBegainTime){
+                layer.msg('结束时间不能小于开始时间');
+                return;
+            }
+            tableIn.reload(
+                {
+                    where: {
+                        activityCode: $("#activityCode").val(),
+                        begainTime:begainTime,
+                        endTime:endTime
+                    }
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                }
+            );
+
+            $("#reset").on("click", function() {
+                begainTime='';
+                endTime='';
+                $('#test1').val('');
+                $('#test2').val('');
+                $("#activityCode").val('');
+        });
+
+            $("#query").on("click", function() {
+                var startTimestamp = new Date(begainTime.replace(/-/g, "/"));
+                var saleBegainTime = new Date(startTimestamp).getTime();
+                var endTimestamp = new Date(endTime.replace(/-/g, "/"));
+                var saleEndTime = new Date(endTimestamp).getTime();
+                if (saleEndTime < saleBegainTime) {
+                    layer.msg('结束时间不能小于开始时间');
+                    return;
+                }
+            });
+                tableIn.reload(
+                    {
+                        where: {
+                            activityCode: $("#activityCode").val(),
+                            begainTime:begainTime,
+                            endTime:endTime
+                        }
+                        ,page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    }
+                );
+            });
+
     });
 
     var app = new Vue({
@@ -132,6 +206,79 @@
 
     });
 
+
+    //日期控件
+    var bMinDate;
+    var defaultMinDate =   {
+        year: 1900,
+        month: 1,
+        date:1,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+    };
+    var aMaxDate;
+    var defaultMaxDate = {
+        year: 2222,
+        month: 1,
+        date:1,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+    };
+
+
+    var a = laydate.render({
+        elem: '#test1' //指定元素
+        ,show: false //直    接显示
+        ,trigger: 'click' //采用click弹出
+        ,btns: ['clear', 'confirm']
+        // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
+        ,done: function(value, date, endDate){
+            begainTime = value;
+            if (value == '' || value == undefined){
+                bMinDate = defaultMinDate
+            }else {
+                date.month = date.month-1;
+                bMinDate = date;
+            }
+        }
+    });
+
+    lay('#test1').on('click', function(e){
+        if(aMaxDate == undefined || aMaxDate == ''){
+            a.config.max=defaultMaxDate;
+        }else {
+            a.config.max=aMaxDate;
+        }
+    });
+
+
+    var b = laydate.render({
+        elem: '#test2' //指定元素
+        ,show: false //直接显示
+        ,trigger: 'click' //采用click弹出
+        ,btns: ['clear', 'confirm']
+        // ,closeStop: '#test2' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
+        ,done: function(value, date, endDate){
+            endTime = value;
+            if (value == '' || value == undefined){
+                aMaxDate = defaultMaxDate
+            }else {
+                date.month = date.month-1
+                aMaxDate = date;
+            }
+        }
+    });
+
+    lay('#test2').on('click', function(e){
+        if(bMinDate == undefined || bMinDate == ''){
+            b.config.min=defaultMinDate;
+        }else {
+            b.config.min=bMinDate;
+        }
+
+    });
 </script>
 </body>
 </html>

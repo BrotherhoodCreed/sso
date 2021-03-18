@@ -52,9 +52,9 @@
                     </select>
                 </td>
                 <td  style="width: 120px">销售开始时间</td>
-                <td>  <input type="text" id="test1" autocomplete="off"> </td>
+                <td>  <input type="text" id="test1"  v-model="detail.salesStartTime" autocomplete="off"> </td>
                 <td  style="width: 120px">销售结束时间</td>
-                <td>    <input type="text" id="test2" autocomplete="off"></td>
+                <td>    <input type="text" id="test2" v-model="detail.salesEndTime" autocomplete="off"></td>
             </tr>
             <tr>
                 <td >每台限用张数/金额</td>
@@ -155,9 +155,10 @@
 
         <div>
             <button type="button" class="btn btn-default" @click="edit()">修改活动</button>
+            <button type="button" class="btn btn-default" id="addActive" style="    margin-left: 3rem;">添加门店</button>
         </div>
         <div>
-            <button type="button" class="btn btn-default" id="addActive">添加门店</button>
+            <button type="button" class="btn btn-default" @click="toList()">返回列表</button>
         </div>
     </form>
     <table id="demo" lay-filter="test"></table>
@@ -166,7 +167,6 @@
         <div id="dept_main" style="margin-right: 2%;">
                 <span>
                     <input type="text" id="search" />
-                    <button type="button" style="width: 10%;" id="queryShop">搜索</button>
                 </span>
             <div id="dept_tree">
             </div>
@@ -414,6 +414,9 @@
                     }
                 }
             },
+            toList:function(){
+                    location.href="<%=request.getContextPath()%>/list";
+            },
         }
     });
 
@@ -620,6 +623,7 @@
                     id:7,
                     title: '高新区刷刷那是的你妈山姆大叔的母亲美味妈妈实打实的' //三级菜单
                     ,check:true
+                    ,spread:true
                     //…… //以此类推，可无限层级
                 },
                 {
@@ -724,17 +728,18 @@
             return data;
         };
 
-        $("#queryShop").on("click", function() {
-            tree.reload('checkTree', {
-                elem: '#dept_tree',
-                data:  getData().data,
-                id: 'checkTree',
-                showCheckbox: true,     //是否显示复选框
-                onlyIconControl: true
-            });
+
+        $('#search').bind('keypress',function(event){
+            if(event.keyCode == "13") {
+                tree.reload('checkTree', {
+                    elem: '#dept_tree',
+                    data:  getData().data,
+                    id: 'checkTree',
+                    showCheckbox: true,     //是否显示复选框
+                    onlyIconControl: true
+                });
+            }
         });
-
-
         //打开选择页
         $("body").on("click", "#addActive", function() {
             // var dataInto=$(this).prev().attr("name");
@@ -800,5 +805,6 @@
         }
 
     });
+
 </script>
 </html>

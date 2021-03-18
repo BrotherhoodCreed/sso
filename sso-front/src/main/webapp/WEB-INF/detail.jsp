@@ -200,7 +200,6 @@
             <div id="dept_main" style="margin-right: 2%;">
                 <span>
                     <input type="text" id="search"/>
-                    <button type="button" style="width: 10%;" id="queryShop">搜索</button>
                 </span>
                 <div id="dept_tree">
                 </div>
@@ -694,14 +693,16 @@
             });
             return data;
         };
-        $("#queryShop").on("click", function() {
-            tree.reload('checkTree', {
-                elem: '#dept_tree',
-                data:  getData().data,
-                id: 'checkTree',
-                showCheckbox: true,     //是否显示复选框
-                onlyIconControl: true
-            });
+        $('#search').bind('keypress',function(event){
+            if(event.keyCode == "13") {
+                tree.reload('checkTree', {
+                    elem: '#dept_tree',
+                    data:  getData().data,
+                    id: 'checkTree',
+                    showCheckbox: true,     //是否显示复选框
+                    onlyIconControl: true
+                });
+            }
         });
         //打开选择页
         $("body").on("click", "#addActive", function() {
