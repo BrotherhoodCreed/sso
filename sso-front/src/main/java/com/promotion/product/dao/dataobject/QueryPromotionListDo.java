@@ -21,9 +21,21 @@ public class QueryPromotionListDo {
      */
     private Date salesStartTime;
     /**
+     *七字描述
+     */
+    private String introduction;
+    /**
      *结束时间
      */
     private Date salesEndTime;
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
 
     public Long getId() {
         return id;
@@ -65,13 +77,15 @@ public class QueryPromotionListDo {
         this.salesEndTime = salesEndTime;
     }
 
+
     @Override
     public String toString() {
-        return "queryPromotionListDo{" +
+        return "QueryPromotionListDo{" +
                 "id=" + id +
                 ", activityCode='" + activityCode + '\'' +
                 ", activityType='" + activityType + '\'' +
                 ", salesStartTime=" + salesStartTime +
+                ", introduction='" + introduction + '\'' +
                 ", salesEndTime=" + salesEndTime +
                 '}';
     }

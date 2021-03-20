@@ -143,6 +143,7 @@ public class PromotionService {
             }
             QueryPromotionListRespone.setSalesStartTime(QueryPromotionListDo.getSalesStartTime());
             QueryPromotionListRespone.setSalesEndTime(QueryPromotionListDo.getSalesEndTime());
+            QueryPromotionListRespone.setIntroduction(QueryPromotionListDo.getIntroduction());
             queryPromotionListResponeList.add(QueryPromotionListRespone);
         }
          response.setData(queryPromotionListResponeList);

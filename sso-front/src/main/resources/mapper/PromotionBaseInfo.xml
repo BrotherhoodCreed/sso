@@ -47,6 +47,8 @@
         id,
         activity_code as activityCode,
         activity_type as activityType,
+        activity_type as activityType,
+        introduction as introduction,
         sales_start_time as salesStartTime,
         sales_end_time as salesEndTime
         FROM

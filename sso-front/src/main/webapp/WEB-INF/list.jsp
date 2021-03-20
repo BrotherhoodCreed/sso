@@ -65,6 +65,7 @@
                 {type: 'checkbox', field: 'id', title: 'ID', sort: true, fixed: 'left'}
                 , {field: 'activityCode', title: '促销编码', sort: true}
                 , {field: 'activityType', title: '活动类型'}
+                , {field: 'introduction', title: '七字描述'}
                 , {field: 'salesStartTime', title: '开始时间'}
                 , {field: 'salesEndTime', title: '结束时间', sort: true}
                 , {fixed: 'right', align: 'center', toolbar: '#opt'} //这里的toolbar值是模板元素的选择器
