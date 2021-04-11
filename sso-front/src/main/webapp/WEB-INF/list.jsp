@@ -6,22 +6,55 @@
     <meta charset="UTF-8">
     <title>管理页面</title>
     <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css" media="all">
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <script src="${ctx}/static/laydate/laydate.js" type="text/javascript"></script>
 <body id="app">
-<div style="padding-top: 1rem;">
-    <td style="width: 120px">销售开始时间</td>
-    <td><input type="text" id="test1" autocomplete="off" readonly="readonly"></td>
-    <td style="width: 120px">销售结束时间</td>
-    <td><input type="text" id="test2" autocomplete="off" readonly="readonly"></td>
-    <td style="width: 120px"></td>
-    <td> 促销编码 <input type="text" id="activityCode" autocomplete="off"></td>
-    <td><input type="button" id="query" value="查询"></td>
-    <td><input type="button" id="reset" value="重置"></td>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo"></div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="">Sign out</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">活动管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="<%=request.getContextPath()%>/list">一级外卖</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding-top: 1rem;">
+            <td style="width: 120px">销售开始时间</td>
+            <td><input type="text" id="test1" autocomplete="off" readonly="readonly"></td>
+            <td style="width: 120px">销售结束时间</td>
+            <td><input type="text" id="test2" autocomplete="off" readonly="readonly"></td>
+            <td style="width: 120px"></td>
+            <td> 促销编码 <input type="text" id="activityCode" autocomplete="off"></td>
+            <td><input type="button" id="query" value="查询"></td>
+            <td><input type="button" id="reset" value="重置"></td>
+        </div>
+
+        <table id="demo" lay-filter="test"></table>
+
+    </div>
+
+    <%--<div class="layui-footer">--%>
+    <%--<!-- 底部固定区域 -->--%>
+    <%----%>
+    <%--</div>--%>
 </div>
-
-<table id="demo" lay-filter="test"></table>
-
 <script src="${ctx}/static/layui/layui.all.js" type="text/javascript"></script>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="add">新增</a>
@@ -47,7 +80,7 @@
         var tableIn = table.render({
             elem: '#demo'
             , id: 'list'
-            , height: 'full-20'
+            // , height: 'full-80'
             , url: '<%=request.getContextPath()%>/PromotionController/queryPromotionList' //数据接口
             , request: {
                 pageName: 'pageIndex' //页码的参数名称，默认：page
