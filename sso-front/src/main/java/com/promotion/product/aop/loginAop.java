@@ -1,5 +1,6 @@
 package com.promotion.product.aop;
 
+
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiServiceGetCorpTokenRequest;

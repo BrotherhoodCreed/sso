@@ -175,6 +175,13 @@
             <artifactId>cxf-rt-transports-http</artifactId>
             <version>${cxf.version}</version>
         </dependency>
+        <dependency>
+            <groupId>alibaba</groupId>
+            <artifactId>dingtaik</artifactId>
+            <version>1479188381469-20210413</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/taobao-sdk-java-auto_1479188381469-20210413.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>
@@ -196,6 +203,8 @@
                 <version>1.4.2.RELEASE</version>
                 <configuration>
                     <mainClass>com.promotion.product.SpringbootApplication</mainClass>
+                    <!-- 将外部的jar打包到自身jar文件里 -->
+                    <includeSystemScope>true</includeSystemScope>
                 </configuration>
             </plugin>
             <!--<plugin>-->
