@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @SpringBootTest
 public class RedisTest {
 
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-
-    @RequestMapping("/redisTest")
-    public  String redisTest(){
-
-        stringRedisTemplate.opsForValue().set("k5","test");
-
-        return stringRedisTemplate.opsForValue().get("k5");
-    }
+//    @Autowired
+//    private StringRedisTemplate stringRedisTemplate;
+//
+//    @RequestMapping("/redisTest")
+//    public  String redisTest(){
+//
+//        stringRedisTemplate.opsForValue().set("k5","test");
+//
+//        return stringRedisTemplate.opsForValue().get("k5");
+//    }
 
 }

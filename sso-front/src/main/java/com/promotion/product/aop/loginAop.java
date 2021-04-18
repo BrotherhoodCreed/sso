@@ -23,8 +23,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Component
-@Aspect
+//@Component
+//@Aspect
 public class loginAop {
 
     private final  String appid="dingoalnu7hn7fqu1gh8cf";
