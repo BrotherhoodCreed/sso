@@ -1,16 +1,11 @@
 package com.promotion.product.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
-import com.dingtalk.api.request.OapiSnsGetPersistentCodeRequest;
-import com.dingtalk.api.request.OapiSnsGetSnsTokenRequest;
-import com.dingtalk.api.request.OapiSnsGettokenRequest;
-import com.dingtalk.api.request.OapiSnsGetuserinfoBycodeRequest;
-import com.dingtalk.api.response.OapiSnsGetPersistentCodeResponse;
-import com.dingtalk.api.response.OapiSnsGetSnsTokenResponse;
-import com.dingtalk.api.response.OapiSnsGettokenResponse;
-import com.dingtalk.api.response.OapiSnsGetuserinfoBycodeResponse;
+import com.dingtalk.api.request.*;
+import com.dingtalk.api.response.*;
 import com.promotion.product.common.HttpHelper;
 import com.taobao.api.ApiException;
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +17,9 @@ import java.util.Objects;
 @Service
 @Slf4j
 public class UserAuthsService {
-    @Value("dingtail.appid")
-    private String appid;
+    private String appid="dingoalnu7hn7fqu1gh8cf";
  
-    @Value("dingtail.appSecret")
-    private String appSecret;
+    private String appSecret="MKpmawqKmqFhGCrH6F7wZ1pt5vf6wpumvcZiGTskrtWXv4NhnmLIPO8ZEoQPrSq4";
 
     @Value("corpId:ding2fde065d59156498")
     private String corpId;
@@ -39,33 +32,19 @@ public class UserAuthsService {
         try {
             //获取accesstoken,返回accessToken
             OapiSnsGetuserinfoBycodeResponse userInfo  =getAccesstoken(code);
-            logStr+="getDingLogin  根据 code 查询用户基本信息{}"+JSONObject.toJSON(userInfo)+"\n\t";
             String accessToken = getAccesstoken();
-            logStr+="https://oapi.dingtalk.com/sns/gettoken 查询用户token{}"+accessToken+"\n\t";
-            //获取用户授权的持久授权码，返回accessToken
-            OapiSnsGetPersistentCodeResponse oapiSnsGetPersistentCodeResponse = getPersistentCode(accessToken, code);
-            log.info("获取用户授权的持久授权码{}",JSONObject.toJSON(oapiSnsGetPersistentCodeResponse));
-            logStr+="获取用户授权的持久授权码"+JSONObject.toJSON(oapiSnsGetPersistentCodeResponse)+"\n\t";
-            String openId = "";
-            String persistentCode = "";
-            if (Objects.isNull(oapiSnsGetPersistentCodeResponse)) {
-                openId =oapiSnsGetPersistentCodeResponse.getOpenid();
-                persistentCode =oapiSnsGetPersistentCodeResponse.getPersistentCode();
-            }
-            //获取用户授权的SNS_TOKEN，返回snsToken
-            String snsToken = getSnsToken(accessToken, openId, persistentCode);
-            logStr+="获取用户SNS——token:"+snsToken+"\n\t";
-            //获取用户的昵称和dingId
-            JSONObject userJson = getUserName(snsToken);
-            logStr+="获取用户的昵称和dingId :"+userJson+"\n\t";
-            if (Integer.parseInt(userJson.get("errcode").toString()) == 0) {
-                JSONObject jsonUser = userJson.getJSONObject("user_info");
-                String nick = jsonUser.getString("nick");
-                String dingId = jsonUser.getString("dingId");
-                String openid = jsonUser.getString("openid");
-                String errmsg = jsonUser.getString("errmsg");
-                String unionid = jsonUser.getString("unionid");
-            }
+            DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/user/getbyunionid");
+            OapiUserGetbyunionidRequest req = new OapiUserGetbyunionidRequest();
+            req.setUnionid(userInfo.getUserInfo().getUnionid());
+            OapiUserGetbyunionidResponse rsp = client.execute(req, accessToken);
+            log.info("获取企业用户useid[{}]",JSON.toJSONString(rsp));
+
+            DingTalkClient client2 = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/v2/user/get");
+            OapiV2UserGetRequest req2 = new OapiV2UserGetRequest();
+            req2.setUserid(rsp.getResult().getUserid());
+            req2.setLanguage("zh_CN");
+            OapiV2UserGetResponse rsp2 = client2.execute(req2, accessToken);
+            log.info("获取企业用户信息[{}]",JSON.toJSONString(rsp2));
 
 //            //获取用户unionid
 //            String unionId = getUnionId(snsToken);
@@ -91,6 +70,7 @@ public class UserAuthsService {
         OapiSnsGetuserinfoBycodeRequest req = new OapiSnsGetuserinfoBycodeRequest();
         req.setTmpAuthCode(authCode);
         OapiSnsGetuserinfoBycodeResponse response = client.execute(req,appid,appSecret);
+        log.info("获取用户信息[{}]", JSON.toJSONString(response));
         return response;
 
     }
@@ -99,13 +79,13 @@ public class UserAuthsService {
      * 获取accesstoken
      */
     public String getAccesstoken() throws ApiException {
-
-        DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/sns/gettoken");
-        OapiSnsGettokenRequest request = new OapiSnsGettokenRequest();
-        request.setAppid(appid);
-        request.setAppsecret(appSecret);
-        OapiSnsGettokenResponse oapiSnsGettokenResponse = client.execute(request);
-        return oapiSnsGettokenResponse.getAccessToken();
+        DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/gettoken");
+        OapiGettokenRequest request = new OapiGettokenRequest();
+        request.setAppkey("dingv6ulx4cvf5ukbn9v");
+        request.setAppsecret("JbqsU8wJ_xwyetQvMl9soBR8sJal3zpiGiGbnjj6lqcycqe35sxdmqkJrtzCgCAT");
+        request.setHttpMethod("GET");
+        OapiGettokenResponse response = client.execute(request);
+        return response.getAccessToken();
 
     }
 

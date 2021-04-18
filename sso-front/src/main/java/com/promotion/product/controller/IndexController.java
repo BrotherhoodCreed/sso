@@ -1,6 +1,7 @@
 package com.promotion.product.controller;
 
 import com.promotion.product.service.UserAuthsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+import java.util.Iterator;
+import java.util.Map;
+@Slf4j
 @Controller
 public class IndexController {
 
@@ -49,7 +52,7 @@ public class IndexController {
         return "tree";
     }
 
-    @RequestMapping("/Login")
+    @RequestMapping("/loginTest")
     public String dingDingLogin(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         String time = String.valueOf(System.currentTimeMillis());
         StringBuilder stringBuilder = new StringBuilder();
@@ -77,9 +80,14 @@ public class IndexController {
     /**
      *  钉钉回调验证
      */
-    @RequestMapping(value="/Login2", produces="text/html; charset=utf-8")
+    @RequestMapping(value="/login", produces="text/html; charset=utf-8")
     public String getUserInfo(HttpServletRequest request, HttpServletResponse response, Model model, String code, String state) {
-        System.out.println("钉钉回调验证");
+        Map<String,String[]> map = request.getParameterMap();
+        Iterator<Map.Entry<String,String[]>> iterator =  map.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry<String,String[]> entry = iterator.next();
+            log.info("钉钉回调验证参数key[{}]value[{}]",entry.getKey(),entry.getValue()[0]);
+        }
         String result = userAuthsService.getDingLogin(code);
         return result;
     }
