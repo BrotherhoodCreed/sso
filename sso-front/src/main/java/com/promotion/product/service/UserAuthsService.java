@@ -21,21 +21,21 @@ import java.util.Objects;
 @Slf4j
 public class UserAuthsService {
 
+//
+//    @Value("${dingtail.appid:dingoalnu7hn7fqu1gh8cf}")
+    private String appid="dingoalnu7hn7fqu1gh8cf";
 
-    @Value("${dingtail.appid:dingoalnu7hn7fqu1gh8cf}")
-    private String appid;
+//    @Value("${dingtail.appSecret:MKpmawqKmqFhGCrH6F7wZ1pt5vf6wpumvcZiGTskrtWXv4NhnmLIPO8ZEoQPrSq4}")
+    private String appSecret="MKpmawqKmqFhGCrH6F7wZ1pt5vf6wpumvcZiGTskrtWXv4NhnmLIPO8ZEoQPrSq4";
 
-    @Value("${dingtail.appSecret:MKpmawqKmqFhGCrH6F7wZ1pt5vf6wpumvcZiGTskrtWXv4NhnmLIPO8ZEoQPrSq4}")
-    private String appSecret;
+//    @Value("${dingtail.appkey:dingv6ulx4cvf5ukbn9v}")
+    private String appkey="dingv6ulx4cvf5ukbn9v";
 
-    @Value("${dingtail.appkey:dingv6ulx4cvf5ukbn9v}")
-    private String appkey;
+//    @Value("${dingtail.appQYSecret:JbqsU8wJ_xwyetQvMl9soBR8sJal3zpiGiGbnjj6lqcycqe35sxdmqkJrtzCgCAT}")
+    private String appQYSecret="JbqsU8wJ_xwyetQvMl9soBR8sJal3zpiGiGbnjj6lqcycqe35sxdmqkJrtzCgCAT";
 
-    @Value("${dingtail.appQYSecret:JbqsU8wJ_xwyetQvMl9soBR8sJal3zpiGiGbnjj6lqcycqe35sxdmqkJrtzCgCAT}")
-    private String appQYSecret;
-
-    @Value("corpId:ding2fde065d59156498")
-    private String corpId;
+//    @Value("corpId:ding2fde065d59156498")
+    private String corpId="ding2fde065d59156498";
 
     /**
      * 通过扫描二维码返回的code值，得到用户相关信息

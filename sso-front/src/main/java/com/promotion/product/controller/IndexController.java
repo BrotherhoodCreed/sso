@@ -1,6 +1,7 @@
 package com.promotion.product.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Utf8;
 import com.promotion.product.entity.UserDao;
 import com.promotion.product.service.UserAuthsService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 @Slf4j
@@ -95,7 +97,7 @@ public class IndexController {
             }
             UserDao result = userAuthsService.getDingLogin(code);
             if(StringUtils.isNotEmpty(request.getMethod())){
-                Cookie cookie =new Cookie("access_token", JSONObject.toJSONString(result));
+                Cookie cookie =new Cookie("access_token", URLEncoder.encode(JSONObject.toJSONString(result), "UTF-8"));
                 cookie.setMaxAge(60*60*24*15);//cookie 15天
                 cookie.setPath("/");
                 cookie.setHttpOnly(true);
