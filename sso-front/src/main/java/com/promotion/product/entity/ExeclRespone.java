@@ -37,7 +37,7 @@ public class ExeclRespone {
     private String sharedActivity;
     @ExcelColumn(value ="销售单价",col = 16)
     private String sellingPrice;
-    @ExcelColumn(value ="汇款单价",col = 17)
+    @ExcelColumn(value ="回款单价",col = 17)
     private String billPrice;
     @ExcelColumn(value ="手续费",col = 18)
     private String handlingFee;
