@@ -49,7 +49,7 @@ public class IndexController {
         return "tree";
     }
 
-    @RequestMapping("/Login")
+    @RequestMapping("/loginTest")
     public String dingDingLogin(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         String time = String.valueOf(System.currentTimeMillis());
         StringBuilder stringBuilder = new StringBuilder();
@@ -77,7 +77,7 @@ public class IndexController {
     /**
      *  钉钉回调验证
      */
-    @RequestMapping(value="/Login2", produces="text/html; charset=utf-8")
+    @RequestMapping(value="/Login", produces="text/html; charset=utf-8")
     public String getUserInfo(HttpServletRequest request, HttpServletResponse response, Model model, String code, String state) {
         System.out.println("钉钉回调验证");
         String result = userAuthsService.getDingLogin(code);
