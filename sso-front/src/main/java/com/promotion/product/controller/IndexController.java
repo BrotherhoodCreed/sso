@@ -100,7 +100,7 @@ public class IndexController {
                 cookie.setPath("/");
                 cookie.setHttpOnly(true);
                 response.addCookie(cookie);
-                response.sendRedirect("/list");
+                response.sendRedirect("/promotion/list");
             }
         }catch (Exception e){
             log.error("钉钉回调验证异常，",e);
