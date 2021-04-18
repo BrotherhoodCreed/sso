@@ -7,19 +7,19 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class RedisTest {
-
-//    @Autowired
-//    private StringRedisTemplate stringRedisTemplate;
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//public class RedisTest {
 //
-//    @RequestMapping("/redisTest")
-//    public  String redisTest(){
+////    @Autowired
+////    private StringRedisTemplate stringRedisTemplate;
+////
+////    @RequestMapping("/redisTest")
+////    public  String redisTest(){
+////
+////        stringRedisTemplate.opsForValue().set("k5","test");
+////
+////        return stringRedisTemplate.opsForValue().get("k5");
+////    }
 //
-//        stringRedisTemplate.opsForValue().set("k5","test");
-//
-//        return stringRedisTemplate.opsForValue().get("k5");
-//    }
-
-}
+//}

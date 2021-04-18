@@ -92,7 +92,7 @@
             </tr>
             <tr>
                 <td colspan="8">
-                    <textarea style="width: 100%; height: 55px; resize: none;" v-model="detail.description">
+                    <textarea style="width: 100%; height: 55px; resize: none;" v-model="detail.description" @input="textChange" >
                     </textarea>
                 </td>
             </tr>
@@ -316,6 +316,14 @@
             // $('.selectpicker').selectpicker('refresh');     //设置好内容后刷新，  多用于异步请求
         },
         methods: {
+            textChange(e){
+                let  val = e.target.value;
+                if(val.length>7){
+                    this.detail.introduction = val.slice(0,7)
+                }else {
+                    this.detail.introduction =val;
+                }
+            },
             valueChange(e){
                 e.target.value = e.target.value.replace(/(^\s*)|(\s*$)/g, "");
                 const reg = /[^\d.]/g;

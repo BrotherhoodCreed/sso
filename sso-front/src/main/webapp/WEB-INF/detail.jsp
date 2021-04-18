@@ -120,7 +120,7 @@
         <%--</div>--%>
         <div>
             <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">活动描述</h3>
-            <textarea style="width: 895px; height: 55px; resize: none;" v-model="detail.description">
+            <textarea style="width: 895px; height: 55px; resize: none;" v-model="detail.description" @input="textChange">
             </textarea>
         </div>
         <div>
@@ -257,6 +257,14 @@
 
         },
         methods: {
+            textChange(e){
+                let  val = e.target.value;
+                if(val.length>7){
+                    this.detail.introduction = val.slice(0,7)
+                }else {
+                    this.detail.introduction =val;
+                }
+            },
             valueChange:function (e){
                 e.target.value = e.target.value.replace(/(^\s*)|(\s*$)/g, "");
                 const reg = /[^\d.]/g;

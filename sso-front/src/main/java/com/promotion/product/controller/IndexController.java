@@ -96,7 +96,7 @@ public class IndexController {
             UserDao result = userAuthsService.getDingLogin(code);
             if(StringUtils.isNotEmpty(request.getMethod())){
                 Cookie cookie =new Cookie("access_token", JSONObject.toJSONString(result));
-                cookie.setMaxAge(60*60*24);//cookie 一天
+                cookie.setMaxAge(60*60*24*15);//cookie 15天
                 cookie.setPath("/");
                 cookie.setHttpOnly(true);
                 response.addCookie(cookie);
