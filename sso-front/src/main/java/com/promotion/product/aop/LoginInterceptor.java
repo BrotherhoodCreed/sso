@@ -27,14 +27,15 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         Cookie[] cookies = request.getCookies();
-        Cookie cookieValue =  Arrays.stream(cookies).filter(item-> StringUtils.equals("access_token",item.getName())).findFirst().orElse(null);
-        if(Objects.nonNull(cookieValue)){
-            UserDao userDao =JSONObject.parseObject(cookieValue.getValue(),UserDao.class);
-            if(StringUtils.isNotEmpty(userDao.getMobile())){
-                return true;
+        if(cookies!=null && cookies.length>0){
+            Cookie cookieValue =  Arrays.stream(cookies).filter(item-> StringUtils.equals("access_token",item.getName())).findFirst().orElse(null);
+            if(Objects.nonNull(cookies)){
+                UserDao userDao =JSONObject.parseObject(cookieValue.getValue(),UserDao.class);
+                if(StringUtils.isNotEmpty(userDao.getMobile())){
+                    return true;
+                }
             }
         }
-
         String time = String.valueOf(System.currentTimeMillis());
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
