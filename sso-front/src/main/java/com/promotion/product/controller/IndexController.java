@@ -1,13 +1,23 @@
 package com.promotion.product.controller;
 
+import com.promotion.product.service.UserAuthsService;
+import com.sun.java.browser.plugin2.liveconnect.v1.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 public class IndexController {
+
+    @Autowired
+    private UserAuthsService userAuthsService;
 
     @Value("dingtail.appid")
     private String appid;
@@ -63,6 +73,18 @@ public class IndexController {
         }
         return result;
     }
+
+    /**
+     *  钉钉回调验证
+     */
+    @RequestMapping(value="/Login", produces="text/html; charset=utf-8")
+    public Object getUserInfo(HttpServletRequest request, HttpServletResponse response, Model model, String code, String state) {
+        System.out.println("钉钉回调验证");
+        Result result = userAuthsService.getDingLogin(code);
+        return result;
+    }
+
+
 
 
 }
