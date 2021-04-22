@@ -96,5 +96,19 @@ public class IKmReviewWebserviceServiceService
         IKmReviewWebserviceService iKmReviewWebserviceService = fatory.getIKmReviewWebserviceServicePort();
         String sring = iKmReviewWebserviceService.addReview(new KmReviewParamterForm());
         System.out.println(sring);
+
+//        URL wsdlDocumentLocation=new URL("http://oa.mrcool.cn:88/sys/webservice/kmReviewWebserviceService?wsdl");
+//        //创建服务名称
+//        //1.namespaceURI - 命名空间地址
+//        //2.localPart - 服务视图名
+//        QName serviceName=new QName("http://webservice.review.km.kmss.landray.com/","IKmReviewWebserviceServiceService");
+//        Service service=Service.create(wsdlDocumentLocation, serviceName);
+//
+//        //获取服务实现类
+//        IKmReviewWebserviceService mobileCodeWSSoap= service.getPort(IKmReviewWebserviceService.class);
+//        //调用方法
+//        String message=mobileCodeWSSoap.addReview( new KmReviewParamterForm());
+//        System.out.println(message);
+
     }
 }
