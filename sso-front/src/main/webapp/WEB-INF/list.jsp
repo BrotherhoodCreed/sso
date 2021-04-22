@@ -15,7 +15,7 @@
     <div class="layui-header">
         <div class="layui-logo"></div>
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item"><a href="<%=request.getContextPath()%>/logout">Sign out</a></li>
+            <li class="layui-nav-item"><a onclick="logout()">Sign out</a></li>
         </ul>
     </div>
 
@@ -302,6 +302,12 @@
         }
 
     });
+
+    function logout(){
+        layer.confirm('确定要退出吗', {icon: 3, title: '提示'}, function (index) {
+            location.href="<%=request.getContextPath()%>/logout";
+        });
+    }
 </script>
 </body>
 </html>
