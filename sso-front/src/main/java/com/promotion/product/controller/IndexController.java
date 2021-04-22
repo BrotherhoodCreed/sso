@@ -16,6 +16,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 @Slf4j
@@ -95,20 +97,38 @@ public class IndexController {
             }
             UserDao result = userAuthsService.getDingLogin(code);
             if(StringUtils.isNotEmpty(request.getMethod())){
-                Cookie cookie =new Cookie("access_token", JSONObject.toJSONString(result));
+                Cookie cookie =new Cookie("access_token", URLEncoder.encode(JSONObject.toJSONString(result),"UTF-8"));
                 cookie.setMaxAge(60*60*24*15);//cookie 15天
                 cookie.setPath("/");
                 cookie.setHttpOnly(true);
                 response.addCookie(cookie);
-                response.sendRedirect("/list");
-            }
+                response.sendRedirect("/promotion/list");            }
         }catch (Exception e){
             log.error("钉钉回调验证异常，",e);
         }
 
     }
 
-
+    @RequestMapping("/logout")
+    public void logout(HttpServletRequest request,HttpServletResponse response){
+        try {
+            Cookie[] cookies = request.getCookies();
+            if (null != cookies) {
+                for (Cookie cookie : cookies) {
+                    if ("access_token".equals(cookie.getName())){
+                        cookie.setMaxAge(0);
+                        cookie.setPath("/");
+                        cookie.setValue(null);
+                        response.addCookie(cookie);
+                        log.info("登出qingchucookie");
+                    }
+                }
+            }
+            response.sendRedirect("/promotion/list");
+        }catch (Exception e){
+            log.error("钉钉回调验证异常，",e);
+        }
+    }
 
 
 }

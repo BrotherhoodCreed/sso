@@ -15,7 +15,7 @@
     <div class="layui-header">
         <div class="layui-logo"></div>
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item"><a href="">Sign out</a></li>
+            <li class="layui-nav-item"><a href="<%=request.getContextPath()%>/logout">Sign out</a></li>
         </ul>
     </div>
 

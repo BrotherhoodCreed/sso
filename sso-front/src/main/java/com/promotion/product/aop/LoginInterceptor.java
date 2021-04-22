@@ -8,6 +8,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -29,8 +30,9 @@ public class LoginInterceptor implements HandlerInterceptor {
         Cookie[] cookies = request.getCookies();
         if(cookies!=null && cookies.length>0){
             Cookie cookieValue =  Arrays.stream(cookies).filter(item-> StringUtils.equals("access_token",item.getName())).findFirst().orElse(null);
-            if(Objects.nonNull(cookies)){
-                UserDao userDao =JSONObject.parseObject(cookieValue.getValue(),UserDao.class);
+            if(Objects.nonNull(cookieValue) && null != cookieValue.getValue()){
+                String userJson = URLDecoder.decode(cookieValue.getValue(),"UTF-8");
+                UserDao userDao =JSONObject.parseObject(userJson,UserDao.class);
                 if(StringUtils.isNotEmpty(userDao.getMobile())){
                     return true;
                 }

@@ -22,17 +22,17 @@ import java.util.Objects;
 public class UserAuthsService {
 
 
-    @Value("${dingtail.appid:dingoalnu7hn7fqu1gh8cf}")
-    private String appid;
+//    @Value("${dingtail.appid:dingoalnu7hn7fqu1gh8cf}")
+    private String appid="dingoalnu7hn7fqu1gh8cf";
 
-    @Value("${dingtail.appSecret:MKpmawqKmqFhGCrH6F7wZ1pt5vf6wpumvcZiGTskrtWXv4NhnmLIPO8ZEoQPrSq4}")
-    private String appSecret;
+//    @Value("${dingtail.appSecret:MKpmawqKmqFhGCrH6F7wZ1pt5vf6wpumvcZiGTskrtWXv4NhnmLIPO8ZEoQPrSq4}")
+    private String appSecret="MKpmawqKmqFhGCrH6F7wZ1pt5vf6wpumvcZiGTskrtWXv4NhnmLIPO8ZEoQPrSq4";
 
-    @Value("${dingtail.appkey:dingv6ulx4cvf5ukbn9v}")
-    private String appkey;
+//    @Value("${dingtail.appkey:dingv6ulx4cvf5ukbn9v}")
+    private String appkey = "dingv6ulx4cvf5ukbn9v";
 
-    @Value("${dingtail.appQYSecret:JbqsU8wJ_xwyetQvMl9soBR8sJal3zpiGiGbnjj6lqcycqe35sxdmqkJrtzCgCAT}")
-    private String appQYSecret;
+//    @Value("${dingtail.appQYSecret:JbqsU8wJ_xwyetQvMl9soBR8sJal3zpiGiGbnjj6lqcycqe35sxdmqkJrtzCgCAT}")
+    private String appQYSecret = "JbqsU8wJ_xwyetQvMl9soBR8sJal3zpiGiGbnjj6lqcycqe35sxdmqkJrtzCgCAT";
 
     @Value("corpId:ding2fde065d59156498")
     private String corpId;
