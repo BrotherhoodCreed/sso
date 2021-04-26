@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 @Slf4j
 @Controller
 public class IndexController {
@@ -37,8 +37,19 @@ public class IndexController {
     private String redirectUrl;
 
     @RequestMapping("/add")
-    public String detail(){
-        return "detail";
+    public ModelAndView detail(){
+        ModelAndView modelAndView = new ModelAndView("detail");
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("year",cal.get(Calendar.YEAR));
+        jsonObject.put("month",cal.get(Calendar.MONTH));
+        jsonObject.put("date",cal.get(Calendar.DAY_OF_MONTH));
+        jsonObject.put("hours",0);
+        jsonObject.put("minutes",0);
+        jsonObject.put("seconds",0);
+        modelAndView.addObject("thisTime",jsonObject);
+        return modelAndView;
     }
 
     @RequestMapping("/edit")

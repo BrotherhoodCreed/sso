@@ -243,6 +243,7 @@
                 taxRate:'',
                 sellingPrice:'',
                 billPrice:'',
+                thisTime:'${thisTime}'
             },
             promotionMapper : [],
             items:[],
@@ -481,6 +482,8 @@
         ,btns: ['clear', 'confirm']
         // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
+            console.log(date);
+            console.log(app.detail.thisTime);
             app.detail.salesStartTime=value;
             if (value == '' || value == undefined){
                 bMinDate = defaultMinDate
@@ -494,6 +497,9 @@
     lay('#test1').on('click', function(e){
         if(aMaxDate == undefined || aMaxDate == ''){
             a.config.max=defaultMaxDate;
+            var thisTime = jQuery.parseJSON(app.detail.thisTime);
+            console.log(thisTime);
+            a.config.min = thisTime;
         }else {
             a.config.max=aMaxDate;
         }
@@ -546,6 +552,9 @@
     lay('#test3').on('click', function(e){
         if(cMaxDate == undefined || cMaxDate == ''){
             c.config.max=defaultMaxDate;
+            var thisTime = jQuery.parseJSON(app.detail.thisTime);
+            console.log(thisTime);
+            c.config.min = thisTime;
         }else {
             c.config.max=cMaxDate;
         }
