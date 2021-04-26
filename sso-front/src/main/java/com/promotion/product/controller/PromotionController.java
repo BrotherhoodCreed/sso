@@ -69,7 +69,9 @@ public class PromotionController {
     public BaseEntityResponse<SavePromotionBaseInfoRespone> savePromotionBaseInfo(@RequestBody SavePromotionBaseInfoRequery request) {
         BaseEntityResponse<SavePromotionBaseInfoRespone> response = BaseEntityResponse.success(BaseEntityResponse.class);
         try {
-            response.setData(promotionService.savePromotionBaseInfo(request, request.getPromotionMapperDo()));
+            synchronized(this){
+                response.setData(promotionService.savePromotionBaseInfo(request, request.getPromotionMapperDo()));
+            }
         } catch (Exception e) {
             e.printStackTrace();
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
