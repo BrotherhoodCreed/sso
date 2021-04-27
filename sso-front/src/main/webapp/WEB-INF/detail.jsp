@@ -559,7 +559,6 @@
         ,show: false //直    接显示
         ,trigger: 'click' //采用click弹出
         ,btns: ['clear', 'confirm']
-        ,value: '2020-04-20'
         ,min:0
         // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
