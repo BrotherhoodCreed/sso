@@ -8,6 +8,8 @@ import com.promotion.product.dao.dataobject.*;
 import com.promotion.product.dao.mysql.DictionaryDao;
 import com.promotion.product.dao.mysql.PromotionBaseInfoDao;
 import com.promotion.product.dao.mysql.PromotionMapperDao;
+import com.promotion.product.dao.mysql2.FineUserDao;
+import com.promotion.product.dao.mysql2.UserStoreDao;
 import com.promotion.product.entity.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -33,6 +35,26 @@ public class PromotionService {
     @Autowired
     private  ShopService shopService;
 
+    @Autowired
+    private FineUserDao fineUserDao;
+
+    @Autowired
+    private UserStoreDao userStoreDao;
+
+    /**
+     *根据钉钉手机号查询用户信息
+     */
+    public FineUserDo queryFineUser(String mobile){
+        FineUserDo fineUserDo=fineUserDao.query(mobile);
+        return fineUserDo;
+    }
+    /**
+     *根据用户名查询区域
+     */
+    public UserStoreDo queryUserStore(String userName){
+        UserStoreDo userStoreDo=userStoreDao.query(userName);
+        return userStoreDo;
+    }
     public  List<ExeclRespone>  exportExcel(List<String> codes){
         List<ExeclRespone> resultList = new ArrayList<>();
         List<ExeclDto> exportExcel =promotionBaseInfoDao.exportExcel(codes);
@@ -122,6 +144,7 @@ public class PromotionService {
     }
 
     public   BasePageResponse<QueryPromotionListRespone>queryPromotionList(QueryPromotionListRequest request){
+        //todo 根据钉钉手机号查询用户信息，用户信息不存在报错提示联系it ，用户信息存在查询数据权限
         BasePageResponse<QueryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
         Page pageInfo = PageHelper.startPage(request.getPageIndex(), request.getPageSize());
         PageHelper.orderBy("created_time desc");
