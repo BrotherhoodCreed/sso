@@ -34,6 +34,7 @@ public class ShopService {
     Cache<String, Object> caffeineCache;
 
     public  List<TreeResponse> queryTree(String activityCode,String shopName){
+        //todo 根据钉钉手机号查询用户信息，用户信息不存在报错提示联系it ，用户信息存在查询数据权限
         List<TreeResponse> treeResponseList =new ArrayList<>();
         List<PromotionMapperDo> promotionMapperDos =new ArrayList<>();
         List<String> shopCode=new ArrayList<>();
