@@ -1,6 +1,7 @@
 package com.promotion.product.aop;
 
 import com.alibaba.fastjson.JSONObject;
+import com.promotion.product.config.Constans;
 import com.promotion.product.entity.UserDao;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -34,6 +35,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 String userJson = URLDecoder.decode(cookieValue.getValue(),"UTF-8");
                 UserDao userDao =JSONObject.parseObject(userJson,UserDao.class);
                 if(StringUtils.isNotEmpty(userDao.getMobile())){
+                    request.getSession().setAttribute(Constans.USER_CONTENT,userDao);
                     return true;
                 }
             }

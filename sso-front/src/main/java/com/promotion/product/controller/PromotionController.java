@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.promotion.product.common.ExcelUtils;
+import com.promotion.product.config.Constans;
 import com.promotion.product.dao.dataobject.*;
 import com.promotion.product.entity.*;
 import com.promotion.product.service.DictionarySerivce;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -46,7 +48,7 @@ public class PromotionController {
      */
     @RequestMapping("queryPromotionBaseInfo")
     @ResponseBody
-    public BaseEntityResponse<PromotionBaseInfoRespone> queryPromotionBaseInfo(String activityCode) {
+    public BaseEntityResponse<PromotionBaseInfoRespone> queryPromotionBaseInfo(String activityCode, HttpServletRequest request) {
         BaseEntityResponse<PromotionBaseInfoRespone> response = BaseEntityResponse.success(BaseEntityResponse.class);
         try {
             if (StringUtils.isEmpty(activityCode)) {
@@ -133,14 +135,20 @@ public class PromotionController {
 
     @RequestMapping("queryPromotionList")
     @ResponseBody
-    public BasePageResponse<QueryPromotionListRespone> queryPromotionList(int pageSize, int pageIndex, String activityCode, String begainTime, String endTime) {
+    public BasePageResponse<QueryPromotionListRespone> queryPromotionList(HttpServletRequest httpRequest,int pageSize, int pageIndex, String activityCode, String begainTime, String endTime) {
         BasePageResponse<QueryPromotionListRespone> response = BasePageResponse.success(BasePageResponse.class);
         try {
             QueryPromotionListRequest request = new QueryPromotionListRequest();
             request.setPageIndex(pageIndex);
             request.setActivityCode(activityCode);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
+            Object o = httpRequest.getSession().getAttribute(Constans.USER_CONTENT);
+            UserDao user = (UserDao)o ;
+            if (null == user){
+                response.setCode(-1);
+                response.setMessage("请联系it,用户信息存在查询数据权限");
+                throw new RuntimeException("请联系it,用户信息存在查询数据权限");
+            }
             if (org.apache.commons.lang3.StringUtils.isNotEmpty(begainTime)) {
                  Date begain = simpleDateFormat.parse(begainTime);
                  request.setBegainTime(begain);
@@ -156,7 +164,8 @@ public class PromotionController {
                 request.setEndTime(end);
             }
             request.setPageSize(pageSize);
-            response = promotionService.queryPromotionList(request);
+
+            response = promotionService.queryPromotionList(request,user);
         } catch (Exception e) {
             e.printStackTrace();
             response = BasePageResponse.failure(BasePageResponse.class);

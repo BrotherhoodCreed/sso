@@ -44,6 +44,7 @@ public enum BizErrorEnum implements Serializable {
     CHANGE_DEVICE_MORE_THEN_FIVE_TIMES(10204, "CHANGE_DEVICE_MORE_THEN_FIVE_TIMES", "切换设备过于频繁，您的账号已经被封停30分钟"),
     DIFF_LAST_LOGIN_DEVICE(10205, "DIFF_LAST_LOGIN_DEVICE", "您的账号尝试在非常用设备登陆，请用使用短信验证码方式重新登陆"),
     NO_NEED_EXECUTE(11000, "NO_NEED_EXECUTE", "不需要执行"),
+    NO_PROMISE(12000, "NO_PROMISE", "请联系it,用户信息存在查询数据权限"),
     FAILURE(29999, "failure", "请求失败"),
     End(99999, "End", "不需要执行");
 

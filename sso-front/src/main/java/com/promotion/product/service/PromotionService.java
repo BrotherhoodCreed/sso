@@ -11,6 +11,7 @@ import com.promotion.product.dao.mysql.PromotionMapperDao;
 import com.promotion.product.dao.mysql2.FineUserDao;
 import com.promotion.product.dao.mysql2.UserStoreDao;
 import com.promotion.product.entity.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Service
 public class PromotionService {
     @Autowired
@@ -40,6 +41,7 @@ public class PromotionService {
 
     @Autowired
     private UserStoreDao userStoreDao;
+
 
     /**
      *根据钉钉手机号查询用户信息
@@ -143,8 +145,19 @@ public class PromotionService {
         return promotionMapperDao.deletePromotionById(id)>0;
     }
 
-    public   BasePageResponse<QueryPromotionListRespone>queryPromotionList(QueryPromotionListRequest request){
+    public   BasePageResponse<QueryPromotionListRespone>queryPromotionList(QueryPromotionListRequest request,UserDao userDao){
         //todo 根据钉钉手机号查询用户信息，用户信息不存在报错提示联系it ，用户信息存在查询数据权限
+        String mobile = userDao.getMobile();
+        if (null == mobile){
+            log.info("查询活动列表 | 用户手机号为空[{}]",userDao);
+            return BasePageResponse.failure(BizErrorEnum.NO_PROMISE.getDesc(),BasePageResponse.class);
+        }
+        FineUserDo fineUserDo =  fineUserDao.query(mobile);
+        if (null == fineUserDo){
+            log.info("查询活动列表 | 用户手机号未找到对应数据",mobile);
+            return BasePageResponse.failure(BizErrorEnum.NO_PROMISE.getDesc(),BasePageResponse.class);
+        }
+
         BasePageResponse<QueryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
         Page pageInfo = PageHelper.startPage(request.getPageIndex(), request.getPageSize());
         PageHelper.orderBy("created_time desc");
