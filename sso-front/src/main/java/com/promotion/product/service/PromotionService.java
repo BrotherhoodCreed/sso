@@ -13,6 +13,7 @@ import com.promotion.product.dao.mysql2.UserStoreDao;
 import com.promotion.product.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -146,6 +147,13 @@ public class PromotionService {
     }
 
     public   BasePageResponse<QueryPromotionListRespone>queryPromotionList(QueryPromotionListRequest request,UserDao userDao){
+        BasePageResponse<QueryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
+        Page pageInfo = PageHelper.startPage(request.getPageIndex(), request.getPageSize());
+        PageHelper.orderBy("created_time desc");
+        List<QueryPromotionListDo> queryPromotionList=promotionBaseInfoDao.queryPromotionList(request);
+        if(CollectionUtils.isEmpty(queryPromotionList)){
+            return response;
+        }
         //todo 根据钉钉手机号查询用户信息，用户信息不存在报错提示联系it ，用户信息存在查询数据权限
         String mobile = userDao.getMobile();
         if (null == mobile){
@@ -157,14 +165,26 @@ public class PromotionService {
             log.info("查询活动列表 | 用户手机号未找到对应数据",mobile);
             return BasePageResponse.failure(BizErrorEnum.NO_PROMISE.getDesc(),BasePageResponse.class);
         }
-
-        BasePageResponse<QueryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
-        Page pageInfo = PageHelper.startPage(request.getPageIndex(), request.getPageSize());
-        PageHelper.orderBy("created_time desc");
-        List<QueryPromotionListDo> queryPromotionList=promotionBaseInfoDao.queryPromotionList(request);
-        if(CollectionUtils.isEmpty(queryPromotionList)){
-            return response;
+        UserStoreDo userStoreDo = userStoreDao.query(fineUserDo.getUserName());
+        if (null == userStoreDo){
+            log.info("查询活动列表 | 用户未找到对应StCd",fineUserDo.getUserName());
+            return BasePageResponse.failure(BizErrorEnum.NO_PROMISE.getDesc(),BasePageResponse.class);
         }
+       List<String> stcds = Arrays.asList(userStoreDo.getStCd().split(","));
+        Iterator<QueryPromotionListDo> iterator = queryPromotionList.iterator();
+        if (iterator.hasNext()){
+            QueryPromotionListDo promotionListDo = iterator.next();
+            List<PromotionMapperDo> list = promotionMapperDao.selectByActivityCode(promotionListDo.getActivityCode());
+            for (PromotionMapperDo promotionMapperDo:list) {
+                if (!stcds.contains(promotionMapperDo.getRestaurantCode())){
+                    log.info("查询活动列表 | StCd[{}]不在用户[{}]权限内[{}]",promotionMapperDo.getRestaurantCode(),fineUserDo.getUserName(),stcds);
+                    iterator.remove();
+                }
+            }
+        }
+
+
+
         Map<String,String> map =dictionaryDao.selectAll().stream().collect(Collectors.toMap(DictionaryDo::getDescriptionCode,DictionaryDo::getDescription));;
         response.setTotal(pageInfo.getTotal());
         response.setPages(pageInfo.getPageNum());

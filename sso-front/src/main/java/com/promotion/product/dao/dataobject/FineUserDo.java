@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class FineUserDo {
-    private Long id;
+    private String id;
     private String mobile;
     private String userName;
 }
