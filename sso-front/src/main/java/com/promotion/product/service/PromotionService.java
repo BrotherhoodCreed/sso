@@ -170,7 +170,7 @@ public class PromotionService {
             log.info("查询活动列表 | 用户未找到对应StCd",fineUserDo.getUserName());
             return BasePageResponse.failure(BizErrorEnum.NO_PROMISE.getDesc(),BasePageResponse.class);
         }
-       List<String> stcds = Arrays.asList(userStoreDo.getStCd().split(","));
+       List<String> stcds = new ArrayList<>(Arrays.asList(userStoreDo.getStCd().split(",")));
         Iterator<QueryPromotionListDo> iterator = queryPromotionList.iterator();
         while (iterator.hasNext()){
             QueryPromotionListDo promotionListDo = iterator.next();
@@ -179,6 +179,7 @@ public class PromotionService {
                 if (!stcds.contains(promotionMapperDo.getRestaurantCode())){
                     log.info("查询活动列表 | StCd[{}]不在用户[{}]权限内[{}]",promotionMapperDo.getRestaurantCode(),fineUserDo.getUserName(),stcds);
                     iterator.remove();
+                    break;
                 }
             }
         }
