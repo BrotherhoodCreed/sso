@@ -3,11 +3,16 @@ package com.promotion.product.service;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import com.promotion.product.dao.dataobject.PromotionMapperDo;
-import com.promotion.product.dao.dataobject.ShopDo;
+import com.promotion.product.dao.dataobject.*;
 import com.promotion.product.dao.mysql.PromotionMapperDao;
+import com.promotion.product.dao.mysql2.FineUserDao;
+import com.promotion.product.dao.mysql2.UserStoreDao;
 import com.promotion.product.dao.mysql2.YuKuDao;
+import com.promotion.product.entity.BasePageResponse;
+import com.promotion.product.entity.BizErrorEnum;
 import com.promotion.product.entity.TreeResponse;
+import com.promotion.product.entity.UserDao;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
@@ -21,7 +26,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-
+@Slf4j
 @Service
 public class ShopService {
     @Autowired
@@ -29,11 +34,16 @@ public class ShopService {
 
     @Autowired
     private YuKuDao yuKuDao;
+    @Autowired
+    private FineUserDao fineUserDao;
+
+    @Autowired
+    private UserStoreDao userStoreDao;
 
     @Autowired
     Cache<String, Object> caffeineCache;
 
-    public  List<TreeResponse> queryTree(String activityCode,String shopName){
+    public  List<TreeResponse> queryTree(String activityCode, String shopName, UserDao userDao){
         //todo 根据钉钉手机号查询用户信息，用户信息不存在报错提示联系it ，用户信息存在查询数据权限
         List<TreeResponse> treeResponseList =new ArrayList<>();
         List<PromotionMapperDo> promotionMapperDos =new ArrayList<>();
@@ -56,7 +66,30 @@ public class ShopService {
         Multimap<String, TreeResponse> childrenMultimap=ArrayListMultimap.create();
 
         Multimap<String, String> mapper=ArrayListMultimap.create();
-        for (ShopDo shopDo : shopDoList){
+
+        String mobile = userDao.getMobile();
+        if (null == mobile){
+            log.info("查询活动列表 | 用户手机号为空[{}]",userDao);
+            return treeResponseList;
+
+        }
+        FineUserDo fineUserDo =  fineUserDao.query(mobile);
+        if (null == fineUserDo){
+            log.info("查询活动列表 | 用户手机号未找到对应数据",mobile);
+            return treeResponseList;
+        }
+        UserStoreDo userStoreDo = userStoreDao.query(fineUserDo.getUserName());
+        if (null == userStoreDo){
+            log.info("查询活动列表 | 用户未找到对应StCd",fineUserDo.getUserName());
+            return treeResponseList;
+        }
+        List<String> stcds = Arrays.asList(userStoreDo.getStCd().split(","));
+        Iterator<ShopDo> shop_iterator = shopDoList.iterator();
+        while (shop_iterator.hasNext()){
+            ShopDo shopDo = shop_iterator.next();
+            if (!stcds.contains(shopDo.getStcd())){
+                continue;
+            }
             //  A    A1  01
             //  A    A1  02
             TreeResponse children =new TreeResponse();

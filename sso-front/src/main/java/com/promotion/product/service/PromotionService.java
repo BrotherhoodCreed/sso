@@ -172,7 +172,7 @@ public class PromotionService {
         }
        List<String> stcds = Arrays.asList(userStoreDo.getStCd().split(","));
         Iterator<QueryPromotionListDo> iterator = queryPromotionList.iterator();
-        if (iterator.hasNext()){
+        while (iterator.hasNext()){
             QueryPromotionListDo promotionListDo = iterator.next();
             List<PromotionMapperDo> list = promotionMapperDao.selectByActivityCode(promotionListDo.getActivityCode());
             for (PromotionMapperDo promotionMapperDo:list) {

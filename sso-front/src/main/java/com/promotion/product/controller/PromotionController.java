@@ -236,10 +236,17 @@ public class PromotionController {
      */
     @RequestMapping("queryTree")
     @ResponseBody
-    private BaseEntityResponse<List<TreeResponse>> queryTree(String activityCode, String shopName) {
+    private BaseEntityResponse<List<TreeResponse>> queryTree(HttpServletRequest request,String activityCode, String shopName) {
         BaseEntityResponse<List<TreeResponse>> response = BaseEntityResponse.success(BaseEntityResponse.class);
         try {
-            response.setData(shopService.queryTree(activityCode, shopName));
+            Object o = request.getSession().getAttribute(Constans.USER_CONTENT);
+            UserDao user = (UserDao)o ;
+            if (null == user){
+                response.setCode(-1);
+                response.setMessage("请联系it,用户信息存在查询数据权限");
+                throw new RuntimeException("请联系it,用户信息存在查询数据权限");
+            }
+            response.setData(shopService.queryTree(activityCode, shopName,user));
         } catch (Exception e) {
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
             response.setMessage(e.getMessage());
