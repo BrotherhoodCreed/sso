@@ -309,8 +309,15 @@
                 var saleBegainTime = new Date(startTimestamp).getTime();
                 var endTimestamp = new Date(this.detail.salesEndTime.replace(/-/g, "/"));
                 var saleEndTime = new Date(endTimestamp).getTime();
+
+                var usageStartTime = new Date(this.detail.usageStartTime.replace(/-/g, "/"));
+                var usageBegainTime = new Date(usageStartTime).getTime();
                 if (saleEndTime < saleBegainTime){
                     layer.msg('销售结束时间不能小于销售开始时间');
+                    return;
+                }
+                if(usageBegainTime<startTimestamp){
+                    layer.msg('核销开始时间不能小于销售开始时间');
                     return;
                 }
                 if (this.detail.amount == ''){
@@ -480,7 +487,7 @@
         ,show: false //直    接显示
         ,trigger: 'click' //采用click弹出
         ,btns: ['clear', 'confirm']
-        ,min:0
+        ,min:1
         // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
             console.log(date);
@@ -512,7 +519,7 @@
         ,show: false //直接显示
         ,trigger: 'click' //采用click弹出
         ,btns: ['clear', 'confirm']
-        ,min:0
+        ,min:1
         // ,closeStop: '#test2' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
             app.detail.salesEndTime=value;
@@ -539,7 +546,7 @@
         ,show: false //直    接显示
         ,trigger: 'click' //采用click弹出
         ,btns: ['clear', 'confirm']
-        ,min:0
+        ,min:1
         // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
             app.detail.usageStartTime=value;
@@ -555,7 +562,7 @@
     lay('#test3').on('click', function(e){
         if(cMaxDate == undefined || cMaxDate == ''){
             c.config.max=defaultMaxDate;
-            var thisTime = jQuery.parseJSON(app.detail.thisTime);
+            var thisTime= jQuery.parseJSON(app.detail.thisTime);
             console.log(thisTime);
             c.config.min = thisTime;
         }else {
@@ -568,7 +575,7 @@
         ,show: false //直    接显示
         ,trigger: 'click' //采用click弹出
         ,btns: ['clear', 'confirm']
-        ,min:0
+        ,min:1
         // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
             app.detail.usageEndTime=value;

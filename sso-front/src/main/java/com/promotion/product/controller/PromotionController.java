@@ -68,9 +68,12 @@ public class PromotionController {
 //    @PostMapping("savePromotionBaseInfo")
     @RequestMapping("savePromotionBaseInfo")
     @ResponseBody
-    public BaseEntityResponse<SavePromotionBaseInfoRespone> savePromotionBaseInfo(@RequestBody SavePromotionBaseInfoRequery request) {
+    public BaseEntityResponse<SavePromotionBaseInfoRespone> savePromotionBaseInfo(@RequestBody SavePromotionBaseInfoRequery request,HttpServletRequest httpRequest) {
         BaseEntityResponse<SavePromotionBaseInfoRespone> response = BaseEntityResponse.success(BaseEntityResponse.class);
         try {
+            Object o = httpRequest.getSession().getAttribute(Constans.USER_CONTENT);
+            UserDao user = (UserDao)o ;
+            request.setCreatedUser(user.getMobile());
             synchronized(this){
                 response.setData(promotionService.savePromotionBaseInfo(request, request.getPromotionMapperDo()));
             }
@@ -118,12 +121,15 @@ public class PromotionController {
      */
     @RequestMapping("updatePromotionBaseInfo")
     @ResponseBody
-    public BaseEntityResponse<Boolean> updatePromotionBaseInfo(@RequestBody UpdatePromotionBaseInfoRequery requery) {
+    public BaseEntityResponse<Boolean> updatePromotionBaseInfo(@RequestBody UpdatePromotionBaseInfoRequery requery,HttpServletRequest httpRequest) {
         BaseEntityResponse<Boolean> response = BaseEntityResponse.success(BaseEntityResponse.class);
         try {
             if (Objects.isNull(requery.getPromotionBaseInfoDo())) {
                 throw new Exception("参数为空");
             }
+            Object o = httpRequest.getSession().getAttribute(Constans.USER_CONTENT);
+            UserDao user = (UserDao)o ;
+            requery.getPromotionBaseInfoDo().setUpdatedUser(user.getMobile());
             response.setData(promotionService.updatePromotionBaseInfo(requery));
         } catch (Exception e) {
             response = BaseEntityResponse.failure(BaseEntityResponse.class);

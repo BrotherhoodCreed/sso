@@ -147,13 +147,6 @@ public class PromotionService {
     }
 
     public   BasePageResponse<QueryPromotionListRespone>queryPromotionList(QueryPromotionListRequest request,UserDao userDao){
-        BasePageResponse<QueryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
-        Page pageInfo = PageHelper.startPage(request.getPageIndex(), request.getPageSize());
-        PageHelper.orderBy("created_time desc");
-        List<QueryPromotionListDo> queryPromotionList=promotionBaseInfoDao.queryPromotionList(request);
-        if(CollectionUtils.isEmpty(queryPromotionList)){
-            return response;
-        }
         //todo 根据钉钉手机号查询用户信息，用户信息不存在报错提示联系it ，用户信息存在查询数据权限
         String mobile = userDao.getMobile();
         if (null == mobile){
@@ -165,26 +158,32 @@ public class PromotionService {
             log.info("查询活动列表 | 用户手机号未找到对应数据",mobile);
             return BasePageResponse.failure(BizErrorEnum.NO_PROMISE.getDesc(),BasePageResponse.class);
         }
-        UserStoreDo userStoreDo = userStoreDao.query(fineUserDo.getUserName());
-        if (null == userStoreDo){
-            log.info("查询活动列表 | 用户未找到对应StCd",fineUserDo.getUserName());
-            return BasePageResponse.failure(BizErrorEnum.NO_PROMISE.getDesc(),BasePageResponse.class);
+        BasePageResponse<QueryPromotionListRespone> response=BasePageResponse.success(BasePageResponse.class);
+        Page pageInfo = PageHelper.startPage(request.getPageIndex(), request.getPageSize());
+        PageHelper.orderBy("created_time desc");
+        request.setCreatedUser(mobile);
+        List<QueryPromotionListDo> queryPromotionList=promotionBaseInfoDao.queryPromotionList(request);
+        if(CollectionUtils.isEmpty(queryPromotionList)){
+            return response;
         }
-       List<String> stcds = new ArrayList<>(Arrays.asList(userStoreDo.getStCd().split(",")));
-        Iterator<QueryPromotionListDo> iterator = queryPromotionList.iterator();
-        while (iterator.hasNext()){
-            QueryPromotionListDo promotionListDo = iterator.next();
-            List<PromotionMapperDo> list = promotionMapperDao.selectByActivityCode(promotionListDo.getActivityCode());
-            for (PromotionMapperDo promotionMapperDo:list) {
-                if (!stcds.contains(promotionMapperDo.getRestaurantCode())){
-                    log.info("查询活动列表 | StCd[{}]不在用户[{}]权限内[{}]",promotionMapperDo.getRestaurantCode(),fineUserDo.getUserName(),stcds);
-                    iterator.remove();
-                    break;
-                }
-            }
-        }
-
-
+//        UserStoreDo userStoreDo = userStoreDao.query(fineUserDo.getUserName());
+//        if (null == userStoreDo){
+//            log.info("查询活动列表 | 用户未找到对应StCd",fineUserDo.getUserName());
+//            return BasePageResponse.failure(BizErrorEnum.NO_PROMISE.getDesc(),BasePageResponse.class);
+//        }
+//       List<String> stcds = new ArrayList<>(Arrays.asList(userStoreDo.getStCd().split(",")));
+//        Iterator<QueryPromotionListDo> iterator = queryPromotionList.iterator();
+//        while (iterator.hasNext()){
+//            QueryPromotionListDo promotionListDo = iterator.next();
+//            List<PromotionMapperDo> list = promotionMapperDao.selectByActivityCode(promotionListDo.getActivityCode());
+//            for (PromotionMapperDo promotionMapperDo:list) {
+//                if (!stcds.contains(promotionMapperDo.getRestaurantCode())){
+//                    log.info("查询活动列表 | StCd[{}]不在用户[{}]权限内[{}]",promotionMapperDo.getRestaurantCode(),fineUserDo.getUserName(),stcds);
+//                    iterator.remove();
+//                    break;
+//                }
+//            }
+//        }
 
         Map<String,String> map =dictionaryDao.selectAll().stream().collect(Collectors.toMap(DictionaryDo::getDescriptionCode,DictionaryDo::getDescription));;
         response.setTotal(pageInfo.getTotal());
@@ -228,6 +227,7 @@ public class PromotionService {
         //01 区域号
         String code =codePrefix+ FormTypeEnums.TAKE_OUT.getIndex()+ format.format(date)+String.format("%03d",index);
         promotionBaseInfoDo.setActivityCode(code);
+        promotionBaseInfoDo.setCreatedUser(savePromotionBaseInfoRequery.getCreatedUser());
         promotionBaseInfoDo.setCreatedTime(new Date());
         promotionBaseInfoDo.setUpdatedTime(new Date());
         promotionBaseInfoDo.setSubmit(SubmitEnums.SAVE.getCode());
