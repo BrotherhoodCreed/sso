@@ -64,6 +64,9 @@
             <if test="endTime !=null ">
                 AND  sales_end_time &lt;= #{endTime}
             </if>
+            <if test="createdUser !=null and createdUser != ''">
+                AND  created_user = #{createdUser}
+            </if>
         </where>
         order by created_time desc
     </select>
