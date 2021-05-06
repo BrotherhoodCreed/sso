@@ -84,6 +84,28 @@ public class PromotionController {
         }
         return response;
     }
+    /**
+     * 保存堂食
+     */
+    @RequestMapping("savePromotionBaseInfoTs")
+    @ResponseBody
+    public BaseEntityResponse<SavePromotionBaseInfoRespone> savePromotionBaseInfoTs(@RequestBody SavePromotionBaseInfoRequery request,HttpServletRequest httpRequest) {
+        BaseEntityResponse<SavePromotionBaseInfoRespone> response = BaseEntityResponse.success(BaseEntityResponse.class);
+        try {
+            Object o = httpRequest.getSession().getAttribute(Constans.USER_CONTENT);
+            UserDao user = (UserDao)o ;
+            request.setCreatedUser(user.getMobile());
+            synchronized(this){
+                response.setData(promotionService.savePromotionBaseInfo_ts(request, request.getPromotionMapperDo()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = BaseEntityResponse.failure(BaseEntityResponse.class);
+            log.error("queryPromotionBaseInfo 接口异常", e);
+        }
+        return response;
+    }
+
 
     /**
      * 保存促销门店
@@ -141,12 +163,13 @@ public class PromotionController {
 
     @RequestMapping("queryPromotionList")
     @ResponseBody
-    public BasePageResponse<QueryPromotionListRespone> queryPromotionList(HttpServletRequest httpRequest,int pageSize, int pageIndex, String activityCode, String begainTime, String endTime) {
+    public BasePageResponse<QueryPromotionListRespone> queryPromotionList(HttpServletRequest httpRequest,int pageSize, int pageIndex, String activityCode, String begainTime, String endTime,String type) {
         BasePageResponse<QueryPromotionListRespone> response = BasePageResponse.success(BasePageResponse.class);
         try {
             QueryPromotionListRequest request = new QueryPromotionListRequest();
             request.setPageIndex(pageIndex);
             request.setActivityCode(activityCode);
+            request.setPromotionType(type);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Object o = httpRequest.getSession().getAttribute(Constans.USER_CONTENT);
             UserDao user = (UserDao)o ;

@@ -26,7 +26,8 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">活动管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="<%=request.getContextPath()%>/list">一级外卖</a></dd>
+                        <dd><a href="<%=request.getContextPath()%>/list?type=1">外卖</a></dd>
+                        <dd><a href="<%=request.getContextPath()%>/list?type=2">堂食</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -126,7 +127,7 @@
 
                     break;
                 case 'add':
-                    window.open('<%=request.getContextPath()%>/add');
+                    window.open('<%=request.getContextPath()%>/add?type=<%=request.getParameter("type")%>');
                 <%--location.href = '<%=request.getContextPath()%>/add';--%>
                     break;
                 case 'upload':

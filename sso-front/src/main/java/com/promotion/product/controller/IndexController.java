@@ -1,6 +1,7 @@
 package com.promotion.product.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.promotion.product.entity.PromotionTypeEnum;
 import com.promotion.product.entity.UserDao;
 import com.promotion.product.service.UserAuthsService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +38,9 @@ public class IndexController {
     private String redirectUrl;
 
     @RequestMapping("/add")
-    public ModelAndView detail(){
-        ModelAndView modelAndView = new ModelAndView("detail");
+    public ModelAndView detail(HttpServletRequest request){
+        String viewName=PromotionTypeEnum.getDescByCode(request.getParameter("type"));
+        ModelAndView modelAndView = new ModelAndView(viewName);
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         JSONObject jsonObject = new JSONObject();

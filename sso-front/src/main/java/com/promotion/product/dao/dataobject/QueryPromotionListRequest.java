@@ -15,6 +15,7 @@ public class QueryPromotionListRequest {
     private Date begainTime;
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date endTime;
+    private String promotionType;
 
 
 

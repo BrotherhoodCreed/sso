@@ -67,6 +67,9 @@
             <if test="createdUser !=null and createdUser != ''">
                 AND  created_user = #{createdUser}
             </if>
+            <if test="promotionType !=null and promotionType != ''">
+                AND  type = #{promotionType}
+            </if>
         </where>
         order by created_time desc
     </select>

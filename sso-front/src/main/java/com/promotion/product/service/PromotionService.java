@@ -226,12 +226,41 @@ public class PromotionService {
         }
         //01 区域号
         String code =codePrefix+ FormTypeEnums.TAKE_OUT.getIndex()+ format.format(date)+String.format("%03d",index);
+        saveData(savePromotionBaseInfoRequery, promotionMapperDo, savePromotionBaseInfoRespone, promotionBaseInfoDo, code,FormTypeEnums.TAKE_OUT);
+        return savePromotionBaseInfoRespone;
+    }
+
+    public SavePromotionBaseInfoRespone savePromotionBaseInfo_ts(SavePromotionBaseInfoRequery savePromotionBaseInfoRequery,List<PromotionMapperDo> promotionMapperDo)  throws Exception{
+        SavePromotionBaseInfoRespone savePromotionBaseInfoRespone =new SavePromotionBaseInfoRespone();
+        PromotionBaseInfoDo promotionBaseInfoDo =ModelCopier.copy(savePromotionBaseInfoRequery,PromotionBaseInfoDo.class);
+
+        Calendar calendar = Calendar.getInstance();
+        Date date=calendar.getTime();
+        SimpleDateFormat format = new SimpleDateFormat("YYYYMM");
+        Integer index= promotionBaseInfoDao.querySerialNumber();
+        String area="";
+        if(promotionMapperDo.get(0)!=null){
+            area=promotionMapperDo.get(0).getArea();
+        }
+        String codePrefix="00";
+        if(CollectionUtils.isNotEmpty(promotionMapperDo)){
+            if(!(promotionMapperDo.stream().map(item->item.getRestaurantCode()).distinct().count()>1)){
+                codePrefix=  shopService.queryShopAreaId(promotionMapperDo.get(0).getRestaurantCode());
+            }
+        }
+        //01 区域号
+        String code =codePrefix+ FormTypeEnums.EAT_IN.getIndex()+ format.format(date)+String.format("%03d",index);
+        saveData(savePromotionBaseInfoRequery, promotionMapperDo, savePromotionBaseInfoRespone, promotionBaseInfoDo, code,FormTypeEnums.EAT_IN);
+        return savePromotionBaseInfoRespone;
+    }
+
+    private void saveData(SavePromotionBaseInfoRequery savePromotionBaseInfoRequery, List<PromotionMapperDo> promotionMapperDo, SavePromotionBaseInfoRespone savePromotionBaseInfoRespone, PromotionBaseInfoDo promotionBaseInfoDo, String code,FormTypeEnums type) {
         promotionBaseInfoDo.setActivityCode(code);
         promotionBaseInfoDo.setCreatedUser(savePromotionBaseInfoRequery.getCreatedUser());
         promotionBaseInfoDo.setCreatedTime(new Date());
         promotionBaseInfoDo.setUpdatedTime(new Date());
         promotionBaseInfoDo.setSubmit(SubmitEnums.SAVE.getCode());
-        promotionBaseInfoDo.setType(FormTypeEnums.TAKE_OUT.getIndex());
+        promotionBaseInfoDo.setType(type.getIndex());
         if(CollectionUtils.isNotEmpty(savePromotionBaseInfoRequery.getSharedActivity())){
             String string=Joiner.on(",").join(savePromotionBaseInfoRequery.getSharedActivity());
             promotionBaseInfoDo.setSharedActivity(string);
@@ -251,7 +280,6 @@ public class PromotionService {
                 }
             }
         }
-        return savePromotionBaseInfoRespone;
     }
 
     public Boolean savePromotionMapperInfo(SavePromotionMapperInfoRequest req){
