@@ -131,6 +131,17 @@ public class PromotionBaseInfoDo {
      */
     private BigDecimal discountFee;
 
+    /**
+     * '回款人姓名'
+     */
+    private String billUserName;
+    /**
+     * '回款人账号'
+     */
+    private String billAccountNumber;
+
+
+
     public Long getId() {
         return id;
     }
@@ -403,6 +414,22 @@ public class PromotionBaseInfoDo {
         this.discountFee = discountFee;
     }
 
+    public String getBillUserName() {
+        return billUserName;
+    }
+
+    public void setBillUserName(String billUserName) {
+        this.billUserName = billUserName;
+    }
+
+    public String getBillAccountNumber() {
+        return billAccountNumber;
+    }
+
+    public void setBillAccountNumber(String billAccountNumber) {
+        this.billAccountNumber = billAccountNumber;
+    }
+
     @Override
     public String toString() {
         return "PromotionBaseInfoDo{" +
@@ -440,6 +467,8 @@ public class PromotionBaseInfoDo {
                 ", couponFee=" + couponFee +
                 ", couponEffectiveTime='" + couponEffectiveTime + '\'' +
                 ", discountFee=" + discountFee +
+                ", billUserName='" + billUserName + '\'' +
+                ", billAccountNumber='" + billAccountNumber + '\'' +
                 '}';
     }
 }
