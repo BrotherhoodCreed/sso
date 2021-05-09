@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -97,6 +98,63 @@ public class PromotionService {
                 execlRespone.setBillPrice(String.valueOf(execlDto.getBillPrice()));
                 execlRespone.setHandlingFee(String.valueOf(execlDto.getHandlingFee()));
                 execlRespone.setTaxRate(String.valueOf(execlDto.getTaxRate())+"%");
+                resultList.add(execlRespone);
+            }
+        }
+
+        return  resultList;
+    }
+
+    public  List<ExeclResponeTs>  exportExcelTs(List<String> codes){
+        List<ExeclResponeTs> resultList = new ArrayList<>();
+        List<ExeclDto> exportExcel =promotionBaseInfoDao.exportExcel(codes);
+        Map<String,String> map =dictionaryDao.selectAll().stream().collect(Collectors.toMap(DictionaryDo::getDescriptionCode,DictionaryDo::getDescription));;
+        if(CollectionUtils.isNotEmpty(exportExcel)){
+            for (ExeclDto execlDto : exportExcel) {
+                ExeclResponeTs execlRespone = new ExeclResponeTs();
+                execlRespone.setArea(execlDto.getArea());
+                execlRespone.setCity(execlDto.getCity());
+                execlRespone.setAmount(String.valueOf(execlDto.getAmount()));
+                execlRespone.setActivityCode(execlDto.getActivityCode());
+                if(execlDto.getActivityType()!=null){
+                    if(map.containsKey(execlDto.getActivityType())){
+                        execlRespone.setActivityType(map.get(execlDto.getActivityType()));;
+                    }
+                }
+                execlRespone.setRestaurantCode(execlDto.getRestaurantCode());
+                execlRespone.setRestaurantName(execlDto.getRestaurantName());
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                if(execlDto.getSalesStartTime()!=null){
+                    execlRespone.setSalesStartTime(formatter.format(execlDto.getSalesStartTime()));
+                }
+                if(execlDto.getSalesEndTime()!=null){
+                    execlRespone.setSalesEndTime(formatter.format(execlDto.getSalesEndTime()));
+                }
+                execlRespone.setDescription(execlDto.getDescription());
+                execlRespone.setAmount(String.valueOf(execlDto.getAmount()));
+                execlRespone.setBillCycle("T+"+String.valueOf(execlDto.getBillCycle()));
+                execlRespone.setIntroduction(execlDto.getIntroduction());
+                if(execlDto.getUsageStartTime()!=null){
+                    execlRespone.setUsageStartTime(formatter.format(execlDto.getUsageStartTime()));
+                }
+                if(execlDto.getUsageEndTime()!=null){
+                    execlRespone.setUsageEndTime(formatter.format(execlDto.getUsageEndTime()));
+                }
+                execlRespone.setSharedActivity(execlDto.getSharedActivity());
+                execlRespone.setSellingPrice(String.valueOf(execlDto.getSellingPrice()));
+                execlRespone.setBillPrice(String.valueOf(execlDto.getBillPrice()));
+                execlRespone.setHandlingFee(String.valueOf(execlDto.getHandlingFee()));
+                execlRespone.setTaxRate(String.valueOf(execlDto.getTaxRate())+"%");
+                execlRespone.setContractAmount(execlDto.getContractAmount());
+                execlRespone.setPrepaymentAmount(execlDto.getPrepaymentAmount());
+                execlRespone.setWage(execlDto.getWage());
+                execlRespone.setAdvertisingFee(execlDto.getAdvertisingFee());
+                execlRespone.setTestFee(execlDto.getTestFee());
+                execlRespone.setCouponFee(execlDto.getCouponFee());
+                execlRespone.setCouponEffectiveTime(execlDto.getCouponEffectiveTime());
+                execlRespone.setDiscountFee(execlDto.getDiscountFee());
+                execlRespone.setBillUserName(execlDto.getBillUserName());
+                execlRespone.setBillAccountNumber(execlDto.getBillAccountNumber());
                 resultList.add(execlRespone);
             }
         }
