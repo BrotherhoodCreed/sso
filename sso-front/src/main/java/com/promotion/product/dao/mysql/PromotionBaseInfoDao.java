@@ -46,40 +46,19 @@ public interface PromotionBaseInfoDao {
             "updated_time as 'updatedTime',\n" +
             "updated_user as 'updatedUser',\n" +
             "usage_start_time as 'usageStartTime',\n" +
-            "usage_end_time as 'usageEndTime'\n" +
+            "usage_end_time as 'usageEndTime',\n" +
+            "contract_amount as 'contractAmount',\n" +
+            "prepayment_amount as 'prepaymentAmount',\n" +
+            "wage as 'wage',\n" +
+            "advertising_fee as 'advertisingFee',\n" +
+            "test_fee as 'testFee',\n" +
+            "coupon_fee as 'couponFee',\n" +
+            "coupon_effective_time as 'couponEffectiveTime',\n" +
+            "discount_fee as 'discountFee'\n" +
             "from tb_promotion_base_info  \n" +
             "where deleted=0   AND   activity_code =#{activityCode}")
     PromotionBaseInfoDo selectOneData(@Param("activityCode") String activityCode);
 
-    @Select("select \n" +
-            "id,\n" +
-            "activity_code as 'activityCode',\n" +
-            "activity_type as 'activityType',\n" +
-            "sales_start_time as 'salesStartTime',\n" +
-            "sales_end_time as 'salesEndTime',\n" +
-            "amount as 'amount',\n" +
-            "bill_cycle as 'billCycle',\n" +
-            "description as 'description',\n" +
-            "introduction as 'introduction',\n" +
-            "channel as 'channel',\n" +
-            "the_way as 'theWay',\n" +
-            "shared_activity as 'sharedActivity',\n" +
-            "selling_price as 'sellingPrice',\n" +
-            "bill_price as 'billPrice',\n" +
-            "handling_fee as 'handlingFee',\n" +
-            "tax_rate as 'taxRate',\n" +
-            "other as 'other',\n" +
-            "submit as 'submit',\n" +
-            "type as 'type',\n" +
-            "created_time as 'createdTime',\n" +
-            "created_user as 'createdUser',\n" +
-            "updated_time as 'updatedTime',\n" +
-            "updated_user as 'updatedUser',\n" +
-            "usage_start_time as 'usageStartTime',\n" +
-            "usage_end_time as 'usageEndTime',\n" +
-            "from tb_promotion_base_info  \n" +
-            "where deleted=0   AND   activity_code =#{aivityCode}")
-    PromotionBaseInfoDo selectByAivityCode(@Param("aivityCode") String  aivityCode);
 
 
     @Select("select \n" +
@@ -108,6 +87,14 @@ public interface PromotionBaseInfoDao {
             "updated_user as 'updatedUser',\n" +
             "usage_start_time as 'usageStartTime',\n" +
             "usage_end_time as 'usageEndTime',\n" +
+            "contract_amount as 'contractAmount',\n" +
+            "prepayment_amount as 'prepaymentAmount',\n" +
+            "wage as 'wage',\n" +
+            "advertising_fee as 'advertisingFee',\n" +
+            "test_fee as 'testFee',\n" +
+            "coupon_fee as 'couponFee',\n" +
+            "coupon_effective_time as 'couponEffectiveTime',\n" +
+            "discount_fee as 'discountFee'\n" +
             "from tb_promotion_base_info  \n" +
             "where deleted=0   AND    " +
             "activity_code in <foreach item='item' index='index' collection='aivityCode' open='(' separator=',' close=')'> " +
@@ -141,7 +128,14 @@ public interface PromotionBaseInfoDao {
             " updated_time,\n" +
             " updated_user,\n" +
             " usage_start_time,\n" +
-            " usage_end_time\n" +
+            " usage_end_time,\n" +
+            " contract_amount,\n" +
+            " wage,\n" +
+            " advertising_fee,\n" +
+            " test_fee,\n" +
+            " coupon_fee,\n" +
+            " coupon_effective_time,\n" +
+            " discount_fee\n" +
             " )\n" +
             " values(" +
             "#{item.activityCode}," +
@@ -167,7 +161,15 @@ public interface PromotionBaseInfoDao {
             "#{item.updatedTime}," +
             "#{item.updatedUser}," +
             "#{item.usageStartTime}," +
-            "#{item.usageEndTime}" +
+            "#{item.usageEndTime}," +
+            "#{item.contractAmount}," +
+            "#{item.prepaymentAmount}," +
+            "#{item.wage}," +
+            "#{item.advertisingFee}," +
+            "#{item.testFee}," +
+            "#{item.couponFee}," +
+            "#{item.couponEffectiveTime}," +
+            "#{item.discountFee}," +
             ")")
     Integer insert(@Param("item")PromotionBaseInfoDo promotionBaseInfoDo);
 

@@ -104,7 +104,15 @@
         b.area,
         b.city,
         b.restaurant_code as 'restaurantCode',
-        b.restaurant_name as 'restaurantName'
+        b.restaurant_name as 'restaurantName',
+        a.contract_amount as 'contractAmount',
+        a.prepayment_amount as 'prepaymentAmount',
+        a.wage as 'wage',
+        a.advertising_fee as 'advertisingFee',
+        a.test_fee as 'testFee',
+        a.coupon_fee as 'couponFee',
+        a.coupon_effective_time as 'couponEffectiveTime',
+        a.discount_fee as 'discountFee'
         from tb_promotion_base_info as a
         left join tb_promotion_mapper as b
         ON a.activity_code=b.activity_code
@@ -179,6 +187,30 @@
             </if>
             <if test="salesEndTime != null ">
                 sales_end_time=  #{salesEndTime} ,
+            </if>
+            <if test="contractAmount != null ">
+                contract_amount=  #{contractAmount} ,
+            </if>
+            <if test="prepaymentAmount != null ">
+                prepayment_amount=  #{prepaymentAmount} ,
+            </if>
+            <if test="wage != null ">
+                wage=  #{wage} ,
+            </if>
+            <if test="advertisingFee != null ">
+                advertising_fee=  #{advertisingFee} ,
+            </if>
+            <if test="testFee != null ">
+                test_fee=  #{testFee} ,
+            </if>
+            <if test="couponFee != null ">
+                coupon_fee=  #{couponFee} ,
+            </if>
+            <if test="couponEffectiveTime != null ">
+                coupon_effective_time=  #{couponEffectiveTime} ,
+            </if>
+            <if test="discountFee != null ">
+                discount_fee=  #{discountFee} ,
             </if>
         </trim>
         <where>
