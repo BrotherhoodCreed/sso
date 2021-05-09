@@ -114,7 +114,7 @@
         a.coupon_effective_time as 'couponEffectiveTime',
         a.discount_fee as 'discountFee',
         a.bill_user_name as 'billUserName',
-        a.bill_account_number as 'billAccountNumber',
+        a.bill_account_number as 'billAccountNumber'
         from tb_promotion_base_info as a
         left join tb_promotion_mapper as b
         ON a.activity_code=b.activity_code
