@@ -132,6 +132,7 @@ public interface PromotionBaseInfoDao {
             " usage_start_time,\n" +
             " usage_end_time,\n" +
             " contract_amount,\n" +
+            " prepayment_amount,\n" +
             " wage,\n" +
             " advertising_fee,\n" +
             " test_fee,\n" +
