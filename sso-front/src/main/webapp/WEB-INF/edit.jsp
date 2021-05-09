@@ -104,7 +104,7 @@
                 </td>
                 <td>团购网站</td>
                 <td>
-                    <select v-model="detail.theWay"  style="width: 100px;">--%>
+                    <select v-model="detail.channel"  style="width: 100px;">--%>
                         <option value="" >请选择</option>
                         <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
                     </select>

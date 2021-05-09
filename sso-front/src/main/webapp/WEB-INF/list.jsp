@@ -60,7 +60,7 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="add">新增</a>
     <a class="layui-btn layui-btn-xs" lay-event="upload">导出</a>
-    <a class="layui-btn layui-btn-xs" lay-event="sumbit">提交OA</a>
+    <%--<a class="layui-btn layui-btn-xs" lay-event="sumbit">提交OA</a>--%>
     <%--<div class="layui-inline" style="float:right;height:29px;" title="搜索" lay-event="LAYTABLE_SEARCH">--%>
     <%--<i class="layui-icon layui-icon-search"></i>--%>
     <%--</div>--%>
@@ -82,7 +82,7 @@
             elem: '#demo'
             , id: 'list'
             // , height: 'full-80'
-            , url: '<%=request.getContextPath()%>/PromotionController/queryPromotionList' //数据接口
+            , url: '<%=request.getContextPath()%>/PromotionController/queryPromotionList?type=1' //数据接口
             , request: {
                 pageName: 'pageIndex' //页码的参数名称，默认：page
                 , limitName: 'pageSize' //每页数据量的参数名，默认：limit

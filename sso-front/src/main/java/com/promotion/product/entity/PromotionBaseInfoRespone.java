@@ -93,4 +93,47 @@ public class PromotionBaseInfoRespone {
     private Boolean     deleted;
     private String        updatedTime;
     private String        updatedUser;
+
+    /**
+     * '合同收售数量'
+     */
+    private Integer contractAmount;
+    /**
+     * '预付金额'
+     */
+    private BigDecimal prepaymentAmount;
+    /**
+     * '人员费用'
+     */
+    private BigDecimal wage;
+    /**
+     * '广告费用'
+     */
+    private BigDecimal advertisingFee;
+    /**
+     * '试吃费用'
+     */
+    private BigDecimal testFee;
+    /**
+     * '尊享卷费用'
+     */
+    private BigDecimal couponFee;
+    /**
+     * '尊享卷费有效期'
+     */
+    private String couponEffectiveTime;
+    /**
+     * '折扣费用'
+     */
+    private BigDecimal discountFee;
+
+    /**
+     * '回款人姓名'
+     */
+    private String billUserName;
+    /**
+     * '回款人账号'
+     */
+    private String billAccountNumber;
+
 }
