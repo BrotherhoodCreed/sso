@@ -98,6 +98,38 @@ public class PromotionBaseInfoDo {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date        updatedTime;
     private String        updatedUser;
+    /**
+     * '合同收售数量'
+     */
+    private Integer contractAmount;
+    /**
+     * '预付金额'
+     */
+    private BigDecimal prepaymentAmount;
+    /**
+     * '人员费用'
+     */
+    private BigDecimal wage;
+    /**
+     * '广告费用'
+     */
+    private BigDecimal advertisingFee;
+    /**
+     * '试吃费用'
+     */
+    private BigDecimal testFee;
+    /**
+     * '尊享卷费用'
+     */
+    private BigDecimal couponFee;
+    /**
+     * '尊享卷费有效期'
+     */
+    private String couponEffectiveTime;
+    /**
+     * '折扣费用'
+     */
+    private BigDecimal discountFee;
 
     public Long getId() {
         return id;
@@ -307,6 +339,70 @@ public class PromotionBaseInfoDo {
         this.updatedUser = updatedUser;
     }
 
+    public Integer getContractAmount() {
+        return contractAmount;
+    }
+
+    public void setContractAmount(Integer contractAmount) {
+        this.contractAmount = contractAmount;
+    }
+
+    public BigDecimal getPrepaymentAmount() {
+        return prepaymentAmount;
+    }
+
+    public void setPrepaymentAmount(BigDecimal prepaymentAmount) {
+        this.prepaymentAmount = prepaymentAmount;
+    }
+
+    public BigDecimal getWage() {
+        return wage;
+    }
+
+    public void setWage(BigDecimal wage) {
+        this.wage = wage;
+    }
+
+    public BigDecimal getAdvertisingFee() {
+        return advertisingFee;
+    }
+
+    public void setAdvertisingFee(BigDecimal advertisingFee) {
+        this.advertisingFee = advertisingFee;
+    }
+
+    public BigDecimal getTestFee() {
+        return testFee;
+    }
+
+    public void setTestFee(BigDecimal testFee) {
+        this.testFee = testFee;
+    }
+
+    public BigDecimal getCouponFee() {
+        return couponFee;
+    }
+
+    public void setCouponFee(BigDecimal couponFee) {
+        this.couponFee = couponFee;
+    }
+
+    public String getCouponEffectiveTime() {
+        return couponEffectiveTime;
+    }
+
+    public void setCouponEffectiveTime(String couponEffectiveTime) {
+        this.couponEffectiveTime = couponEffectiveTime;
+    }
+
+    public BigDecimal getDiscountFee() {
+        return discountFee;
+    }
+
+    public void setDiscountFee(BigDecimal discountFee) {
+        this.discountFee = discountFee;
+    }
+
     @Override
     public String toString() {
         return "PromotionBaseInfoDo{" +
@@ -336,6 +432,14 @@ public class PromotionBaseInfoDo {
                 ", deleted=" + deleted +
                 ", updatedTime=" + updatedTime +
                 ", updatedUser='" + updatedUser + '\'' +
+                ", contractAmount=" + contractAmount +
+                ", prepaymentAmount=" + prepaymentAmount +
+                ", wage=" + wage +
+                ", advertisingFee=" + advertisingFee +
+                ", testFee=" + testFee +
+                ", couponFee=" + couponFee +
+                ", couponEffectiveTime='" + couponEffectiveTime + '\'' +
+                ", discountFee=" + discountFee +
                 '}';
     }
 }

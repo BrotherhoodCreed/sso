@@ -127,7 +127,7 @@
 
                     break;
                 case 'add':
-                    window.open('<%=request.getContextPath()%>/add?type=<%=request.getParameter("type")%>');
+                    window.open('<%=request.getContextPath()%>/add');
                 <%--location.href = '<%=request.getContextPath()%>/add';--%>
                     break;
                 case 'upload':
