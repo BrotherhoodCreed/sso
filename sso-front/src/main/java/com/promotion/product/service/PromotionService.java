@@ -13,7 +13,6 @@ import com.promotion.product.dao.mysql2.UserStoreDao;
 import com.promotion.product.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -256,7 +255,6 @@ public class PromotionService {
 
     private void saveData(SavePromotionBaseInfoRequery savePromotionBaseInfoRequery, List<PromotionMapperDo> promotionMapperDo, SavePromotionBaseInfoRespone savePromotionBaseInfoRespone, PromotionBaseInfoDo promotionBaseInfoDo, String code,FormTypeEnums type) {
         promotionBaseInfoDo.setActivityCode(code);
-        promotionBaseInfoDo.setCreatedUser(savePromotionBaseInfoRequery.getCreatedUser());
         promotionBaseInfoDo.setCreatedTime(new Date());
         promotionBaseInfoDo.setUpdatedTime(new Date());
         promotionBaseInfoDo.setSubmit(SubmitEnums.SAVE.getCode());

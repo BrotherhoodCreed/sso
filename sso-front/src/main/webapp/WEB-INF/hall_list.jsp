@@ -26,30 +26,30 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">活动管理</a>
                     <dl class="layui-nav-child">
-                        <dd  style="background: #395461;"><a href="<%=request.getContextPath()%>/list">一级外卖</a></dd>
-                        <dd><a href="<%=request.getContextPath()%>/hall/list">堂食</a></dd>
+                        <dd><a href="<%=request.getContextPath()%>/list">一级外卖</a></dd>
+                        <dd style="background: #395461;"><a href="<%=request.getContextPath()%>/hall/list">堂食</a></dd>
                     </dl>
                 </li>
             </ul>
         </div>
     </div>
 
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding-top: 1rem;">
-            <td style="width: 120px">销售开始时间</td>
-            <td><input type="text" id="test1" autocomplete="off" readonly="readonly"></td>
-            <td style="width: 120px">销售结束时间</td>
-            <td><input type="text" id="test2" autocomplete="off" readonly="readonly"></td>
-            <td style="width: 120px"></td>
-            <td> 促销编码 <input type="text" id="activityCode" autocomplete="off"></td>
-            <td><input type="button" id="query" value="查询"></td>
-            <td><input type="button" id="reset" value="重置"></td>
-        </div>
+    <%--<div class="layui-body">--%>
+        <%--<!-- 内容主体区域 -->--%>
+        <%--<div style="padding-top: 1rem;">--%>
+            <%--<td style="width: 120px">销售开始时间</td>--%>
+            <%--<td><input type="text" id="test1" autocomplete="off" readonly="readonly"></td>--%>
+            <%--<td style="width: 120px">销售结束时间</td>--%>
+            <%--<td><input type="text" id="test2" autocomplete="off" readonly="readonly"></td>--%>
+            <%--<td style="width: 120px"></td>--%>
+            <%--<td> 促销编码 <input type="text" id="activityCode" autocomplete="off"></td>--%>
+            <%--<td><input type="button" id="query" value="查询"></td>--%>
+            <%--<td><input type="button" id="reset" value="重置"></td>--%>
+        <%--</div>--%>
 
-        <table id="demo" lay-filter="test"></table>
+        <%--<table id="demo" lay-filter="test"></table>--%>
 
-    </div>
+    <%--</div>--%>
 
     <%--<div class="layui-footer">--%>
     <%--<!-- 底部固定区域 -->--%>
@@ -127,7 +127,7 @@
 
                     break;
                 case 'add':
-                    window.open('<%=request.getContextPath()%>/add?type=<%=request.getParameter("type")%>');
+                    window.open('<%=request.getContextPath()%>/add');
                 <%--location.href = '<%=request.getContextPath()%>/add';--%>
                     break;
                 case 'upload':

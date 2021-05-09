@@ -66,6 +66,27 @@ public class IndexController {
         return "list";
     }
 
+    @RequestMapping("/hall/list")
+    public String hallList(){
+        return "hall_list";
+    }
+
+    @RequestMapping("/hall/add")
+    public ModelAndView hallDetail(){
+        ModelAndView modelAndView = new ModelAndView("hall_detail");
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("year",cal.get(Calendar.YEAR));
+        jsonObject.put("month",cal.get(Calendar.MONTH));
+        jsonObject.put("date",cal.get(Calendar.DAY_OF_MONTH));
+        jsonObject.put("hours",0);
+        jsonObject.put("minutes",0);
+        jsonObject.put("seconds",0);
+        modelAndView.addObject("thisTime",jsonObject);
+        return modelAndView;
+    }
+
     @RequestMapping("/tree")
     public String tree(){
         return "tree";
