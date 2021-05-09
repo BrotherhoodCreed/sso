@@ -54,7 +54,9 @@ public interface PromotionBaseInfoDao {
             "test_fee as 'testFee',\n" +
             "coupon_fee as 'couponFee',\n" +
             "coupon_effective_time as 'couponEffectiveTime',\n" +
-            "discount_fee as 'discountFee'\n" +
+            "discount_fee as 'discountFee',\n" +
+            "bill_user_name as 'billUserName',\n" +
+            "bill_account_number as 'billAccountNumber'\n" +
             "from tb_promotion_base_info  \n" +
             "where deleted=0   AND   activity_code =#{activityCode}")
     PromotionBaseInfoDo selectOneData(@Param("activityCode") String activityCode);
@@ -135,7 +137,9 @@ public interface PromotionBaseInfoDao {
             " test_fee,\n" +
             " coupon_fee,\n" +
             " coupon_effective_time,\n" +
-            " discount_fee\n" +
+            " discount_fee,\n" +
+            " bill_user_name,\n" +
+            " bill_account_number\n" +
             " )\n" +
             " values(" +
             "#{item.activityCode}," +
@@ -170,6 +174,8 @@ public interface PromotionBaseInfoDao {
             "#{item.couponFee}," +
             "#{item.couponEffectiveTime}," +
             "#{item.discountFee}," +
+            "#{item.billUserName}," +
+            "#{item.billAccountNumber}" +
             ")")
     Integer insert(@Param("item")PromotionBaseInfoDo promotionBaseInfoDo);
 
