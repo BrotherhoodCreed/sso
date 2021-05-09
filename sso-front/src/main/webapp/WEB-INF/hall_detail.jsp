@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>新增堂食活动</title>
     <style>
         * {
             margin: 0;
@@ -103,17 +103,44 @@
                     <td>
                         <input type="text " v-model="detail.introduction"  style="width: 100px;">
                     </td>
+                    <td>核销开始时间</td>
+                    <td> <input type="text" id="test3" autocomplete="off"></td>
+                    <td>核销结束时间</td>
+                    <td> <input type="text" id="test4" autocomplete="off"></td>
                     <td>团购网站</td>
                     <td>   <select v-model="detail.theWay"  style="width: 100px;">
                         <option value="" >请选择</option>
                         <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
                     </select> </td>
-                    <td>核销开始时间</td>
-                    <td> <input type="text" id="test3" autocomplete="off"></td>
-                    <td>核销结束时间</td>
-                    <td> <input type="text" id="test4" autocomplete="off"></td>
                 </tr>
 
+                <tr>
+                    <td >团购形式</td>
+                    <td>
+                        <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 100px;">
+                    </td>
+                    <td>与本活动共存活动</td>
+                    <td>
+                        <select v-model="detail.theWay"  style="width: 100px;">
+                            <option value="" >请选择</option>
+                            <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td >合同收售份数</td>
+                    <td>
+                        <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 100px;">
+                    </td>
+                    <td>预付款金额</td>
+                    <td>
+                        <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 100px;margin-right: 62px;">
+                    </td>
+                    <td>人员费用</td>
+                    <td> <input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width:100px; margin-right: 46px;"></td>
+                    <td>广告费用</td>
+                    <td><input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 100px;"></td>
+                </tr>
                 <tr>
                     <td >销售单价</td>
                     <td>
@@ -128,33 +155,23 @@
                     <td>手续费率(%)</td>
                     <td><input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 100px;"></td>
                 </tr>
+                <tr>
+                    <td >试吃费用</td>
+                    <td>
+                        <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 100px;">
+                    </td>
+                    <td>折扣费用</td>
+                    <td>
+                        <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 100px;margin-right: 62px;">
+                    </td>
+                    <td>尊享券费用</td>
+                    <td> <input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width:100px; margin-right: 46px;"></td>
+                    <td>尊享券有效期</td>
+                    <td><input  v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 100px;"></td>
+                </tr>
 
             </table>
-
-
-            <%--<span>七字描述</span> <input type="text " v-model="detail.introduction"  style="width: 110px;">--%>
-            <%--<span>团购网站</span> <select v-model="detail.theWay"  style="width: 100px;">--%>
-                <%--<option value="" >请选择</option>--%>
-                <%--<option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>--%>
-            <%--</select>--%>
-            <%--<span>核销开始时间</span>--%>
-            <%--<input type="text" id="test3" autocomplete="off">--%>
-            <%--<span>核销结束时间</span>--%>
-            <%--<input type="text" id="test4" autocomplete="off">--%>
         </div>
-        <%--<div>--%>
-            <%--<h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">与本活动共存的活动</h3>--%>
-            <%--<label for="id_select"></label>--%>
-            <%--<select id="id_select" class="selectpicker bla bla bli" multiple data-live-search="true">--%>
-                <%--&lt;%&ndash;<option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>&ndash;%&gt;--%>
-                <%--</optgroup>--%>
-            <%--</select>--%>
-        <%--</div>--%>
-        <%--<div><span>销售单价</span> <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 5rem;">--%>
-            <%--<span>回款单价</span> <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 5rem;margin-right: 62px;">--%>
-            <%--<span>手续费</span><input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width: 5rem; margin-right: 46px;">--%>
-            <%--<span>手续费率(%)</span> <input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 10rem;"></div>--%>
-        <%--<div>--%>
             <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">其他</h3>
             <textarea v-model="detail.other"  style="width: 895px; height: 55px; resize: none;"></textarea>
         </div>
@@ -162,7 +179,7 @@
             <%--<button type="button" class="btn btn-default" @click="save()">保存活动</button>--%>
         <%--</div>--%>
         <div>
-            <button type="button" class="btn btn-default" id="addActive">添加门店</button>
+            <button type="button" class="btn btn-default" id="addActive">添加活动</button>
         </div>
         <table id="demo" lay-filter="test"></table>
 
