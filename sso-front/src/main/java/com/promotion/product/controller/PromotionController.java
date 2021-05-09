@@ -138,6 +138,18 @@ public class PromotionController {
         System.out.println(String.format("write over! cost:%sms", (t2 - t1)));
     }
 
+    @RequestMapping(value = "/exportExcelTs", method = RequestMethod.GET)
+    public void exportExcelTs(HttpServletResponse response, String codestr) throws IOException {
+        //查询数据
+        List<String> codes = JSON.parseArray(codestr, String.class);
+        List<ExeclResponeTs> resultList = promotionService.exportExcelTs(codes);
+        long t1 = System.currentTimeMillis();
+        ExcelUtils.writeExcel(response, resultList, ExeclResponeTs.class);
+        long t2 = System.currentTimeMillis();
+
+        System.out.println(String.format("write over! cost:%sms", (t2 - t1)));
+    }
+
     /**
      * 根据activityCode修改活动基本信息
      */

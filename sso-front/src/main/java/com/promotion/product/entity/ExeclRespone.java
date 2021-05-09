@@ -43,4 +43,6 @@ public class ExeclRespone {
     private String handlingFee;
     @ExcelColumn(value ="手续费税率%",col = 18)
     private String taxRate;
+
+
 }

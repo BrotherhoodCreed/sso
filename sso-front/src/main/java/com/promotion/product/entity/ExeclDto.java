@@ -25,6 +25,47 @@ public class ExeclDto {
     private BigDecimal billPrice;
     private BigDecimal handlingFee;
     private BigDecimal  taxRate;
+    /**
+     * '合同收售数量'
+     */
+    private Integer contractAmount;
+    /**
+     * '预付金额'
+     */
+    private BigDecimal prepaymentAmount;
+    /**
+     * '人员费用'
+     */
+    private BigDecimal wage;
+    /**
+     * '广告费用'
+     */
+    private BigDecimal advertisingFee;
+    /**
+     * '试吃费用'
+     */
+    private BigDecimal testFee;
+    /**
+     * '尊享卷费用'
+     */
+    private BigDecimal couponFee;
+    /**
+     * '尊享卷费有效期'
+     */
+    private String couponEffectiveTime;
+    /**
+     * '折扣费用'
+     */
+    private BigDecimal discountFee;
+
+    /**
+     * '回款人姓名'
+     */
+    private String billUserName;
+    /**
+     * '回款人账号'
+     */
+    private String billAccountNumber;
 
     public String getArea() {
         return area;
@@ -178,6 +219,86 @@ public class ExeclDto {
         this.taxRate = taxRate;
     }
 
+    public Integer getContractAmount() {
+        return contractAmount;
+    }
+
+    public void setContractAmount(Integer contractAmount) {
+        this.contractAmount = contractAmount;
+    }
+
+    public BigDecimal getPrepaymentAmount() {
+        return prepaymentAmount;
+    }
+
+    public void setPrepaymentAmount(BigDecimal prepaymentAmount) {
+        this.prepaymentAmount = prepaymentAmount;
+    }
+
+    public BigDecimal getWage() {
+        return wage;
+    }
+
+    public void setWage(BigDecimal wage) {
+        this.wage = wage;
+    }
+
+    public BigDecimal getAdvertisingFee() {
+        return advertisingFee;
+    }
+
+    public void setAdvertisingFee(BigDecimal advertisingFee) {
+        this.advertisingFee = advertisingFee;
+    }
+
+    public BigDecimal getTestFee() {
+        return testFee;
+    }
+
+    public void setTestFee(BigDecimal testFee) {
+        this.testFee = testFee;
+    }
+
+    public BigDecimal getCouponFee() {
+        return couponFee;
+    }
+
+    public void setCouponFee(BigDecimal couponFee) {
+        this.couponFee = couponFee;
+    }
+
+    public String getCouponEffectiveTime() {
+        return couponEffectiveTime;
+    }
+
+    public void setCouponEffectiveTime(String couponEffectiveTime) {
+        this.couponEffectiveTime = couponEffectiveTime;
+    }
+
+    public BigDecimal getDiscountFee() {
+        return discountFee;
+    }
+
+    public void setDiscountFee(BigDecimal discountFee) {
+        this.discountFee = discountFee;
+    }
+
+    public String getBillUserName() {
+        return billUserName;
+    }
+
+    public void setBillUserName(String billUserName) {
+        this.billUserName = billUserName;
+    }
+
+    public String getBillAccountNumber() {
+        return billAccountNumber;
+    }
+
+    public void setBillAccountNumber(String billAccountNumber) {
+        this.billAccountNumber = billAccountNumber;
+    }
+
     @Override
     public String toString() {
         return "ExeclDto{" +
@@ -200,6 +321,16 @@ public class ExeclDto {
                 ", billPrice=" + billPrice +
                 ", handlingFee=" + handlingFee +
                 ", taxRate=" + taxRate +
+                ", contractAmount=" + contractAmount +
+                ", prepaymentAmount=" + prepaymentAmount +
+                ", wage=" + wage +
+                ", advertisingFee=" + advertisingFee +
+                ", testFee=" + testFee +
+                ", couponFee=" + couponFee +
+                ", couponEffectiveTime='" + couponEffectiveTime + '\'' +
+                ", discountFee=" + discountFee +
+                ", billUserName='" + billUserName + '\'' +
+                ", billAccountNumber='" + billAccountNumber + '\'' +
                 '}';
     }
 }
