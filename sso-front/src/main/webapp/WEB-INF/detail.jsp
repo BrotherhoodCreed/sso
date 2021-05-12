@@ -336,7 +336,7 @@
                     layer.msg('七字描述为空');
                     return;
                 }
-                if (this.detail.theWay == ''){
+                if (this.detail.channel == ''){
                     layer.msg('请选择团购网站');
                     return;
                 }
