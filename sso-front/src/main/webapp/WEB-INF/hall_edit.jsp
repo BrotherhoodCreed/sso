@@ -307,7 +307,8 @@
             },
             edit:function () {
                 // var actives = ($(".selectpicker").val());
-                if(!this.detail.sharedActivity instanceof Array){
+                if(this.detail.sharedActivity instanceof Array){
+                }else {
                     this.detail.sharedActivity = [this.detail.sharedActivity];
                 }
                 if (this.detail.activityCode == ''){
