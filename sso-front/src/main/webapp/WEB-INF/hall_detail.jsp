@@ -80,14 +80,15 @@
                             <option value="15">T+15</option>
                         </select>
                     </td>
-                    <td>回款人姓名</td>
-                    <td>
-                        <input @input="valueChange"  v-model="detail.amount" style="width: 100px; text-align: center;">
-                    </td>
-                    <td>回款人账号</td>
-                    <td>
-                        <input type="number"  v-model="detail.amount" style="width: 100px; text-align: center;">
-                    </td>
+                    <td colspan="3"></td>--%>
+<%--                    <td colspan="3">回款人姓名</td>--%>
+<%--                    <td>--%>
+<%--                        <input @input="valueChange"  v-model="detail.amount" style="width: 100px; text-align: center;">--%>
+<%--                    </td>--%>
+<%--                    <td>回款人账号</td>--%>
+<%--                    <td>--%>
+<%--                        <input type="number"  v-model="detail.amount" style="width: 100px; text-align: center;">--%>
+<%--                    </td>--%>
                 </tr>
 
             </table>

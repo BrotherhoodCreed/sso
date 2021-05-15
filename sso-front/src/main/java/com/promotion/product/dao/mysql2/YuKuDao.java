@@ -33,7 +33,10 @@ public interface YuKuDao {
             "\tDEF5 AS 'def5',\n" +
             "\tSYSINITDATE AS 'sysinitdate',\n" +
             "\tiscomparable AS 'iscomparable', \n" +
-            "\tAMCD AS 'amcd' \n" +
+            "\tAMCD AS 'amcd', \n" +
+            "\taccountnumber, \n" +
+            "\tuid, \n" +
+            "\tdepositbank \n" +
             "FROM\n" +
             "\tstoreinfo where AM is not null")
     List<ShopDo> selectShop();
@@ -41,6 +44,18 @@ public interface YuKuDao {
 
     @Select("Select AMCD from storeinfo where STCD=#{shopAreaId}")
     String selectShopAreaId(@Param("shopAreaId") String shopAreaId);
+
+
+    @Select("SELECT\n" +
+            "\tSTCD AS 'stcd',\n" +
+            "\taccountnumber, \n" +
+            "\tuid, \n" +
+            "\tdepositbank \n" +
+            "FROM\n" +
+            "\tstoreinfo where STCD in <foreach item='item' index='index' collection='list' open='(' separator=',' close=')'> "+
+            "   #{item}" +
+            "</foreach>")
+    List<ShopDo> selectShopList(@Param("list") List<String> stcd);
 
 
 }

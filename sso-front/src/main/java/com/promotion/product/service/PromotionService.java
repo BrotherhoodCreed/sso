@@ -10,6 +10,7 @@ import com.promotion.product.dao.mysql.PromotionBaseInfoDao;
 import com.promotion.product.dao.mysql.PromotionMapperDao;
 import com.promotion.product.dao.mysql2.FineUserDao;
 import com.promotion.product.dao.mysql2.UserStoreDao;
+import com.promotion.product.dao.mysql2.YuKuDao;
 import com.promotion.product.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -43,6 +44,8 @@ public class PromotionService {
     @Autowired
     private UserStoreDao userStoreDao;
 
+    @Autowired
+    private YuKuDao yuKuDao;
 
     /**
      *根据钉钉手机号查询用户信息
@@ -330,7 +333,18 @@ public class PromotionService {
                     List<String> stringListi = promotionMapperDos.stream().map(item -> item.getRestaurantCode()).collect(Collectors.toList());
                     promotionMapperDo.removeIf(item->stringListi.contains(item.getRestaurantCode()));
                 }
+                List<String> stcd=CollectionUtils.emptyIfNull(promotionMapperDo).stream().map(item->item.getReceivingAccount()).collect(Collectors.toList());
+                List<ShopDo> shopDoList =new ArrayList<>();
+                if(CollectionUtils.isNotEmpty(stcd)){
+                    shopDoList=yuKuDao.selectShopList(stcd);
+                }
                 for (PromotionMapperDo mapperDo : promotionMapperDo) {
+                    ShopDo shopDo=CollectionUtils.emptyIfNull(shopDoList).stream().filter(item->StringUtils.equals(item.getStcd(),mapperDo.getRestaurantCode())).findFirst().orElse(null);
+                    if(Objects.nonNull(shopDo)){
+                        mapperDo.setBillUserName(shopDo.getUid());
+                        mapperDo.setBillAccountNumber(shopDo.getAccountnumber());
+                        mapperDo.setBillDepositBank(shopDo.getDepositbank());
+                    }
                     mapperDo.setActivityCode(code);
                     promotionMapperDao.insert(mapperDo);
                 }

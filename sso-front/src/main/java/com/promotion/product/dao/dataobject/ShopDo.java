@@ -104,6 +104,12 @@ public class ShopDo {
 
     private String amcd;
 
+    private String accountnumber;
+
+    private String uid;
+
+    private String depositbank;
+
     public String getStcd() {
         return stcd;
     }
@@ -288,6 +294,38 @@ public class ShopDo {
         this.iscomparable = iscomparable;
     }
 
+    public String getAmcd() {
+        return amcd;
+    }
+
+    public void setAmcd(String amcd) {
+        this.amcd = amcd;
+    }
+
+    public String getAccountnumber() {
+        return accountnumber;
+    }
+
+    public void setAccountnumber(String accountnumber) {
+        this.accountnumber = accountnumber;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getDepositbank() {
+        return depositbank;
+    }
+
+    public void setDepositbank(String depositbank) {
+        this.depositbank = depositbank;
+    }
+
     @Override
     public String toString() {
         return "ShopDo{" +
@@ -314,6 +352,10 @@ public class ShopDo {
                 ", def5='" + def5 + '\'' +
                 ", sysinitdate='" + sysinitdate + '\'' +
                 ", iscomparable='" + iscomparable + '\'' +
+                ", amcd='" + amcd + '\'' +
+                ", accountnumber='" + accountnumber + '\'' +
+                ", uid='" + uid + '\'' +
+                ", depositbank='" + depositbank + '\'' +
                 '}';
     }
 }

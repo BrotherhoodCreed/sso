@@ -14,6 +14,10 @@ public class PromotionMapperDo {
     private String  receivingAccount;
     private String  receivingNumber;
     private Boolean deleted;
+    private String  billUserName;
+    private String  billAccountNumber;
+    private String  billDepositBank;
+
 
     public Long getId() {
         return id;
@@ -87,6 +91,30 @@ public class PromotionMapperDo {
         this.deleted = deleted;
     }
 
+    public String getBillUserName() {
+        return billUserName;
+    }
+
+    public void setBillUserName(String billUserName) {
+        this.billUserName = billUserName;
+    }
+
+    public String getBillAccountNumber() {
+        return billAccountNumber;
+    }
+
+    public void setBillAccountNumber(String billAccountNumber) {
+        this.billAccountNumber = billAccountNumber;
+    }
+
+    public String getBillDepositBank() {
+        return billDepositBank;
+    }
+
+    public void setBillDepositBank(String billDepositBank) {
+        this.billDepositBank = billDepositBank;
+    }
+
     @Override
     public String toString() {
         return "PromotionMapperDo{" +
@@ -99,6 +127,9 @@ public class PromotionMapperDo {
                 ", receivingAccount='" + receivingAccount + '\'' +
                 ", receivingNumber='" + receivingNumber + '\'' +
                 ", deleted=" + deleted +
+                ", billUserName='" + billUserName + '\'' +
+                ", billAccountNumber='" + billAccountNumber + '\'' +
+                ", billDepositBank='" + billDepositBank + '\'' +
                 '}';
     }
 }

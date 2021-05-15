@@ -15,7 +15,7 @@ public interface PromotionMapperDao {
     @Update("update tb_promotion_mapper set deleted=1 where id=#{id}")
     Integer deletePromotionById(@Param("id")Long id);
 
-    @Select("select id,activity_code as 'activityCode',area,city,restaurant_code as 'restaurantCode',restaurant_name as 'restaurantName',deleted from  tb_promotion_mapper where deleted=0 and activity_code= #{activityCode}")
+    @Select("select id,activity_code as 'activityCode',area,city,restaurant_code as 'restaurantCode',restaurant_name as 'restaurantName',deleted,bill_user_name as 'billUserName',bill_account_number as 'billAccountNumber',bill_deposit_bank as 'billDepositBank' from  tb_promotion_mapper where deleted=0 and activity_code= #{activityCode}")
     List<PromotionMapperDo> selectByActivityCode(@Param("activityCode")  String activityCode);
 
     @Insert(" insert into tb_promotion_mapper(\n" +
@@ -23,14 +23,20 @@ public interface PromotionMapperDao {
             " `area`,\n" +
             " `city`,\n" +
             " `restaurant_code`,\n" +
-            " `restaurant_name`\n" +
+            " `restaurant_name`,\n" +
+            " `bill_user_name`,\n" +
+            " `bill_account_number`,\n" +
+            " `bill_deposit_bank`\n" +
             " )\n" +
             " values(" +
             "#{item.activityCode}," +
             "#{item.area}," +
             "#{item.city}," +
             "#{item.restaurantCode}," +
-            "#{item.restaurantName}" +
+            "#{item.restaurantName}," +
+            "#{item.billUserName}," +
+            "#{item.billAccountNumber}," +
+            "#{item.billDepositBank}" +
             ")")
     Integer insert(@Param("item")PromotionMapperDo promotionMapperDo);
 
