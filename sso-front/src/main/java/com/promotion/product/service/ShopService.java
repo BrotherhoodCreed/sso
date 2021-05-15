@@ -102,6 +102,10 @@ public class ShopService {
             children.setId(shopDo.getStcd());
             children.setAm(shopDo.getAm());
             children.setCity(shopDo.getCity());
+            children.setAccountnumber(shopDo.getAccountnumber());
+            children.setAmcd(shopDo.getAmcd());
+            children.setDepositbank(shopDo.getDepositbank());
+            children.setUid(shopDo.getUid());
             if(sentinel){
                 children.setSpread(true);
             }

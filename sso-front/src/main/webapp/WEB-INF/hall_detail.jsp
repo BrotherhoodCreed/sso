@@ -790,6 +790,9 @@
                                     area : area,
                                     city : city,
                                     restaurantCode : item2.id,
+                                    billUserName : item2.uid,
+                                    billAccountNumber : item2.accountnumber,
+                                    billDepositBank : item2.depositbank,
                                     restaurantName : item2.title
                                 }
                                 app.promotionMapper.push(data);

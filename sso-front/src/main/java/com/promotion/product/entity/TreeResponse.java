@@ -12,6 +12,10 @@ public class TreeResponse {
     private String am;
     private String city;
     private Integer level;
+    private String amcd;
+    private String accountnumber;
+    private String uid;
+    private String depositbank;
     private Boolean checked=false;
     private Boolean spread=false;
     private List<TreeResponse> children=new ArrayList<>();

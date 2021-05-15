@@ -104,30 +104,28 @@
                 </td>
             </tr>
 
-            <tr>
-                <td >七字描述</td>
-                <td>
-                    <input type="text " v-model="detail.introduction"  style="width: 100px;">
-                </td>
-                <td style="min-width: 120px">核销开始时间</td>
-                <td> <input type="text" id="test3"  v-model="detail.usageStartTime" autocomplete="off"></td>
-                <td style="min-width: 120px">核销结束时间</td>
-                <td><input type="text" id="test4" v-model="detail.usageEndTime" autocomplete="off"></td>
-                <%--<td>团购网站</td>--%>
-                <%--<td>--%>
-                    <%--<select v-model="detail.channel"  style="width: 100px;">&ndash;%&gt;--%>
-                        <%--<option value="" >请选择</option>--%>
-                        <%--<option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>--%>
-                    <%--</select>--%>
-                <%--</td>--%>
-            </tr>
+            <table style=" width: 70%; max-width: 1000px; border-collapse: separate;border-spacing: 8px;">
+                <tr>
+                    <td >七字描述</td>
+                    <td>
+                        <input type="text " v-model="detail.introduction"  style="width: 100px;">
+                    </td>
+                    <%--<td>团购网站</td>--%>
+                    <%--<td>   <select v-model="detail.channel"  style="width: 100px;">--%>
+                    <%--<option value="" >请选择</option>--%>
+                    <%--<option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>--%>
+                    <%--</select> </td>--%>
+                    <td>核销开始时间</td>
+                    <td> <input type="text" id="test3" autocomplete="off"></td>
+                    <td>核销结束时间</td>
+                    <td> <input type="text" id="test4" autocomplete="off"></td>
 
+                    <td >约定售卖份数</td>
+                    <td>
+                        <input type="number" v-model="detail.contractAmount" @input="valueChange"  style="width: 100px;">
+                    </td>
 
-            <tr>
-                <%--<td >团购形式</td>--%>
-                <%--<td>--%>
-                    <%--<input v-model="detail.theWay"  @blur.native.capture="changeCount"  style="width: 100px;">--%>
-                <%--</td>--%>
+                </tr>
                 <td>与本活动共存活动</td>
                 <td>
                     <select v-model="detail.sharedActivity"  style="width: 100px;">
@@ -135,61 +133,38 @@
                         <option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>
                     </select>
                 </td>
-            </tr>
-            <tr>
-                <td >合同收售份数</td>
-                <td>
-                    <input type="number" v-model="detail.contractAmount" @input="valueChange"  style="width: 100px;">
-                </td>
-                <%--<td>预付款金额</td>--%>
-                <%--<td>--%>
+                <tr>
+
+                    <%--<td>预付款金额</td>--%>
+                    <%--<td>--%>
                     <%--<input type="number " v-model="detail.prepaymentAmount" @input="valueChange"  style="width: 100px;margin-right: 62px;">--%>
-                <%--</td>--%>
-                <%--<td>人员费用</td>--%>
-                <%--<td> <input type="number " v-model="detail.wage" @input="valueChange"  style="width:100px; margin-right: 46px;"></td>--%>
-                <%--<td>广告费用</td>--%>
-                <%--<td><input type="number" v-model="detail.advertisingFee" @input="valueChange"   style="width: 100px;"></td>--%>
-            </tr>
+                    <%--</td>--%>
+                    <%--<td>人员费用</td>--%>
+                    <%--<td> <input type="number " v-model="detail.wage" @input="valueChange"  style="width:100px; margin-right: 46px;"></td>--%>
+                    <%--<td>广告费用</td>--%>
+                    <%--<td><input type="number" v-model="detail.advertisingFee" @input="valueChange"   style="width: 100px;"></td>--%>
+                </tr>
 
-
-            <tr>
-                <td >销售单价</td>
-                <td>
-                    <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 100px;">
-                </td>
-                <td>回款单价</td>
-                <td>
-                    <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 100px;margin-right: 62px;">
-                </td>
-                <td>手续费</td>
-                <td> <input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width:130px; margin-right: 46px;"></td>
-                <td>手续费率(%)</td>
-                <td><input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 130px;"></td>
-            </tr>
-
-            <%--<tr>--%>
-                <%--<td >试吃费用</td>--%>
-                <%--<td>--%>
-                    <%--<input type="number" v-model="detail.testFee" @input="valueChange"   style="width: 100px;">--%>
-                <%--</td>--%>
-                <%--<td>折扣费用</td>--%>
-                <%--<td>--%>
-                    <%--<input type="number " v-model="detail.discountFee" @input="valueChange"  style="width: 100px;margin-right: 62px;">--%>
-                <%--</td>--%>
-                <%--<td>尊享券费用</td>--%>
-                <%--<td> <input type="number " v-model="detail.couponFee" @input="valueChange"  style="width:100px; margin-right: 46px;"></td>--%>
-                <%--<td>尊享券有效期</td>--%>
-                <%--<td><input  v-model="detail.couponEffectiveTime" @input="valueChange"     style="width: 100px;"></td>--%>
-            <%--</tr>--%>
-            <tr>
-                <td colspan="8">其他</td>
-            </tr>
-            <tr>
-                <td colspan="8">
-                    <textarea v-model="detail.other"  style="width: 100%; height: 55px; resize: none;"></textarea>
-                </td>
-            </tr>
-
+                <tr>
+                    <td >销售单价</td>
+                    <td>
+                        <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 100px;">
+                    </td>
+                    <td>回款单价</td>
+                    <td>
+                        <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 100px;margin-right: 62px;">
+                    </td>
+                    <td>手续费</td>
+                    <td> <input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width:100px; margin-right: 46px;"></td>
+                    <td>手续费率(%)</td>
+                    <td><input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 100px;"></td>
+                </tr>
+            </table>
+            </div>
+            <div  style="padding-top: 10px;padding-left: 2px;">
+            <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">其他</h3>
+            <textarea v-model="detail.other"  style="width: 1000px; height: 55px; resize: none;"></textarea>
+            </div>
         </table>
 
         <div>
@@ -651,6 +626,9 @@
                 ,{field: 'city', title: '城市' }
                 ,{field: 'restaurantCode', title: '门店编号'}
                 ,{field: 'restaurantName', title: '门店名称',  sort: true}
+                ,{field: 'billAccountNumber', title: '回款人账号',  sort: true}
+                ,{field: 'billDepositBank', title: '回款银行',  sort: true}
+                ,{field: 'billUserName', title: '回款人姓名',  sort: true}
                 ,{fixed: 'right', align:'center', toolbar: '#opt'} //这里的toolbar值是模板元素的选择器
             ]]
         });
@@ -868,6 +846,9 @@
                                     area : area,
                                     city : city,
                                     restaurantCode : item2.id,
+                                    billUserName : item2.uid,
+                                    billAccountNumber : item2.accountnumber,
+                                    billDepositBank : item2.depositbank,
                                     restaurantName : item2.title
                                 }
                                 app.promotionMapper.push(data);
