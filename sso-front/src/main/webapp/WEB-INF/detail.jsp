@@ -131,7 +131,7 @@
                         <input type="text " v-model="detail.introduction"  style="width: 100px;">
                     </td>
                     <td>团购网站</td>
-                    <td>   <select v-model="detail.theWay"  style="width: 100px;">
+                    <td>   <select v-model="detail.channel"  style="width: 100px;">
                         <option value="" >请选择</option>
                         <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
                     </select> </td>
@@ -336,7 +336,7 @@
                     layer.msg('七字描述为空');
                     return;
                 }
-                if (this.detail.theWay == ''){
+                if (this.detail.channel == ''){
                     layer.msg('请选择团购网站');
                     return;
                 }

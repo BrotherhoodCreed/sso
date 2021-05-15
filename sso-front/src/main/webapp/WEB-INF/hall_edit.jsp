@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>修改活动</title>
+    <title>修改堂食活动</title>
     <style>
         * {
             margin: 0;
@@ -30,6 +30,9 @@
         #app {
             margin-top: 30px !important;
             margin-left: 50px !important;
+        }
+        td{
+            margin-bottom:10px;
         }
     </style>
     <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
@@ -82,10 +85,14 @@
                         <option value="15">T+15</option>
                     </select>
                 </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>  </td>
+                <%--<td>回款人姓名</td>--%>
+                <%--<td>--%>
+                    <%--<input  v-model="detail.billUserName" style="width: 100px; text-align: center;">--%>
+                <%--</td>--%>
+                <%--<td>回款人账号</td>--%>
+                <%--<td>--%>
+                    <%--<input type="number"  v-model="detail.billAccountNumber" style="width: 100px; text-align: center;">--%>
+                <%--</td>--%>
             </tr>
             <tr>
                 <td colspan="8">活动描述</td>
@@ -102,18 +109,48 @@
                 <td>
                     <input type="text " v-model="detail.introduction"  style="width: 100px;">
                 </td>
-                <td>团购网站</td>
-                <td>
-                    <select v-model="detail.channel"  style="width: 100px;">--%>
-                        <option value="" >请选择</option>
-                        <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
-                    </select>
-                </td>
                 <td style="min-width: 120px">核销开始时间</td>
                 <td> <input type="text" id="test3"  v-model="detail.usageStartTime" autocomplete="off"></td>
                 <td style="min-width: 120px">核销结束时间</td>
                 <td><input type="text" id="test4" v-model="detail.usageEndTime" autocomplete="off"></td>
+                <%--<td>团购网站</td>--%>
+                <%--<td>--%>
+                    <%--<select v-model="detail.channel"  style="width: 100px;">&ndash;%&gt;--%>
+                        <%--<option value="" >请选择</option>--%>
+                        <%--<option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>--%>
+                    <%--</select>--%>
+                <%--</td>--%>
             </tr>
+
+
+            <tr>
+                <%--<td >团购形式</td>--%>
+                <%--<td>--%>
+                    <%--<input v-model="detail.theWay"  @blur.native.capture="changeCount"  style="width: 100px;">--%>
+                <%--</td>--%>
+                <td>与本活动共存活动</td>
+                <td>
+                    <select v-model="detail.sharedActivity"  style="width: 100px;">
+                        <option value="" >请选择</option>
+                        <option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td >合同收售份数</td>
+                <td>
+                    <input type="number" v-model="detail.contractAmount" @input="valueChange"  style="width: 100px;">
+                </td>
+                <%--<td>预付款金额</td>--%>
+                <%--<td>--%>
+                    <%--<input type="number " v-model="detail.prepaymentAmount" @input="valueChange"  style="width: 100px;margin-right: 62px;">--%>
+                <%--</td>--%>
+                <%--<td>人员费用</td>--%>
+                <%--<td> <input type="number " v-model="detail.wage" @input="valueChange"  style="width:100px; margin-right: 46px;"></td>--%>
+                <%--<td>广告费用</td>--%>
+                <%--<td><input type="number" v-model="detail.advertisingFee" @input="valueChange"   style="width: 100px;"></td>--%>
+            </tr>
+
 
             <tr>
                 <td >销售单价</td>
@@ -130,6 +167,20 @@
                 <td><input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 130px;"></td>
             </tr>
 
+            <%--<tr>--%>
+                <%--<td >试吃费用</td>--%>
+                <%--<td>--%>
+                    <%--<input type="number" v-model="detail.testFee" @input="valueChange"   style="width: 100px;">--%>
+                <%--</td>--%>
+                <%--<td>折扣费用</td>--%>
+                <%--<td>--%>
+                    <%--<input type="number " v-model="detail.discountFee" @input="valueChange"  style="width: 100px;margin-right: 62px;">--%>
+                <%--</td>--%>
+                <%--<td>尊享券费用</td>--%>
+                <%--<td> <input type="number " v-model="detail.couponFee" @input="valueChange"  style="width:100px; margin-right: 46px;"></td>--%>
+                <%--<td>尊享券有效期</td>--%>
+                <%--<td><input  v-model="detail.couponEffectiveTime" @input="valueChange"     style="width: 100px;"></td>--%>
+            <%--</tr>--%>
             <tr>
                 <td colspan="8">其他</td>
             </tr>
@@ -140,107 +191,6 @@
             </tr>
 
         </table>
-        <%--<div><span>促销编码</span> <input type="number" v-model="detail.activityCode"  readonly="readonly" style="width: 110px;">--%>
-            <%--<span>活动类型</span>--%>
-            <%--<select v-model="detail.activityType"  style="width: 100px;">--%>
-                <%--<option value="" >请选择</option>--%>
-                <%--<option  v-bind:value="item.descriptionCode" v-for="item in activityType" >{{item.description}}</option>--%>
-            <%--</select>--%>
-            <%--<span>销售开始时间</span>--%>
-            <%--<input type="text" id="test1" v-model="detail.salesStartTime" autocomplete="off">--%>
-
-            <%--<span>销售结束时间</span>--%>
-            <%--<input type="text" id="test2"  v-model="detail.salesEndTime" autocomplete="off">--%>
-        <%--</div>--%>
-        <%--<div><span>每台现用张数/金额</span> <input type="number" @input="valueChange"  v-model="detail.amount" style="width: 5rem; text-align: center;">--%>
-            <%--<span>回款周期</span>--%>
-            <%--<select v-model="detail.billCycle"  style="width: 100px; ">--%>
-                <%--<option value="1">T+1</option>--%>
-                <%--<option value="2">T+2</option>--%>
-                <%--<option value="3">T+3</option>--%>
-                <%--<option value="4">T+4</option>--%>
-                <%--<option value="5">T+5</option>--%>
-                <%--<option value="6">T+6</option>--%>
-                <%--<option value="7">T+7</option>--%>
-                <%--<option value="8">T+8</option>--%>
-                <%--<option value="9">T+9</option>--%>
-                <%--<option value="10">T+10</option>--%>
-                <%--<option value="11">T+11</option>--%>
-                <%--<option value="12">T+12</option>--%>
-                <%--<option value="13">T+13</option>--%>
-                <%--<option value="14">T+14</option>--%>
-                <%--<option value="15">T+15</option>--%>
-            <%--</select>--%>
-        <%--</div>--%>
-<%--        <div>--%>
-<%--            <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">活动描述</h3>--%>
-<%--            <textarea style="width: 895px; height: 55px; resize: none;" v-model="detail.description">--%>
-<%--            </textarea>--%>
-<%--        </div>--%>
-<%--        <div>--%>
-<%--            <table style=" width: 70%; max-width: 1000px; border-collapse: separate;border-spacing: 5px;">--%>
-<%--                <tr>--%>
-<%--                    <td >七字描述</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="text " v-model="detail.introduction"  style="width: 100px;">--%>
-<%--                    </td>--%>
-<%--                    <td>团购网站</td>--%>
-<%--                    <td>--%>
-<%--                     <select v-model="detail.theWay"  style="width: 100px;">&ndash;%&gt;--%>
-<%--                         <option value="" >请选择</option>--%>
-<%--                         <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>--%>
-<%--                     </select>--%>
-<%--                    </td>--%>
-<%--                    <td>核销开始时间</td>--%>
-<%--                    <td> <input type="text" id="test3"  v-model="detail.usageStartTime" autocomplete="off"></td>--%>
-<%--                    <td>核销结束时间</td>--%>
-<%--                    <td><input type="text" id="test4" v-model="detail.usageEndTime" autocomplete="off"></td>--%>
-<%--                </tr>--%>
-
-<%--                <tr>--%>
-<%--                    <td >销售单价</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 100px;">--%>
-<%--                    </td>--%>
-<%--                    <td>回款单价</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 100px;margin-right: 62px;">--%>
-<%--                    </td>--%>
-<%--                    <td>手续费</td>--%>
-<%--                    <td> <input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width:130px; margin-right: 46px;"></td>--%>
-<%--                    <td>手续费率(%)</td>--%>
-<%--                    <td><input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 130px;"></td>--%>
-<%--                </tr>--%>
-
-<%--            </table>--%>
-
-<%--            <span>七字描述</span> <input type="text " v-model="detail.introduction" @input="valueChange" style="width: 110px;">--%>
-<%--            <span>团购网站</span> <select v-model="detail.theWay"  style="width: 100px;">--%>
-<%--                <option value="" >请选择</option>--%>
-<%--                <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>--%>
-<%--            </select>--%>
-<%--            <span>核销开始时间</span>--%>
-<%--            <input type="text" id="test3"  v-model="detail.usageStartTime" autocomplete="off">--%>
-<%--            <span>核销结束时间</span>--%>
-<%--            <input type="text" id="test4" v-model="detail.usageEndTime" autocomplete="off">--%>
-<%--        </div>--%>
-        <%--<div>--%>
-            <%--<h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">与本活动共存的活动</h3>--%>
-            <%--<label for="id_select"></label>--%>
-            <%--<select id="id_select" class="selectpicker bla bla bli" multiple data-live-search="true">--%>
-                <%--&lt;%&ndash;<option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>&ndash;%&gt;--%>
-                <%--</optgroup>--%>
-            <%--</select>--%>
-        <%--</div>--%>
-<%--        <div><span>销售单价</span> <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 5rem;">--%>
-<%--            <span>回款单价</span> <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 5rem;margin-right: 62px;">--%>
-<%--            <span>手续费</span><input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width: 5rem; margin-right: 46px;">--%>
-<%--            <span>手续费率(%)</span> <input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 10rem;">--%>
-<%--        </div>--%>
-<%--        <div>--%>
-<%--            <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">其他</h3>--%>
-<%--            <textarea v-model="detail.other"  style="width: 895px; height: 35px; resize: none;"></textarea>--%>
-<%--        </div>--%>
 
         <div>
             <button type="button" class="btn btn-default" @click="edit()">修改活动</button>
@@ -300,7 +250,18 @@
                 handlingFee:"",
                 taxRate:'',
                 sellingPrice:'',
-                billPrice:''
+                billPrice:'',
+                type:'2',
+                contractAmount:'',
+                prepaymentAmount:'',
+                wage:'',
+                advertisingFee:'',
+                testFee:'',
+                couponFee:'',
+                couponEffectiveTime:'',
+                discountFee:'',
+                billUserName:"",
+                billAccountNumber:""
             },
             promotionMapper : [],
             activityType:[],
@@ -345,8 +306,11 @@
                 );
             },
             edit:function () {
-                var actives = ($(".selectpicker").val());
-                this.detail.sharedActivity = actives;
+                // var actives = ($(".selectpicker").val());
+                if(this.detail.sharedActivity instanceof Array){
+                }else {
+                    this.detail.sharedActivity = [this.detail.sharedActivity];
+                }
                 if (this.detail.activityCode == ''){
                     layer.msg('促销编码为空');
                     return;
@@ -395,10 +359,10 @@
                     layer.msg('七字描述为空');
                     return;
                 }
-                if (this.detail.channel == ''){
-                    layer.msg('请选择团购网站');
-                    return;
-                }
+                // if (this.detail.channel == ''){
+                //     layer.msg('请选择团购网站');
+                //     return;
+                // }
                 if (this.detail.usageStartTime == ''){
                     layer.msg('核销开始时间为空');
                     return;
@@ -518,7 +482,7 @@
                 }
             },
             toList:function(){
-                    location.href="<%=request.getContextPath()%>/list";
+                    location.href="<%=request.getContextPath()%>/hall/list";
             },
         }
     });

@@ -34,33 +34,33 @@
         </div>
     </div>
 
-    <%--<div class="layui-body">--%>
-        <%--<!-- 内容主体区域 -->--%>
-        <%--<div style="padding-top: 1rem;">--%>
-            <%--<td style="width: 120px">销售开始时间</td>--%>
-            <%--<td><input type="text" id="test1" autocomplete="off" readonly="readonly"></td>--%>
-            <%--<td style="width: 120px">销售结束时间</td>--%>
-            <%--<td><input type="text" id="test2" autocomplete="off" readonly="readonly"></td>--%>
-            <%--<td style="width: 120px"></td>--%>
-            <%--<td> 促销编码 <input type="text" id="activityCode" autocomplete="off"></td>--%>
-            <%--<td><input type="button" id="query" value="查询"></td>--%>
-            <%--<td><input type="button" id="reset" value="重置"></td>--%>
-        <%--</div>--%>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding-top: 1rem;">
+            <td style="width: 120px">销售开始时间</td>
+            <td><input type="text" id="test1" autocomplete="off" readonly="readonly"></td>
+            <td style="width: 120px">销售结束时间</td>
+            <td><input type="text" id="test2" autocomplete="off" readonly="readonly"></td>
+            <td style="width: 120px"></td>
+            <td> 促销编码 <input type="text" id="activityCode" autocomplete="off"></td>
+            <td><input type="button" id="query" value="查询"></td>
+            <td><input type="button" id="reset" value="重置"></td>
+        </div>
 
-        <%--<table id="demo" lay-filter="test"></table>--%>
+        <table id="demo" lay-filter="test"></table>
 
-    <%--</div>--%>
+    </div>
 
-    <%--<div class="layui-footer">--%>
-    <%--<!-- 底部固定区域 -->--%>
-    <%----%>
-    <%--</div>--%>
+    <div class="layui-footer">
+    <!-- 底部固定区域 -->
+
+    </div>
 </div>
 <script src="${ctx}/static/layui/layui.all.js" type="text/javascript"></script>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="add">新增</a>
     <a class="layui-btn layui-btn-xs" lay-event="upload">导出</a>
-    <a class="layui-btn layui-btn-xs" lay-event="sumbit">提交OA</a>
+    <%--<a class="layui-btn layui-btn-xs" lay-event="sumbit">提交OA</a>--%>
     <%--<div class="layui-inline" style="float:right;height:29px;" title="搜索" lay-event="LAYTABLE_SEARCH">--%>
     <%--<i class="layui-icon layui-icon-search"></i>--%>
     <%--</div>--%>
@@ -82,7 +82,7 @@
             elem: '#demo'
             , id: 'list'
             // , height: 'full-80'
-            , url: '<%=request.getContextPath()%>/PromotionController/queryPromotionList' //数据接口
+            , url: '<%=request.getContextPath()%>/PromotionController/queryPromotionList?type=0' //数据接口
             , request: {
                 pageName: 'pageIndex' //页码的参数名称，默认：page
                 , limitName: 'pageSize' //每页数据量的参数名，默认：limit
@@ -115,7 +115,7 @@
             if (layEvent === 'detail') { //查看
 
             } else if (layEvent === 'edit') { //编辑
-                window.open('<%=request.getContextPath()%>/edit?id=' + data.activityCode);
+                window.open('<%=request.getContextPath()%>/hall/edit?id=' + data.activityCode);
                 <%--location.href = '<%=request.getContextPath()%>/edit?id=' + data.activityCode;--%>
             }
         });
@@ -127,7 +127,7 @@
 
                     break;
                 case 'add':
-                    window.open('<%=request.getContextPath()%>/add');
+                    window.open('<%=request.getContextPath()%>/hall/add');
                 <%--location.href = '<%=request.getContextPath()%>/add';--%>
                     break;
                 case 'upload':
@@ -215,7 +215,7 @@
         methods: {
             upload: function (data) {
                 var idstr = JSON.stringify(data);
-                window.location.href = '<%=request.getContextPath()%>/PromotionController/exportExcel?codestr=' + encodeURIComponent(idstr);
+                window.location.href = '<%=request.getContextPath()%>/PromotionController/exportExcelTs?codestr=' + encodeURIComponent(idstr);
             },
             delete: function (data) {
                 var idstr = JSON.stringify(data);

@@ -71,6 +71,13 @@ public class IndexController {
         return "hall_list";
     }
 
+    @RequestMapping("/hall/edit")
+    public ModelAndView hallEdit(String id){
+        ModelAndView mv = new ModelAndView("hall_edit");
+        mv.addObject("activeCode",id);
+        return mv;
+    }
+
     @RequestMapping("/hall/add")
     public ModelAndView hallDetail(){
         ModelAndView modelAndView = new ModelAndView("hall_detail");

@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>新增堂食活动</title>
     <style>
         * {
             margin: 0;
@@ -80,15 +80,14 @@
                             <option value="15">T+15</option>
                         </select>
                     </td>
-                    <td colspan="3"></td>--%>
-<%--                    <td colspan="3">回款人姓名</td>--%>
-<%--                    <td>--%>
-<%--                        <input @input="valueChange"  v-model="detail.amount" style="width: 100px; text-align: center;">--%>
-<%--                    </td>--%>
-<%--                    <td>回款人账号</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="number"  v-model="detail.amount" style="width: 100px; text-align: center;">--%>
-<%--                    </td>--%>
+                    <%--<td>回款人姓名</td>--%>
+                    <%--<td>--%>
+                        <%--<input  v-model="detail.billUserName" style="width: 100px; text-align: center;">--%>
+                    <%--</td>--%>
+                    <%--<td>回款人账号</td>--%>
+                    <%--<td>--%>
+                        <%--<input type="number"  v-model="detail.billAccountNumber" style="width: 100px; text-align: center;">--%>
+                    <%--</td>--%>
                 </tr>
 
             </table>
@@ -98,21 +97,45 @@
             </textarea>
         </div>
         <div>
-            <table style=" width: 70%; max-width: 895px; border-collapse: separate;border-spacing: 5px;">
+            <table style=" width: 70%; max-width: 970px; border-collapse: separate;border-spacing: 5px;">
                 <tr>
                     <td >七字描述</td>
                     <td>
                         <input type="text " v-model="detail.introduction"  style="width: 100px;">
                     </td>
-                    <td>团购网站</td>
-                    <td>   <select v-model="detail.theWay"  style="width: 100px;">
-                        <option value="" >请选择</option>
-                        <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
-                    </select> </td>
+                    <%--<td>团购网站</td>--%>
+                    <%--<td>   <select v-model="detail.channel"  style="width: 100px;">--%>
+                        <%--<option value="" >请选择</option>--%>
+                        <%--<option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>--%>
+                    <%--</select> </td>--%>
                     <td>核销开始时间</td>
                     <td> <input type="text" id="test3" autocomplete="off"></td>
                     <td>核销结束时间</td>
                     <td> <input type="text" id="test4" autocomplete="off"></td>
+
+                    <td >合同收售份数</td>
+                    <td>
+                        <input type="number" v-model="detail.contractAmount" @input="valueChange"  style="width: 100px;">
+                    </td>
+
+                </tr>
+                    <td>与本活动共存活动</td>
+                    <td>
+                        <select v-model="detail.sharedActivity"  style="width: 100px;">
+                            <option value="" >请选择</option>
+                            <option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>
+                        </select>
+                    </td>
+                <tr>
+
+                    <%--<td>预付款金额</td>--%>
+                    <%--<td>--%>
+                    <%--<input type="number " v-model="detail.prepaymentAmount" @input="valueChange"  style="width: 100px;margin-right: 62px;">--%>
+                    <%--</td>--%>
+                    <%--<td>人员费用</td>--%>
+                    <%--<td> <input type="number " v-model="detail.wage" @input="valueChange"  style="width:100px; margin-right: 46px;"></td>--%>
+                    <%--<td>广告费用</td>--%>
+                    <%--<td><input type="number" v-model="detail.advertisingFee" @input="valueChange"   style="width: 100px;"></td>--%>
                 </tr>
 
                 <tr>
@@ -129,41 +152,16 @@
                     <td>手续费率(%)</td>
                     <td><input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 100px;"></td>
                 </tr>
-
             </table>
-
-
-            <%--<span>七字描述</span> <input type="text " v-model="detail.introduction"  style="width: 110px;">--%>
-            <%--<span>团购网站</span> <select v-model="detail.theWay"  style="width: 100px;">--%>
-                <%--<option value="" >请选择</option>--%>
-                <%--<option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>--%>
-            <%--</select>--%>
-            <%--<span>核销开始时间</span>--%>
-            <%--<input type="text" id="test3" autocomplete="off">--%>
-            <%--<span>核销结束时间</span>--%>
-            <%--<input type="text" id="test4" autocomplete="off">--%>
         </div>
-        <%--<div>--%>
-            <%--<h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">与本活动共存的活动</h3>--%>
-            <%--<label for="id_select"></label>--%>
-            <%--<select id="id_select" class="selectpicker bla bla bli" multiple data-live-search="true">--%>
-                <%--&lt;%&ndash;<option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>&ndash;%&gt;--%>
-                <%--</optgroup>--%>
-            <%--</select>--%>
-        <%--</div>--%>
-        <%--<div><span>销售单价</span> <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 5rem;">--%>
-            <%--<span>回款单价</span> <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 5rem;margin-right: 62px;">--%>
-            <%--<span>手续费</span><input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width: 5rem; margin-right: 46px;">--%>
-            <%--<span>手续费率(%)</span> <input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 10rem;"></div>--%>
-        <%--<div>--%>
             <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">其他</h3>
-            <textarea v-model="detail.other"  style="width: 895px; height: 55px; resize: none;"></textarea>
+            <textarea v-model="detail.other"  style="width: 970px; height: 55px; resize: none;"></textarea>
         </div>
         <%--<div>--%>
             <%--<button type="button" class="btn btn-default" @click="save()">保存活动</button>--%>
         <%--</div>--%>
         <div>
-            <button type="button" class="btn btn-default" id="addActive">添加门店</button>
+            <button type="button" class="btn btn-default" id="addActive">添加活动</button>
         </div>
         <table id="demo" lay-filter="test"></table>
 
@@ -217,6 +215,17 @@
                 taxRate:'',
                 sellingPrice:'',
                 billPrice:'',
+                type:'2',
+                contractAmount:'',
+                prepaymentAmount:'',
+                wage:'',
+                advertisingFee:'',
+                testFee:'',
+                couponFee:'',
+                couponEffectiveTime:'',
+                discountFee:'',
+                billUserName:"",
+                billAccountNumber:"",
                 thisTime:'${thisTime}'
             },
             promotionMapper : [],
@@ -261,8 +270,8 @@
                 );
             },
             save:function () {
-                var actives = ($(".selectpicker").val());
-                this.detail.sharedActivity = actives;
+                // var actives = ($(".selectpicker").val());
+                this.detail.sharedActivity = [this.detail.sharedActivity];
                 // if (this.detail.activityCode == ''){
                 //     layer.msg('促销编码为空');
                 //     return;
@@ -303,23 +312,47 @@
                     layer.msg('七字描述为空');
                     return;
                 }
-                if (this.detail.theWay == ''){
-                    layer.msg('请选择团购网站');
-                    return;
-                }
+                // if (this.detail.channel == ''){
+                //     layer.msg('请选择团购网站');
+                //     return;
+                // }
                 if (this.detail.usageStartTime == ''){
                     layer.msg('核销开始时间为空');
                     return;
                 }
-                if (this.detail.usageEndTime == ''){
-                    layer.msg('核销结束时间为空');
+                if (this.detail.contractAmount == ''){
+                    layer.msg('约定售卖份数数量为空');
                     return;
                 }
-
-                // if (this.detail.sharedActivity == ''){
-                //     layer.msg('请选择共存活动');
+                // if (this.detail.prepaymentAmount == ''){
+                //     layer.msg('预付金额为空');
                 //     return;
                 // }
+                // if (this.detail.wage == ''){
+                //     layer.msg('人员费用为空');
+                //     return;
+                // }
+                // if (this.detail.advertisingFee == ''){
+                //     layer.msg('广告费用为空');
+                //     return;
+                // }
+                // if (this.detail.testFee == ''){
+                //     layer.msg('试吃费用为空');
+                //     return;
+                // }
+                // if (this.detail.couponFee == ''){
+                //     layer.msg('尊享券费用为空');
+                //     return;
+                // }
+                // if (this.detail.couponEffectiveTime == ''){
+                //     layer.msg('尊享券费有效期为空');
+                //     return;
+                // }
+                // if (this.detail.discountFee == ''){
+                //     layer.msg('折扣费用为空');
+                //     return;
+                // }
+
                 if (this.detail.sellingPrice == ''){
                     layer.msg('销售价为空');
                     return;
@@ -342,12 +375,12 @@
                 // };
                 // console.log(param);
                 this.detail.promotionMapperDo = this.promotionMapper;
-                this.$http.post('<%=request.getContextPath()%>/PromotionController/savePromotionBaseInfo',
+                this.$http.post('<%=request.getContextPath()%>/PromotionController/savePromotionBaseInfoTs',
                     JSON.stringify(this.detail),{emulateJSON:false}).then(function(response) {
                         if('10000' == response.data.code){
                             layer.msg('保存成功');
                             this.detail.activityCode = response.data.data.activityCode;
-                            location.href='<%=request.getContextPath()%>/list?id='+app.detail.activityCode;
+                            location.href='<%=request.getContextPath()%>/hall/list?id='+app.detail.activityCode;
                         }else {
                             layer.msg('保存失败');
                         }
