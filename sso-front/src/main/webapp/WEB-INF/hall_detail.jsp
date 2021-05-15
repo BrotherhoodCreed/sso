@@ -113,7 +113,7 @@
                     <td>核销结束时间</td>
                     <td> <input type="text" id="test4" autocomplete="off"></td>
 
-                    <td >合同收售份数</td>
+                    <td >约定售卖份数</td>
                     <td>
                         <input type="number" v-model="detail.contractAmount" @input="valueChange"  style="width: 100px;">
                     </td>
