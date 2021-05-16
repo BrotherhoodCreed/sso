@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.promotion.product.dao.mysql2.YuKuDao">
+
+
+
+    <select id="selectShopList" resultType="com.promotion.product.dao.dataobject.ShopDo" parameterType="list">
+        select
+        STCD AS 'stcd',
+        accountnumber,
+        uid,
+        depositbank
+        from storeinfo
+        <where>
+           STCD in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </where>
+
+    </select>
+
+
+
+</mapper>

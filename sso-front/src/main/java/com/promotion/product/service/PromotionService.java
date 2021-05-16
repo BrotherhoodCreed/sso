@@ -273,7 +273,7 @@ public class PromotionService {
 
         Calendar calendar = Calendar.getInstance();
         Date date=calendar.getTime();
-        SimpleDateFormat format = new SimpleDateFormat("YYYYMM");
+        SimpleDateFormat format = new SimpleDateFormat("YYYYMMDD");
         Integer index= promotionBaseInfoDao.querySerialNumber();
         String area="";
         if(promotionMapperDo.get(0)!=null){
@@ -286,7 +286,7 @@ public class PromotionService {
             }
         }
         //01 区域号
-        String code =codePrefix+ FormTypeEnums.TAKE_OUT.getIndex()+ format.format(date)+String.format("%03d",index);
+        String code =codePrefix+ FormTypeEnums.TAKE_OUT.getIndex()+ format.format(date)+String.format("%03d",index)+new Random(3).nextInt(999);
         saveData(savePromotionBaseInfoRequery, promotionMapperDo, savePromotionBaseInfoRespone, promotionBaseInfoDo, code,FormTypeEnums.TAKE_OUT);
         return savePromotionBaseInfoRespone;
     }
@@ -297,7 +297,7 @@ public class PromotionService {
 
         Calendar calendar = Calendar.getInstance();
         Date date=calendar.getTime();
-        SimpleDateFormat format = new SimpleDateFormat("YYYYMM");
+        SimpleDateFormat format = new SimpleDateFormat("YYYYMMDD");
         Integer index= promotionBaseInfoDao.querySerialNumber();
         String area="";
         if(promotionMapperDo.get(0)!=null){
@@ -310,7 +310,7 @@ public class PromotionService {
             }
         }
         //01 区域号
-        String code =codePrefix+ FormTypeEnums.EAT_IN.getIndex()+ format.format(date)+String.format("%03d",index);
+        String code =codePrefix+ FormTypeEnums.EAT_IN.getIndex()+ format.format(date)+String.format("%03d",index)+new Random(3).nextInt(999);;
         saveData(savePromotionBaseInfoRequery, promotionMapperDo, savePromotionBaseInfoRespone, promotionBaseInfoDo, code,FormTypeEnums.EAT_IN);
         return savePromotionBaseInfoRespone;
     }

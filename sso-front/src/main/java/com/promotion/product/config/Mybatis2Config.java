@@ -33,8 +33,8 @@ public class Mybatis2Config {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         //启用Mybatis的全部xml文件，就不需要一个个去打开
-//        String packageSerchPath = PathMatchingResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + "/mapper/**.xml";
-//        sqlSessionFactoryBean.setMapperLocations(resolver.getResources(packageSerchPath));
+        String packageSerchPath = PathMatchingResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + "/yuku_mapper/**.xml";
+        sqlSessionFactoryBean.setMapperLocations(resolver.getResources(packageSerchPath));
         sqlSessionFactoryBean.setDataSource(dataSource);
         return sqlSessionFactoryBean;
     }

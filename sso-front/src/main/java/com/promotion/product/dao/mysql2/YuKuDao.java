@@ -46,15 +46,6 @@ public interface YuKuDao {
     String selectShopAreaId(@Param("shopAreaId") String shopAreaId);
 
 
-    @Select("SELECT\n" +
-            "\tSTCD AS 'stcd',\n" +
-            "\taccountnumber, \n" +
-            "\tuid, \n" +
-            "\tdepositbank \n" +
-            "FROM\n" +
-            "\tstoreinfo where STCD in <foreach item='item' index='index' collection='list' open='(' separator=',' close=')'> "+
-            "   #{item}" +
-            "</foreach>")
     List<ShopDo> selectShopList(@Param("list") List<String> stcd);
 
 
