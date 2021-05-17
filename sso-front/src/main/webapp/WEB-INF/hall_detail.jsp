@@ -29,7 +29,8 @@
                 <label class="layui-form-label">活动类型</label>
                 <div class="layui-input-inline">
                     <select id="activityTypes">
-                        <%--<option  v-bind:value="item.descriptionCode"  v-for="item in activityType" >{{item.description}}</option>--%>
+                        <option value="">请选择</option>
+                    <%--<option  v-bind:value="item.descriptionCode"  v-for="item in activityType" >{{item.description}}</option>--%>
                     </select>
                 </div>
             </div>
@@ -53,6 +54,7 @@
                 <label class="layui-form-label">回款周期</label>
                 <div class="layui-input-inline">
                     <select name="modules" lay-verify="required" lay-search="" id="billCycle">
+                        <option value="">请选择</option>
                         <option value="1">T+1</option>
                         <option value="2">T+2</option>
                         <option value="3">T+3</option>
@@ -151,7 +153,7 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">其他</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入内容" class="layui-textarea" v-model="detail.other" @input="textChange" ></textarea>
+                <textarea placeholder="请输入内容" class="layui-textarea" v-model="detail.other" ></textarea>
             </div>
         </div>
 
@@ -394,6 +396,7 @@
         ,show: false //直    接显示
         ,trigger: 'click' //采用click弹出
         ,btns: ['clear', 'confirm']
+        ,min:0
         ,done: function(value, date, endDate){
             app.detail.salesStartTime=value;
             if (value == '' || value == undefined){
@@ -401,21 +404,22 @@
             }else {
                 date.month = date.month-1;
                 bMinDate = date;
+                b.config.min=bMinDate;
+                b.config.max=bMaxDate;
             }
         }
     });
 
-    lay('#test1').on('click', function(e){
-            a.config.max=aMaxDate;
-            a.config.min=aMinDate;
-    });
-
+    // lay('#test1').on('click', function(e){
+    //
+    // });
 
     var b = laydate.render({
         elem: '#test2' //指定元素
         ,show: false //直接显示
         ,trigger: 'click' //采用click弹出
         ,btns: ['clear', 'confirm']
+        ,min:0
         // ,closeStop: '#test2' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
             app.detail.salesEndTime=value;
@@ -424,25 +428,28 @@
             }else {
                 date.month = date.month-1
                 aMaxDate = date;
+                a.config.max=aMaxDate;
+                a.config.min=aMinDate;
             }
         }
     });
 
-    lay('#test2').on('click', function(e){
-        if(bMinDate == undefined || bMinDate == ''){
-            b.config.min=defaultMinDate;
-        }else {
-            b.config.min=bMinDate;
-            b.config.max=bMaxDate;
-        }
-
-    });
+    // lay('#test2').on('click', function(e){
+    //     if(bMinDate == undefined || bMinDate == ''){
+    //         b.config.min=defaultMinDate;
+    //     }else {
+    //         b.config.min=bMinDate;
+    //         b.config.max=bMaxDate;
+    //     }
+    //
+    // });
 
     var c = laydate.render({
         elem: '#test3' //指定元素
         ,show: false //直    接显示
         ,trigger: 'click' //采用click弹出
         ,btns: ['clear', 'confirm']
+        ,min:0
         // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
             app.detail.usageStartTime=value;
@@ -451,20 +458,22 @@
             }else {
                 date.month = date.month-1;
                 dMinDate = date;
+                d.config.min=dMinDate;
+                d.config.max=dMaxDate;
             }
         }
     });
-
-    lay('#test3').on('click', function(e){
-        c.config.max=cMaxDate;
-        c.config.min=cMinDate;
-    });
+    //
+    // lay('#test3').on('click', function(e){
+    //
+    // });
 
     var d = laydate.render({
         elem: '#test4' //指定元素
         ,show: false //直    接显示
         ,trigger: 'click' //采用click弹出
         ,btns: ['clear', 'confirm']
+        ,min:0
         // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
             app.detail.usageEndTime=value;
@@ -473,18 +482,19 @@
             }else {
                 date.month = date.month-1;
                 cMaxDate = date;
+                c.config.max=cMaxDate;
+                c.config.min=cMinDate;
             }
         }
     });
 
-    lay('#test4').on('click', function(e){
-        if(dMinDate == undefined || dMinDate == ''){
-            d.config.min=defaultMinDate;
-        }else {
-            d.config.min=dMinDate;
-            d.config.max=dMaxDate;
-        }
-    });
+    // lay('#test4').on('click', function(e){
+    //     if(dMinDate == undefined || dMinDate == ''){
+    //         d.config.min=defaultMinDate;
+    //     }else {
+    //
+    //     }
+    // });
 
     $(window).on('load', function () {
         $('.selectpicker').selectpicker({
@@ -651,8 +661,15 @@
             var saleBegainTime = new Date(startTimestamp).getTime();
             var endTimestamp = new Date(app.detail.salesEndTime.replace(/-/g, "/"));
             var saleEndTime = new Date(endTimestamp).getTime();
+
+            var usageStartTime = new Date(app.detail.usageStartTime.replace(/-/g, "/"));
+            var usageBegainTime = new Date(usageStartTime).getTime();
             if (saleEndTime < saleBegainTime){
                 layer.msg('销售结束时间不能小于销售开始时间');
+                return;
+            }
+            if(usageBegainTime<startTimestamp){
+                layer.msg('核销开始时间不能小于销售开始时间');
                 return;
             }
             if (app.detail.amount == ''){
@@ -680,7 +697,7 @@
                 return;
             }
             if (app.detail.contractAmount == ''){
-                layer.msg('约定售卖份数数量为空');
+                layer.msg('约定售卖份数为空');
                 return;
             }
             if (app.detail.sharedActivity == ''){

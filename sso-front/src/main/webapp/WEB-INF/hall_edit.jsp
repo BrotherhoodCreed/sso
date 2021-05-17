@@ -36,7 +36,8 @@
             <label class="layui-form-label">活动类型</label>
             <div class="layui-input-inline">
                 <select id="activityTypes">
-                        <%--<option  v-bind:value="item.descriptionCode"  v-for="item in activityType" >{{item.description}}</option>--%>
+                    <option value="">请选择</option>
+                <%--<option  v-bind:value="item.descriptionCode"  v-for="item in activityType" >{{item.description}}</option>--%>
                 </select>
             </div>
         </div>
@@ -60,6 +61,7 @@
             <label class="layui-form-label">回款周期</label>
             <div class="layui-input-inline">
                 <select name="modules" v-model="detail.billCycle" lay-verify="required" lay-search="">
+                    <option value="">请选择</option>
                     <option value="1">T+1</option>
                     <option value="2">T+2</option>
                     <option value="3">T+3</option>
@@ -158,7 +160,7 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">其他</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea" v-model="detail.other" @input="textChange" ></textarea>
+            <textarea placeholder="请输入内容" class="layui-textarea" v-model="detail.other"></textarea>
         </div>
     </div>
 
@@ -239,14 +241,17 @@ var a = laydate.render({
         }else {
             date.month = date.month-1;
             bMinDate = date;
+            b.config.min=bMinDate;
+            b.config.max=bMaxDate;
+
         }
     }
 });
-
-lay('#test1').on('click', function(e){
-    a.config.max=aMaxDate;
-    a.config.min=aMinDate;
-});
+//
+// lay('#test1').on('click', function(e){
+//     a.config.max=aMaxDate;
+//     a.config.min=aMinDate;
+// });
 
 
 var b = laydate.render({
@@ -262,25 +267,29 @@ var b = laydate.render({
         }else {
             date.month = date.month-1
             aMaxDate = date;
+            a.config.max=aMaxDate;
+            a.config.min=aMinDate;
         }
     }
 });
 
-lay('#test2').on('click', function(e){
-    if(bMinDate == undefined || bMinDate == ''){
-        b.config.min=defaultMinDate;
-    }else {
-        b.config.min=bMinDate;
-        b.config.max=bMaxDate;
-    }
-
-});
+// lay('#test2').on('click', function(e){
+//     if(bMinDate == undefined || bMinDate == ''){
+//         b.config.min=defaultMinDate;
+//     }else {
+//         b.config.min=bMinDate;
+//         b.config.max=bMaxDate;
+//
+//     }
+//
+// });
 
 var c = laydate.render({
     elem: '#test3' //指定元素
     ,show: false //直    接显示
     ,trigger: 'click' //采用click弹出
     ,btns: ['clear', 'confirm']
+    ,min:0
     // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
     ,done: function(value, date, endDate){
         app.detail.usageStartTime=value;
@@ -289,20 +298,23 @@ var c = laydate.render({
         }else {
             date.month = date.month-1;
             dMinDate = date;
+            d.config.min=dMinDate;
+            d.config.max=dMaxDate;
         }
     }
 });
 
-lay('#test3').on('click', function(e){
-    c.config.max=cMaxDate;
-    c.config.min=cMinDate;
-});
+// lay('#test3').on('click', function(e){
+//     c.config.max=cMaxDate;
+//     c.config.min=cMinDate;
+// });
 
 var d = laydate.render({
     elem: '#test4' //指定元素
     ,show: false //直    接显示
     ,trigger: 'click' //采用click弹出
     ,btns: ['clear', 'confirm']
+    ,min:0
     // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
     ,done: function(value, date, endDate){
         app.detail.usageEndTime=value;
@@ -311,18 +323,20 @@ var d = laydate.render({
         }else {
             date.month = date.month-1;
             cMaxDate = date;
+            c.config.max=cMaxDate;
+            c.config.min=cMinDate;
         }
     }
 });
 
-lay('#test4').on('click', function(e){
-    if(dMinDate == undefined || dMinDate == ''){
-        d.config.min=defaultMinDate;
-    }else {
-        d.config.min=dMinDate;
-        d.config.max=dMaxDate;
-    }
-});
+// lay('#test4').on('click', function(e){
+//     if(dMinDate == undefined || dMinDate == ''){
+//         d.config.min=defaultMinDate;
+//     }else {
+//         d.config.min=dMinDate;
+//         d.config.max=dMaxDate;
+//     }
+// });
 
 
     var app = new Vue({
@@ -471,7 +485,10 @@ lay('#test4').on('click', function(e){
                     layer.msg('核销结束时间为空');
                     return;
                 }
-
+                if (this.detail.sharedActivity == ''){
+                    layer.msg('与本活动共存活动为空');
+                    return;
+                }
                 // if (this.detail.sharedActivity == ''){
                 //     layer.msg('请选择共存活动');
                 //     return;
