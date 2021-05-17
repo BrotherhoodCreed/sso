@@ -14,7 +14,7 @@
         .layui-form-label {
             width: 100px;
         }
-        .layui-input-block {
+        .layui-input-block {e.target.value
             margin-left: 130px;
         }
         .layui-form-item{
@@ -111,7 +111,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">约定售卖份数</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="url" lay-verify="url" autocomplete="off" class="layui-input"  v-model="detail.contractAmount" @input="valueChange">
+                    <input type="text" name="contractAmount" lay-verify="contractAmount" autocomplete="off" class="layui-input"  v-model="detail.contractAmount" @input="valueChange">
                 </div>
             </div>
         </div>
@@ -247,11 +247,15 @@
             },
             valueChange:function (e){
                 e.target.value = e.target.value.replace(/(^\s*)|(\s*$)/g, "");
-                const reg = /[^\d.]/g;
-
+                let reg = /[^\d.]/g;
+                //约定售卖份数 不能有小数
+                if("contractAmount"==e.target.name){
+                    reg = /[^\d]/g;
+                    e.target.value = e.target.value.replace(reg, "");
+                    return;
+                }
                 // 只能是数字和小数点，不能是其他输入
                 e.target.value = e.target.value.replace(reg, "");
-
                 // 保证第一位只能是数字，不能是点
                 e.target.value = e.target.value.replace(/^\./g, "");
                 // 小数只能出现1位
@@ -259,7 +263,7 @@
                     .replace(".", "$#$")
                     .replace(/\./g, "")
                     .replace("$#$", ".");
-                // 小数点后面保留2位
+                    // 小数点后面保留2位
                 e.target.value = e.target.value.replace(
                     /^(\-)*(\d+)\.(\d\d).*$/,
                     "$1$2.$3"

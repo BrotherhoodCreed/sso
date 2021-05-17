@@ -401,8 +401,13 @@ var d = laydate.render({
             },
             valueChange(e){
                 e.target.value = e.target.value.replace(/(^\s*)|(\s*$)/g, "");
-                const reg = /[^\d.]/g;
-
+                let reg = /[^\d.]/g;
+                //约定售卖份数 不能有小数
+                if("contractAmount"==e.target.name){
+                    reg = /[^\d]/g;
+                    e.target.value = e.target.value.replace(reg, "");
+                    return;
+                }
                 // 只能是数字和小数点，不能是其他输入
                 e.target.value = e.target.value.replace(reg, "");
 
