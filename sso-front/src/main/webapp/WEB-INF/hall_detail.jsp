@@ -14,7 +14,7 @@
         .layui-form-label {
             width: 100px;
         }
-        .layui-input-block {e.target.value
+        .layui-input-block {
             margin-left: 130px;
         }
         .layui-form-item{
@@ -23,7 +23,7 @@
     </style>
 
 <body>
-    <form class="layui-form" action="" id="app">
+    <form class="layui-form" style="font-size:3px" action="" id="app">
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">活动类型</label>
@@ -37,13 +37,13 @@
             <div class="layui-inline">
                 <label class="layui-form-label" pane>销售开始时间</label>
                 <div class="layui-input-block">
-                    <input type="text" name="date" id="test1" autocomplete="off" class="layui-input"  v-model="detail.salesStartTime">
+                    <input type="text" style="width:190px" name="date" id="test1" autocomplete="off" class="layui-input"  v-model="detail.salesStartTime">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">销售结束时间</label>
                 <div class="layui-input-block">
-                    <input type="text" name="date" id="test2" autocomplete="off" class="layui-input" v-model="detail.salesEndTime">
+                    <input type="text"  style="width:190px" name="date" id="test2" autocomplete="off" class="layui-input" v-model="detail.salesEndTime">
                 </div>
             </div>
         </div>
