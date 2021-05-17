@@ -118,7 +118,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">约定售卖份数</label>
             <div class="layui-input-inline">
-                <input type="text" name="url" lay-verify="url" autocomplete="off" class="layui-input"  v-model="detail.contractAmount" @input="valueChange">
+                <input type="text" name="contractAmount" lay-verify="contractAmount" autocomplete="off" class="layui-input"  v-model="detail.contractAmount" @input="valueChange">
             </div>
         </div>
     </div>
