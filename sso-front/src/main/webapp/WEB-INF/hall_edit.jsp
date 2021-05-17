@@ -168,7 +168,7 @@
         <div class="layui-input-block">
             <button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-setval" @click="edit()">修改活动</button>
             <button type="button" class="layui-btn layui-btn-normal" id="addActive">添加门店</button>
-            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1"  @click="toList()">返回列表</button>
+            <button type="button" class="layui-btn"    @click="toList()">返回列表</button>
         </div>
     </div>
 </form>
@@ -234,6 +234,7 @@ var a = laydate.render({
     ,show: false //直    接显示
     ,trigger: 'click' //采用click弹出
     ,btns: ['clear', 'confirm']
+    ,min:0
     ,done: function(value, date, endDate){
         app.detail.salesStartTime=value;
         if (value == '' || value == undefined){
@@ -590,7 +591,7 @@ var d = laydate.render({
                                 minutes: 0,
                                 seconds: 0
                             };
-                            aMaxDate = aDefaultMaxDate;
+                            a.config.max = aDefaultMaxDate;
                             var salesStart = new Date(this.detail.salesStartTime);
                             var bDefaultMinDate ={
                                 year: salesStart.getFullYear(),
@@ -600,7 +601,7 @@ var d = laydate.render({
                                 minutes: 0,
                                 seconds: 0
                             };
-                            bMinDate = bDefaultMinDate;
+                            b.config.min = bDefaultMinDate;
 
                             var usageEnd = new Date(this.detail.usageEndTime);
                             var cQueryMaxDate ={
@@ -611,7 +612,7 @@ var d = laydate.render({
                                 minutes: 0,
                                 seconds: 0
                             };
-                            cMaxDate = cQueryMaxDate;
+                            c.config.max = cQueryMaxDate;
 
                             var usageStart = new Date(this.detail.usageStartTime);
                             var dQueryMinDate ={
@@ -622,7 +623,7 @@ var d = laydate.render({
                                 minutes: 0,
                                 seconds: 0
                             };
-                            dMinDate = dQueryMinDate;
+                            d.config.min = dQueryMinDate;
                             // for (var i = 0; i < this.detail.sharedActivity.length; i++) {
                             //     $('#id_select').selectpicker('val',this.detail.sharedActivity);
                             //     $('#id_select').selectpicker('refresh');     //设置好内容后刷新，  多用于异步请求

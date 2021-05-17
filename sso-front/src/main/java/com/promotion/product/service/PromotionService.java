@@ -285,6 +285,9 @@ public class PromotionService {
                 codePrefix=  shopService.queryShopAreaId(promotionMapperDo.get(0).getRestaurantCode());
             }
         }
+        if(StringUtils.isEmpty(codePrefix)){
+            codePrefix = "00";
+        }
         //01 区域号
         String code =codePrefix+ FormTypeEnums.TAKE_OUT.getIndex()+ format.format(date)+String.format("%03d",index)+new Random(3).nextInt(999);
         saveData(savePromotionBaseInfoRequery, promotionMapperDo, savePromotionBaseInfoRespone, promotionBaseInfoDo, code,FormTypeEnums.TAKE_OUT);
