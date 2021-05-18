@@ -111,7 +111,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">约定售卖份数</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="contractAmount" lay-verify="contractAmount" autocomplete="off" class="layui-input"  v-model="detail.contractAmount" @input="valueChange">
+                    <input type="text" name="contractAmount" lay-verify="contractAmount" autocomplete="off" class="layui-input"  v-model="detail.contractAmount" @input="contractAmountChange">
                 </div>
             </div>
         </div>
@@ -127,25 +127,25 @@
             <div class="layui-inline">
                 <label class="layui-form-label">销售单价</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.sellingPrice" @input="valueChange">
+                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.sellingPrice" @input="sellingPriceChange">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">回款单价</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"   v-model="detail.billPrice" @input="valueChange">
+                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"   v-model="detail.billPrice" @input="billPricePriceChange">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">手续费</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.handlingFee" @input="valueChange">
+                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.handlingFee" @input="handlingFeeChange">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">手续费率(%)</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.taxRate" @input="valueChange">
+                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.taxRate" @input="taxRateChange">
                 </div>
             </div>
         </div>
@@ -245,6 +245,29 @@
                     this.detail.introduction =val;
                 }
             },
+            contractAmountChange:function (e){
+                e.target.value = e.target.value.replace(/(^\s*)|(\s*$)/g, "");
+                let reg = /[^\d.]/g;
+                //约定售卖份数 不能有小数
+                if("contractAmount"==e.target.name){
+                    reg = /[^\d]/g;
+                    e.target.value = e.target.value.replace(reg, "");
+                    app.detail.contractAmount = e.target.value;
+                    return;
+                }
+            },
+            sellingPriceChange:function (e){
+                this.detail.sellingPrice = this.valueChange(e);
+            },
+            billPricePriceChange:function (e){
+                this.detail.billPrice = this.valueChange(e);
+            },
+            handlingFeeChange:function (e){
+                this.detail.handlingFee = this.valueChange(e);
+            },
+            taxRateChange:function (e){
+                this.detail.taxRate = this.valueChange(e);
+            },
             valueChange:function (e){
                 e.target.value = e.target.value.replace(/(^\s*)|(\s*$)/g, "");
                 let reg = /[^\d.]/g;
@@ -252,6 +275,7 @@
                 if("contractAmount"==e.target.name){
                     reg = /[^\d]/g;
                     e.target.value = e.target.value.replace(reg, "");
+                    app.detail.contractAmount = e.target.value;
                     return;
                 }
                 // 只能是数字和小数点，不能是其他输入
@@ -263,11 +287,12 @@
                     .replace(".", "$#$")
                     .replace(/\./g, "")
                     .replace("$#$", ".");
-                    // 小数点后面保留2位
+                // 小数点后面保留2位
                 e.target.value = e.target.value.replace(
                     /^(\-)*(\d+)\.(\d\d).*$/,
                     "$1$2.$3"
                 );
+                return e.target.value;
             },
             save:function () {
                 // var actives = ($(".selectpicker").val());
