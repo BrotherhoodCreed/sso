@@ -377,6 +377,7 @@ var d = laydate.render({
             },
             promotionMapper : [],
             activityType:[],
+            billCycles:[],
             channel:[],
             items:[]
         },
@@ -590,6 +591,17 @@ var d = laydate.render({
                             layui.form.render("select");
                         }else if('channel' == type){
                             this.channel = response.data.data;
+                        }else if('bill_cycle_type' == type){
+                            this.billCycles = response.data.data;
+                            $.each(this.activityType, function(index, item) {
+                                if(item.descriptionCode ==  app.detail.activityType ){
+                                    $('#billCycle').append(new Option( item.description,item.descriptionCode,true,true));
+
+                                }else{
+                                    $('#billCycle').append(new Option( item.description,item.descriptionCode));
+                                }
+                            });
+                            layui.form.render("select");
                         }
                     },
                     function(response) {
@@ -661,7 +673,9 @@ var d = laydate.render({
                             //     $('#id_select').selectpicker('val',this.detail.sharedActivity);
                             //     $('#id_select').selectpicker('refresh');     //设置好内容后刷新，  多用于异步请求
                             // }
+                            //等待页面渲染完毕在加载下拉选
                             this.query("eat_in_type");
+                            this.query("bill_cycle_type");
                         }else {
                             layer.msg('查询异常');
                         }

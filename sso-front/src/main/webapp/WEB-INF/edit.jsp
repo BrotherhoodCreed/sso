@@ -64,22 +64,9 @@
                 </td>
                 <td>回款周期</td>
                 <td>
-                    <select v-model="detail.billCycle"  style="width: 130px; ">
-                        <option value="1">T+1</option>
-                        <option value="2">T+2</option>
-                        <option value="3">T+3</option>
-                        <option value="4">T+4</option>
-                        <option value="5">T+5</option>
-                        <option value="6">T+6</option>
-                        <option value="7">T+7</option>
-                        <option value="8">T+8</option>
-                        <option value="9">T+9</option>
-                        <option value="10">T+10</option>
-                        <option value="11">T+11</option>
-                        <option value="12">T+12</option>
-                        <option value="13">T+13</option>
-                        <option value="14">T+14</option>
-                        <option value="15">T+15</option>
+                    <select v-model="detail.billCycle"  style="width: 100px; ">
+                        <option value="">请选择</option>
+                        <option  v-bind:value="item.descriptionCode" v-for="item in billCycles" >{{item.description}}</option>
                     </select>
                 </td>
                 <td></td>
@@ -304,6 +291,7 @@
             },
             promotionMapper : [],
             activityType:[],
+            billCycles:[],
             channel:[],
             items:[]
         },
@@ -465,6 +453,8 @@
                             this.activityType = response.data.data;
                         }else if('channel' == type){
                             this.channel = response.data.data;
+                        }else if('bill_cycle_type' == type){
+                            this.billCycles = response.data.data;
                         }
                     },
                     function(response) {
