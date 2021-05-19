@@ -1,8 +1,8 @@
 package com.promotion.product.entity;
 
 public enum FormTypeEnums {
-    TAKE_OUT("TAKE_OUT ","外卖","1"),
-    EAT_IN("EAT_IN","堂食","0");
+    TAKE_OUT("TAKE_OUT ","外卖","001"),
+    EAT_IN("EAT_IN","堂食","002");
     private String code;
     private String desc;
     private String index;
@@ -22,5 +22,12 @@ public enum FormTypeEnums {
 
     public String getIndex() {
         return index;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = new int[]{1,2,3,4};
+        for(int i=0;i<arr.length;i++){
+            System.out.println(arr[i]);
+        }
     }
 }

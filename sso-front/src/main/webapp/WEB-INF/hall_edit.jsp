@@ -60,23 +60,8 @@
         <div class="layui-inline">
             <label class="layui-form-label">回款周期</label>
             <div class="layui-input-inline">
-                <select name="modules" v-model="detail.billCycle" lay-verify="required" lay-search="">
+                <select name="modules" lay-verify="required" lay-search="" id="billCycle">
                     <option value="">请选择</option>
-                    <option value="1">T+1</option>
-                    <option value="2">T+2</option>
-                    <option value="3">T+3</option>
-                    <option value="4">T+4</option>
-                    <option value="5">T+5</option>
-                    <option value="6">T+6</option>
-                    <option value="7">T+7</option>
-                    <option value="8">T+8</option>
-                    <option value="9">T+9</option>
-                    <option value="10">T+10</option>
-                    <option value="11">T+11</option>
-                    <option value="12">T+12</option>
-                    <option value="13">T+13</option>
-                    <option value="14">T+14</option>
-                    <option value="15">T+15</option>
                 </select>
             </div>
         </div>
@@ -206,7 +191,7 @@ var myDate = new Date();
 var defaultMinDate ={
     year: myDate.getFullYear(),
     month: myDate.getMonth(),
-    date:myDate.getDate(),
+    date:myDate.getDate()+1,
     hours: 0,
     minutes: 0,
     seconds: 0
@@ -234,7 +219,7 @@ var a = laydate.render({
     ,show: false //直    接显示
     ,trigger: 'click' //采用click弹出
     ,btns: ['clear', 'confirm']
-    ,min:0
+    ,min:1
     ,done: function(value, date, endDate){
         app.detail.salesStartTime=value;
         if (value == '' || value == undefined){
@@ -290,7 +275,7 @@ var c = laydate.render({
     ,show: false //直    接显示
     ,trigger: 'click' //采用click弹出
     ,btns: ['clear', 'confirm']
-    ,min:0
+    ,min:1
     // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
     ,done: function(value, date, endDate){
         app.detail.usageStartTime=value;
@@ -315,7 +300,7 @@ var d = laydate.render({
     ,show: false //直    接显示
     ,trigger: 'click' //采用click弹出
     ,btns: ['clear', 'confirm']
-    ,min:0
+    ,min:1
     // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
     ,done: function(value, date, endDate){
         app.detail.usageEndTime=value;
@@ -456,6 +441,7 @@ var d = laydate.render({
                     this.detail.sharedActivity = [this.detail.sharedActivity];
                 }
                 this.detail.activityType = $("#activityTypes").val();
+                this.detail.billCycle = $("#billCycle").val();
                 if (this.detail.activityCode == ''){
                     layer.msg('促销编码为空');
                     return;
@@ -593,8 +579,8 @@ var d = laydate.render({
                             this.channel = response.data.data;
                         }else if('bill_cycle_type' == type){
                             this.billCycles = response.data.data;
-                            $.each(this.activityType, function(index, item) {
-                                if(item.descriptionCode ==  app.detail.activityType ){
+                            $.each(this.billCycles, function(index, item) {
+                                if(item.descriptionCode ==  app.detail.billCycle ){
                                     $('#billCycle').append(new Option( item.description,item.descriptionCode,true,true));
 
                                 }else{

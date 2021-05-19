@@ -82,7 +82,7 @@
             elem: '#demo'
             , id: 'list'
             // , height: 'full-80'
-            , url: '<%=request.getContextPath()%>/PromotionController/queryPromotionList?type=0' //数据接口
+            , url: '<%=request.getContextPath()%>/PromotionController/queryPromotionList?type=002' //数据接口
             , request: {
                 pageName: 'pageIndex' //页码的参数名称，默认：page
                 , limitName: 'pageSize' //每页数据量的参数名，默认：limit

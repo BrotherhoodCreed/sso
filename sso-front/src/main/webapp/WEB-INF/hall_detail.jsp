@@ -348,7 +348,7 @@
                             this.channel = response.data.data;
                         }else if('bill_cycle_type' == type){
                             this.billCycles = response.data.data;
-                            $.each(this.activityType, function(index, item) {
+                            $.each(this.billCycles, function(index, item) {
                                 $('#billCycle').append(new Option( item.description,item.descriptionCode));
                             });
                             layui.form.render("select");
@@ -390,7 +390,7 @@
     var defaultMinDate ={
         year: myDate.getFullYear(),
         month: myDate.getMonth(),
-        date:myDate.getDate(),
+        date:myDate.getDate()+1,
         hours: 0,
         minutes: 0,
         seconds: 0
@@ -418,7 +418,7 @@
         ,show: false //直    接显示
         ,trigger: 'click' //采用click弹出
         ,btns: ['clear', 'confirm']
-        ,min:0
+        ,min:1
         ,done: function(value, date, endDate){
             app.detail.salesStartTime=value;
             if (value == '' || value == undefined){
@@ -441,7 +441,7 @@
         ,show: false //直接显示
         ,trigger: 'click' //采用click弹出
         ,btns: ['clear', 'confirm']
-        ,min:0
+        ,min:1
         // ,closeStop: '#test2' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
             app.detail.salesEndTime=value;
@@ -471,7 +471,7 @@
         ,show: false //直    接显示
         ,trigger: 'click' //采用click弹出
         ,btns: ['clear', 'confirm']
-        ,min:0
+        ,min:1
         // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
             app.detail.usageStartTime=value;
@@ -495,7 +495,7 @@
         ,show: false //直    接显示
         ,trigger: 'click' //采用click弹出
         ,btns: ['clear', 'confirm']
-        ,min:0
+        ,min:1
         // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
             app.detail.usageEndTime=value;

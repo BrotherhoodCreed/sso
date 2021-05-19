@@ -141,23 +141,23 @@
         <%--</div>--%>
         <%--<div><span>每台现用张数/金额</span> <input type="number" @input="valueChange"  v-model="detail.amount" style="width: 5rem; text-align: center;">--%>
             <%--<span>回款周期</span>--%>
-            <%--<select v-model="detail.billCycle"  style="width: 100px; ">--%>
-                <%--<option value="1">T+1</option>--%>
-                <%--<option value="2">T+2</option>--%>
-                <%--<option value="3">T+3</option>--%>
-                <%--<option value="4">T+4</option>--%>
-                <%--<option value="5">T+5</option>--%>
-                <%--<option value="6">T+6</option>--%>
-                <%--<option value="7">T+7</option>--%>
-                <%--<option value="8">T+8</option>--%>
-                <%--<option value="9">T+9</option>--%>
-                <%--<option value="10">T+10</option>--%>
-                <%--<option value="11">T+11</option>--%>
-                <%--<option value="12">T+12</option>--%>
-                <%--<option value="13">T+13</option>--%>
-                <%--<option value="14">T+14</option>--%>
-                <%--<option value="15">T+15</option>--%>
-            <%--</select>--%>
+            <select v-model="detail.billCycle"  style="width: 100px; ">
+                <option value="1">T+1</option>
+                <option value="2">T+2</option>
+                <option value="3">T+3</option>
+                <option value="4">T+4</option>
+                <option value="5">T+5</option>
+                <option value="6">T+6</option>
+                <option value="7">T+7</option>
+                <option value="8">T+8</option>
+                <option value="9">T+9</option>
+                <option value="10">T+10</option>
+                <option value="11">T+11</option>
+                <option value="12">T+12</option>
+                <option value="13">T+13</option>
+                <option value="14">T+14</option>
+                <option value="15">T+15</option>
+            </select>
         <%--</div>--%>
 <%--        <div>--%>
 <%--            <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">活动描述</h3>--%>

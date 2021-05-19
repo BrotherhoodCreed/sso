@@ -289,7 +289,7 @@ public class PromotionService {
             codePrefix = "00";
         }
         //01 区域号
-        String code =codePrefix+ FormTypeEnums.TAKE_OUT.getIndex()+ format.format(date)+String.format("%03d",index)+new Random(3).nextInt(999);
+        String code =codePrefix+ Integer.valueOf(FormTypeEnums.TAKE_OUT.getIndex())+ format.format(date)+String.format("%03d",index)+new Random(3).nextInt(999);
         saveData(savePromotionBaseInfoRequery, promotionMapperDo, savePromotionBaseInfoRespone, promotionBaseInfoDo, code,FormTypeEnums.TAKE_OUT);
         return savePromotionBaseInfoRespone;
     }
@@ -313,7 +313,7 @@ public class PromotionService {
             }
         }
         //01 区域号
-        String code =codePrefix+ FormTypeEnums.EAT_IN.getIndex()+ format.format(date)+String.format("%03d",index)+new Random(3).nextInt(999);;
+        String code =codePrefix+ Integer.valueOf(FormTypeEnums.EAT_IN.getIndex())+ format.format(date)+String.format("%03d",index)+new Random(3).nextInt(999);;
         saveData(savePromotionBaseInfoRequery, promotionMapperDo, savePromotionBaseInfoRespone, promotionBaseInfoDo, code,FormTypeEnums.EAT_IN);
         return savePromotionBaseInfoRespone;
     }
