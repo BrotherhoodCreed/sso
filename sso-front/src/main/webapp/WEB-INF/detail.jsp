@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>新增活动</title>
     <style>
         * {
             margin: 0;
@@ -105,18 +105,19 @@
                 <%--<option value="15">T+15</option>--%>
             <%--</select>--%>
         <%--</div>--%>
+       <div>
+           <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">活动简述</h3>
+           <input type="text " v-model="detail.introduction"  style="width: 895px;height:22px" @input="textChange">
+       </textarea>
+       </div>
         <div>
             <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">活动描述</h3>
-            <textarea style="width: 895px; height: 55px; resize: none;" v-model="detail.description" @input="textChange">
+            <textarea style="width: 895px; height: 55px; resize: none;" v-model="detail.description">
             </textarea>
         </div>
         <div>
             <table style=" width: 70%; max-width: 895px; border-collapse: separate;border-spacing: 5px;">
                 <tr>
-                    <td >七字描述</td>
-                    <td>
-                        <input type="text " v-model="detail.introduction"  style="width: 100px;">
-                    </td>
                     <td>团购网站</td>
                     <td>   <select v-model="detail.channel"  style="width: 100px;">
                         <option value="" >请选择</option>
@@ -126,6 +127,10 @@
                     <td> <input type="text" id="test3" autocomplete="off"></td>
                     <td>核销结束时间</td>
                     <td> <input type="text" id="test4" autocomplete="off"></td>
+                    <td ></td>
+                    <td>
+
+                    </td>
                 </tr>
 
                 <tr>
@@ -135,12 +140,12 @@
                     </td>
                     <td>回款单价</td>
                     <td>
-                        <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 100px;margin-right: 62px;">
+                        <input type="number " v-model="detail.billPrice" @input="valueChange"  style="width: 100px;margin-right: 62px;">
                     </td>
                     <td>手续费</td>
-                    <td> <input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width:100px; margin-right: 46px;"></td>
+                    <td> <input type="number " v-model="detail.handlingFee" @input="valueChange" style="width:100px; margin-right: 46px;"></td>
                     <td>手续费率(%)</td>
-                    <td><input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 100px;"></td>
+                    <td><input type="number" v-model="detail.taxRate" @input="valueChange"    style="width: 100px;"></td>
                 </tr>
 
             </table>
@@ -249,11 +254,12 @@
         methods: {
             textChange(e){
                 let  val = e.target.value;
-                if(val.length>7){
-                    this.detail.introduction = val.slice(0,7)
+                if(val.length>20){
+                    this.detail.description = val.slice(0,20)
                 }else {
-                    this.detail.introduction =val;
+                    this.detail.description =val;
                 }
+                e.target.value=val.slice(0,20);
             },
             valueChange:function (e){
                 e.target.value = e.target.value.replace(/(^\s*)|(\s*$)/g, "");
