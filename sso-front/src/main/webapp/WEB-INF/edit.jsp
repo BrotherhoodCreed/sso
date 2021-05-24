@@ -75,20 +75,28 @@
                 <td>  </td>
             </tr>
             <tr>
+                <td colspan="8">活动简述</td>
+            </tr>
+            <tr>
+                <td colspan="8">
+                    <input type="text " v-model="detail.introduction"  style="width:100%;height: 22px"  @input="textChange">
+                </td>
+            </tr>
+            <tr>
                 <td colspan="8">活动描述</td>
             </tr>
             <tr>
                 <td colspan="8">
-                    <textarea style="width: 100%; height: 55px; resize: none;" v-model="detail.description" @input="textChange" >
+                    <textarea style="width: 100%; height: 55px; resize: none;" v-model="detail.description" >
                     </textarea>
                 </td>
             </tr>
 
             <tr>
-                <td >七字描述</td>
-                <td>
-                    <input type="text " v-model="detail.introduction"  style="width: 100px;">
-                </td>
+<%--                <td >七字描述</td>--%>
+<%--                <td>--%>
+<%--                    <input type="text " v-model="detail.introduction"  style="width: 100px;">--%>
+<%--                </td>--%>
                 <td>团购网站</td>
                 <td>
                     <select v-model="detail.channel"  style="width: 100px;">--%>
@@ -100,6 +108,8 @@
                 <td> <input type="text" id="test3"  v-model="detail.usageStartTime" autocomplete="off"></td>
                 <td style="min-width: 120px">核销结束时间</td>
                 <td><input type="text" id="test4" v-model="detail.usageEndTime" autocomplete="off"></td>
+                <td></td>
+                <td></td>
             </tr>
 
             <tr>
@@ -109,12 +119,12 @@
                 </td>
                 <td>回款单价</td>
                 <td>
-                    <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 100px;margin-right: 62px;">
+                    <input type="number " v-model="detail.billPrice" @input="valueChange"  style="width: 100px;margin-right: 62px;">
                 </td>
                 <td>手续费</td>
-                <td> <input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width:130px; margin-right: 46px;"></td>
+                <td> <input type="number " v-model="detail.handlingFee" @input="valueChange"   style="width:130px; margin-right: 46px;"></td>
                 <td>手续费率(%)</td>
-                <td><input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 130px;"></td>
+                <td><input type="number" v-model="detail.taxRate" @input="valueChange"      style="width: 130px;"></td>
             </tr>
 
             <tr>
@@ -141,23 +151,23 @@
         <%--</div>--%>
         <%--<div><span>每台现用张数/金额</span> <input type="number" @input="valueChange"  v-model="detail.amount" style="width: 5rem; text-align: center;">--%>
             <%--<span>回款周期</span>--%>
-            <select v-model="detail.billCycle"  style="width: 100px; ">
-                <option value="1">T+1</option>
-                <option value="2">T+2</option>
-                <option value="3">T+3</option>
-                <option value="4">T+4</option>
-                <option value="5">T+5</option>
-                <option value="6">T+6</option>
-                <option value="7">T+7</option>
-                <option value="8">T+8</option>
-                <option value="9">T+9</option>
-                <option value="10">T+10</option>
-                <option value="11">T+11</option>
-                <option value="12">T+12</option>
-                <option value="13">T+13</option>
-                <option value="14">T+14</option>
-                <option value="15">T+15</option>
-            </select>
+<%--            <select v-model="detail.billCycle"  style="width: 100px; ">--%>
+<%--                <option value="1">T+1</option>--%>
+<%--                <option value="2">T+2</option>--%>
+<%--                <option value="3">T+3</option>--%>
+<%--                <option value="4">T+4</option>--%>
+<%--                <option value="5">T+5</option>--%>
+<%--                <option value="6">T+6</option>--%>
+<%--                <option value="7">T+7</option>--%>
+<%--                <option value="8">T+8</option>--%>
+<%--                <option value="9">T+9</option>--%>
+<%--                <option value="10">T+10</option>--%>
+<%--                <option value="11">T+11</option>--%>
+<%--                <option value="12">T+12</option>--%>
+<%--                <option value="13">T+13</option>--%>
+<%--                <option value="14">T+14</option>--%>
+<%--                <option value="15">T+15</option>--%>
+<%--            </select>--%>
         <%--</div>--%>
 <%--        <div>--%>
 <%--            <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">活动描述</h3>--%>
@@ -299,6 +309,7 @@
             this.queryRelActive();
             this.query("activity_type");
             this.query("channel");
+            this.query("bill_cycle_type");
             this.queryDetail();
 
             // $('.selectpicker').selectpicker('refresh');     //设置好内容后刷新，  多用于异步请求
@@ -306,11 +317,12 @@
         methods: {
             textChange(e){
                 let  val = e.target.value;
-                if(val.length>7){
-                    this.detail.introduction = val.slice(0,7)
+                if(val.length>20){
+                    this.detail.description = val.slice(0,20);
                 }else {
-                    this.detail.introduction =val;
+                    this.detail.description =val;
                 }
+                e.target.value=val.slice(0,20);
             },
             valueChange(e){
                 e.target.value = e.target.value.replace(/(^\s*)|(\s*$)/g, "");

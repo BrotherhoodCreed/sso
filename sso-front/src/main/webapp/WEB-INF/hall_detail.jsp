@@ -68,19 +68,25 @@
         </div>
 
         <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">活动简述</label>
+            <div class="layui-input-block">
+                <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" v-model="detail.introduction" style="width: 90%"  @input="textChange">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">活动描述</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入内容" class="layui-textarea" v-model="detail.description" @input="textChange" ></textarea>
+                <textarea placeholder="请输入内容" class="layui-textarea" style="width: 90%" v-model="detail.description" ></textarea>
             </div>
         </div>
 
         <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">七字描述</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" v-model="detail.introduction">
-                </div>
-            </div>
+<%--            <div class="layui-inline">--%>
+<%--                <label class="layui-form-label">七字描述</label>--%>
+<%--                <div class="layui-input-inline">--%>
+<%--                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" v-model="detail.introduction">--%>
+<%--                </div>--%>
+<%--            </div>--%>
             <div class="layui-inline">
                 <label class="layui-form-label">核销开始时间</label>
                 <div class="layui-input-inline">
@@ -104,7 +110,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">与本活动共存活动</label>
             <div class="layui-input-block">
-                <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input" v-model="detail.sharedActivity">
+                <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input" style="width: 90%;" v-model="detail.sharedActivity">
             </div>
         </div>
 
@@ -138,7 +144,7 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">其他</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入内容" class="layui-textarea" v-model="detail.other" ></textarea>
+                <textarea placeholder="请输入内容" class="layui-textarea" v-model="detail.other"  style="width: 90%" ></textarea>
             </div>
         </div>
 
@@ -226,11 +232,12 @@
         methods: {
             textChange(e){
                 let  val = e.target.value;
-                if(val.length>7){
-                    this.detail.introduction = val.slice(0,7)
+                if(val.length>20){
+                    this.detail.description = val.slice(0,20);
                 }else {
-                    this.detail.introduction =val;
+                    this.detail.description =val;
                 }
+                e.target.value =val.slice(0,20);
             },
             contractAmountChange:function (e){
                 e.target.value = e.target.value.replace(/(^\s*)|(\s*$)/g, "");
@@ -718,10 +725,10 @@
                 layer.msg('核销开始时间为空');
                 return;
             }
-            if (app.detail.contractAmount == ''){
-                layer.msg('约定售卖份数为空');
-                return;
-            }
+            // if (app.detail.contractAmount == ''){
+            //     layer.msg('约定售卖份数为空');
+            //     return;
+            // }
             if (app.detail.sharedActivity == ''){
                 layer.msg('与本活动共存活动为空');
                 return;
@@ -767,10 +774,10 @@
                 layer.msg('手续费为空');
                 return;
             }
-            if (app.detail.taxRate == ''){
-                layer.msg('手续费率为空');
-                return;
-            }
+            // if (app.detail.taxRate == ''){
+            //     layer.msg('手续费率为空');
+            //     return;
+            // }
             // var dataInto=$(this).prev().attr("name");
             // if(''==app.detail.activityCode){
             //     layer.msg("请先保存活动");
