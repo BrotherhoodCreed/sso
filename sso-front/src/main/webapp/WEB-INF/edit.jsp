@@ -8,259 +8,166 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>修改活动</title>
+    <title>修改外卖活动</title>
+    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css" media="all">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .layui-form-label {
+            width: 100px;
         }
-        input {
-            margin-right: 14px;
-            width: 130px;
+        .layui-input-block {
+            margin-left: 130px;
         }
-        select {
-            margin-right: 14px;
-        }
-
-        #app div {
-            margin-bottom: 10px !important;
-        }
-
-        #app {
-            margin-top: 30px !important;
-            margin-left: 50px !important;
+        .layui-form-item{
+            margin-top: 10px;
         }
     </style>
-    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/bootstrap/bootstrap-select.min.css">
-    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css" media="all">
 
 <body>
-    <form action="" id="app">
-        <table style=" width: 85%; max-width: 1000px; border-collapse: separate;border-spacing: 5px;">
-
-            <tr>
-                <td style="width: 150px">促销编码</td>
-                <td>
-                    <input type="number" v-model="detail.activityCode"  readonly="readonly" style="width: 130px;">
-                </td>
-                <td style="width: 120px">活动类型</td>
-                <td>
-                    <select v-model="detail.activityType"  style="width: 130px;">
-                        <option value="" >请选择</option>
-                        <option  v-bind:value="item.descriptionCode" v-for="item in activityType" >{{item.description}}</option>
-                    </select>
-                </td>
-                <td  style="width: 120px">销售开始时间</td>
-                <td> <input type="text" id="test1" v-model="detail.salesStartTime" autocomplete="off"></td>
-                <td  style="width: 120px">销售结束时间</td>
-                <td>   <input type="text" id="test2"  v-model="detail.salesEndTime" autocomplete="off"></td>
-            </tr>
-            <tr>
-                <td >每台限用张数/金额</td>
-                <td>
-                    <input type="number" @input="valueChange"  v-model="detail.amount" style="width: 130px; text-align: center;">
-                </td>
-                <td>回款周期</td>
-                <td>
-                    <select v-model="detail.billCycle"  style="width: 100px; ">
-                        <option value="">请选择</option>
-                        <option  v-bind:value="item.descriptionCode" v-for="item in billCycles" >{{item.description}}</option>
-                    </select>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>  </td>
-            </tr>
-            <tr>
-                <td colspan="8">活动简述</td>
-            </tr>
-            <tr>
-                <td colspan="8">
-                    <input type="text " v-model="detail.introduction"  style="width:100%;height: 22px"  @input="textChange">
-                </td>
-            </tr>
-            <tr>
-                <td colspan="8">活动描述</td>
-            </tr>
-            <tr>
-                <td colspan="8">
-                    <textarea style="width: 100%; height: 55px; resize: none;" v-model="detail.description" >
-                    </textarea>
-                </td>
-            </tr>
-
-            <tr>
-<%--                <td >七字描述</td>--%>
-<%--                <td>--%>
-<%--                    <input type="text " v-model="detail.introduction"  style="width: 100px;">--%>
-<%--                </td>--%>
-                <td>团购网站</td>
-                <td>
-                    <select v-model="detail.channel"  style="width: 100px;">--%>
-                        <option value="" >请选择</option>
-                        <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
-                    </select>
-                </td>
-                <td style="min-width: 120px">核销开始时间</td>
-                <td> <input type="text" id="test3"  v-model="detail.usageStartTime" autocomplete="off"></td>
-                <td style="min-width: 120px">核销结束时间</td>
-                <td><input type="text" id="test4" v-model="detail.usageEndTime" autocomplete="off"></td>
-                <td></td>
-                <td></td>
-            </tr>
-
-            <tr>
-                <td >销售单价</td>
-                <td>
-                    <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 100px;">
-                </td>
-                <td>回款单价</td>
-                <td>
-                    <input type="number " v-model="detail.billPrice" @input="valueChange"  style="width: 100px;margin-right: 62px;">
-                </td>
-                <td>手续费</td>
-                <td> <input type="number " v-model="detail.handlingFee" @input="valueChange"   style="width:130px; margin-right: 46px;"></td>
-                <td>手续费率(%)</td>
-                <td><input type="number" v-model="detail.taxRate" @input="valueChange"      style="width: 130px;"></td>
-            </tr>
-
-            <tr>
-                <td colspan="8">其他</td>
-            </tr>
-            <tr>
-                <td colspan="8">
-                    <textarea v-model="detail.other"  style="width: 100%; height: 55px; resize: none;"></textarea>
-                </td>
-            </tr>
-
-        </table>
-        <%--<div><span>促销编码</span> <input type="number" v-model="detail.activityCode"  readonly="readonly" style="width: 110px;">--%>
-            <%--<span>活动类型</span>--%>
-            <%--<select v-model="detail.activityType"  style="width: 100px;">--%>
-                <%--<option value="" >请选择</option>--%>
-                <%--<option  v-bind:value="item.descriptionCode" v-for="item in activityType" >{{item.description}}</option>--%>
-            <%--</select>--%>
-            <%--<span>销售开始时间</span>--%>
-            <%--<input type="text" id="test1" v-model="detail.salesStartTime" autocomplete="off">--%>
-
-            <%--<span>销售结束时间</span>--%>
-            <%--<input type="text" id="test2"  v-model="detail.salesEndTime" autocomplete="off">--%>
-        <%--</div>--%>
-        <%--<div><span>每台现用张数/金额</span> <input type="number" @input="valueChange"  v-model="detail.amount" style="width: 5rem; text-align: center;">--%>
-            <%--<span>回款周期</span>--%>
-<%--            <select v-model="detail.billCycle"  style="width: 100px; ">--%>
-<%--                <option value="1">T+1</option>--%>
-<%--                <option value="2">T+2</option>--%>
-<%--                <option value="3">T+3</option>--%>
-<%--                <option value="4">T+4</option>--%>
-<%--                <option value="5">T+5</option>--%>
-<%--                <option value="6">T+6</option>--%>
-<%--                <option value="7">T+7</option>--%>
-<%--                <option value="8">T+8</option>--%>
-<%--                <option value="9">T+9</option>--%>
-<%--                <option value="10">T+10</option>--%>
-<%--                <option value="11">T+11</option>--%>
-<%--                <option value="12">T+12</option>--%>
-<%--                <option value="13">T+13</option>--%>
-<%--                <option value="14">T+14</option>--%>
-<%--                <option value="15">T+15</option>--%>
-<%--            </select>--%>
-        <%--</div>--%>
-<%--        <div>--%>
-<%--            <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">活动描述</h3>--%>
-<%--            <textarea style="width: 895px; height: 55px; resize: none;" v-model="detail.description">--%>
-<%--            </textarea>--%>
-<%--        </div>--%>
-<%--        <div>--%>
-<%--            <table style=" width: 70%; max-width: 1000px; border-collapse: separate;border-spacing: 5px;">--%>
-<%--                <tr>--%>
-<%--                    <td >七字描述</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="text " v-model="detail.introduction"  style="width: 100px;">--%>
-<%--                    </td>--%>
-<%--                    <td>团购网站</td>--%>
-<%--                    <td>--%>
-<%--                     <select v-model="detail.theWay"  style="width: 100px;">&ndash;%&gt;--%>
-<%--                         <option value="" >请选择</option>--%>
-<%--                         <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>--%>
-<%--                     </select>--%>
-<%--                    </td>--%>
-<%--                    <td>核销开始时间</td>--%>
-<%--                    <td> <input type="text" id="test3"  v-model="detail.usageStartTime" autocomplete="off"></td>--%>
-<%--                    <td>核销结束时间</td>--%>
-<%--                    <td><input type="text" id="test4" v-model="detail.usageEndTime" autocomplete="off"></td>--%>
-<%--                </tr>--%>
-
-<%--                <tr>--%>
-<%--                    <td >销售单价</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 100px;">--%>
-<%--                    </td>--%>
-<%--                    <td>回款单价</td>--%>
-<%--                    <td>--%>
-<%--                        <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 100px;margin-right: 62px;">--%>
-<%--                    </td>--%>
-<%--                    <td>手续费</td>--%>
-<%--                    <td> <input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width:130px; margin-right: 46px;"></td>--%>
-<%--                    <td>手续费率(%)</td>--%>
-<%--                    <td><input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 130px;"></td>--%>
-<%--                </tr>--%>
-
-<%--            </table>--%>
-
-<%--            <span>七字描述</span> <input type="text " v-model="detail.introduction" @input="valueChange" style="width: 110px;">--%>
-<%--            <span>团购网站</span> <select v-model="detail.theWay"  style="width: 100px;">--%>
-<%--                <option value="" >请选择</option>--%>
-<%--                <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>--%>
-<%--            </select>--%>
-<%--            <span>核销开始时间</span>--%>
-<%--            <input type="text" id="test3"  v-model="detail.usageStartTime" autocomplete="off">--%>
-<%--            <span>核销结束时间</span>--%>
-<%--            <input type="text" id="test4" v-model="detail.usageEndTime" autocomplete="off">--%>
-<%--        </div>--%>
-        <%--<div>--%>
-            <%--<h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">与本活动共存的活动</h3>--%>
-            <%--<label for="id_select"></label>--%>
-            <%--<select id="id_select" class="selectpicker bla bla bli" multiple data-live-search="true">--%>
-                <%--&lt;%&ndash;<option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>&ndash;%&gt;--%>
-                <%--</optgroup>--%>
-            <%--</select>--%>
-        <%--</div>--%>
-<%--        <div><span>销售单价</span> <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 5rem;">--%>
-<%--            <span>回款单价</span> <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 5rem;margin-right: 62px;">--%>
-<%--            <span>手续费</span><input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width: 5rem; margin-right: 46px;">--%>
-<%--            <span>手续费率(%)</span> <input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 10rem;">--%>
-<%--        </div>--%>
-<%--        <div>--%>
-<%--            <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">其他</h3>--%>
-<%--            <textarea v-model="detail.other"  style="width: 895px; height: 35px; resize: none;"></textarea>--%>
-<%--        </div>--%>
-
-        <div>
-            <button type="button" class="btn btn-default" @click="edit()">修改活动</button>
-            <button type="button" class="btn btn-default" id="addActive" style="    margin-left: 3rem;">添加门店</button>
-            <button type="button" class="btn btn-default" @click="toList()" style="    margin-left: 3rem;">返回列表</button>
-        </div>
-    </form>
-    <table id="demo" lay-filter="test"></table>
-
-    <div class="showChooseDiv" style="display: none;  padding: 20px">
-        <div id="dept_main" style="margin-right: 2%;">
-                <span>
-                    <input type="text" id="search" style="width: 70%;border: 1px solid gray; border-radius: 4px; outline: none;"/>
-                </span>
-            <div id="dept_tree">
+<body>
+<form class="layui-form" style="font-size:3px" action="" id="app">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">活动类型</label>
+            <div class="layui-input-inline">
+                <select id="activityTypes">
+                    <option value="">请选择</option>
+                    <%--<option  v-bind:value="item.descriptionCode"  v-for="item in activityType" >{{item.description}}</option>--%>
+                </select>
             </div>
-            <div class="layui-form-item float-right">
-                <div class="layui-input-block">
-                    <button class="layui-btn layui-btn-normal layui-btn-sm" id="lay-submit-Choose">确定</button>
-                </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label" pane>销售开始时间</label>
+            <div class="layui-input-block">
+                <input type="text" style="width:190px" name="date" id="test1" autocomplete="off" class="layui-input"  v-model="detail.salesStartTime">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">销售结束时间</label>
+            <div class="layui-input-block">
+                <input type="text"  style="width:190px" name="date" id="test2" autocomplete="off" class="layui-input" v-model="detail.salesEndTime">
             </div>
         </div>
     </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">回款周期</label>
+            <div class="layui-input-inline">
+                <select name="modules" lay-verify="required" lay-search="" id="billCycle">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label" style="width: auto;">每台限用张数/金额</label>
+            <div class="layui-input-inline">
+                <input type="text" name="username" @input="valueChange"  v-model="detail.amount" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">活动简述</label>
+        <div class="layui-input-block">
+            <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" v-model="detail.introduction" style="width: 90%"  @input="textChange">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">活动描述</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入内容" class="layui-textarea" style="width: 90%" v-model="detail.description" ></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <%--            <div class="layui-inline">--%>
+        <%--                <label class="layui-form-label">七字描述</label>--%>
+        <%--                <div class="layui-input-inline">--%>
+        <%--                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" v-model="detail.introduction">--%>
+        <%--                </div>--%>
+        <%--            </div>--%>
+        <div class="layui-inline">
+            <label class="layui-form-label">团购网站</label>
+            <div class="layui-input-inline">
+                <select id="channel">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">核销开始时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="date" id="test3" lay-verify="date"  autocomplete="off" class="layui-input" v-model="detail.usageStartTime">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">核销结束时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="date" id="test4" lay-verify="date"  autocomplete="off" class="layui-input" v-model="detail.usageEndTime">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">销售单价</label>
+            <div class="layui-input-inline">
+                <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.sellingPrice" @input="sellingPriceChange">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">回款单价</label>
+            <div class="layui-input-inline">
+                <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"   v-model="detail.billPrice" @input="billPricePriceChange">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">手续费</label>
+            <div class="layui-input-inline">
+                <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.handlingFee" @input="handlingFeeChange">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">手续费率(%)</label>
+            <div class="layui-input-inline">
+                <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.taxRate" @input="taxRateChange">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">其他</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入内容" class="layui-textarea" v-model="detail.other"  style="width: 90%" ></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-setval" @click="edit()">修改活动</button>
+            <button type="button" class="layui-btn layui-btn-normal" id="addActive">添加门店</button>
+            <button type="button" class="layui-btn"    @click="toList()">返回列表</button>
+        </div>
+    </div>
+</form>
+
+<table id="demo" lay-filter="test"></table>
+
+<div class="showChooseDiv" style="display: none;  padding: 20px">
+    <div id="dept_main" style="margin-right: 2%;">
+                <span>
+                    <input type="text" id="search" style="width: 70%;border: 1px solid gray; border-radius: 4px; outline: none;"/>
+                </span>
+        <div id="dept_tree">
+        </div>
+        <div class="layui-form-item float-right">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal layui-btn-sm" id="lay-submit-Choose">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <script type="text/html" id="opt">
     <a class="layui-btn layui-btn-xs" lay-event="del">删除</a>
@@ -274,7 +181,143 @@
 <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">;
+//日期控件
+var myDate = new Date();
+var defaultMinDate ={
+    year: myDate.getFullYear(),
+    month: myDate.getMonth(),
+    date:myDate.getDate()+1,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+};
+var defaultMaxDate = {
+    year: 2222,
+    month: 1,
+    date:1,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+};
+var aMaxDate = defaultMaxDate;
+var aMinDate = defaultMinDate;
+var bMinDate = defaultMinDate;
+var bMaxDate = defaultMaxDate;
+var cMaxDate = defaultMaxDate;
+var cMinDate = defaultMinDate;
+var dMinDate = defaultMinDate;
+var dMaxDate = defaultMaxDate;
 
+
+var a = laydate.render({
+    elem: '#test1' //指定元素
+    ,show: false //直    接显示
+    ,trigger: 'click' //采用click弹出
+    ,btns: ['clear', 'confirm']
+    ,min:1
+    ,done: function(value, date, endDate){
+        app.detail.salesStartTime=value;
+        if (value == '' || value == undefined){
+            bMinDate = defaultMinDate;
+        }else {
+            date.month = date.month-1;
+            bMinDate = date;
+            b.config.min=bMinDate;
+            b.config.max=bMaxDate;
+
+        }
+    }
+});
+//
+// lay('#test1').on('click', function(e){
+//     a.config.max=aMaxDate;
+//     a.config.min=aMinDate;
+// });
+
+
+var b = laydate.render({
+    elem: '#test2' //指定元素
+    ,show: false //直接显示
+    ,trigger: 'click' //采用click弹出
+    ,btns: ['clear', 'confirm']
+    // ,closeStop: '#test2' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
+    ,done: function(value, date, endDate){
+        app.detail.salesEndTime=value;
+        if (value == '' || value == undefined){
+            aMaxDate = defaultMaxDate
+        }else {
+            date.month = date.month-1
+            aMaxDate = date;
+            a.config.max=aMaxDate;
+            a.config.min=aMinDate;
+        }
+    }
+});
+
+// lay('#test2').on('click', function(e){
+//     if(bMinDate == undefined || bMinDate == ''){
+//         b.config.min=defaultMinDate;
+//     }else {
+//         b.config.min=bMinDate;
+//         b.config.max=bMaxDate;
+//
+//     }
+//
+// });
+
+var c = laydate.render({
+    elem: '#test3' //指定元素
+    ,show: false //直    接显示
+    ,trigger: 'click' //采用click弹出
+    ,btns: ['clear', 'confirm']
+    ,min:1
+    // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
+    ,done: function(value, date, endDate){
+        app.detail.usageStartTime=value;
+        if (value == '' || value == undefined){
+            dMinDate = defaultMinDate
+        }else {
+            date.month = date.month-1;
+            dMinDate = date;
+            d.config.min=dMinDate;
+            d.config.max=dMaxDate;
+        }
+    }
+});
+
+// lay('#test3').on('click', function(e){
+//     c.config.max=cMaxDate;
+//     c.config.min=cMinDate;
+// });
+
+var d = laydate.render({
+    elem: '#test4' //指定元素
+    ,show: false //直    接显示
+    ,trigger: 'click' //采用click弹出
+    ,btns: ['clear', 'confirm']
+    ,min:1
+    // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
+    ,done: function(value, date, endDate){
+        app.detail.usageEndTime=value;
+        if (value == '' || value == undefined){
+            cMaxDate = defaultMinDate
+        }else {
+            date.month = date.month-1;
+            cMaxDate = date;
+            c.config.max=cMaxDate;
+            c.config.min=cMinDate;
+        }
+    }
+});
+
+// lay('#test4').on('click', function(e){
+//     if(dMinDate == undefined || dMinDate == ''){
+//         d.config.min=defaultMinDate;
+//     }else {
+//         d.config.min=dMinDate;
+//         d.config.max=dMaxDate;
+//     }
+// });
     var app = new Vue({
         el: "#app",
         data: {
@@ -307,9 +350,6 @@
         },
         created:function(){
             this.queryRelActive();
-            this.query("activity_type");
-            this.query("channel");
-            this.query("bill_cycle_type");
             this.queryDetail();
 
             // $('.selectpicker').selectpicker('refresh');     //设置好内容后刷新，  多用于异步请求
@@ -324,13 +364,30 @@
                 }
                 e.target.value=val.slice(0,20);
             },
-            valueChange(e){
+            sellingPriceChange:function (e){
+                this.detail.sellingPrice = this.valueChange(e);
+            },
+            billPricePriceChange:function (e){
+                this.detail.billPrice = this.valueChange(e);
+            },
+            handlingFeeChange:function (e){
+                this.detail.handlingFee = this.valueChange(e);
+            },
+            taxRateChange:function (e){
+                this.detail.taxRate = this.valueChange(e);
+            },
+            valueChange:function (e){
                 e.target.value = e.target.value.replace(/(^\s*)|(\s*$)/g, "");
-                const reg = /[^\d.]/g;
-
+                let reg = /[^\d.]/g;
+                //约定售卖份数 不能有小数
+                if("contractAmount"==e.target.name){
+                    reg = /[^\d]/g;
+                    e.target.value = e.target.value.replace(reg, "");
+                    app.detail.contractAmount = e.target.value;
+                    return;
+                }
                 // 只能是数字和小数点，不能是其他输入
                 e.target.value = e.target.value.replace(reg, "");
-
                 // 保证第一位只能是数字，不能是点
                 e.target.value = e.target.value.replace(/^\./g, "");
                 // 小数只能出现1位
@@ -343,10 +400,16 @@
                     /^(\-)*(\d+)\.(\d\d).*$/,
                     "$1$2.$3"
                 );
+                return e.target.value;
             },
             edit:function () {
-                var actives = ($(".selectpicker").val());
-                this.detail.sharedActivity = actives;
+                if(app.detail.sharedActivity instanceof Array){
+                }else {
+                    app.detail.sharedActivity = [app.detail.sharedActivity];
+                }
+                app.detail.activityType = $("#activityTypes").val();
+                app.detail.billCycle = $("#billCycle").val();
+                app.detail.channel = $("#channel").val();
                 if (this.detail.activityCode == ''){
                     layer.msg('促销编码为空');
                     return;
@@ -412,19 +475,19 @@
                 //     layer.msg('请选择共存活动');
                 //     return;
                 // }
-                if (this.detail.sellingPrice == ''){
+                if (this.detail.sellingPrice+'' == ''){
                     layer.msg('销售价为空');
                     return;
                 }
-                if (this.detail.billPrice == ''){
+                if (this.detail.billPrice+'' == ''){
                     layer.msg('回款单价为空');
                     return;
                 }
-                if (this.detail.handlingFee == ''){
+                if (this.detail.handlingFee+'' == ''){
                     layer.msg('手续费为空');
                     return;
                 }
-                if (this.detail.taxRate == ''){
+                if (this.detail.taxRate+'' == ''){
                     layer.msg('手续费率为空');
                     return;
                 }
@@ -463,10 +526,38 @@
                 this.$http.post('<%=request.getContextPath()%>/PromotionController/queryDictionary',{descriptionType:type},{emulateJSON:true}).then(function(response) {
                         if('activity_type' == type){
                             this.activityType = response.data.data;
+                            $.each(this.activityType, function(index, item) {
+                                //赋值
+                                if(item.descriptionCode ==  app.detail.activityType ){
+                                    $('#activityTypes').append(new Option( item.description,item.descriptionCode,true,true));
+                                }else {
+                                    $('#activityTypes').append(new Option( item.description,item.descriptionCode));
+
+                                }
+                            });
+                            layui.form.render("select");
                         }else if('channel' == type){
                             this.channel = response.data.data;
+                            $.each(this.channel, function(index, item) {
+                                if(item.descriptionCode ==  app.detail.channel ){
+                                    $('#channel').append(new Option( item.description,item.descriptionCode,true,true));
+
+                                }else{
+                                    $('#channel').append(new Option( item.description,item.descriptionCode));
+                                }
+                            });
+                            layui.form.render("select");
                         }else if('bill_cycle_type' == type){
                             this.billCycles = response.data.data;
+                            $.each(this.billCycles, function(index, item) {
+                                if(item.descriptionCode ==  app.detail.billCycle ){
+                                    $('#billCycle').append(new Option( item.description,item.descriptionCode,true,true));
+
+                                }else{
+                                    $('#billCycle').append(new Option( item.description,item.descriptionCode));
+                                }
+                            });
+                            layui.form.render("select");
                         }
                     },
                     function(response) {
@@ -492,11 +583,56 @@
                         console.log(response.data);
                         if (10000 == response.data.code){
                             this.detail = response.data.data;
+                            var salesEnd = new Date(this.detail.salesEndTime);
+                            var aDefaultMaxDate ={
+                                year: salesEnd.getFullYear(),
+                                month: salesEnd.getMonth(),
+                                date:salesEnd.getDate(),
+                                hours: 0,
+                                minutes: 0,
+                                seconds: 0
+                            };
+                            a.config.max = aDefaultMaxDate;
+                            var salesStart = new Date(this.detail.salesStartTime);
+                            var bDefaultMinDate ={
+                                year: salesStart.getFullYear(),
+                                month: salesStart.getMonth(),
+                                date:salesStart.getDate(),
+                                hours: 0,
+                                minutes: 0,
+                                seconds: 0
+                            };
+                            b.config.min = bDefaultMinDate;
+
+                            var usageEnd = new Date(this.detail.usageEndTime);
+                            var cQueryMaxDate ={
+                                year: usageEnd.getFullYear(),
+                                month: usageEnd.getMonth(),
+                                date:usageEnd.getDate(),
+                                hours: 0,
+                                minutes: 0,
+                                seconds: 0
+                            };
+                            c.config.max = cQueryMaxDate;
+
+                            var usageStart = new Date(this.detail.usageStartTime);
+                            var dQueryMinDate ={
+                                year: usageStart.getFullYear(),
+                                month: usageStart.getMonth(),
+                                date:usageStart.getDate(),
+                                hours: 0,
+                                minutes: 0,
+                                seconds: 0
+                            };
+                            d.config.min = dQueryMinDate;
                             // for (var i = 0; i < this.detail.sharedActivity.length; i++) {
                             //     $('#id_select').selectpicker('val',this.detail.sharedActivity);
                             //     $('#id_select').selectpicker('refresh');     //设置好内容后刷新，  多用于异步请求
                             // }
-
+                            //等待页面渲染完毕在加载下拉选
+                            this.query("activity_type");
+                            this.query("bill_cycle_type");
+                            this.query("channel");
                         }else {
                             layer.msg('查询异常');
                         }
@@ -528,139 +664,6 @@
     $(window).on('load', function () {
         $('.selectpicker').selectpicker();
     });
-
-    //日期控件
-    var bMinDate;
-    var dMinDate;
-    var defaultMinDate =   {
-        year: 1900,
-        month: 1,
-        date:1,
-        hours: 0,
-        minutes: 0,
-        seconds: 0
-    };
-    var aMaxDate;
-    var cMaxDate;
-    var defaultMaxDate = {
-        year: 2222,
-        month: 1,
-        date:1,
-        hours: 0,
-        minutes: 0,
-        seconds: 0
-    };
-
-
-    var a = laydate.render({
-        elem: '#test1' //指定元素
-        ,show: false //直    接显示
-        ,trigger: 'click' //采用click弹出
-        ,min:1
-        ,value: app.detail.salesStartTime
-        ,btns: ['clear', 'confirm']
-        // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
-        ,done: function(value, date, endDate){
-            app.detail.salesStartTime=value;
-            if (value == '' || value == undefined){
-                bMinDate = defaultMinDate
-            }else {
-                date.month = date.month-1;
-                bMinDate = date;
-            }
-        }
-    });
-
-    lay('#test1').on('click', function(e){
-        if(aMaxDate == undefined || aMaxDate == ''){
-            a.config.max=defaultMaxDate;
-        }else {
-            a.config.max=aMaxDate;
-        }
-    });
-
-
-    var b = laydate.render({
-        elem: '#test2' //指定元素
-        ,show: false //直接显示
-        ,trigger: 'click' //采用click弹出
-        ,min:1
-        ,value: app.detail.salesEndTime
-        ,btns: ['clear', 'confirm']
-        // ,closeStop: '#test2' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
-        ,done: function(value, date, endDate){
-            app.detail.salesEndTime=value;
-            if (value == '' || value == undefined){
-                aMaxDate = defaultMaxDate
-            }else {
-                date.month = date.month-1
-                aMaxDate = date;
-            }
-        }
-    });
-
-    lay('#test2').on('click', function(e){
-        if(bMinDate == undefined || bMinDate == ''){
-            b.config.min=defaultMinDate;
-        }else {
-            b.config.min=bMinDate;
-        }
-
-    });
-
-    var c = laydate.render({
-        elem: '#test3' //指定元素
-        ,show: false //直    接显示
-        ,trigger: 'click' //采用click弹出
-        ,btns: ['clear', 'confirm']
-        ,min:1
-        // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
-        ,done: function(value, date, endDate){
-            app.detail.usageStartTime=value;
-            if (value == '' || value == undefined){
-                dMinDate = defaultMinDate
-            }else {
-                date.month = date.month-1;
-                dMinDate = date;
-            }
-        }
-    });
-
-    lay('#test3').on('click', function(e){
-        if(cMaxDate == undefined || cMaxDate == ''){
-            c.config.max=defaultMaxDate;
-        }else {
-            c.config.max=cMaxDate;
-        }
-    });
-
-    var d = laydate.render({
-        elem: '#test4' //指定元素
-        ,show: false //直    接显示
-        ,trigger: 'click' //采用click弹出
-        ,btns: ['clear', 'confirm']
-        ,min:1
-        // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
-        ,done: function(value, date, endDate){
-            app.detail.usageEndTime=value;
-            if (value == '' || value == undefined){
-                dMinDate = defaultMinDate
-            }else {
-                date.month = date.month-1;
-                dMinDate = date;
-            }
-        }
-    });
-
-    lay('#test4').on('click', function(e){
-        if(dMinDate == undefined || dMinDate == ''){
-            d.config.min=defaultMinDate;
-        }else {
-            d.config.min=dMinDate;
-        }
-    });
-
-
 </script>
 
 <script>

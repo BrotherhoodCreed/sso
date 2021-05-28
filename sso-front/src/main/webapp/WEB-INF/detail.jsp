@@ -8,200 +8,159 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新增活动</title>
+    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css" media="all">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        input {
-            margin-right: 14px;
+        .layui-form-label {
             width: 100px;
         }
-        
-        select {
-            margin-right: 14px;
+        .layui-input-block {
+            margin-left: 130px;
         }
-        
-        #app div {
-            margin-bottom: 10px !important;
+        .layui-form-item{
+            margin-top: 10px;
         }
-
-        #app {
-            margin-top: 30px !important;
-            margin-left: 50px !important;
-        }
-
     </style>
-    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/bootstrap/bootstrap-select.min.css">
-    <link rel="stylesheet" href="${ctx}/static/layui/css/layui.css" media="all">
 
 <body>
-    <form action="" id="app">
-        <div>
-            <table style=" width: 70%; max-width: 895px; border-collapse: separate;border-spacing: 5px;">
-                <tr>
-                    <td style="width: 20%">活动类型</td>
-                    <td>
-                        <select v-model="detail.activityType"  style="width: 100px;">
-                        <option value="" >请选择</option>
-                        <option  v-bind:value="item.descriptionCode" v-for="item in activityType" >{{item.description}}</option>
+    <form class="layui-form" style="font-size:3px" action="" id="app">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">活动类型</label>
+                <div class="layui-input-inline">
+                    <select id="activityTypes">
+                        <option value="">请选择</option>
+                        <%--<option  v-bind:value="item.descriptionCode"  v-for="item in activityType" >{{item.description}}</option>--%>
                     </select>
-                    </td>
-                    <td>销售开始时间</td>
-                    <td>  <input type="text" id="test1" autocomplete="off"> </td>
-                    <td>销售结束时间</td>
-                    <td>    <input type="text" id="test2" autocomplete="off"></td>
-                </tr>
-                <tr>
-                    <td style="width: 20%">每台现用张数/金额</td>
-                    <td>
-                        <input type="number" @input="valueChange"  v-model="detail.amount" style="width: 100px; text-align: center;">
-                    </td>
-                    <td>回款周期</td>
-                    <td>
-                        <select v-model="detail.billCycle"  style="width: 100px; ">
-                            <option value="">请选择</option>
-                            <option  v-bind:value="item.descriptionCode" v-for="item in billCycles" >{{item.description}}</option>
-                        </select>
-                    </td>
-                    <td></td>
-                    <td>  </td>
-                </tr>
-
-            </table>
-            <%--<span>促销编码</span> <input type="hidden" v-model="detail.activityCode"  style="width: 110px;"> --%>
-            <%--<span>活动类型</span>--%>
-                <%--<select v-model="detail.activityType"  style="width: 100px;">--%>
-                    <%--<option value="" >请选择</option>--%>
-                    <%--<option  v-bind:value="item.descriptionCode" v-for="item in activityType" >{{item.description}}</option>--%>
-                <%--</select>--%>
-            <%--<span>销售开始时间</span>--%>
-
-            <%--<input type="text" id="test1" autocomplete="off">--%>
-
-            <%--<span>销售结束时间</span>--%>
-            <%--<input type="text" id="test2" autocomplete="off">--%>
-        <%--</div>--%>
-        <%--<div><span>每台现用张数/金额</span> <input type="number" @input="valueChange"  v-model="detail.amount" style="width: 5rem; text-align: center;">--%>
-            <%--<span>回款周期</span>--%>
-            <%--<select v-model="detail.billCycle"  style="width: 100px; ">--%>
-                <%--<option value="1">T+1</option>--%>
-                <%--<option value="2">T+2</option>--%>
-                <%--<option value="3">T+3</option>--%>
-                <%--<option value="4">T+4</option>--%>
-                <%--<option value="5">T+5</option>--%>
-                <%--<option value="6">T+6</option>--%>
-                <%--<option value="7">T+7</option>--%>
-                <%--<option value="8">T+8</option>--%>
-                <%--<option value="9">T+9</option>--%>
-                <%--<option value="10">T+10</option>--%>
-                <%--<option value="11">T+11</option>--%>
-                <%--<option value="12">T+12</option>--%>
-                <%--<option value="13">T+13</option>--%>
-                <%--<option value="14">T+14</option>--%>
-                <%--<option value="15">T+15</option>--%>
-            <%--</select>--%>
-        <%--</div>--%>
-       <div>
-           <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">活动简述</h3>
-           <input type="text " v-model="detail.introduction"  style="width: 895px;height:22px" @input="textChange">
-       </textarea>
-       </div>
-        <div>
-            <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">活动描述</h3>
-            <textarea style="width: 895px; height: 55px; resize: none;" v-model="detail.description">
-            </textarea>
-        </div>
-        <div>
-            <table style=" width: 70%; max-width: 895px; border-collapse: separate;border-spacing: 5px;">
-                <tr>
-                    <td>团购网站</td>
-                    <td>   <select v-model="detail.channel"  style="width: 100px;">
-                        <option value="" >请选择</option>
-                        <option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>
-                    </select> </td>
-                    <td>核销开始时间</td>
-                    <td> <input type="text" id="test3" autocomplete="off"></td>
-                    <td>核销结束时间</td>
-                    <td> <input type="text" id="test4" autocomplete="off"></td>
-                    <td ></td>
-                    <td>
-
-                    </td>
-                </tr>
-
-                <tr>
-                    <td >销售单价</td>
-                    <td>
-                        <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 100px;">
-                    </td>
-                    <td>回款单价</td>
-                    <td>
-                        <input type="number " v-model="detail.billPrice" @input="valueChange"  style="width: 100px;margin-right: 62px;">
-                    </td>
-                    <td>手续费</td>
-                    <td> <input type="number " v-model="detail.handlingFee" @input="valueChange" style="width:100px; margin-right: 46px;"></td>
-                    <td>手续费率(%)</td>
-                    <td><input type="number" v-model="detail.taxRate" @input="valueChange"    style="width: 100px;"></td>
-                </tr>
-
-            </table>
-
-
-            <%--<span>七字描述</span> <input type="text " v-model="detail.introduction"  style="width: 110px;">--%>
-            <%--<span>团购网站</span> <select v-model="detail.theWay"  style="width: 100px;">--%>
-                <%--<option value="" >请选择</option>--%>
-                <%--<option  v-bind:value="item.descriptionCode" v-for="item in channel" >{{item.description}}</option>--%>
-            <%--</select>--%>
-            <%--<span>核销开始时间</span>--%>
-            <%--<input type="text" id="test3" autocomplete="off">--%>
-            <%--<span>核销结束时间</span>--%>
-            <%--<input type="text" id="test4" autocomplete="off">--%>
-        </div>
-        <%--<div>--%>
-            <%--<h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">与本活动共存的活动</h3>--%>
-            <%--<label for="id_select"></label>--%>
-            <%--<select id="id_select" class="selectpicker bla bla bli" multiple data-live-search="true">--%>
-                <%--&lt;%&ndash;<option v-bind:value="item.id" v-for="item in items">{{item.id}}</option>&ndash;%&gt;--%>
-                <%--</optgroup>--%>
-            <%--</select>--%>
-        <%--</div>--%>
-        <%--<div><span>销售单价</span> <input type="number" v-model="detail.sellingPrice" @input="valueChange"  @blur.native.capture="changeCount"  style="width: 5rem;">--%>
-            <%--<span>回款单价</span> <input type="number " v-model="detail.billPrice" @input="valueChange" @blur.native.capture="billPricechangeCount(0)"  style="width: 5rem;margin-right: 62px;">--%>
-            <%--<span>手续费</span><input type="number " v-model="detail.handlingFee" @input="valueChange"  @blur.native.capture="billPricechangeCount(1)" style="width: 5rem; margin-right: 46px;">--%>
-            <%--<span>手续费率(%)</span> <input type="number" v-model="detail.taxRate" @input="valueChange"   @blur.native.capture="billPricechangeCount(2)"   style="width: 10rem;"></div>--%>
-        <%--<div>--%>
-            <h3 style="font-size: 16px; font-weight: normal; margin: 0 0 3px;">其他</h3>
-            <textarea v-model="detail.other"  style="width: 895px; height: 55px; resize: none;"></textarea>
-        </div>
-        <%--<div>--%>
-            <%--<button type="button" class="btn btn-default" @click="save()">保存活动</button>--%>
-        <%--</div>--%>
-        <div>
-            <button type="button" class="btn btn-default" id="addActive">添加门店</button>
-        </div>
-        <table id="demo" lay-filter="test"></table>
-
-
-
-    </form>
-    <div class="showChooseDiv" style="display: none;  padding: 20px">
-            <div id="dept_main" style="margin-right: 2%;">
-                <span>
-                    <input type="text" id="search" style="width: 70%;border: 1px solid gray; border-radius: 4px; outline: none;"/>
-                </span>
-                <div id="dept_tree">
                 </div>
-                <div class="layui-form-item float-right">
-                    <div class="layui-input-block">
-                        <button class="layui-btn layui-btn-normal layui-btn-sm" id="lay-submit-Choose">确定</button>
-                    </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" pane>销售开始时间</label>
+                <div class="layui-input-block">
+                    <input type="text" style="width:190px" name="date" id="test1" autocomplete="off" class="layui-input"  v-model="detail.salesStartTime">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">销售结束时间</label>
+                <div class="layui-input-block">
+                    <input type="text"  style="width:190px" name="date" id="test2" autocomplete="off" class="layui-input" v-model="detail.salesEndTime">
                 </div>
             </div>
         </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">回款周期</label>
+                <div class="layui-input-inline">
+                    <select name="modules" lay-verify="required" lay-search="" id="billCycle">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width: auto;">每台限用张数/金额</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" @input="valueChange"  v-model="detail.amount" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">活动简述</label>
+            <div class="layui-input-block">
+                <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" v-model="detail.introduction" style="width: 90%"  @input="textChange">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">活动描述</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入内容" class="layui-textarea" style="width: 90%" v-model="detail.description" ></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <%--            <div class="layui-inline">--%>
+            <%--                <label class="layui-form-label">七字描述</label>--%>
+            <%--                <div class="layui-input-inline">--%>
+            <%--                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" v-model="detail.introduction">--%>
+            <%--                </div>--%>
+            <%--            </div>--%>
+                <div class="layui-inline">
+                    <label class="layui-form-label">团购网站</label>
+                    <div class="layui-input-inline">
+                        <select id="channel">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">核销开始时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="date" id="test3" lay-verify="date"  autocomplete="off" class="layui-input" v-model="detail.usageStartTime">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">核销结束时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="date" id="test4" lay-verify="date"  autocomplete="off" class="layui-input" v-model="detail.usageEndTime">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">销售单价</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.sellingPrice" @input="sellingPriceChange">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">回款单价</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"   v-model="detail.billPrice" @input="billPricePriceChange">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">手续费</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.handlingFee" @input="handlingFeeChange">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">手续费率(%)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.taxRate" @input="taxRateChange">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">其他</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入内容" class="layui-textarea" v-model="detail.other"  style="width: 90%" ></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal" id="addActive">添加门店</button>
+            </div>
+        </div>
+    </form>
+    <div class="showChooseDiv" style="display: none;  padding: 20px">
+        <div id="dept_main" style="margin-right: 2%;">
+                <span>
+                    <input type="text" id="search" style="width: 70%;border: 1px solid gray; border-radius: 4px; outline: none;"/>
+                </span>
+            <div id="dept_tree">
+            </div>
+            <div class="layui-form-item float-right">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-normal layui-btn-sm" id="lay-submit-Choose">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script src="${ctx}/js/jquery-3.3.1.js" type="text/javascript"></script>
@@ -261,13 +220,30 @@
                 }
                 e.target.value=val.slice(0,20);
             },
+            sellingPriceChange:function (e){
+                this.detail.sellingPrice = this.valueChange(e);
+            },
+            billPricePriceChange:function (e){
+                this.detail.billPrice = this.valueChange(e);
+            },
+            handlingFeeChange:function (e){
+                this.detail.handlingFee = this.valueChange(e);
+            },
+            taxRateChange:function (e){
+                this.detail.taxRate = this.valueChange(e);
+            },
             valueChange:function (e){
                 e.target.value = e.target.value.replace(/(^\s*)|(\s*$)/g, "");
-                const reg = /[^\d.]/g;
-
+                let reg = /[^\d.]/g;
+                //约定售卖份数 不能有小数
+                if("contractAmount"==e.target.name){
+                    reg = /[^\d]/g;
+                    e.target.value = e.target.value.replace(reg, "");
+                    app.detail.contractAmount = e.target.value;
+                    return;
+                }
                 // 只能是数字和小数点，不能是其他输入
                 e.target.value = e.target.value.replace(reg, "");
-
                 // 保证第一位只能是数字，不能是点
                 e.target.value = e.target.value.replace(/^\./g, "");
                 // 小数只能出现1位
@@ -280,90 +256,9 @@
                     /^(\-)*(\d+)\.(\d\d).*$/,
                     "$1$2.$3"
                 );
+                return e.target.value;
             },
             save:function () {
-                var actives = ($(".selectpicker").val());
-                this.detail.sharedActivity = actives;
-                // if (this.detail.activityCode == ''){
-                //     layer.msg('促销编码为空');
-                //     return;
-                // }
-                if (this.detail.activityType == ''){
-                    layer.msg('活动类型为空');
-                    return;
-                }
-                if (this.detail.salesStartTime == ''){
-                    layer.msg('销售开始时间为空');
-                    return;
-                }
-                if (this.detail.salesEndTime == ''){
-                    layer.msg('销售结束时间为空');
-                    return;
-                }
-                var startTimestamp = new Date(this.detail.salesStartTime.replace(/-/g, "/"));
-                var saleBegainTime = new Date(startTimestamp).getTime();
-                var endTimestamp = new Date(this.detail.salesEndTime.replace(/-/g, "/"));
-                var saleEndTime = new Date(endTimestamp).getTime();
-
-                var usageStartTime = new Date(this.detail.usageStartTime.replace(/-/g, "/"));
-                var usageBegainTime = new Date(usageStartTime).getTime();
-                if (saleEndTime < saleBegainTime){
-                    layer.msg('销售结束时间不能小于销售开始时间');
-                    return;
-                }
-                if(usageBegainTime<startTimestamp){
-                    layer.msg('核销开始时间不能小于销售开始时间');
-                    return;
-                }
-                if (this.detail.amount == ''){
-                    layer.msg('每台现用张数/金额为空');
-                    return;
-                }
-                if (this.detail.billCycle == ''){
-                    layer.msg('回款周期为空');
-                    return;
-                }
-                if (this.detail.description == ''){
-                    layer.msg('活动描述为空');
-                    return;
-                }
-                if (this.detail.introduction == ''){
-                    layer.msg('七字描述为空');
-                    return;
-                }
-                if (this.detail.channel == ''){
-                    layer.msg('请选择团购网站');
-                    return;
-                }
-                if (this.detail.usageStartTime == ''){
-                    layer.msg('核销开始时间为空');
-                    return;
-                }
-                if (this.detail.usageEndTime == ''){
-                    layer.msg('核销结束时间为空');
-                    return;
-                }
-
-                // if (this.detail.sharedActivity == ''){
-                //     layer.msg('请选择共存活动');
-                //     return;
-                // }
-                if (this.detail.sellingPrice == ''){
-                    layer.msg('销售价为空');
-                    return;
-                }
-                if (this.detail.billPrice == ''){
-                    layer.msg('回款单价为空');
-                    return;
-                }
-                if (this.detail.handlingFee == ''){
-                    layer.msg('手续费为空');
-                    return;
-                }
-                if (this.detail.taxRate == ''){
-                    layer.msg('手续费率为空');
-                    return;
-                }
                 // var param = {
                 //     promotionBaseInfoDo: this.detail,
                 //     promotionMapperDo:this.promotionMapper
@@ -420,10 +315,22 @@
                 this.$http.post('<%=request.getContextPath()%>/PromotionController/queryDictionary',{descriptionType:type},{emulateJSON:true}).then(function(response) {
                         if('activity_type' == type){
                             this.activityType = response.data.data;
+                            $.each(this.activityType, function(index, item) {
+                                $('#activityTypes').append(new Option( item.description,item.descriptionCode));
+                            });
+                            layui.form.render("select");
                         }else if('channel' == type){
                             this.channel = response.data.data;
+                            $.each(this.channel, function(index, item) {
+                                $('#channel').append(new Option( item.description,item.descriptionCode));
+                            });
+                            layui.form.render("select");
                         }else if('bill_cycle_type' == type){
                             this.billCycles = response.data.data;
+                            $.each(this.billCycles, function(index, item) {
+                                $('#billCycle').append(new Option( item.description,item.descriptionCode));
+                            });
+                            layui.form.render("select");
                         }
                     },
                     function(response) {
@@ -457,18 +364,16 @@
 
 
     //日期控件
-    var bMinDate;
-    var dMinDate;
-    var defaultMinDate =   {
-        year: 1900,
-        month: 1,
-        date:1,
+
+    var myDate = new Date();
+    var defaultMinDate ={
+        year: myDate.getFullYear(),
+        month: myDate.getMonth(),
+        date:myDate.getDate()+1,
         hours: 0,
         minutes: 0,
         seconds: 0
     };
-    var aMaxDate;
-    var cMaxDate;
     var defaultMaxDate = {
         year: 2222,
         month: 1,
@@ -477,6 +382,14 @@
         minutes: 0,
         seconds: 0
     };
+    var aMaxDate = defaultMaxDate;
+    var aMinDate = defaultMinDate;
+    var bMinDate = defaultMinDate;
+    var bMaxDate = defaultMaxDate;
+    var cMaxDate = defaultMaxDate;
+    var cMinDate = defaultMinDate;
+    var dMinDate = defaultMinDate;
+    var dMaxDate = defaultMaxDate;
 
 
     var a = laydate.render({
@@ -485,31 +398,22 @@
         ,trigger: 'click' //采用click弹出
         ,btns: ['clear', 'confirm']
         ,min:1
-        // ,closeStop: '#test1' //这里代表的意思是：点击 test1 所在元素阻止关闭事件冒泡。如果不设定，则无法弹出控件
         ,done: function(value, date, endDate){
-            console.log(date);
-            console.log(app.detail.thisTime);
             app.detail.salesStartTime=value;
             if (value == '' || value == undefined){
-                bMinDate = defaultMinDate
+                bMinDate = defaultMinDate;
             }else {
                 date.month = date.month-1;
                 bMinDate = date;
+                b.config.min=bMinDate;
+                b.config.max=bMaxDate;
             }
         }
     });
 
-    lay('#test1').on('click', function(e){
-        if(aMaxDate == undefined || aMaxDate == ''){
-            a.config.max=defaultMaxDate;
-            var thisTime = jQuery.parseJSON(app.detail.thisTime);
-            console.log(thisTime);
-            a.config.min = thisTime;
-        }else {
-            a.config.max=aMaxDate;
-        }
-    });
-
+    // lay('#test1').on('click', function(e){
+    //
+    // });
 
     var b = laydate.render({
         elem: '#test2' //指定元素
@@ -525,18 +429,21 @@
             }else {
                 date.month = date.month-1
                 aMaxDate = date;
+                a.config.max=aMaxDate;
+                a.config.min=aMinDate;
             }
         }
     });
 
-    lay('#test2').on('click', function(e){
-        if(bMinDate == undefined || bMinDate == ''){
-            b.config.min=defaultMinDate;
-        }else {
-            b.config.min=bMinDate;
-        }
-
-    });
+    // lay('#test2').on('click', function(e){
+    //     if(bMinDate == undefined || bMinDate == ''){
+    //         b.config.min=defaultMinDate;
+    //     }else {
+    //         b.config.min=bMinDate;
+    //         b.config.max=bMaxDate;
+    //     }
+    //
+    // });
 
     var c = laydate.render({
         elem: '#test3' //指定元素
@@ -552,20 +459,15 @@
             }else {
                 date.month = date.month-1;
                 dMinDate = date;
+                d.config.min=dMinDate;
+                d.config.max=dMaxDate;
             }
         }
     });
-
-    lay('#test3').on('click', function(e){
-        if(cMaxDate == undefined || cMaxDate == ''){
-            c.config.max=defaultMaxDate;
-            var thisTime= jQuery.parseJSON(app.detail.thisTime);
-            console.log(thisTime);
-            c.config.min = thisTime;
-        }else {
-            c.config.max=cMaxDate;
-        }
-    });
+    //
+    // lay('#test3').on('click', function(e){
+    //
+    // });
 
     var d = laydate.render({
         elem: '#test4' //指定元素
@@ -577,19 +479,13 @@
         ,done: function(value, date, endDate){
             app.detail.usageEndTime=value;
             if (value == '' || value == undefined){
-                dMinDate = defaultMinDate
+                cMaxDate = defaultMinDate
             }else {
-                // date.month = date.month-1;
-                // dMinDate = date;
+                date.month = date.month-1;
+                cMaxDate = date;
+                c.config.max=cMaxDate;
+                c.config.min=cMinDate;
             }
-        }
-    });
-
-    lay('#test4').on('click', function(e){
-        if(dMinDate == undefined || dMinDate == ''){
-            d.config.min=defaultMinDate;
-        }else {
-            d.config.min=dMinDate;
         }
     });
 
@@ -731,11 +627,89 @@
         });
         //打开选择页
         $("body").on("click", "#addActive", function() {
-            // var dataInto=$(this).prev().attr("name");
-            // if(''==app.detail.activityCode){
-            //     layer.msg("请先保存活动");
+            if(app.detail.sharedActivity instanceof Array){
+            }else {
+                app.detail.sharedActivity = [app.detail.sharedActivity];
+            }
+            app.detail.activityType = $("#activityTypes").val();
+            app.detail.billCycle = $("#billCycle").val();
+            app.detail.channel = $("#channel").val();
+            if (app.detail.activityType == ''){
+                layer.msg('活动类型为空');
+                return;
+            }
+            if (app.detail.salesStartTime == ''){
+                layer.msg('销售开始时间为空');
+                return;
+            }
+            if (app.detail.salesEndTime == ''){
+                layer.msg('销售结束时间为空');
+                return;
+            }
+            var startTimestamp = new Date(app.detail.salesStartTime.replace(/-/g, "/"));
+            var saleBegainTime = new Date(startTimestamp).getTime();
+            var endTimestamp = new Date(app.detail.salesEndTime.replace(/-/g, "/"));
+            var saleEndTime = new Date(endTimestamp).getTime();
+
+            var usageStartTime = new Date(app.detail.usageStartTime.replace(/-/g, "/"));
+            var usageBegainTime = new Date(usageStartTime).getTime();
+            if (saleEndTime < saleBegainTime){
+                layer.msg('销售结束时间不能小于销售开始时间');
+                return;
+            }
+            if(usageBegainTime<startTimestamp){
+                layer.msg('核销开始时间不能小于销售开始时间');
+                return;
+            }
+            if (app.detail.amount == ''){
+                layer.msg('每台现用张数/金额为空');
+                return;
+            }
+            if (app.detail.billCycle == ''){
+                layer.msg('回款周期为空');
+                return;
+            }
+            if (app.detail.description == ''){
+                layer.msg('活动描述为空');
+                return;
+            }
+            if (app.detail.introduction == ''){
+                layer.msg('七字描述为空');
+                return;
+            }
+            if (app.detail.channel == ''){
+                layer.msg('请选择团购网站');
+                return;
+            }
+            if (app.detail.usageStartTime == ''){
+                layer.msg('核销开始时间为空');
+                return;
+            }
+            if (app.detail.usageEndTime == ''){
+                layer.msg('核销结束时间为空');
+                return;
+            }
+
+            // if (app.detail.sharedActivity == ''){
+            //     layer.msg('请选择共存活动');
             //     return;
             // }
+            if (app.detail.sellingPrice+'' == ''){
+                layer.msg('销售价为空');
+                return;
+            }
+            if (app.detail.billPrice+'' == ''){
+                layer.msg('回款单价为空');
+                return;
+            }
+            if (app.detail.handlingFee+'' == ''){
+                layer.msg('手续费为空');
+                return;
+            }
+            if (app.detail.taxRate+'' == ''){
+                layer.msg('手续费率为空');
+                return;
+            }
             layer.open({
                 type: 1,
                 title: "选择",

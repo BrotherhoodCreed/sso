@@ -520,15 +520,15 @@ var d = laydate.render({
                 //     layer.msg('请选择共存活动');
                 //     return;
                 // }
-                if (this.detail.sellingPrice == ''){
+                if (this.detail.sellingPrice+'' == ''){
                     layer.msg('销售价为空');
                     return;
                 }
-                if (this.detail.billPrice == ''){
+                if (this.detail.billPrice+'' == ''){
                     layer.msg('回款单价为空');
                     return;
                 }
-                if (this.detail.handlingFee == ''){
+                if (this.detail.handlingFee+'' == ''){
                     layer.msg('手续费为空');
                     return;
                 }
