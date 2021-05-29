@@ -697,6 +697,11 @@
                 layer.msg('销售结束时间不能小于销售开始时间');
                 return;
             }
+            var days = parseInt((endTimestamp.getTime()-startTimestamp.getTime()) / (1000 * 60 * 60 * 24));
+            if(days > 30){
+                layer.msg('销售日期范围应在一个月之内');
+                return ;
+            }
             if(usageBegainTime<startTimestamp){
                 layer.msg('核销开始时间不能小于销售开始时间');
                 return;

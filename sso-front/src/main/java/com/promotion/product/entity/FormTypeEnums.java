@@ -1,8 +1,8 @@
 package com.promotion.product.entity;
 
 public enum FormTypeEnums {
-    TAKE_OUT("TAKE_OUT ","外卖","001"),
-    EAT_IN("EAT_IN","堂食","002");
+    TAKE_OUT("TAKE_OUT ","外卖","W"),
+    EAT_IN("EAT_IN","堂食","T");
     private String code;
     private String desc;
     private String index;

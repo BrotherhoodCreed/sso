@@ -129,9 +129,9 @@
     </select>
 
     <select id="querySerialNumber" resultType="Integer">
-        select count(1) + 1 as activity_code
-        from tb_promotion_base_info
-        where to_days(created_time) = to_days(now());
+        SELECT count(1) + 1 as activity_code
+        FROM tb_promotion_base_info
+        WHERE DATE_FORMAT(created_time, '%Y%m') = DATE_FORMAT( CURDATE( ) , '%Y%m' )
     </select>
 
 
