@@ -315,7 +315,7 @@ public class PromotionService {
         }
         //01 区域号
         //活动类型+区域编号
-        String code =savePromotionBaseInfoRequery.getActivityType()+ FormTypeEnums.EAT_IN.getIndex()+ format.format(date)+String.format("%03d",index);
+        String code =savePromotionBaseInfoRequery.getActivityType()+codePrefix+ FormTypeEnums.EAT_IN.getIndex()+ format.format(date)+String.format("%03d",index);
         //String code =codePrefix+ Integer.valueOf(FormTypeEnums.EAT_IN.getIndex())+ format.format(date)+String.format("%03d",index)+new Random(3).nextInt(999);;
         saveData(savePromotionBaseInfoRequery, promotionMapperDo, savePromotionBaseInfoRespone, promotionBaseInfoDo, code,FormTypeEnums.EAT_IN);
         return savePromotionBaseInfoRespone;
