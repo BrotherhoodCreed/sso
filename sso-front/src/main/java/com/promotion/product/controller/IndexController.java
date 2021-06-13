@@ -1,6 +1,7 @@
 package com.promotion.product.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.promotion.product.config.Constans;
 import com.promotion.product.entity.PromotionTypeEnum;
 import com.promotion.product.entity.UserDao;
 import com.promotion.product.service.UserAuthsService;
@@ -37,6 +38,19 @@ public class IndexController {
     @Value("${dingtail.redirect.uri}")
     private String redirectUrl;
 
+    @RequestMapping("/permission")
+    public ModelAndView permission(HttpServletRequest httpRequest){
+        ModelAndView modelAndView = null;
+        try {
+            modelAndView = new ModelAndView("permission");
+            UserDao user = (UserDao) httpRequest.getSession().getAttribute(Constans.USER_CONTENT);
+            modelAndView.addObject("user",user);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return modelAndView;
+    }
+
     @RequestMapping("/add")
     public ModelAndView detail(HttpServletRequest request){
         String viewName=PromotionTypeEnum.getDescByCode(request.getParameter("type"));
@@ -62,13 +76,29 @@ public class IndexController {
     }
 
     @RequestMapping("/list")
-    public String list(){
-        return "list";
+    public ModelAndView list(HttpServletRequest httpRequest){
+        ModelAndView modelAndView = null;
+        try {
+            modelAndView = new ModelAndView("list");
+            UserDao user = (UserDao) httpRequest.getSession().getAttribute(Constans.USER_CONTENT);
+            modelAndView.addObject("user",user);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return modelAndView;
     }
 
     @RequestMapping("/hall/list")
-    public String hallList(){
-        return "hall_list";
+    public ModelAndView hallList(HttpServletRequest httpRequest){
+        ModelAndView modelAndView = null;
+        try {
+            modelAndView = new ModelAndView("hall_list");
+            UserDao user = (UserDao) httpRequest.getSession().getAttribute(Constans.USER_CONTENT);
+            modelAndView.addObject("user",user);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return modelAndView;
     }
 
     @RequestMapping("/hall/edit")
@@ -76,6 +106,19 @@ public class IndexController {
         ModelAndView mv = new ModelAndView("hall_edit");
         mv.addObject("activeCode",id);
         return mv;
+    }
+
+    @RequestMapping("/index")
+    public ModelAndView index(HttpServletRequest httpRequest){
+        ModelAndView modelAndView = null;
+        try {
+            modelAndView = new ModelAndView("index");
+            UserDao user = (UserDao) httpRequest.getSession().getAttribute(Constans.USER_CONTENT);
+            modelAndView.addObject("user",user);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return modelAndView;
     }
 
     @RequestMapping("/hall/add")
@@ -143,7 +186,7 @@ public class IndexController {
                 cookie.setPath("/");
                 cookie.setHttpOnly(true);
                 response.addCookie(cookie);
-                response.sendRedirect("/promotion/list");            }
+                response.sendRedirect("/promotion/index");            }
         }catch (Exception e){
             log.error("钉钉回调验证异常，",e);
         }
