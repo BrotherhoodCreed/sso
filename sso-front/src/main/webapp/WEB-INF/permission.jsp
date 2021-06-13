@@ -37,15 +37,17 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">活动管理</a>
                     <dl class="layui-nav-child">
-                        <c:if test="${user.permission == 1 || user.permission == 3}">
-                            <dd><a href="<%=request.getContextPath()%>/list">一级外卖</a></dd>
-                        </c:if>
-                        <c:if test="${user.permission == 2 || user.permission == 3}">
-                            <dd><a href="<%=request.getContextPath()%>/hall/list">堂食</a></dd>
-                        </c:if>
-                        <c:if test="${user.permission == 3}">
-                            <dd style="background: #395461;"><a href="<%=request.getContextPath()%>/permission">权限管理</a></dd>
-                        </c:if>
+                        <c:forEach items="${user.permission}" var="permission">
+                            <c:if test="${permission == 1 }">
+                                <dd><a href="<%=request.getContextPath()%>/list">一级外卖</a></dd>
+                            </c:if>
+                            <c:if test="${permission == 2}">
+                                <dd><a href="<%=request.getContextPath()%>/hall/list">堂食</a></dd>
+                            </c:if>
+                            <c:if test="${3==permission}">
+                                <dd style="background: #395461;"><a href="<%=request.getContextPath()%>/permission">权限管理</a></dd>
+                            </c:if>
+                        </c:forEach>
                     </dl>
                 </li>
             </ul>
