@@ -26,8 +26,15 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">活动管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="<%=request.getContextPath()%>/list">一级外卖</a></dd>
-                        <dd style="background: #395461;"><a href="<%=request.getContextPath()%>/hall/list">堂食</a></dd>
+                        <c:if test="${user.permission == 1 || user.permission == 3}">
+                            <dd ><a href="<%=request.getContextPath()%>/list">一级外卖</a></dd>
+                        </c:if>
+                        <c:if test="${user.permission == 2 || user.permission == 3}">
+                            <dd style="background: #395461;"><a href="<%=request.getContextPath()%>/hall/list">堂食</a></dd>
+                        </c:if>
+                        <c:if test="${user.permission == 3}">
+                            <dd><a href="<%=request.getContextPath()%>/permission">权限管理</a></dd>
+                        </c:if>
                     </dl>
                 </li>
             </ul>

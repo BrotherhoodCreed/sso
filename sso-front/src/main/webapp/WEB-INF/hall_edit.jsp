@@ -29,7 +29,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">促销编码</label>
             <div class="layui-input-inline">
-                <input type="text" v-model="detail.activityCode" autocomplete="off" class="layui-input">
+                <input type="text" readonly="readonly" v-model="detail.activityCode" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">

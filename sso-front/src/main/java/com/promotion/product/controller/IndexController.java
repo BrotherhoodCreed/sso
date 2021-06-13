@@ -50,6 +50,18 @@ public class IndexController {
         }
         return modelAndView;
     }
+    @RequestMapping("/addPermission")
+    public ModelAndView addPermission(HttpServletRequest httpRequest){
+        ModelAndView modelAndView = null;
+        try {
+            modelAndView = new ModelAndView("addPermission");
+            UserDao user = (UserDao) httpRequest.getSession().getAttribute(Constans.USER_CONTENT);
+            modelAndView.addObject("user",user);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return modelAndView;
+    }
 
     @RequestMapping("/add")
     public ModelAndView detail(HttpServletRequest request){
