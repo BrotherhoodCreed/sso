@@ -4,8 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.promotion.product.config.Constans;
 import com.promotion.product.entity.PromotionTypeEnum;
 import com.promotion.product.entity.UserDao;
+import com.promotion.product.entity.UserRoleDto;
 import com.promotion.product.service.UserAuthsService;
+import com.promotion.product.service.UserRoleService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +24,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -37,6 +41,10 @@ public class IndexController {
 
     @Value("${dingtail.redirect.uri}")
     private String redirectUrl;
+
+
+    @Autowired
+    private UserRoleService userRoleService;
 
     @RequestMapping("/permission")
     public ModelAndView permission(HttpServletRequest httpRequest){
@@ -180,6 +188,12 @@ public class IndexController {
                 log.info("钉钉回调验证参数key[{}]value[{}]",entry.getKey(),entry.getValue()[0]);
             }
             UserDao result = userAuthsService.getDingLogin(code);
+            if(StringUtils.isNotBlank(result.getMobile())){
+                List<UserRoleDto> list = userRoleService.queryListByUserMobile(result.getMobile());
+                if(CollectionUtils.isNotEmpty(list)){
+                    result.setPermission(list.stream().map(i -> i.getRoleCode()).collect(Collectors.toList()));
+                }
+            }
             if(StringUtils.isNotEmpty(request.getMethod())){
                 Cookie cookie =new Cookie("access_token", URLEncoder.encode(JSONObject.toJSONString(result),"UTF-8"));
                 cookie.setMaxAge(60*60*24*15);//cookie 15天
