@@ -40,5 +40,5 @@ public class UserDao {
     private String userid;
     private String workPlace;
     //用户权限
-    private Integer permission;
+    private List<Integer> permission;
 }

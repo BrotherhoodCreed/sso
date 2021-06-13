@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.promotion.product.dao.mysql.UserRoleDao">
+
+
+    <select id="queryList" resultType="com.promotion.product.dao.dataobject.UserRoleDo">
+        SELECT
+        id,
+        role_code AS 'roleCode',
+        user_mobile AS 'userMobile',
+        user_name AS 'userName',
+        is_deleted AS 'isDeleted'
+        FROM
+        tb_user_role
+        <where>
+            deleted = 0
+            <if test="userMobile !=null and userMobile!=''">
+                AND  user_mobile =#{userMobile}
+            </if>
+
+            <if test="userMobile !=null and userMobile!=''">
+                AND  user_name =#{userName}
+            </if>
+
+        </where>
+        order by created_time desc
+    </select>
+
+
+
+</mapper>

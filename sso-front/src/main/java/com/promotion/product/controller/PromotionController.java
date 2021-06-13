@@ -7,11 +7,9 @@ import com.promotion.product.common.ExcelUtils;
 import com.promotion.product.config.Constans;
 import com.promotion.product.dao.dataobject.*;
 import com.promotion.product.entity.*;
-import com.promotion.product.service.DictionarySerivce;
-import com.promotion.product.service.PromotionMapperSeriver;
-import com.promotion.product.service.PromotionService;
-import com.promotion.product.service.ShopService;
+import com.promotion.product.service.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +36,9 @@ public class PromotionController {
 
     @Autowired
     private ShopService shopService;
+
+    @Autowired
+    private UserRoleService userRoleService;
 
 
     /**
@@ -340,31 +341,11 @@ public class PromotionController {
      */
     @RequestMapping("/permission/list")
     @ResponseBody
-    public BasePageResponse<JSONObject> permissionList(HttpServletRequest httpRequest,int pageSize, int pageIndex) {
-        BasePageResponse<JSONObject> response = BasePageResponse.success(BasePageResponse.class);
+    public BasePageResponse<UserRoleDto> permissionList(HttpServletRequest httpRequest,int pageSize, int pageIndex) {
+        BasePageResponse<UserRoleDto> response = BasePageResponse.success(BasePageResponse.class);
         try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("name","111");
-            jsonObject.put("mobile","119");
-            jsonObject.put("permission",3);
-
-            JSONObject jsonObject2 = new JSONObject();
-            jsonObject2.put("name","222");
-            jsonObject2.put("mobile","120");
-            jsonObject2.put("permission",2);
-
-            JSONObject jsonObject3 = new JSONObject();
-            jsonObject3.put("name","3333");
-            jsonObject3.put("mobile","110");
-            jsonObject3.put("permission",1);
-
-            List<JSONObject> list = new ArrayList<>();
-            list.add(jsonObject);
-            list.add(jsonObject2);
-            list.add(jsonObject3);
-            response.setData(list);
-            response.setCode(10000);
-            response.setTotal(3L);
+            String mobile = httpRequest.getParameter("mobile");
+            response= userRoleService.queryByUserMobile(mobile,pageSize,pageIndex);
         } catch (Exception e) {
             e.printStackTrace();
             response = BasePageResponse.failure(BasePageResponse.class);
@@ -378,10 +359,11 @@ public class PromotionController {
      */
     @RequestMapping("/permission/add")
     @ResponseBody
-    public BaseEntityResponse<Boolean> addPermission(String name,String mobile,Integer permission) {
+    public BaseEntityResponse<Boolean> addPermission(String name,String mobile,List<Integer> permission) {
         BaseEntityResponse<Boolean> response = BaseEntityResponse.success(BaseEntityResponse.class);
         try {
-            response.setData(true);
+            Boolean result = userRoleService.add(name, mobile, permission);
+            response.setData(BooleanUtils.isTrue(result));
         } catch (Exception e) {
             e.printStackTrace();
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
@@ -396,10 +378,11 @@ public class PromotionController {
      */
     @RequestMapping("/permission/edit")
     @ResponseBody
-    public BaseEntityResponse<Boolean> editPermission(String name,String mobile,Integer permission) {
+    public BaseEntityResponse<Boolean> editPermission(String name,String mobile,List<Integer> permission) {
         BaseEntityResponse<Boolean> response = BaseEntityResponse.success(BaseEntityResponse.class);
         try {
-            response.setData(true);
+            Boolean result = userRoleService.update(name, mobile, permission);
+            response.setData(BooleanUtils.isTrue(result));
         } catch (Exception e) {
             e.printStackTrace();
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
