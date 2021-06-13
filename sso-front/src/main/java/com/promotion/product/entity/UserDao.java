@@ -39,4 +39,6 @@ public class UserDao {
     private String unionid;
     private String userid;
     private String workPlace;
+    //用户权限
+    private Integer permission;
 }
