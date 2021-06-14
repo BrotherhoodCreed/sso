@@ -55,10 +55,11 @@ public class UserRoleService {
         for (UserRoleDo userRoleDo : CollectionUtils.emptyIfNull(userRoleDoList)) {
             PermissionDTO userRoleDto = new PermissionDTO();
             userRoleDto.setId(userRoleDo.getId());
-            userRoleDto.setMobile(userRoleDo.getUserName());
+            userRoleDto.setMobile(userRoleDo.getUserMobile());
             if(StringUtils.isNotBlank(userRoleDo.getRoleCode())){
                 userRoleDto.setRoleCodes(Arrays.asList( userRoleDo.getRoleCode().split(",")));
             }
+            userRoleDto.setName(userRoleDo.getUserName());
             userRoleDto.setRoledesc(userRoleDo.getRoleDesc());
             list.add(userRoleDto);
         }
