@@ -148,6 +148,10 @@
                     JSON.stringify(this.edit),{emulateJSON:false}).then(function(response) {
                         //设置好内容后刷新，  多用于异步请求
                         layer.msg('修改成功');
+                        if(this.edit.id != '' && this.edit.id != undefined && this.edit.id !='null') {
+                            this.edit.id = response.data.data;
+                            href.reload();
+                        }
                     },
                     function(response) {
                         console.log("网络异常");

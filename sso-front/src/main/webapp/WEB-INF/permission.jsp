@@ -54,6 +54,7 @@
         </div>
     </div>
 
+
     <div class="layui-body">
         <table id="demo" lay-filter="test"></table>
     </div>
@@ -63,7 +64,10 @@
 <script src="${ctx}/static/layui/layui.all.js" type="text/javascript"></script>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="add">新增</a>
-    <%--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>--%>
+    <div class="layui-inline" style="float:right;height:29px;" title="搜索" lay-event="search">
+        <i class="layui-icon layui-icon-search"></i>
+    </div>
+    <input type="text" id="mobile" style="width:200px;float:right;height:30px;" placeholder="请输入促销编码" autocomplete="off" class="layui-input">
 
 </script>
 <script type="text/html" id="opt">
@@ -167,7 +171,7 @@
                 , {field: 'roledesc', title: '权限'}
                 , {fixed: 'right', align: 'center', toolbar: '#opt'} //这里的toolbar值是模板元素的选择器
             ]]
-            // , toolbar: '#barDemo'
+            , toolbar: '#barDemo'
         });
 
         table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
@@ -184,6 +188,18 @@
             switch (obj.event) {
                 case 'add':
                     window.open('<%=request.getContextPath()%>/addPermission');
+                    break;
+                case 'search':
+                    tableIn.reload(
+                        {
+                            where: {
+                                mobile: $("#mobile").val(),
+                            }
+                            , page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        }
+                    );
                     break;
             }
             ;
