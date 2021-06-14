@@ -385,12 +385,19 @@ public class PromotionController {
     @ResponseBody
     public BaseEntityResponse<Boolean> editPermission(@RequestBody PermissionDTO permissionDTO) {
         BaseEntityResponse<Boolean> response = BaseEntityResponse.success(BaseEntityResponse.class);
+        Boolean result = false;
         try {
             String code="";
             if(CollectionUtils.isNotEmpty(permissionDTO.getRoleCodes())){
                 code=String.join(",",permissionDTO.getRoleCodes());
             }
-            Boolean result = userRoleService.update(permissionDTO.getId(), code,permissionDTO.getRoledesc());
+            if(permissionDTO.getId()!=null){
+                result = userRoleService.update(permissionDTO.getId(), code,permissionDTO.getRoledesc());
+            }
+            if (permissionDTO.getId() == null) {
+               result = userRoleService.add(permissionDTO.getName(), permissionDTO.getMobile(), code,permissionDTO.getRoledesc());
+            }
+
             response.setData(BooleanUtils.isTrue(result));
         } catch (Exception e) {
             e.printStackTrace();

@@ -14,6 +14,8 @@ public interface UserRoleDao {
 
     List<UserRoleDo> queryList(@Param("userMobile") String userMobile,@Param("userName")String userName);
 
+    List<UserRoleDo> queryMobileList(@Param("userMobile") List<String> mobile);
+
     @Insert("insert into tb_user_role(role_code,role_desc,user_mobile,user_name) values(#{item.roleCode},#{item.roleDesc},#{item.userMobile},#{item.userName})")
     boolean add(@Param("item") UserRoleDo userRoleDo);
 
