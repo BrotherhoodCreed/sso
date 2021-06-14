@@ -12,6 +12,6 @@ public interface FineUserDao {
    @Select("SELECT * from finedb.fine_user WHERE MOBILE=#{mobile} limit 1")
    FineUserDo query(@Param("mobile")String mobile);
 
-   @Select("SELECT * from finedb.fine_user ")
+   @Select("SELECT * from finedb.fine_user where  mobile is not null")
    List<FineUserDo> queryList();
 }
