@@ -92,7 +92,7 @@ public class UserRoleService {
     }
 
     public UserRoleDo queryById(Integer id) {
-        List<UserRoleDo> userRoleDoList = userRoleDao.queryByIds(Arrays.asList(id));
+        List<UserRoleDo> userRoleDoList = userRoleDao.queryByIds(id);
         UserRoleDo userRoleDo = CollectionUtils.emptyIfNull(userRoleDoList).stream().findFirst().orElse(null);
         return userRoleDo;
 

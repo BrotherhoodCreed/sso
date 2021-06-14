@@ -18,7 +18,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">姓名</label>
             <div class="layui-input-inline">
-                <input type="tel" name="phone" autocomplete="off" class="layui-input" v-model="edit.name">
+                <input type="tel" name="phone" readonly="readonly" autocomplete="off" class="layui-input" v-model="edit.name">
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">手机</label>
             <div class="layui-input-inline">
-                <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input"  v-model="edit.mobile">
+                <input type="tel" name="phone" readonly="readonly" lay-verify="required|phone" autocomplete="off" class="layui-input"  v-model="edit.mobile">
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
 
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button type="button" class="layui-btn layui-btn-normal" @click="editPermission()">新增</button>
+            <button type="button" class="layui-btn layui-btn-normal" @click="editPermission()">编辑</button>
         </div>
     </div>
 </form>
@@ -124,6 +124,10 @@
                     layer.msg('手机为空');
                     return;
                 }
+                this.edit.roleCodes = [];
+                $('#checkBox input[type=checkbox]:checked').each(function() {
+                    app.edit.roleCodes.push($(this).val());
+                });
                 if(this.edit.roleCodes.length == 0){
                     layer.msg('请选择权限');
                     return;
