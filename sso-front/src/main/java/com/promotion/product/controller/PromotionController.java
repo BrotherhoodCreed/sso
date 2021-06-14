@@ -342,8 +342,8 @@ public class PromotionController {
      */
     @RequestMapping("/permission/list")
     @ResponseBody
-    public BasePageResponse<UserRoleDto> permissionList(HttpServletRequest httpRequest,int pageSize, int pageIndex) {
-        BasePageResponse<UserRoleDto> response = BasePageResponse.success(BasePageResponse.class);
+    public BasePageResponse<PermissionDTO> permissionList(HttpServletRequest httpRequest,int pageSize, int pageIndex) {
+        BasePageResponse<PermissionDTO> response = BasePageResponse.success(BasePageResponse.class);
         try {
             String mobile = httpRequest.getParameter("mobile");
             response= userRoleService.queryByUserMobile(mobile,pageSize,pageIndex);
@@ -367,7 +367,7 @@ public class PromotionController {
             if(CollectionUtils.isNotEmpty(permissionDTO.getRoleCodes())){
                 code=String.join(",",permissionDTO.getRoleCodes());
             }
-            Boolean result = userRoleService.add(permissionDTO.getName(), permissionDTO.getMobile(), code);
+            Boolean result = userRoleService.add(permissionDTO.getName(), permissionDTO.getMobile(), code,permissionDTO.getRoledesc());
             response.setData(BooleanUtils.isTrue(result));
         } catch (Exception e) {
             e.printStackTrace();
@@ -390,7 +390,7 @@ public class PromotionController {
             if(CollectionUtils.isNotEmpty(permissionDTO.getRoleCodes())){
                 code=String.join(",",permissionDTO.getRoleCodes());
             }
-            Boolean result = userRoleService.update(permissionDTO.getId(),permissionDTO.getName(), permissionDTO.getMobile(), code);
+            Boolean result = userRoleService.update(permissionDTO.getId(), code,permissionDTO.getRoledesc());
             response.setData(BooleanUtils.isTrue(result));
         } catch (Exception e) {
             e.printStackTrace();
@@ -418,6 +418,7 @@ public class PromotionController {
                 List<String> stringList = Arrays.asList(userRoleDo.getRoleCode().split(","));
                 permissionDTO.setRoleCodes(stringList);
             }
+            permissionDTO.setRoledesc(userRoleDo.getRoleDesc());
             response.setData(permissionDTO);
         } catch (Exception e) {
             e.printStackTrace();

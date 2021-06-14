@@ -9,4 +9,5 @@ public class UserRoleDto {
     private String userMobile;
     private String userName;
     private Integer isDeleted;
+    private String roleDesc;
 }
