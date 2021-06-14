@@ -26,6 +26,6 @@ public interface UserRoleDao {
 
     UserRoleDo queryById(@Param("id")Integer id);
 
-    @Update("update tb_user_role set role_code=#{roleCode},role_code=#{roleDesc}  where id =#{id} ")
+    @Update("update tb_user_role set role_code=#{roleCode},role_desc=#{roleDesc}  where id =#{id} ")
     boolean updateById(@Param("id")int id,@Param("roleCode") String roleCode,@Param("roleDesc") String roleDesc);
 }

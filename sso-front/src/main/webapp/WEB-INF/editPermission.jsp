@@ -66,7 +66,7 @@
         el: "#app",
         data: {
             edit:{
-                id:'${permissionId}',
+                id:${permissionId},
                 name:'${name}',
                 mobile:'${mobile}',
                 roleCodes:[],
@@ -75,7 +75,7 @@
             permissionList : [],
         },
         created:function(){
-            if(this.edit.id != '' && this.edit.id != undefined){
+            if(this.edit.id != '' && this.edit.id != undefined && this.edit.id !='null'){
                 this.queryDetail();
             }else {
                 this.query('role_core');

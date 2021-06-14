@@ -40,7 +40,7 @@
         tb_user_role
         <where>
             is_deleted = 0
-            <if test="userMobile !=null and userMobile!=''">
+            <if test="userMobile !=null">
                 AND  user_mobile in
                 <foreach collection="userMobile" item="value" open="(" close=")" separator=",">
                     #{value}
