@@ -383,8 +383,8 @@ public class PromotionController {
      */
     @RequestMapping("/permission/edit")
     @ResponseBody
-    public BaseEntityResponse<Boolean> editPermission(@RequestBody PermissionDTO permissionDTO) {
-        BaseEntityResponse<Boolean> response = BaseEntityResponse.success(BaseEntityResponse.class);
+    public BaseEntityResponse<Integer> editPermission(@RequestBody PermissionDTO permissionDTO) {
+        BaseEntityResponse<Integer> response = BaseEntityResponse.success(BaseEntityResponse.class);
         Boolean result = false;
         try {
             String code="";
@@ -397,8 +397,10 @@ public class PromotionController {
             if (permissionDTO.getId() == null) {
                result = userRoleService.add(permissionDTO.getName(), permissionDTO.getMobile(), code,permissionDTO.getRoledesc());
             }
-
-            response.setData(BooleanUtils.isTrue(result));
+            UserRoleDo userRoleDo1 = userRoleService.queryByMobile(permissionDTO.getMobile());
+            if(Objects.nonNull(userRoleDo1)){
+                response.setData(userRoleDo1.getId());
+            }
         } catch (Exception e) {
             e.printStackTrace();
             response = BaseEntityResponse.failure(BaseEntityResponse.class);

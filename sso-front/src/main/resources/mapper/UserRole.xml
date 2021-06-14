@@ -84,7 +84,10 @@
         <where>
             is_deleted = 0
             <if test="id !=null and id!=''">
-                AND  id  =#{id}
+                AND  id  = #{id}
+            </if>
+            <if test="userMobile !=null ">
+                AND  user_mobile =#{userMobile}
             </if>
         </where>
     </select>
