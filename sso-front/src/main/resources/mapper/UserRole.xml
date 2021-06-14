@@ -28,6 +28,28 @@
     </select>
 
 
+    <select id="queryMobileList" resultType="com.promotion.product.dao.dataobject.UserRoleDo">
+        SELECT
+        id,
+        role_code AS 'roleCode',
+        role_desc AS 'roleDesc',
+        user_mobile AS 'userMobile',
+        user_name AS 'userName',
+        is_deleted AS 'isDeleted'
+        FROM
+        tb_user_role
+        <where>
+            is_deleted = 0
+            <if test="userMobile !=null and userMobile!=''">
+                AND  user_mobile in
+                <foreach collection="userMobile" item="value" open="(" close=")" separator=",">
+                    #{value}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
     <select id="queryByIds" resultType="com.promotion.product.dao.dataobject.UserRoleDo">
         SELECT
         id,

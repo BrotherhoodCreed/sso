@@ -2,8 +2,10 @@ package com.promotion.product.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.promotion.product.dao.dataobject.FineUserDo;
 import com.promotion.product.dao.dataobject.UserRoleDo;
 import com.promotion.product.dao.mysql.UserRoleDao;
+import com.promotion.product.dao.mysql2.FineUserDao;
 import com.promotion.product.entity.BasePageResponse;
 import com.promotion.product.entity.PermissionDTO;
 import com.promotion.product.entity.UserRoleDto;
@@ -25,6 +27,9 @@ public class UserRoleService {
 
     @Autowired
     private UserRoleDao userRoleDao;
+
+    @Autowired
+    private FineUserDao fineUserDao;
 
 
     /**
@@ -50,19 +55,40 @@ public class UserRoleService {
         BasePageResponse<PermissionDTO> basePageResponse = BasePageResponse.success(BasePageResponse.class);
         List<PermissionDTO> list = new ArrayList<>();
         PageHelper.startPage(pageIndex, pageSize);
-        List<UserRoleDo> userRoleDoList = userRoleDao.queryList(mobile, null);
-        PageInfo<UserRoleDo> page = new PageInfo<UserRoleDo>(userRoleDoList);
-        for (UserRoleDo userRoleDo : CollectionUtils.emptyIfNull(userRoleDoList)) {
-            PermissionDTO userRoleDto = new PermissionDTO();
-            userRoleDto.setId(userRoleDo.getId());
-            userRoleDto.setMobile(userRoleDo.getUserMobile());
-            if(StringUtils.isNotBlank(userRoleDo.getRoleCode())){
-                userRoleDto.setRoleCodes(Arrays.asList( userRoleDo.getRoleCode().split(",")));
-            }
-            userRoleDto.setName(userRoleDo.getUserName());
-            userRoleDto.setRoledesc(userRoleDo.getRoleDesc());
-            list.add(userRoleDto);
+        List<FineUserDo> fineUserDo = fineUserDao.queryList();
+        PageInfo<FineUserDo> page = new PageInfo<FineUserDo>(fineUserDo);
+        List<String> roleMobileList = CollectionUtils.emptyIfNull(fineUserDo).stream().map(FineUserDo::getMobile).collect(Collectors.toList());
+
+        List<UserRoleDo> userRoleDoList = userRoleDao.queryMobileList(roleMobileList);
+        if(CollectionUtils.isNotEmpty(fineUserDo)){
+            for (FineUserDo userDo : fineUserDo) {
+                PermissionDTO userRoleDto = new PermissionDTO();
+                userRoleDto.setMobile(userDo.getMobile());
+                userRoleDto.setName(userDo.getUserName());
+                UserRoleDo userRoleDo = CollectionUtils.emptyIfNull(userRoleDoList).stream().filter(t -> StringUtils.equals(t.getUserMobile(), userDo.getMobile())).findFirst().orElse(null);
+                if(userRoleDo!=null){
+                    userRoleDto.setId(userRoleDo.getId());
+                    if(StringUtils.isNotBlank(userRoleDo.getRoleCode())){
+                        userRoleDto.setRoleCodes(Arrays.asList( userRoleDo.getRoleCode().split(",")));
+                    }
+                    userRoleDto.setRoledesc(userRoleDo.getRoleDesc());
+                }
+                list.add(userRoleDto);
+                }
         }
+//        List<UserRoleDo> userRoleDoList = userRoleDao.queryList(mobile, null);
+//        PageInfo<UserRoleDo> page = new PageInfo<UserRoleDo>(userRoleDoList);
+//        for (UserRoleDo userRoleDo : CollectionUtils.emptyIfNull(userRoleDoList)) {
+//            PermissionDTO userRoleDto = new PermissionDTO();
+//            userRoleDto.setId(userRoleDo.getId());
+//            userRoleDto.setMobile(userRoleDo.getUserMobile());
+//            if(StringUtils.isNotBlank(userRoleDo.getRoleCode())){
+//                userRoleDto.setRoleCodes(Arrays.asList( userRoleDo.getRoleCode().split(",")));
+//            }
+//            userRoleDto.setName(userRoleDo.getUserName());
+//            userRoleDto.setRoledesc(userRoleDo.getRoleDesc());
+//            list.add(userRoleDto);
+//        }
         basePageResponse.setData(list);
         basePageResponse.setTotal(page.getTotal());
         basePageResponse.setPages(pageIndex);
