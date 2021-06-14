@@ -401,14 +401,14 @@ public class PromotionController {
         BaseEntityResponse<PermissionDTO> response = BaseEntityResponse.success(BaseEntityResponse.class);
         try {
             PermissionDTO permissionDTO = new PermissionDTO();
-            permissionDTO.setMobile("1111");
-            permissionDTO.setName("ass");
-            permissionDTO.setId(id);
-            List<String> list = new ArrayList<>();
-            list.add("管理员");
-            list.add("外卖");
-            list.add("堂食");
-            permissionDTO.setRoleCodes(list);
+            UserRoleDo userRoleDo = userRoleService.queryById(Integer.valueOf(id));
+            permissionDTO.setMobile(userRoleDo.getUserMobile());
+            permissionDTO.setName(userRoleDo.getUserName());
+            permissionDTO.setId(String.valueOf(userRoleDo.getId()));
+            if(org.apache.commons.lang3.StringUtils.isNoneBlank(userRoleDo.getRoleCode())){
+                List<String> stringList = Arrays.asList(userRoleDo.getRoleCode().split(","));
+                permissionDTO.setRoleCodes(stringList);
+            }
             response.setData(permissionDTO);
         } catch (Exception e) {
             e.printStackTrace();

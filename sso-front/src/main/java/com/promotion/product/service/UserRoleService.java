@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,10 +27,10 @@ public class UserRoleService {
     /**
      * 根据用户手机号查询用户权限
      */
-    public List<UserRoleDto> queryListByUserMobile(String mobile){
+    public List<UserRoleDto> queryListByUserMobile(String mobile) {
         List<UserRoleDo> userRoleDoList = userRoleDao.queryList(mobile, null);
-        return CollectionUtils.emptyIfNull(userRoleDoList).stream().map(i->{
-            UserRoleDto userRoleDto =new UserRoleDto();
+        return CollectionUtils.emptyIfNull(userRoleDoList).stream().map(i -> {
+            UserRoleDto userRoleDto = new UserRoleDto();
             userRoleDto.setRoleCode(i.getRoleCode());
             userRoleDto.setUserName(i.getUserName());
             userRoleDto.setUserMobile(i.getUserMobile());
@@ -40,16 +41,16 @@ public class UserRoleService {
 
     /**
      * 用户权限列表查询
-     * */
-    public BasePageResponse<UserRoleDto> queryByUserMobile(String mobile,int pageSize, int pageIndex){
-        BasePageResponse<UserRoleDto> basePageResponse =BasePageResponse.success(BasePageResponse.class);
-        List<UserRoleDto> list =new ArrayList<>();
-        PageHelper.startPage(pageIndex,pageSize);
-        List<UserRoleDo> userRoleDoList = userRoleDao.queryList(mobile,null);
-        PageInfo<UserRoleDo> page=new PageInfo<UserRoleDo>(userRoleDoList);
+     */
+    public BasePageResponse<UserRoleDto> queryByUserMobile(String mobile, int pageSize, int pageIndex) {
+        BasePageResponse<UserRoleDto> basePageResponse = BasePageResponse.success(BasePageResponse.class);
+        List<UserRoleDto> list = new ArrayList<>();
+        PageHelper.startPage(pageIndex, pageSize);
+        List<UserRoleDo> userRoleDoList = userRoleDao.queryList(mobile, null);
+        PageInfo<UserRoleDo> page = new PageInfo<UserRoleDo>(userRoleDoList);
         for (UserRoleDo userRoleDo : CollectionUtils.emptyIfNull(userRoleDoList)) {
-            UserRoleDto userRoleDto =new UserRoleDto();
-            BeanUtils.copyProperties(userRoleDo,userRoleDto);
+            UserRoleDto userRoleDto = new UserRoleDto();
+            BeanUtils.copyProperties(userRoleDo, userRoleDto);
             list.add(userRoleDto);
         }
         basePageResponse.setData(list);
@@ -61,52 +62,43 @@ public class UserRoleService {
 
     /**
      * 添加用户权限
-     * */
+     */
     @Transactional
-    public Boolean add(String name,String mobile,List<Integer> permission){
+    public Boolean add(String name, String mobile,String permission) {
         List<UserRoleDo> userRoleDoList = userRoleDao.queryList(mobile, name);
-        List<Integer> roleCodes = CollectionUtils.emptyIfNull(userRoleDoList).stream().map(i -> i.getRoleCode()).collect(Collectors.toList());
-
-        if(CollectionUtils.isNotEmpty(roleCodes)){
-            for (Integer roleCode : roleCodes) {
-                permission.remove(roleCode);
-            }
+        if (CollectionUtils.isNotEmpty(userRoleDoList)) {
+            userRoleDao.delete(userRoleDoList.stream().map(UserRoleDo::getId).collect(Collectors.toList()));
         }
-        List<UserRoleDo> list =new ArrayList<>();
-        for (Integer code : CollectionUtils.emptyIfNull(permission)) {
-            UserRoleDo userRoleDo =new UserRoleDo();
-            userRoleDo.setRoleCode(code);
-            userRoleDo.setUserName(name);
-            userRoleDo.setUserMobile(mobile);
-            list.add(userRoleDo);
-        }
-        for (UserRoleDo userRoleDo : CollectionUtils.emptyIfNull(list)) {
-            userRoleDao.add(userRoleDo);
-        }
+        UserRoleDo userRoleDo = new UserRoleDo();
+        userRoleDo.setRoleCode(permission);
+        userRoleDo.setUserName(name);
+        userRoleDo.setUserMobile(mobile);
+        userRoleDao.add(userRoleDo);
         return true;
     }
 
     /**
      * 修改用户权限
-     * */
+     */
     @Transactional
-    public Boolean update(String name,String mobile,List<Integer> permission){
+    public Boolean update(String name, String mobile, String permission) {
         List<UserRoleDo> userRoleDoList = userRoleDao.queryList(mobile, name);
-        if(CollectionUtils.isNotEmpty(userRoleDoList)){
+        if (CollectionUtils.isNotEmpty(userRoleDoList)) {
             userRoleDao.delete(userRoleDoList.stream().map(UserRoleDo::getId).collect(Collectors.toList()));
         }
-        List<UserRoleDo> list =new ArrayList<>();
-        for (Integer code : CollectionUtils.emptyIfNull(permission)) {
-            UserRoleDo userRoleDo =new UserRoleDo();
-            userRoleDo.setRoleCode(code);
-            userRoleDo.setUserName(name);
-            userRoleDo.setUserMobile(mobile);
-            list.add(userRoleDo);
-        }
-        for (UserRoleDo userRoleDo : CollectionUtils.emptyIfNull(list)) {
-            userRoleDao.add(userRoleDo);
-        }
+        UserRoleDo userRoleDo = new UserRoleDo();
+        userRoleDo.setRoleCode(permission);
+        userRoleDo.setUserName(name);
+        userRoleDo.setUserMobile(mobile);
+        userRoleDao.add(userRoleDo);
         return true;
+    }
+
+    public UserRoleDo queryById(Integer id) {
+        List<UserRoleDo> userRoleDoList = userRoleDao.queryById(Arrays.asList(id));
+        UserRoleDo userRoleDo = CollectionUtils.emptyIfNull(userRoleDoList).stream().findFirst().orElse(null);
+        return userRoleDo;
+
     }
 
 }

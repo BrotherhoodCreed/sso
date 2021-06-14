@@ -3,6 +3,7 @@ package com.promotion.product.dao.mysql;
 import com.promotion.product.dao.dataobject.UserRoleDo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Component;
 
@@ -18,4 +19,6 @@ public interface UserRoleDao {
 
     @Update("update tb_user_role set isDeleted=1 where id in   <foreach collection=\"ids\" item=\"value\" open=\"(\" close=\")\" separator=\",\"> #{value} </foreach>")
     boolean delete(@Param("ids") List<Integer> id);
+
+    List<UserRoleDo> queryById(@Param("ids") List<Integer> ids);
 }

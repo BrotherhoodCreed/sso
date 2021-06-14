@@ -28,5 +28,25 @@
     </select>
 
 
+    <select id="queryById" resultType="com.promotion.product.dao.dataobject.UserRoleDo">
+        SELECT
+        id,
+        role_code AS 'roleCode',
+        user_mobile AS 'userMobile',
+        user_name AS 'userName',
+        is_deleted AS 'isDeleted'
+        FROM
+        tb_user_role
+        <where>
+            deleted = 0
+            <if test="id !=null and id!=''">
+                AND  id  in
+                <foreach collection="ids" item="value" open="(" close=")" separator=",">
+                 #{value}
+                </foreach>
+            </if>
+        </where>
+        order by created_time desc
+    </select>
 
 </mapper>
