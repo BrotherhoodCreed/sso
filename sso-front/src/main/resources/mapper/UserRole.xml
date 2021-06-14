@@ -24,7 +24,6 @@
             </if>
 
         </where>
-        order by created_time desc
     </select>
 
 
@@ -46,7 +45,6 @@
                 </foreach>
             </if>
         </where>
-        order by created_time desc
     </select>
 
     <select id="queryById" resultType="com.promotion.product.dao.dataobject.UserRoleDo">
@@ -64,7 +62,6 @@
                 AND  id  =#{id}
             </if>
         </where>
-        order by created_time desc
     </select>
 
 </mapper>
