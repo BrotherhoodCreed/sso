@@ -359,11 +359,11 @@ public class PromotionController {
      */
     @RequestMapping("/permission/add")
     @ResponseBody
-    public BaseEntityResponse<Boolean> addPermission(String name,String mobile,List<Integer> permission) {
+    public BaseEntityResponse<Boolean> addPermission(@RequestBody PermissionDTO permissionDTO) {
         BaseEntityResponse<Boolean> response = BaseEntityResponse.success(BaseEntityResponse.class);
         try {
-            Boolean result = userRoleService.add(name, mobile, permission);
-            response.setData(BooleanUtils.isTrue(result));
+//            Boolean result = userRoleService.add(name, mobile, permission);
+//            response.setData(BooleanUtils.isTrue(result));
         } catch (Exception e) {
             e.printStackTrace();
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
@@ -378,11 +378,11 @@ public class PromotionController {
      */
     @RequestMapping("/permission/edit")
     @ResponseBody
-    public BaseEntityResponse<Boolean> editPermission(String name,String mobile,List<Integer> permission) {
+    public BaseEntityResponse<Boolean> editPermission(@RequestBody PermissionDTO permissionDTO) {
         BaseEntityResponse<Boolean> response = BaseEntityResponse.success(BaseEntityResponse.class);
         try {
-            Boolean result = userRoleService.update(name, mobile, permission);
-            response.setData(BooleanUtils.isTrue(result));
+//            Boolean result = userRoleService.update(permissionDTO.getName(), permissionDTO.getMobile(), permissionDTO.getRoleCodes());
+//            response.setData(BooleanUtils.isTrue(result));
         } catch (Exception e) {
             e.printStackTrace();
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
@@ -392,4 +392,41 @@ public class PromotionController {
 
     }
 
+    /**
+     *  查询权限
+     */
+    @RequestMapping("/permission/query")
+    @ResponseBody
+    public BaseEntityResponse<PermissionDTO> queryPermission(String id) {
+        BaseEntityResponse<PermissionDTO> response = BaseEntityResponse.success(BaseEntityResponse.class);
+        try {
+            PermissionDTO permissionDTO = new PermissionDTO();
+            permissionDTO.setMobile("1111");
+            permissionDTO.setName("ass");
+            permissionDTO.setId(id);
+            List<String> list = new ArrayList<>();
+            list.add("管理员");
+            list.add("外卖");
+            list.add("堂食");
+            permissionDTO.setRoleCodes(list);
+            response.setData(permissionDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = BaseEntityResponse.failure(BaseEntityResponse.class);
+            response.setMessage(e.getMessage());
+        }
+        return response;
+
+    }
+
+    public static void main(String[] args) {
+        JSONObject jsonObject = new JSONObject();
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        jsonObject.put("permission",list);
+
+        System.out.println(JSON.toJSONString(jsonObject));
+    }
 }

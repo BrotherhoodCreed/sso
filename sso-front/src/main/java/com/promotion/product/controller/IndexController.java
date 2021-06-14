@@ -71,6 +71,18 @@ public class IndexController {
         return modelAndView;
     }
 
+    @RequestMapping("/editPermission")
+    public ModelAndView editPermission(String id){
+        ModelAndView modelAndView = null;
+        try {
+            modelAndView = new ModelAndView("editPermission");
+            modelAndView.addObject("permissionId",id);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return modelAndView;
+    }
+
     @RequestMapping("/add")
     public ModelAndView detail(HttpServletRequest request){
         String viewName=PromotionTypeEnum.getDescByCode(request.getParameter("type"));
