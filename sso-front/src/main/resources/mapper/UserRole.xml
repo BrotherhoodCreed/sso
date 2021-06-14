@@ -80,7 +80,7 @@
         tb_user_role
         <where>
             is_deleted = 0
-            <if test="id !=null and id!=''">
+            <if test="id !=null ">
                 AND  id  = #{id}
             </if>
             <if test="userMobile !=null ">
