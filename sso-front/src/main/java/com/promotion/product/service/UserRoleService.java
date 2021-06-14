@@ -55,7 +55,13 @@ public class UserRoleService {
         BasePageResponse<PermissionDTO> basePageResponse = BasePageResponse.success(BasePageResponse.class);
         List<PermissionDTO> list = new ArrayList<>();
         PageHelper.startPage(pageIndex, pageSize);
-        List<FineUserDo> fineUserDo = fineUserDao.queryList();
+        List<FineUserDo> fineUserDo =new ArrayList<>();
+        if(StringUtils.isNotBlank(mobile)){
+            fineUserDo = fineUserDao.queryListWhere(mobile);
+        }
+        else {
+            fineUserDo=fineUserDao.queryList();
+        }
         PageInfo<FineUserDo> page = new PageInfo<FineUserDo>(fineUserDo);
         List<String> roleMobileList = CollectionUtils.emptyIfNull(fineUserDo).stream().map(FineUserDo::getMobile).collect(Collectors.toList());
 
