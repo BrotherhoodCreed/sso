@@ -119,7 +119,7 @@ public class UserRoleService {
      */
     @Transactional
     public Boolean update(Integer id, String permission,String roleDesc) {
-        UserRoleDo userRoleDo = userRoleDao.queryById(id);
+        UserRoleDo userRoleDo = userRoleDao.queryById(id,null);
         if (Objects.isNull(userRoleDo)) {
             return false;
         }
@@ -131,7 +131,12 @@ public class UserRoleService {
         List<UserRoleDo> userRoleDoList = userRoleDao.queryByIds(id);
         UserRoleDo userRoleDo = CollectionUtils.emptyIfNull(userRoleDoList).stream().findFirst().orElse(null);
         return userRoleDo;
-
     }
+
+    public UserRoleDo queryByMobile(String mobile) {
+        UserRoleDo userRoleDo = userRoleDao.queryById(null,mobile);
+        return userRoleDo;
+    }
+
 
 }

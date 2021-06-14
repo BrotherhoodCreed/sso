@@ -40,7 +40,7 @@
         tb_user_role
         <where>
             is_deleted = 0
-            <if test="userMobile !=null">
+            <if test="userMobile !=null ">
                 AND  user_mobile in
                 <foreach collection="userMobile" item="value" open="(" close=")" separator=",">
                     #{value}
@@ -81,7 +81,10 @@
         <where>
             is_deleted = 0
             <if test="id !=null and id!=''">
-                AND  id  =#{id}
+                AND  id  = #{id}
+            </if>
+            <if test="userMobile !=null ">
+                AND  user_mobile =#{userMobile}
             </if>
         </where>
     </select>
