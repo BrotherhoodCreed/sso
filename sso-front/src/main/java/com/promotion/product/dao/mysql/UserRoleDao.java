@@ -17,8 +17,13 @@ public interface UserRoleDao {
     @Insert("insert into tb_user_role(role_code,user_mobile,user_name) values(#{item.roleCode},#{item.userMobile},#{item.userName})")
     boolean add(UserRoleDo userRoleDo);
 
-    @Update("update tb_user_role set isDeleted=1 where id in   <foreach collection=\"ids\" item=\"value\" open=\"(\" close=\")\" separator=\",\"> #{value} </foreach>")
+    @Update("update tb_user_role set is_deleted=1 where id in   <foreach collection=\"ids\" item=\"value\" open=\"(\" close=\")\" separator=\",\"> #{value} </foreach>")
     boolean delete(@Param("ids") List<Integer> id);
 
-    List<UserRoleDo> queryById(@Param("ids") List<Integer> ids);
+    List<UserRoleDo> queryByIds(@Param("ids") List<Integer> ids);
+
+    UserRoleDo queryById(@Param("id")Integer id);
+
+    @Update("update tb_user_role set role_code=#{roleCode}  where id =#{id} ")
+    boolean updateById(@Param("id")int id,@Param("roleCode") String roleCode);
 }

@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -81,21 +82,17 @@ public class UserRoleService {
      * 修改用户权限
      */
     @Transactional
-    public Boolean update(String name, String mobile, String permission) {
-        List<UserRoleDo> userRoleDoList = userRoleDao.queryList(mobile, name);
-        if (CollectionUtils.isNotEmpty(userRoleDoList)) {
-            userRoleDao.delete(userRoleDoList.stream().map(UserRoleDo::getId).collect(Collectors.toList()));
+    public Boolean update(Integer id,String name, String mobile, String permission) {
+        UserRoleDo userRoleDo = userRoleDao.queryById(id);
+        if (Objects.isNull(userRoleDo)) {
+            return false;
         }
-        UserRoleDo userRoleDo = new UserRoleDo();
-        userRoleDo.setRoleCode(permission);
-        userRoleDo.setUserName(name);
-        userRoleDo.setUserMobile(mobile);
-        userRoleDao.add(userRoleDo);
+        userRoleDao.updateById(userRoleDo.getId(),permission);
         return true;
     }
 
     public UserRoleDo queryById(Integer id) {
-        List<UserRoleDo> userRoleDoList = userRoleDao.queryById(Arrays.asList(id));
+        List<UserRoleDo> userRoleDoList = userRoleDao.queryByIds(Arrays.asList(id));
         UserRoleDo userRoleDo = CollectionUtils.emptyIfNull(userRoleDoList).stream().findFirst().orElse(null);
         return userRoleDo;
 

@@ -14,7 +14,7 @@
         FROM
         tb_user_role
         <where>
-            deleted = 0
+            is_deleted = 0
             <if test="userMobile !=null and userMobile!=''">
                 AND  user_mobile =#{userMobile}
             </if>
@@ -28,6 +28,27 @@
     </select>
 
 
+    <select id="queryByIds" resultType="com.promotion.product.dao.dataobject.UserRoleDo">
+        SELECT
+        id,
+        role_code AS 'roleCode',
+        user_mobile AS 'userMobile',
+        user_name AS 'userName',
+        is_deleted AS 'isDeleted'
+        FROM
+        tb_user_role
+        <where>
+            is_deleted = 0
+            <if test="id !=null and id!=''">
+                AND  id  in
+                <foreach collection="ids" item="value" open="(" close=")" separator=",">
+                 #{value}
+                </foreach>
+            </if>
+        </where>
+        order by created_time desc
+    </select>
+
     <select id="queryById" resultType="com.promotion.product.dao.dataobject.UserRoleDo">
         SELECT
         id,
@@ -38,12 +59,9 @@
         FROM
         tb_user_role
         <where>
-            deleted = 0
+            is_deleted = 0
             <if test="id !=null and id!=''">
-                AND  id  in
-                <foreach collection="ids" item="value" open="(" close=")" separator=",">
-                 #{value}
-                </foreach>
+                AND  id  =#{id}
             </if>
         </where>
         order by created_time desc

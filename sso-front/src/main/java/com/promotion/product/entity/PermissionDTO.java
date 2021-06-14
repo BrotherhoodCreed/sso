@@ -11,5 +11,5 @@ public class PermissionDTO {
     private String roledesc;
     private String name;
     private String mobile;
-    private String id;
+    private Integer id;
 }

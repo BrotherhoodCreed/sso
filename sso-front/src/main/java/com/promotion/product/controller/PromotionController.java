@@ -9,6 +9,7 @@ import com.promotion.product.dao.dataobject.*;
 import com.promotion.product.entity.*;
 import com.promotion.product.service.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -362,8 +363,12 @@ public class PromotionController {
     public BaseEntityResponse<Boolean> addPermission(@RequestBody PermissionDTO permissionDTO) {
         BaseEntityResponse<Boolean> response = BaseEntityResponse.success(BaseEntityResponse.class);
         try {
-//            Boolean result = userRoleService.add(name, mobile, permission);
-//            response.setData(BooleanUtils.isTrue(result));
+            String code="";
+            if(CollectionUtils.isNotEmpty(permissionDTO.getRoleCodes())){
+                code=String.join(",",permissionDTO.getRoleCodes());
+            }
+            Boolean result = userRoleService.add(permissionDTO.getName(), permissionDTO.getMobile(), code);
+            response.setData(BooleanUtils.isTrue(result));
         } catch (Exception e) {
             e.printStackTrace();
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
@@ -381,8 +386,12 @@ public class PromotionController {
     public BaseEntityResponse<Boolean> editPermission(@RequestBody PermissionDTO permissionDTO) {
         BaseEntityResponse<Boolean> response = BaseEntityResponse.success(BaseEntityResponse.class);
         try {
-//            Boolean result = userRoleService.update(permissionDTO.getName(), permissionDTO.getMobile(), permissionDTO.getRoleCodes());
-//            response.setData(BooleanUtils.isTrue(result));
+            String code="";
+            if(CollectionUtils.isNotEmpty(permissionDTO.getRoleCodes())){
+                code=String.join(",",permissionDTO.getRoleCodes());
+            }
+            Boolean result = userRoleService.update(permissionDTO.getId(),permissionDTO.getName(), permissionDTO.getMobile(), code);
+            response.setData(BooleanUtils.isTrue(result));
         } catch (Exception e) {
             e.printStackTrace();
             response = BaseEntityResponse.failure(BaseEntityResponse.class);
@@ -404,7 +413,7 @@ public class PromotionController {
             UserRoleDo userRoleDo = userRoleService.queryById(Integer.valueOf(id));
             permissionDTO.setMobile(userRoleDo.getUserMobile());
             permissionDTO.setName(userRoleDo.getUserName());
-            permissionDTO.setId(String.valueOf(userRoleDo.getId()));
+            permissionDTO.setId(Integer.valueOf(userRoleDo.getId()));
             if(org.apache.commons.lang3.StringUtils.isNoneBlank(userRoleDo.getRoleCode())){
                 List<String> stringList = Arrays.asList(userRoleDo.getRoleCode().split(","));
                 permissionDTO.setRoleCodes(stringList);
