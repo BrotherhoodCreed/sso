@@ -74,7 +74,8 @@
             add:{
                 name:'',
                 mobile:'',
-                roleCodes:[]
+                roleCodes:[],
+                roledesc:''
             },
             permissionList : [],
         },
@@ -109,14 +110,18 @@
                     layer.msg('手机为空');
                     return;
                 }
-                this.add.roleCodes = [];
+                this.add.roleCodes=[];
+                var roledesc = [];
                 $('#checkBox input[type=checkbox]:checked').each(function() {
+                   console.log($(this));
                     app.add.roleCodes.push($(this).val());
+                    roledesc.push($(this).attr("title"));
                 });
                 if(this.add.roleCodes.length == 0){
                     layer.msg('请选择权限');
                     return;
                 }
+                this.add.roledesc = roledesc.join(',');
                 this.$http.post('<%=request.getContextPath()%>/PromotionController/permission/add',
                     JSON.stringify(this.add),{emulateJSON:false}).then(function(response) {
                         //设置好内容后刷新，  多用于异步请求

@@ -167,7 +167,7 @@
                 , {field: 'roledesc', title: '权限'}
                 , {fixed: 'right', align: 'center', toolbar: '#opt'} //这里的toolbar值是模板元素的选择器
             ]]
-            , toolbar: '#barDemo'
+            // , toolbar: '#barDemo'
         });
 
         table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
@@ -175,7 +175,7 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
             if (layEvent === 'edit') { //编辑
-                window.open('<%=request.getContextPath()%>/editPermission?id=' + data.id);
+                window.open('<%=request.getContextPath()%>/editPermission?id=' + data.id+'&name='+data.name+'&mobile='+data.mobile);
             }
         });
 

@@ -72,11 +72,13 @@ public class IndexController {
     }
 
     @RequestMapping("/editPermission")
-    public ModelAndView editPermission(String id){
+    public ModelAndView editPermission(String id,String name,String mobile){
         ModelAndView modelAndView = null;
         try {
             modelAndView = new ModelAndView("editPermission");
             modelAndView.addObject("permissionId",id);
+            modelAndView.addObject("name",name);
+            modelAndView.addObject("mobile",mobile);
         } catch (Exception exception) {
             exception.printStackTrace();
         }

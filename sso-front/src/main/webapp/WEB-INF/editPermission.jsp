@@ -57,9 +57,9 @@
             ,laydate = layui.laydate;
 
 
-        form.on('checkbox()', function(data){
-            app.add.roleCodes.push(data.value);
-        });
+        // form.on('checkbox()', function(data){
+        //     app.add.roleCodes.push(data.value);
+        // });
     });
 
     var app = new Vue({
@@ -67,14 +67,19 @@
         data: {
             edit:{
                 id:'${permissionId}',
-                name:'',
-                mobile:'',
-                roleCodes:[]
+                name:'${name}',
+                mobile:'${mobile}',
+                roleCodes:[],
+                roledesc:''
             },
             permissionList : [],
         },
         created:function(){
-            this.queryDetail();
+            if(this.edit.id != '' && this.edit.id != undefined){
+                this.queryDetail();
+            }else {
+                this.query('role_core');
+            }
         },
         methods: {
             query:function (type) {
@@ -89,7 +94,6 @@
                                     if(item2 == item.descriptionCode){
                                         checked = true;
                                     }
-
                                 });
                                 if(checked){
                                     html = html + '<input type="checkbox" name="permission"  checked title="'+ item.description + '" value="'+item.descriptionCode+'">';
@@ -124,10 +128,18 @@
                     layer.msg('手机为空');
                     return;
                 }
-                this.edit.roleCodes = [];
+                this.edit.roleCodes=[];
+                var roledesc = [];
                 $('#checkBox input[type=checkbox]:checked').each(function() {
+                    console.log($(this));
                     app.edit.roleCodes.push($(this).val());
+                    roledesc.push($(this).attr("title"));
                 });
+                if(this.edit.roleCodes.length == 0){
+                    layer.msg('请选择权限');
+                    return;
+                }
+                this.edit.roledesc = roledesc.join(',');
                 if(this.edit.roleCodes.length == 0){
                     layer.msg('请选择权限');
                     return;
