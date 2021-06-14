@@ -37,15 +37,17 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">活动管理</a>
                     <dl class="layui-nav-child">
-                        <c:if test="${user.permission == 1 || user.permission == 3}">
-                            <dd><a href="<%=request.getContextPath()%>/list">一级外卖</a></dd>
-                        </c:if>
-                        <c:if test="${user.permission == 2 || user.permission == 3}">
-                            <dd><a href="<%=request.getContextPath()%>/hall/list">堂食</a></dd>
-                        </c:if>
-                        <c:if test="${user.permission == 3}">
-                            <dd style="background: #395461;"><a href="<%=request.getContextPath()%>/permission">权限管理</a></dd>
-                        </c:if>
+                        <c:forEach items="${user.permission}" var="item">
+                            <c:if test="${item == 1}">
+                                <dd><a href="<%=request.getContextPath()%>/list">一级外卖</a></dd>
+                            </c:if>
+                            <c:if test="${item == 2}">
+                                <dd><a href="<%=request.getContextPath()%>/hall/list">堂食</a></dd>
+                            </c:if>
+                            <c:if test="${item == 3}">
+                                <dd style="background: #395461;"><a href="<%=request.getContextPath()%>/permission">权限管理</a></dd>
+                            </c:if>
+                        </c:forEach>
                     </dl>
                 </li>
             </ul>
@@ -162,8 +164,7 @@
                 {type: 'checkbox', field: 'id', title: 'ID', sort: true, fixed: 'left'}
                 , {field: 'name', title: '姓名', sort: true}
                 , {field: 'mobile', title: '手机号'}
-                , {field: 'permission', title: '权限'}
-                , {field: 'permissionDesc', title: '权限'}
+                , {field: 'roledesc', title: '权限'}
                 , {fixed: 'right', align: 'center', toolbar: '#opt'} //这里的toolbar值是模板元素的选择器
             ]]
             , toolbar: '#barDemo'
@@ -174,22 +175,7 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
             if (layEvent === 'edit') { //编辑
-                app.edit.name =  data.name;
-                app.edit.mobile =  data.mobile;
-                app.edit.permission =  data.permission;
-                app.query("role_core",'add');
-                layer.open({
-                    type: 1,
-                    title: "编辑",
-                    // area: '40%',
-                    content: $("#editDiv"),
-                    maxmin: false,
-                    shadeClose: true,
-                    shade: false,
-                    // area:['30%',"50%"],
-                    // maxHeight:'50%',
-                    // offset: '100px'
-                });
+                window.open('<%=request.getContextPath()%>/editPermission?id=' + data.id);
             }
         });
 
@@ -197,20 +183,7 @@
             var checkStatus = table.checkStatus(obj.config.id);
             switch (obj.event) {
                 case 'add':
-                    app.query("role_core",'add');
-                    layer.open({
-                        type: 1,
-                        title: "新增",
-                        // area: '40%',
-                        content: $("#addDiv"),
-                        maxmin: false,
-                        shadeClose: true,
-                        shade: false,
-                        // area:['30%',"50%"],
-                        // maxHeight:'50%',
-                        // offset: '100px'
-                    });
-                    // $("#layui-layer-content").attr("height","auto");
+                    window.open('<%=request.getContextPath()%>/addPermission');
                     break;
             }
             ;
