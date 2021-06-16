@@ -217,9 +217,10 @@ public class IndexController {
             if(StringUtils.isNotBlank(result.getMobile())){
                 List<UserRoleDto> list = userRoleService.queryListByUserMobile(result.getMobile());
                 if(CollectionUtils.isNotEmpty(list)){
-                    result.setPermission(list.stream().map(i -> i.getRoleCode()).collect(Collectors.toList()));
+                    result.setPermission(Arrays.asList( list.get(0).getRoleCode().split(",")));
                 }
             }
+            log.info("缓存用户信息{}",JSONObject.toJSON(result));
             if(StringUtils.isNotEmpty(request.getMethod())){
                 Cookie cookie =new Cookie("access_token", URLEncoder.encode(JSONObject.toJSONString(result),"UTF-8"));
                 cookie.setMaxAge(60*60*24*15);//cookie 15天

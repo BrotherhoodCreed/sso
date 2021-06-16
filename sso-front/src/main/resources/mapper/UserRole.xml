@@ -20,7 +20,7 @@
                 AND  user_mobile =#{userMobile}
             </if>
 
-            <if test="userMobile !=null and userMobile!=''">
+            <if test="userName !=null and userName!=''">
                 AND  user_name =#{userName}
             </if>
 

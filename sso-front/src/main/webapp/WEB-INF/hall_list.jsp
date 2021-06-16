@@ -27,13 +27,13 @@
                     <a class="" href="javascript:;">活动管理</a>
                     <dl class="layui-nav-child">
                         <c:forEach items="${user.permission}" var="item">
-                            <c:if test="${item == 1}">
+                            <c:if test="${item eq 'role01'}">
                                 <dd><a href="<%=request.getContextPath()%>/list">一级外卖</a></dd>
                             </c:if>
-                            <c:if test="${item == 2}">
+                            <c:if test="${item eq 'role02'}">
                                 <dd style="background: #395461;"><a href="<%=request.getContextPath()%>/hall/list">堂食</a></dd>
                             </c:if>
-                            <c:if test="${item == 3}">
+                            <c:if test="${item eq 'role03'}">
                                 <dd ><a href="<%=request.getContextPath()%>/permission">权限管理</a></dd>
                             </c:if>
                         </c:forEach>

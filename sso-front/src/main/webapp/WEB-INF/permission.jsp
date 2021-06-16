@@ -38,13 +38,13 @@
                     <a class="" href="javascript:;">活动管理</a>
                     <dl class="layui-nav-child">
                         <c:forEach items="${user.permission}" var="item">
-                            <c:if test="${item == 1}">
+                            <c:if test="${item eq 'role01'}">
                                 <dd><a href="<%=request.getContextPath()%>/list">一级外卖</a></dd>
                             </c:if>
-                            <c:if test="${item == 2}">
+                            <c:if test="${item eq 'role02'}">
                                 <dd><a href="<%=request.getContextPath()%>/hall/list">堂食</a></dd>
                             </c:if>
-                            <c:if test="${item == 3}">
+                            <c:if test="${item eq 'role03'}">
                                 <dd style="background: #395461;"><a href="<%=request.getContextPath()%>/permission">权限管理</a></dd>
                             </c:if>
                         </c:forEach>
@@ -67,7 +67,7 @@
     <div class="layui-inline" style="float:right;height:29px;" title="搜索" lay-event="search">
         <i class="layui-icon layui-icon-search"></i>
     </div>
-    <input type="text" id="mobile" style="width:200px;float:right;height:30px;" placeholder="请输入促销编码" autocomplete="off" class="layui-input">
+    <input type="text" id="mobile" style="width:200px;float:right;height:30px;" placeholder="请输入手机号" autocomplete="off" class="layui-input">
 
 </script>
 <script type="text/html" id="opt">

@@ -720,7 +720,7 @@
                 return;
             }
             if (app.detail.introduction == ''){
-                layer.msg('七字描述为空');
+                layer.msg('活动简述为空');
                 return;
             }
             // if (app.detail.channel == ''){
