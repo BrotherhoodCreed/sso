@@ -426,15 +426,24 @@
         ,trigger: 'click' //采用click弹出
         ,btns: ['clear', 'confirm']
         ,min:1
+        ,max:30
         ,done: function(value, date, endDate){
             app.detail.salesStartTime=value;
             if (value == '' || value == undefined){
                 bMinDate = defaultMinDate;
+                c.config.min=defaultMinDate;
             }else {
+                const obj3 = JSON.parse(JSON.stringify(date));
                 date.month = date.month-1;
+                date.date = date.date+1;
                 bMinDate = date;
                 b.config.min=bMinDate;
                 b.config.max=bMaxDate;
+
+                obj3.month = obj3.month-1;
+                obj3.date=obj3.date+1;
+                cMinDate = obj3;
+                c.config.min=cMinDate;
             }
         }
     });
