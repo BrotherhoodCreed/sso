@@ -397,7 +397,8 @@ var d = laydate.render({
                 }else {
                     this.detail.description =val;
                 }
-                e.target.value=val.slice(0,20);
+                this.detail.introduction=val.slice(0,20);
+                //e.target.value=val.slice(0,20);
             },
             contractAmountChange:function (e){
                 e.target.value = e.target.value.replace(/(^\s*)|(\s*$)/g, "");
