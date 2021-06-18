@@ -14,9 +14,7 @@ import java.lang.annotation.*;
 public @interface ExcelColumn {
     /**
      * Excel标题
-     *
      * @return
-     * @author Lynch
      */
     String value() default "";
 
@@ -24,7 +22,17 @@ public @interface ExcelColumn {
      * Excel从左往右排列位置
      *
      * @return
-     * @author Lynch
      */
     int col() default 0;
+
+
+    /**
+     * Excel 单元格类型
+     * 0 字符串
+     * 1 整数
+     * 2 小数
+     * 3百分比
+     * @return
+     */
+    int type() default 0;
 }

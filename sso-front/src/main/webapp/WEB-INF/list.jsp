@@ -52,8 +52,8 @@
             <td><input type="text" id="test2" autocomplete="off" readonly="readonly"></td>
             <td style="width: 120px"></td>
             <td> 促销编码 <input type="text" id="activityCode" autocomplete="off"></td>
-            <td><input type="button" id="query" value="查询"></td>
-            <td><input type="button" id="reset" value="重置"></td>
+            <td><input type="button" id="query" class="layui-btn layui-btn-xs" value="查询"></td>
+            <td><input type="button" id="reset" class="layui-btn layui-btn-xs" value="重置"></td>
         </div>
 
         <table id="demo" lay-filter="test"></table>

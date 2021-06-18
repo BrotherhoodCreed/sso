@@ -64,7 +64,9 @@ public class UserRoleService {
         }
         PageInfo<FineUserDo> page = new PageInfo<FineUserDo>(fineUserDo);
         List<String> roleMobileList = CollectionUtils.emptyIfNull(fineUserDo).stream().map(FineUserDo::getMobile).collect(Collectors.toList());
-
+        if(CollectionUtils.isEmpty(roleMobileList)){
+            return basePageResponse;
+        }
         List<UserRoleDo> userRoleDoList = userRoleDao.queryMobileList(roleMobileList);
         if(CollectionUtils.isNotEmpty(fineUserDo)){
             for (FineUserDo userDo : fineUserDo) {

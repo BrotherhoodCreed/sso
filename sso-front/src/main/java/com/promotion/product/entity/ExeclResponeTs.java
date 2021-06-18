@@ -25,7 +25,7 @@ public class ExeclResponeTs {
     private String salesEndTime;
     @ExcelColumn(value ="活动描述",col = 9)
     private String description;
-    @ExcelColumn(value ="每台限用张数/金额",col = 10)
+    @ExcelColumn(value ="每台限用张数/金额",col = 10,type=1)
     private String amount;
     @ExcelColumn(value ="回款周期",col = 11)
     private String billCycle;
@@ -37,16 +37,16 @@ public class ExeclResponeTs {
     private String usageEndTime;
     @ExcelColumn(value ="与本活动共享活动",col = 15)
     private String sharedActivity;
-    @ExcelColumn(value ="销售单价",col = 16)
+    @ExcelColumn(value ="销售单价",col = 16,type=2)
     private String sellingPrice;
-    @ExcelColumn(value ="回款单价",col = 17)
+    @ExcelColumn(value ="回款单价",col = 17,type=2)
     private String billPrice;
-    @ExcelColumn(value ="手续费",col = 18)
+    @ExcelColumn(value ="手续费",col = 18,type=2)
     private String handlingFee;
-    @ExcelColumn(value ="手续费税率%",col = 18)
+    @ExcelColumn(value ="手续费税率%",col = 18,type = 3)
     private String taxRate;
 
-    @ExcelColumn(value ="合同收售数量",col = 19)
+    @ExcelColumn(value ="合同收售数量",col = 19,type=1)
     private Integer contractAmount;
 
 //    @ExcelColumn(value ="预付金额",col = 20)
