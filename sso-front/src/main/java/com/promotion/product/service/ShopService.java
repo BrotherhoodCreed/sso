@@ -63,7 +63,7 @@ public class ShopService {
             return treeResponseList;
         }
         Map<String,Map<String,Collection<TreeResponse>>> multimap = new HashMap<>();
-        Multimap<String, TreeResponse> childrenMultimap=ArrayListMultimap.create();
+        HashMap<String,Map<String,List<TreeResponse>>> result = new HashMap<>();
 
         Multimap<String, String> mapper=ArrayListMultimap.create();
 
@@ -109,43 +109,38 @@ public class ShopService {
             if(sentinel){
                 children.setSpread(true);
             }
-            //城市 门店信息
-            //A1   01,02 03
-            childrenMultimap.put(shopDo.getCity(),children);
-            //区域 + 二三级
-            // A1    A1  01,02
-            //       A1  01,02
-            mapper.put(shopDo.getAm(),shopDo.getCity());
-
-        }
-        Map<String, Collection<TreeResponse>> cityMap= childrenMultimap.asMap();
-        Iterator<Map.Entry<String, Collection<TreeResponse>>> iterator1= cityMap.entrySet().iterator();
-        while (iterator1.hasNext()){
-            Map<String,  Collection<TreeResponse>> data= new HashMap<>();
-            Map.Entry<String, Collection<TreeResponse>> entity=iterator1.next();
-            data.put(entity.getKey(), entity.getValue());
-            if (multimap.containsKey(entity.getValue().iterator().next().getAm())){
-                multimap.get(entity.getValue().iterator().next().getAm()).putAll(data);
+            if (result.containsKey(shopDo.getAm())){
+                Map<String,List<TreeResponse>> cityMap = result.get(shopDo.getAm());
+                if (cityMap.containsKey(shopDo.getCity())){
+                    cityMap.get(shopDo.getCity()).add(children);
+                }else {
+                    List<TreeResponse> list = new ArrayList<>();
+                    list.add(children);
+                    cityMap.put(shopDo.getCity(),list);
+                }
             }else {
-                multimap.put(entity.getValue().iterator().next().getAm(),data);
+                Map<String,List<TreeResponse>> map = new HashMap<>();
+                List<TreeResponse> list = new ArrayList<>();
+                list.add(children);
+                map.put(shopDo.getCity(),list);
+                result.put(shopDo.getAm(),map);
             }
         }
 
 
-
-        Iterator<Map.Entry<String, Map<String,Collection<TreeResponse>>>> iterator=multimap.entrySet().iterator();
+        Iterator<Map.Entry<String, Map<String,List<TreeResponse>>>> iterator=result.entrySet().iterator();
         Map<String,TreeResponse> map =new HashMap<>();
         while (iterator.hasNext()){
-            Map.Entry<String, Map<String, Collection<TreeResponse>>> entry= iterator.next();
+            Map.Entry<String, Map<String, List<TreeResponse>>> entry= iterator.next();
             TreeResponse treeResponse =treeResponse(entry.getKey(),1,sentinel);
-            Map<String, Collection<TreeResponse>> multimap2=  entry.getValue();
-            Iterator<Map.Entry<String, Collection<TreeResponse>>>iterator2=multimap2.entrySet().iterator();
+            Map<String, List<TreeResponse>> multimap2=  entry.getValue();
+            Iterator<Map.Entry<String, List<TreeResponse>>>iterator2=multimap2.entrySet().iterator();
             if(map.get(entry.getKey())!=null){
                 continue;
             }
             List<TreeResponse> treeResponseList1 =new ArrayList<>();
             while (iterator2.hasNext()){
-                Map.Entry<String, Collection<TreeResponse>> entry2= iterator2.next();
+                Map.Entry<String, List<TreeResponse>> entry2= iterator2.next();
                 TreeResponse treeResponse2 =treeResponse(entry2.getKey(),2,sentinel);
                 Map<String,TreeResponse> map2 =new HashMap<>();
                 if(map2.get(entry2.getKey())==null){
@@ -155,10 +150,34 @@ public class ShopService {
                     treeResponseList1.add(treeResponse2);
                 }
             }
+            if (null != treeResponseList1 && treeResponseList1.size()>0
+                    && null != treeResponseList1.get(0).getChildren() && treeResponseList1.get(0).getChildren().size()>0){
+                treeResponse.setAmcd(treeResponseList1.get(0).getChildren().get(0).getAmcd());
+            }
             treeResponse.getChildren().addAll(treeResponseList1);
             treeResponseList1=new ArrayList<>();
             treeResponseList.add(treeResponse);
         }
+        Collections.sort(treeResponseList, new Comparator<TreeResponse>() {
+            @Override
+            public int compare(TreeResponse o1, TreeResponse o2) {
+                try {
+                    int sort1 = 0;
+                    int sort2 = 0;
+                    if (null != o1.getAmcd()){
+                        sort1 = Integer.valueOf(o1.getAmcd());
+                    }
+                    if (null != o2.getAmcd()){
+                        sort2 = Integer.valueOf(o2.getAmcd());
+                    }
+                    return sort1-sort2;
+                }catch (Exception e){
+                    log.error("排序异常[{}]",e);
+                    return 0;
+                }
+
+            }
+        });
 
         return treeResponseList;
 
