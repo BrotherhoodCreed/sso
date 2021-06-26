@@ -207,7 +207,7 @@
             this.queryRelActive();
             this.query("activity_type");
             this.query("channel");
-            this.query("bill_cycle_type");
+            this.query("takea_way");
 
         },
         methods: {
@@ -218,7 +218,8 @@
                 }else {
                     this.detail.description =val;
                 }
-                e.target.value=val.slice(0,20);
+                this.detail.introduction=val.slice(0,20);
+                // this.$set(this.task,"eventAddress",this.task.eventAddress);
             },
             sellingPriceChange:function (e){
                 this.detail.sellingPrice = this.valueChange(e);
@@ -325,7 +326,7 @@
                                 $('#channel').append(new Option( item.description,item.descriptionCode));
                             });
                             layui.form.render("select");
-                        }else if('bill_cycle_type' == type){
+                        }else if('takea_way' == type){
                             this.billCycles = response.data.data;
                             $.each(this.billCycles, function(index, item) {
                                 $('#billCycle').append(new Option( item.description,item.descriptionCode));
@@ -680,7 +681,7 @@
                 return;
             }
             if (app.detail.introduction == ''){
-                layer.msg('七字描述为空');
+                layer.msg('活动简述为空');
                 return;
             }
             if (app.detail.channel == ''){

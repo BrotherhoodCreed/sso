@@ -362,7 +362,8 @@ var d = laydate.render({
                 }else {
                     this.detail.description =val;
                 }
-                e.target.value=val.slice(0,20);
+                this.detail.introduction=val.slice(0,20);
+                //e.target.value=val.slice(0,20);
             },
             sellingPriceChange:function (e){
                 this.detail.sellingPrice = this.valueChange(e);
@@ -553,7 +554,7 @@ var d = laydate.render({
                                 }
                             });
                             layui.form.render("select");
-                        }else if('bill_cycle_type' == type){
+                        }else if('takea_way' == type){
                             this.billCycles = response.data.data;
                             $.each(this.billCycles, function(index, item) {
                                 if(item.descriptionCode ==  app.detail.billCycle ){
@@ -637,7 +638,7 @@ var d = laydate.render({
                             // }
                             //等待页面渲染完毕在加载下拉选
                             this.query("activity_type");
-                            this.query("bill_cycle_type");
+                            this.query("takea_way");
                             this.query("channel");
                         }else {
                             layer.msg('查询异常');

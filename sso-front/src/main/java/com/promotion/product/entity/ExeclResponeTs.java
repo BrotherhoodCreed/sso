@@ -25,7 +25,7 @@ public class ExeclResponeTs {
     private String salesEndTime;
     @ExcelColumn(value ="活动描述",col = 9)
     private String description;
-    @ExcelColumn(value ="每台限用张数/金额",col = 10)
+    @ExcelColumn(value ="每台限用张数/金额",col = 10,type=1)
     private String amount;
     @ExcelColumn(value ="回款周期",col = 11)
     private String billCycle;
@@ -37,43 +37,43 @@ public class ExeclResponeTs {
     private String usageEndTime;
     @ExcelColumn(value ="与本活动共享活动",col = 15)
     private String sharedActivity;
-    @ExcelColumn(value ="销售单价",col = 16)
+    @ExcelColumn(value ="销售单价",col = 16,type=2)
     private String sellingPrice;
-    @ExcelColumn(value ="回款单价",col = 17)
+    @ExcelColumn(value ="回款单价",col = 17,type=2)
     private String billPrice;
-    @ExcelColumn(value ="手续费",col = 18)
+    @ExcelColumn(value ="手续费",col = 18,type=2)
     private String handlingFee;
-    @ExcelColumn(value ="手续费税率%",col = 18)
+    @ExcelColumn(value ="手续费税率%",col = 18,type = 3)
     private String taxRate;
 
-    @ExcelColumn(value ="合同收售数量",col = 19)
+    @ExcelColumn(value ="合同收售数量",col = 19,type=1)
     private Integer contractAmount;
 
-    @ExcelColumn(value ="预付金额",col = 20)
-    private BigDecimal prepaymentAmount;
+//    @ExcelColumn(value ="预付金额",col = 20)
+//    private BigDecimal prepaymentAmount;
+//
+//    @ExcelColumn(value ="人员费用",col = 21)
+//    private BigDecimal wage;
+//
+//    @ExcelColumn(value ="广告费用",col = 22)
+//    private BigDecimal advertisingFee;
+//
+//    @ExcelColumn(value ="试吃费用",col = 23)
+//    private BigDecimal testFee;
+//
+//    @ExcelColumn(value ="尊享卷费用",col = 24)
+//    private BigDecimal couponFee;
+//
+//    @ExcelColumn(value ="尊享卷费有效期",col = 25)
+//    private String couponEffectiveTime;
+//
+//    @ExcelColumn(value ="折扣费用",col = 26)
+//    private BigDecimal discountFee;
 
-    @ExcelColumn(value ="人员费用",col = 21)
-    private BigDecimal wage;
-
-    @ExcelColumn(value ="广告费用",col = 22)
-    private BigDecimal advertisingFee;
-
-    @ExcelColumn(value ="试吃费用",col = 23)
-    private BigDecimal testFee;
-
-    @ExcelColumn(value ="尊享卷费用",col = 24)
-    private BigDecimal couponFee;
-
-    @ExcelColumn(value ="尊享卷费有效期",col = 25)
-    private String couponEffectiveTime;
-
-    @ExcelColumn(value ="折扣费用",col = 26)
-    private BigDecimal discountFee;
-
-    @ExcelColumn(value ="回款人姓名",col = 27)
+    @ExcelColumn(value ="回款人姓名",col = 20)
     private String billUserName;
 
-    @ExcelColumn(value ="回款人账号",col = 28)
+    @ExcelColumn(value ="回款人账号",col = 21)
     private String billAccountNumber;
 
 

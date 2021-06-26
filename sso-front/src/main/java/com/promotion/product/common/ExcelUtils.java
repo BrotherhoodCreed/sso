@@ -27,20 +27,18 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.format.CellFormatType;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
+
+import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_NUMERIC;
 
 public class ExcelUtils {
 
@@ -203,7 +201,7 @@ public class ExcelUtils {
         if (cell == null) {
             return "";
         }
-        if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+        if (cell.getCellType() == CELL_TYPE_NUMERIC) {
             if (HSSFDateUtil.isCellDateFormatted(cell)) {
                 return HSSFDateUtil.getJavaDate(cell.getNumericCellValue()).toString();
             } else {
@@ -258,12 +256,10 @@ public class ExcelUtils {
                     columnName = annotation.value();
                 }
                 Cell cell = row.createCell(aj.getAndIncrement());
-
                 CellStyle cellStyle = wb.createCellStyle();
                 cellStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
                 cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
                 cellStyle.setAlignment(CellStyle.ALIGN_CENTER);
-
                 Font font = wb.createFont();
                 font.setBoldweight(Font.BOLDWEIGHT_NORMAL);
                 cellStyle.setFont(font);
@@ -285,12 +281,8 @@ public class ExcelUtils {
                     }
                     Cell cell = row1.createCell(aj.getAndIncrement());
                     if (value != null) {
-                        if (type == Date.class) {
-                            cell.setCellValue(value.toString());
-                        } else {
-                            cell.setCellValue(value.toString());
-                        }
-                        cell.setCellValue(value.toString());
+                        //setCell(wb, field, value, cell);
+                        setCell2(wb, field, value, cell);
                     }
                 });
             });
@@ -302,6 +294,66 @@ public class ExcelUtils {
         //生成excel文件
 //        buildExcelFile(".\\default.xlsx",wb);
     }
+
+    private static void setCell(Workbook wb, Field field, Object value, Cell cell) {
+        //判断data是否为数值型
+        boolean isNum = value.toString().matches("^(-?\\d+)(\\.\\d+)?$")
+                && !StringUtils.equals(field.getName(),"billAccountNumber");
+        //判断data是否为整数（小数部分是否为0）
+        boolean isInteger= value.toString().matches("^[-\\+]?[\\d]*$");
+        //判断data是否为百分数（是否包含“%”）
+        boolean isPercent= value.toString().contains("%");
+        CellStyle cellStyle = wb.createCellStyle();
+        DataFormat dataFormat = wb.createDataFormat();
+        //如果单元格内容是数值类型，涉及到金钱（金额、本、利），则设置cell的类型为数值型，设置data的类型为数值类型
+        if (isNum && !isPercent) {
+            if (isInteger) {
+                cellStyle.setDataFormat(dataFormat.getFormat("#,#0"));//数据格式只显示整数
+            }else{
+                cellStyle.setDataFormat(dataFormat.getFormat("#,##0.00"));//保留两位小数点
+            }
+            cell.setCellStyle(cellStyle);
+            // 设置单元格内容为double类型
+            cell.setCellValue(Double.parseDouble(value.toString()));
+        }
+        else if(isPercent){
+            cellStyle.setDataFormat(dataFormat.getFormat("0%"));
+            cell.setCellStyle(cellStyle);
+            double v = Double.parseDouble(value.toString().replace("%", ""));
+            // 设置单元格内容为double类型
+            cell.setCellValue(v/100);
+        }
+        else {
+            cell.setCellValue(value.toString());
+        }
+    }
+    private static void setCell2(Workbook wb, Field field, Object value, Cell cell){
+        ExcelColumn annotation = field.getAnnotation(ExcelColumn.class);
+        CellStyle cellStyle = wb.createCellStyle();
+        DataFormat dataFormat = wb.createDataFormat();
+        switch (annotation.type()){
+            case 1:
+                cellStyle.setDataFormat(dataFormat.getFormat("#,#0"));
+                cell.setCellStyle(cellStyle);
+                cell.setCellValue(Double.parseDouble(value.toString()));
+                break;
+            case 2:
+                cellStyle.setDataFormat(dataFormat.getFormat("#,##0.00"));
+                cell.setCellStyle(cellStyle);
+                cell.setCellValue(Double.parseDouble(value.toString()));
+                break;
+            case 3:
+                cellStyle.setDataFormat(dataFormat.getFormat("0%"));
+                cell.setCellStyle(cellStyle);
+                double v = Double.parseDouble(value.toString().replace("%", ""));
+                cell.setCellValue(v/100);
+                break;
+            default:
+                cell.setCellValue(value.toString());
+                break;
+        }
+    }
+
 
     /**
      * 浏览器下载excel

@@ -1,5 +1,6 @@
 package com.promotion.product.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.base.Joiner;
@@ -64,7 +65,7 @@ public class PromotionService {
     public  List<ExeclRespone>  exportExcel(List<String> codes){
         List<ExeclRespone> resultList = new ArrayList<>();
         List<ExeclDto> exportExcel =promotionBaseInfoDao.exportExcel(codes);
-        Map<String,String> map =dictionaryDao.selectAll().stream().collect(Collectors.toMap(DictionaryDo::getDescriptionCode,DictionaryDo::getDescription));;
+        Map<String,List<DictionaryDo>> map =dictionaryDao.selectAll().stream().collect(Collectors.groupingBy(DictionaryDo::getDescriptionType));
         if(CollectionUtils.isNotEmpty(exportExcel)){
             for (ExeclDto execlDto : exportExcel) {
                 ExeclRespone execlRespone = new ExeclRespone();
@@ -73,8 +74,11 @@ public class PromotionService {
                 execlRespone.setAmount(String.valueOf(execlDto.getAmount()));
                 execlRespone.setActivityCode(execlDto.getActivityCode());
                 if(execlDto.getActivityType()!=null){
-                    if(map.containsKey(execlDto.getActivityType())){
-                        execlRespone.setActivityType(map.get(execlDto.getActivityType()));;
+                    List<DictionaryDo> activityType = map.get("activity_type");
+                    if(CollectionUtils.isNotEmpty(activityType)){
+                        DictionaryDo dictionaryDo = activityType.stream().filter(t -> StringUtils.equals(t.getDescriptionCode(), execlDto.getActivityType())).findFirst().orElse(null);
+
+                        execlRespone.setActivityType(dictionaryDo!=null?dictionaryDo.getDescription():"");
                     }
                 }
                 execlRespone.setRestaurantCode(execlDto.getRestaurantCode());
@@ -111,7 +115,7 @@ public class PromotionService {
     public  List<ExeclResponeTs>  exportExcelTs(List<String> codes){
         List<ExeclResponeTs> resultList = new ArrayList<>();
         List<ExeclDto> exportExcel =promotionBaseInfoDao.exportExcel(codes);
-        Map<String,String> map =dictionaryDao.selectAll().stream().collect(Collectors.toMap(DictionaryDo::getDescriptionCode,DictionaryDo::getDescription));;
+        Map<String,List<DictionaryDo>> map =dictionaryDao.selectAll().stream().collect(Collectors.groupingBy(DictionaryDo::getDescriptionType));
         if(CollectionUtils.isNotEmpty(exportExcel)){
             for (ExeclDto execlDto : exportExcel) {
                 ExeclResponeTs execlRespone = new ExeclResponeTs();
@@ -120,8 +124,10 @@ public class PromotionService {
                 execlRespone.setAmount(String.valueOf(execlDto.getAmount()));
                 execlRespone.setActivityCode(execlDto.getActivityCode());
                 if(execlDto.getActivityType()!=null){
-                    if(map.containsKey(execlDto.getActivityType())){
-                        execlRespone.setActivityType(map.get(execlDto.getActivityType()));;
+                    List<DictionaryDo> activityType = map.get("eat_in_type");
+                    if(CollectionUtils.isNotEmpty(activityType)){
+                        DictionaryDo dictionaryDo = activityType.stream().filter(t -> StringUtils.equals(t.getDescriptionCode(), execlDto.getActivityType())).findFirst().orElse(null);
+                        execlRespone.setActivityType(dictionaryDo!=null?dictionaryDo.getDescription():"");
                     }
                 }
                 execlRespone.setRestaurantCode(execlDto.getRestaurantCode());
@@ -149,13 +155,13 @@ public class PromotionService {
                 execlRespone.setHandlingFee(String.valueOf(execlDto.getHandlingFee()));
                 execlRespone.setTaxRate(String.valueOf(execlDto.getTaxRate())+"%");
                 execlRespone.setContractAmount(execlDto.getContractAmount());
-                execlRespone.setPrepaymentAmount(execlDto.getPrepaymentAmount());
-                execlRespone.setWage(execlDto.getWage());
-                execlRespone.setAdvertisingFee(execlDto.getAdvertisingFee());
-                execlRespone.setTestFee(execlDto.getTestFee());
-                execlRespone.setCouponFee(execlDto.getCouponFee());
-                execlRespone.setCouponEffectiveTime(execlDto.getCouponEffectiveTime());
-                execlRespone.setDiscountFee(execlDto.getDiscountFee());
+//                execlRespone.setPrepaymentAmount(execlDto.getPrepaymentAmount());
+//                execlRespone.setWage(execlDto.getWage());
+//                execlRespone.setAdvertisingFee(execlDto.getAdvertisingFee());
+//                execlRespone.setTestFee(execlDto.getTestFee());
+//                execlRespone.setCouponFee(execlDto.getCouponFee());
+//                execlRespone.setCouponEffectiveTime(execlDto.getCouponEffectiveTime());
+//                execlRespone.setDiscountFee(execlDto.getDiscountFee());
                 execlRespone.setBillUserName(execlDto.getBillUserName());
                 execlRespone.setBillAccountNumber(execlDto.getBillAccountNumber());
                 resultList.add(execlRespone);
@@ -246,22 +252,28 @@ public class PromotionService {
 //            }
 //        }
 
-        Map<String,String> map =dictionaryDao.selectAll().stream().collect(Collectors.toMap(DictionaryDo::getDescriptionCode,DictionaryDo::getDescription));;
+//        Map<String,String> map =dictionaryDao.selectAll().stream().collect(Collectors.toMap(DictionaryDo::getDescriptionCode,DictionaryDo::getDescription));;
+        Map<String,List<DictionaryDo>> map =dictionaryDao.selectAll().stream().collect(Collectors.groupingBy(DictionaryDo::getDescriptionType));
         response.setTotal(pageInfo.getTotal());
         response.setPages(pageInfo.getPageNum());
         List<QueryPromotionListRespone> queryPromotionListResponeList =new ArrayList<>();
-        for (QueryPromotionListDo QueryPromotionListDo : queryPromotionList) {
-            QueryPromotionListRespone QueryPromotionListRespone =new QueryPromotionListRespone();
-            QueryPromotionListRespone.setId(QueryPromotionListDo.getId());
-
-            QueryPromotionListRespone.setActivityCode(QueryPromotionListDo.getActivityCode());
-            if(map.get(QueryPromotionListDo.getActivityType())!=null){
-                QueryPromotionListRespone.setActivityType(map.get(QueryPromotionListDo.getActivityType()));
+        for (QueryPromotionListDo queryPromotionListDo : queryPromotionList) {
+            QueryPromotionListRespone queryPromotionListRespone =new QueryPromotionListRespone();
+            queryPromotionListRespone.setId(queryPromotionListDo.getId());
+            queryPromotionListRespone.setActivityCode(queryPromotionListDo.getActivityCode());
+            List<DictionaryDo> activityType = map.get("activity_type");
+            List<DictionaryDo> eatInType = map.get("eat_in_type");
+            if(CollectionUtils.isNotEmpty(activityType) ||CollectionUtils.isNotEmpty(eatInType) ){
+                DictionaryDo dictionaryDo = CollectionUtils.emptyIfNull(activityType).stream().filter(t -> StringUtils.equals(t.getDescriptionCode(), queryPromotionListDo.getActivityType())).findFirst().orElse(null);
+                if(dictionaryDo==null){
+                    dictionaryDo = CollectionUtils.emptyIfNull(eatInType).stream().filter(t -> StringUtils.equals(t.getDescriptionCode(), queryPromotionListDo.getActivityType())).findFirst().orElse(null);
+                }
+                queryPromotionListRespone.setActivityType(dictionaryDo.getDescription());
             }
-            QueryPromotionListRespone.setSalesStartTime(QueryPromotionListDo.getSalesStartTime());
-            QueryPromotionListRespone.setSalesEndTime(QueryPromotionListDo.getSalesEndTime());
-            QueryPromotionListRespone.setIntroduction(QueryPromotionListDo.getIntroduction());
-            queryPromotionListResponeList.add(QueryPromotionListRespone);
+            queryPromotionListRespone.setSalesStartTime(queryPromotionListDo.getSalesStartTime());
+            queryPromotionListRespone.setSalesEndTime(queryPromotionListDo.getSalesEndTime());
+            queryPromotionListRespone.setIntroduction(queryPromotionListDo.getIntroduction());
+            queryPromotionListResponeList.add(queryPromotionListRespone);
         }
          response.setData(queryPromotionListResponeList);
        return response;
