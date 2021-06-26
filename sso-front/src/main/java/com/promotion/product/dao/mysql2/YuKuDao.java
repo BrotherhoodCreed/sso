@@ -1,6 +1,7 @@
 package com.promotion.product.dao.mysql2;
 
 import com.promotion.product.dao.dataobject.ShopDo;
+import com.promotion.product.dao.dataobject.StoreAccountInfoDo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
@@ -47,6 +48,22 @@ public interface YuKuDao {
 
 
     List<ShopDo> selectShopList(@Param("list") List<String> stcd);
+
+    @Select("select sai.STCD as stcd,sai.STNM as stnm,sai.type,sai.accountnumber,sai.uid,sai.depositbank,sai.isdefault\n" +
+            "from storeaccountinfo sai\n" +
+            "left join storeinfo si\n" +
+            "on sai.stcd = si.stcd\n" +
+            "where 1=1\n" +
+            "order by ISNULL(si.am), \n" +
+            "case when si.am=\"一区\" then \"1\" \n" +
+            "when si.am=\"二区\" then \"2\"\n" +
+            "when si.am=\"三区\" then \"3\"\n" +
+            "when si.am=\"四区\" then \"4\"\n" +
+            "when si.am=\"五区\" then \"5\"\n" +
+            "when si.am=\"六区\" then \"6\"\n" +
+            "else si.am end \n" +
+            ",sai.stcd")
+    List<StoreAccountInfoDo> selectStoreAccountinfo();
 
 
 }

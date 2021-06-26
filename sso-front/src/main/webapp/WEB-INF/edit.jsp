@@ -67,7 +67,7 @@
     </div>
 
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">活动简述</label>
+        <label class="layui-form-label">键位名称</label>
         <div class="layui-input-block">
             <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" v-model="detail.introduction" style="width: 90%"  @input="textChange">
         </div>
