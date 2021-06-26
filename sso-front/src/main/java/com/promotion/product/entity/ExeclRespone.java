@@ -29,7 +29,7 @@ public class ExeclRespone {
     private String amount;
     @ExcelColumn(value ="回款周期",col = 11)
     private String billCycle;
-    @ExcelColumn(value ="七字描述",col = 12)
+    @ExcelColumn(value ="键位名称",col = 12)
     private String introduction;
     @ExcelColumn(value ="活动有效开始时间",col = 13)
     private String usageStartTime;

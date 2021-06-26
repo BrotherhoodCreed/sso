@@ -68,7 +68,7 @@
         </div>
 
         <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">活动简述</label>
+            <label class="layui-form-label">键位名称</label>
             <div class="layui-input-block">
                 <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" v-model="detail.introduction" style="width: 90%"  @input="textChange">
             </div>
@@ -442,7 +442,7 @@
                 b.config.max=bMaxDate;
 
                 obj3.month = obj3.month-1;
-                obj3.date=obj3.date+1;
+                obj3.date=obj3.date;
                 cMinDate = obj3;
                 c.config.min=cMinDate;
             }
@@ -730,7 +730,7 @@
                 return;
             }
             if (app.detail.introduction == ''){
-                layer.msg('活动简述为空');
+                layer.msg('键位名称为空');
                 return;
             }
             // if (app.detail.channel == ''){
