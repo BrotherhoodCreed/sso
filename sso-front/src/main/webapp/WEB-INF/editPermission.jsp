@@ -150,7 +150,7 @@
                         layer.msg('修改成功');
                         if(this.edit.id != '' && this.edit.id != undefined && this.edit.id !='null') {
                             this.edit.id = response.data.data;
-                            href.reload();
+                            location.href="<%=request.getContextPath()%>/permission";
                         }
                     },
                     function(response) {

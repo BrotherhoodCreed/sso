@@ -67,7 +67,7 @@
     <div class="layui-inline" style="float:right;height:29px;" title="搜索" lay-event="search">
         <i class="layui-icon layui-icon-search"></i>
     </div>
-    <input type="text" id="mobile" style="width:200px;float:right;height:30px;" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+    <input type="text" id="mobile" style="width:200px;float:right;height:30px;" placeholder="请输入手机号或姓名" autocomplete="off" class="layui-input">
 
 </script>
 <script type="text/html" id="opt">
