@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.promotion.product.common.ExcelUtils;
 import com.promotion.product.config.Constans;
 import com.promotion.product.dao.dataobject.*;
+import com.promotion.product.dao.mysql2.YuKuDao;
 import com.promotion.product.entity.*;
 import com.promotion.product.service.*;
 import lombok.extern.slf4j.Slf4j;
@@ -129,9 +130,10 @@ public class PromotionController {
         //查询数据
         List<String> codes = JSON.parseArray(codestr, String.class);
         List<ExeclRespone> resultList = promotionService.exportExcel(codes);
-
+        DictionaryDo execl_password = CollectionUtils.emptyIfNull(dictionarySerivce.queryDictionary("execl_password")).stream().findFirst().orElse(null);
+        String pwd= execl_password!=null?execl_password.getDescriptionCode():"";
         long t1 = System.currentTimeMillis();
-        ExcelUtils.writeExcel(response, resultList, ExeclRespone.class);
+        ExcelUtils.writeExcel(response, resultList, ExeclRespone.class,pwd);
         long t2 = System.currentTimeMillis();
 
         System.out.println(String.format("write over! cost:%sms", (t2 - t1)));
@@ -143,7 +145,9 @@ public class PromotionController {
         List<String> codes = JSON.parseArray(codestr, String.class);
         List<ExeclResponeTs> resultList = promotionService.exportExcelTs(codes);
         long t1 = System.currentTimeMillis();
-        ExcelUtils.writeExcel(response, resultList, ExeclResponeTs.class);
+        DictionaryDo execl_password = CollectionUtils.emptyIfNull(dictionarySerivce.queryDictionary("execl_password")).stream().findFirst().orElse(null);
+        String pwd= execl_password!=null?execl_password.getDescriptionCode():"";
+        ExcelUtils.writeExcel_Ts(response, resultList, ExeclResponeTs.class,pwd);
         long t2 = System.currentTimeMillis();
 
         System.out.println(String.format("write over! cost:%sms", (t2 - t1)));

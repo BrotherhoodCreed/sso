@@ -8,20 +8,17 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletResponse;
 
 
+import com.promotion.product.dao.dataobject.CellRangeAddressDto;
+import com.promotion.product.entity.ExeclResponeTs;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.CharUtils;
@@ -30,9 +27,13 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.crypt.Decryptor;
+import org.apache.poi.poifs.crypt.EncryptionInfo;
 import org.apache.poi.ss.format.CellFormatType;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.aspectj.weaver.IWeaveRequestor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -223,7 +224,7 @@ public class ExcelUtils {
 
     }
 
-    public static <T> void writeExcel(HttpServletResponse response, List<T> dataList, Class<T> cls){
+    public static <T> void writeExcel(HttpServletResponse response, List<T> dataList, Class<T> cls,String pwd){
         Field[] fields = cls.getDeclaredFields();
         List<Field> fieldList = Arrays.stream(fields)
                 .filter(field -> {
@@ -241,9 +242,11 @@ public class ExcelUtils {
                     }
                     return col;
                 })).collect(Collectors.toList());
-
         Workbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet("Sheet1");
+        if(StringUtils.isNotBlank(pwd)){
+            sheet.protectSheet(pwd);
+        }
         AtomicInteger ai = new AtomicInteger();
         {
             Row row = sheet.createRow(ai.getAndIncrement());
@@ -287,8 +290,106 @@ public class ExcelUtils {
                 });
             });
         }
-        //冻结窗格
-        wb.getSheet("Sheet1").createFreezePane(0, 1, 0, 1);
+//        //冻结窗格
+//        wb.getSheet("Sheet1").createFreezePane(0, 1, 0, 1);
+        CellRangeAddress region = new CellRangeAddress(1, 2, 0, 0);
+        sheet.addMergedRegion(region);
+        //浏览器下载excel
+        buildExcelDocument("abbot.xlsx",wb,response);
+        //生成excel文件
+//        buildExcelFile(".\\default.xlsx",wb);
+    }
+
+
+
+    public static <T> void writeExcel_Ts(HttpServletResponse response, List<ExeclResponeTs> dataList, Class<T> cls,String pwd){
+        Field[] fields = cls.getDeclaredFields();
+        List<Field> fieldList = Arrays.stream(fields)
+                .filter(field -> {
+                    ExcelColumn annotation = field.getAnnotation(ExcelColumn.class);
+                    if (annotation != null && annotation.col() > 0) {
+                        field.setAccessible(true);
+                        return true;
+                    }
+                    return false;
+                }).sorted(Comparator.comparing(field -> {
+                    int col = 0;
+                    ExcelColumn annotation = field.getAnnotation(ExcelColumn.class);
+                    if (annotation != null) {
+                        col = annotation.col();
+                    }
+                    return col;
+                })).collect(Collectors.toList());
+        Workbook wb = new XSSFWorkbook();
+        Sheet sheet = wb.createSheet("Sheet1");
+        if(StringUtils.isNotBlank(pwd)){
+            sheet.protectSheet(pwd);
+        }
+        AtomicInteger ai = new AtomicInteger();
+        {
+            Row row = sheet.createRow(ai.getAndIncrement());
+            AtomicInteger aj = new AtomicInteger();
+            //写入头部
+            fieldList.forEach(field -> {
+                ExcelColumn annotation = field.getAnnotation(ExcelColumn.class);
+                String columnName = "";
+                if (annotation != null) {
+                    columnName = annotation.value();
+                }
+                Cell cell = row.createCell(aj.getAndIncrement());
+                CellStyle cellStyle = wb.createCellStyle();
+                cellStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+                cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+                cellStyle.setAlignment(CellStyle.ALIGN_CENTER);
+                Font font = wb.createFont();
+                font.setBoldweight(Font.BOLDWEIGHT_NORMAL);
+                cellStyle.setFont(font);
+                cell.setCellStyle(cellStyle);
+                cell.setCellValue(columnName);
+            });
+        }
+        if (CollectionUtils.isNotEmpty(dataList)) {
+            Map<String,CellRangeAddressDto> map =new HashMap<>();
+            dataList.forEach(t -> {
+                CellRangeAddressDto cellRangeAddressDto =new CellRangeAddressDto();
+                Row row1 = sheet.createRow(ai.getAndIncrement());
+                AtomicInteger aj = new AtomicInteger();
+                if(map.containsKey(t.getActivityCode())){
+                    cellRangeAddressDto =map.get(t.getActivityCode());
+                    cellRangeAddressDto.setLastRow(row1.getRowNum());
+                }
+                else{
+                    cellRangeAddressDto.setFirstRow(row1.getRowNum());
+                    cellRangeAddressDto.setLastRow(row1.getRowNum());
+                }
+                for (Field field : fieldList) {
+
+                    Class<?> type = field.getType();
+                    Object value = "";
+                    try {
+                        value = field.get(t);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Cell cell = row1.createCell(aj.getAndIncrement());
+
+                    if (value != null) {
+                        //setCell(wb, field, value, cell);
+                        setCell2(wb, field, value, cell);
+                    }
+
+                }
+                map.putIfAbsent(t.getActivityCode(),cellRangeAddressDto);
+            });
+            for (Map.Entry<String, CellRangeAddressDto> next : map.entrySet()) {
+                CellRangeAddressDto value = next.getValue();
+                CellRangeAddress region = new CellRangeAddress(value.getFirstRow(), value.getLastRow(), value.getFirstCol(), value.getLastCol());
+                sheet.addMergedRegion(region);
+            }
+        }
+//        //冻结窗格
+//        wb.getSheet("Sheet1").createFreezePane(0, 1, 0, 1);
+
         //浏览器下载excel
         buildExcelDocument("abbot.xlsx",wb,response);
         //生成excel文件
@@ -327,7 +428,7 @@ public class ExcelUtils {
             cell.setCellValue(value.toString());
         }
     }
-    private static void setCell2(Workbook wb, Field field, Object value, Cell cell){
+    private static ExcelColumn setCell2(Workbook wb, Field field, Object value, Cell cell){
         ExcelColumn annotation = field.getAnnotation(ExcelColumn.class);
         CellStyle cellStyle = wb.createCellStyle();
         DataFormat dataFormat = wb.createDataFormat();
@@ -352,6 +453,7 @@ public class ExcelUtils {
                 cell.setCellValue(value.toString());
                 break;
         }
+        return annotation;
     }
 
 
