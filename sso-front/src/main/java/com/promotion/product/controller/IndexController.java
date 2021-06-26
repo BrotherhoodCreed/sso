@@ -248,7 +248,7 @@ public class IndexController {
                     }
                 }
             }
-            response.sendRedirect("/promotion/list");
+            response.sendRedirect("/promotion/index");
         }catch (Exception e){
             log.error("钉钉回调验证异常，",e);
         }
