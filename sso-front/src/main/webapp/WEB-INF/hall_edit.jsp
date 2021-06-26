@@ -14,13 +14,19 @@
 
     <style>
         .layui-form-label {
-            width: 100px;
+            width: 105px;
+            padding: 9px 10px;
         }
         .layui-input-block {
             margin-left: 130px;
         }
         .layui-form-item{
             margin-top: 10px;
+        }
+        .layui-form-label.layui-required:after{
+            content:"*";
+            color:red;
+            padding-left:4px;
         }
     </style>
 <body>
@@ -33,7 +39,7 @@
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">活动类型</label>
+            <label class="layui-form-label layui-required   ">活动类型</label>
             <div class="layui-input-inline">
                 <select id="activityTypes">
                     <option value="">请选择</option>
@@ -42,13 +48,13 @@
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label" pane>销售开始时间</label>
+            <label class="layui-form-label layui-required" pane>销售开始时间</label>
             <div class="layui-input-block">
                 <input type="text" style="width:190px" name="date" id="test1" autocomplete="off" class="layui-input"  v-model="detail.salesStartTime">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">销售结束时间</label>
+            <label class="layui-form-label layui-required">销售结束时间</label>
             <div class="layui-input-block">
                 <input type="text" style="width:190px" name="date" id="test2" autocomplete="off" class="layui-input" v-model="detail.salesEndTime">
             </div>
@@ -58,7 +64,7 @@
 
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">回款周期</label>
+            <label class="layui-form-label layui-required">回款周期</label>
             <div class="layui-input-inline">
                 <select name="modules" lay-verify="required" lay-search="" id="billCycle">
                     <option value="">请选择</option>
@@ -67,9 +73,9 @@
         </div>
 
         <div class="layui-inline">
-            <label class="layui-form-label" style="width: auto;">每台限用张数/金额</label>
+            <label class="layui-form-label layui-required" style="width: auto;">每台限用张数/金额</label>
             <div class="layui-input-inline">
-                <input type="text" name="username" @input="valueChange"  v-model="detail.amount" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                <input type="text" name="username" @input="amountChange"  v-model="detail.amount" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -94,19 +100,19 @@
 <%--            </div>--%>
 <%--        </div>--%>
         <div class="layui-inline">
-            <label class="layui-form-label">核销开始时间</label>
+            <label class="layui-form-label layui-required">核销开始时间</label>
             <div class="layui-input-inline">
                 <input type="text" name="date" id="test3" lay-verify="date"  autocomplete="off" class="layui-input" v-model="detail.usageStartTime">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">核销结束时间</label>
+            <label class="layui-form-label layui-required">核销结束时间</label>
             <div class="layui-input-inline">
                 <input type="text" name="date" id="test4" lay-verify="date"  autocomplete="off" class="layui-input" v-model="detail.usageEndTime">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">约定售卖份数</label>
+            <label class="layui-form-label ">约定售卖份数</label>
             <div class="layui-input-inline">
                 <input type="text" name="contractAmount" lay-verify="contractAmount" autocomplete="off" class="layui-input"  v-model="detail.contractAmount" @input="valueChange">
             </div>
@@ -114,7 +120,7 @@
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">与本活动共存活动</label>
+        <label class="layui-form-label layui-required">与本活动共存活动</label>
         <div class="layui-input-block">
             <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input" style="width: 90%" v-model="detail.sharedActivity">
         </div>
@@ -122,19 +128,19 @@
 
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">销售单价</label>
+            <label class="layui-form-label layui-required">销售单价</label>
             <div class="layui-input-inline">
                 <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.sellingPrice" @input="sellingPriceChange">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">回款单价</label>
+            <label class="layui-form-label layui-required">回款单价</label>
             <div class="layui-input-inline">
                 <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"   v-model="detail.billPrice" @input="billPricePriceChange">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">手续费</label>
+            <label class="layui-form-label layui-required">手续费</label>
             <div class="layui-input-inline">
                 <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.handlingFee" @input="handlingFeeChange">
             </div>
@@ -410,6 +416,9 @@ var d = laydate.render({
                     app.detail.contractAmount = e.target.value;
                     return;
                 }
+            },
+            amountChange:function (e){
+                this.detail.amount = this.valueChange(e);
             },
             sellingPriceChange:function (e){
                 this.detail.sellingPrice = this.valueChange(e);
