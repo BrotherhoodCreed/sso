@@ -67,7 +67,7 @@
     </div>
 
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">键位名称</label>
+        <label class="layui-form-label layui-required">键位名称</label>
         <div class="layui-input-block">
             <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" v-model="detail.introduction" style="width: 90%"  @input="textChange">
         </div>
@@ -462,7 +462,7 @@ var d = laydate.render({
                     return;
                 }
                 if (this.detail.introduction == ''){
-                    layer.msg('七字描述为空');
+                    layer.msg('键位名称为空');
                     return;
                 }
                 if (this.detail.channel == ''){

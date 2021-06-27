@@ -80,7 +80,7 @@
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">键位名称</label>
+        <label class="layui-form-label layui-required">键位名称</label>
         <div class="layui-input-block">
             <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" style="width:90%" v-model="detail.introduction"  @input="textChange">
         </div>
@@ -109,6 +109,7 @@
             <label class="layui-form-label layui-required">核销结束时间</label>
             <div class="layui-input-inline">
                 <input type="text" name="date" id="test4" lay-verify="date"  autocomplete="off" class="layui-input" v-model="detail.usageEndTime">
+            </div>
             </div>
         </div>
         <div class="layui-inline">
@@ -525,7 +526,7 @@ var d = laydate.render({
                     return;
                 }
                 if (this.detail.introduction == ''){
-                    layer.msg('七字描述为空');
+                    layer.msg('键位名称为空');
                     return;
                 }
                 // if (this.detail.channel == ''){

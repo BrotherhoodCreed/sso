@@ -309,7 +309,7 @@
                     return;
                 }
                 if (this.detail.introduction == ''){
-                    layer.msg('七字描述为空');
+                    layer.msg('键位名称为空');
                     return;
                 }
                 // if (this.detail.channel == ''){
