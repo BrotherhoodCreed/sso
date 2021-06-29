@@ -392,8 +392,8 @@ public class PromotionService {
                             mapperDo.setBillDepositBank(shopDo.getDepositbank());
                         }
                         mapperDo.setActivityCode(code);
-                        promotionMapperDao.insert(mapperDo);
                     }
+                    promotionMapperDao.insert(mapperDo);
                 }
             }
         }
