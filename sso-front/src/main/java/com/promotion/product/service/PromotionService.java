@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -369,17 +370,17 @@ public class PromotionService {
                     if (FormTypeEnums.EAT_IN.getCode().equals(FormTypeEnums.EAT_IN.getCode())) {
                         List<DictionaryDo> eatInType = dictionarySerivce.queryDictionary("eat_in_type");
                         DictionaryDo dictionaryDo = eatInType.stream().filter(t -> StringUtils.equals(t.getDescriptionCode(), savePromotionBaseInfoRequery.getActivityType())).findFirst().orElse(null);
-                        StoreAccountInfoDo storeAccountInfoDo=CollectionUtils.emptyIfNull(storeAccountInfoDoList).stream()
-                                .filter(t-> BooleanUtils.isTrue(t.getIsdefault()) && StringUtils.equals(t.getStcd(),mapperDo.getRestaurantCode()))
+                        StoreAccountInfoDo storeAccountInfoDo = CollectionUtils.emptyIfNull(storeAccountInfoDoList).stream()
+                                .filter(t -> BooleanUtils.isTrue(t.getIsdefault()) && StringUtils.equals(t.getStcd(), mapperDo.getRestaurantCode()))
                                 .findFirst().orElse(null);
-                        log.info("堂食-取默认账号：查询账号结果：{}",JSONObject.toJSONString(storeAccountInfoDo));
-                        if(dictionaryDo.getId()==13){
-                             storeAccountInfoDo = CollectionUtils.emptyIfNull(storeAccountInfoDoList).stream()
-                                     .filter(t -> t.getType() == 2 && StringUtils.equals(t.getStcd(),mapperDo.getRestaurantCode()))
-                                     .findFirst().orElse(null);
-                            log.info("堂食-商场活动：查询账号结果：{}",JSONObject.toJSONString(storeAccountInfoDo));
+                        log.info("堂食-取默认账号：查询账号结果：{}", JSONObject.toJSONString(storeAccountInfoDo));
+                        if (dictionaryDo.getId() == 13) {
+                            storeAccountInfoDo = CollectionUtils.emptyIfNull(storeAccountInfoDoList).stream()
+                                    .filter(t -> t.getType() == 2 && StringUtils.equals(t.getStcd(), mapperDo.getRestaurantCode()))
+                                    .findFirst().orElse(null);
+                            log.info("堂食-商场活动：查询账号结果：{}", JSONObject.toJSONString(storeAccountInfoDo));
                         }
-                        if(Objects.nonNull(storeAccountInfoDo)){
+                        if (Objects.nonNull(storeAccountInfoDo)) {
                             mapperDo.setBillUserName(storeAccountInfoDo.getUid());
                             mapperDo.setBillAccountNumber(storeAccountInfoDo.getAccountnumber());
                             mapperDo.setBillDepositBank(storeAccountInfoDo.getDepositbank());
@@ -391,8 +392,9 @@ public class PromotionService {
                             mapperDo.setBillAccountNumber(shopDo.getAccountnumber());
                             mapperDo.setBillDepositBank(shopDo.getDepositbank());
                         }
-                        mapperDo.setActivityCode(code);
+
                     }
+                    mapperDo.setActivityCode(code);
                     promotionMapperDao.insert(mapperDo);
                 }
             }
@@ -400,6 +402,7 @@ public class PromotionService {
     }
 
     public Boolean savePromotionMapperInfo(SavePromotionMapperInfoRequest req) {
+        PromotionBaseInfoDo promotionBaseInfoDo1 = new PromotionBaseInfoDo();
         String activityCode = req.getPromotionMapperDos().get(0).getActivityCode();
         if (StringUtils.isNotEmpty(activityCode)) {
             List<PromotionMapperDo> promotionMapperDos = promotionMapperDao.selectByActivityCode(activityCode);
@@ -407,11 +410,40 @@ public class PromotionService {
                 List<String> list = promotionMapperDos.stream().map(item -> item.getRestaurantCode()).collect(Collectors.toList());
                 req.getPromotionMapperDos().removeIf(item -> list.contains(item.getRestaurantCode()));
             }
+            promotionBaseInfoDo1 = promotionBaseInfoDao.selectOneData(activityCode);
         }
         Integer row = 0;
+        List<StoreAccountInfoDo> storeAccountInfoDoList = yuKuDao.selectStoreAccountinfo();
+        List<DictionaryDo> eatInType = dictionarySerivce.queryDictionary("eat_in_type");
+        PromotionBaseInfoDo finalPromotionBaseInfoDo = promotionBaseInfoDo1;
+        DictionaryDo dictionaryDo = eatInType.stream().filter(t -> StringUtils.equals(t.getDescriptionCode(), finalPromotionBaseInfoDo.getActivityType())).findFirst().orElse(null);
         for (PromotionMapperDo promotionMapperDo : req.getPromotionMapperDos()) {
-            row += promotionMapperDao.insert(promotionMapperDo);
+            if(StringUtils.equals(FormTypeEnums.EAT_IN.getIndex(),promotionBaseInfoDo1.getType())){
+                if (FormTypeEnums.EAT_IN.getCode().equals(FormTypeEnums.EAT_IN.getCode())) {
+
+                    StoreAccountInfoDo storeAccountInfoDo=CollectionUtils.emptyIfNull(storeAccountInfoDoList).stream()
+                            .filter(t-> BooleanUtils.isTrue(t.getIsdefault()) && StringUtils.equals(t.getStcd(),promotionMapperDo.getRestaurantCode()))
+                            .findFirst().orElse(null);
+                    log.info("堂食-取默认账号：查询账号结果：{}",JSONObject.toJSONString(storeAccountInfoDo));
+                    if(dictionaryDo.getId()==13){
+                        storeAccountInfoDo = CollectionUtils.emptyIfNull(storeAccountInfoDoList).stream()
+                                .filter(t -> t.getType() == 2 && StringUtils.equals(t.getStcd(),promotionMapperDo.getRestaurantCode()))
+                                .findFirst().orElse(null);
+                        log.info("堂食-商场活动：查询账号结果：{}",JSONObject.toJSONString(storeAccountInfoDo));
+                    }
+                    if(Objects.nonNull(storeAccountInfoDo)){
+                        promotionMapperDo.setBillAccountNumber(storeAccountInfoDo.getAccountnumber());
+                        promotionMapperDo.setBillUserName(storeAccountInfoDo.getUid());
+                        promotionMapperDo.setBillDepositBank(storeAccountInfoDo.getDepositbank());
+                        row += promotionMapperDao.insert(promotionMapperDo);
+                    }
+                }
+            }
+            else {
+                row += promotionMapperDao.insert(promotionMapperDo);
+            }
         }
+
         return row > 0;
 
     }

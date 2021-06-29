@@ -80,7 +80,7 @@
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">活动描述</label>
+            <label class="layui-form-label layui-required">活动描述</label>
             <div class="layui-input-block">
                 <textarea placeholder="请输入内容" class="layui-textarea" style="width: 90%" v-model="detail.description" ></textarea>
             </div>
