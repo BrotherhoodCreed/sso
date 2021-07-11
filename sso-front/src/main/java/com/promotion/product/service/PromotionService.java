@@ -368,7 +368,7 @@ public class PromotionService {
                 List<StoreAccountInfoDo> storeAccountInfoDoList = yuKuDao.selectStoreAccountinfo();
                 for (PromotionMapperDo mapperDo : promotionMapperDo) {
                     if (FormTypeEnums.EAT_IN.getCode().equals(type.getCode())) {
-                        if (savePromotionBaseInfoRequery.getIsAnyBillAccount() == 0) {
+
                             List<DictionaryDo> eatInType = dictionarySerivce.queryDictionary("eat_in_type");
                             DictionaryDo dictionaryDo = eatInType.stream().filter(t -> StringUtils.equals(t.getDescriptionCode(), savePromotionBaseInfoRequery.getActivityType())).findFirst().orElse(null);
                             StoreAccountInfoDo storeAccountInfoDo = CollectionUtils.emptyIfNull(storeAccountInfoDoList).stream()
@@ -386,7 +386,7 @@ public class PromotionService {
                                 mapperDo.setBillAccountNumber(storeAccountInfoDo.getAccountnumber());
                                 mapperDo.setBillDepositBank(storeAccountInfoDo.getDepositbank());
                             }
-                        }
+
                     } else {
                         ShopDo shopDo = CollectionUtils.emptyIfNull(shopDoList).stream().filter(item -> StringUtils.equals(item.getStcd(), mapperDo.getRestaurantCode())).findFirst().orElse(null);
                         if (Objects.nonNull(shopDo)) {
@@ -396,6 +396,11 @@ public class PromotionService {
                         }
                     }
                     mapperDo.setActivityCode(code);
+                    if (savePromotionBaseInfoRequery.getIsAnyBillAccount() == 1) {
+                        mapperDo.setBillDepositBank(null);
+                        mapperDo.setBillAccountNumber(null);
+                        mapperDo.setBillUserName(null);
+                    }
                     promotionMapperDao.insert(mapperDo);
                 }
             }
@@ -438,6 +443,12 @@ public class PromotionService {
                             promotionMapperDo.setBillUserName(storeAccountInfoDo.getUid());
                             promotionMapperDo.setBillDepositBank(storeAccountInfoDo.getDepositbank());
                         }
+                    }
+                    if (finalPromotionBaseInfoDo.getIsAnyBillAccount() == 1){
+                        promotionMapperDo.setBillAccountNumber(null);
+                        promotionMapperDo.setBillUserName(null);
+                        promotionMapperDo.setBillDepositBank(null);
+
                     }
                     row += promotionMapperDao.insert(promotionMapperDo);
                 }
