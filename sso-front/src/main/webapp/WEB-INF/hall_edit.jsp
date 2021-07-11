@@ -511,6 +511,7 @@ var d = laydate.render({
                 }
                 this.detail.activityType = $("#activityTypes").val();
                 this.detail.billCycle = $("#billCycle").val();
+                this.detail.isAnyBillAccount = $("input[name='sex']:checked").val();
                 if (this.detail.activityCode == ''){
                     layer.msg('促销编码为空');
                     return;
@@ -698,9 +699,9 @@ var d = laydate.render({
                             this.detail = response.data.data;
                             var html = "";
                             if(0 == this.detail.isAnyBillAccount){
-                                html = '<input type="radio"  v-model="detail.isAnyBillAccount" name="sex" value="nv" title="是" checked> <input type="radio"  v-model="detail.isAnyBillAccount" name="sex" value="" title="否">';
+                                html = '<input type="radio"  v-model="detail.isAnyBillAccount" name="sex" value="0" title="是" checked @click="checkChange()"> <input type="radio"  v-model="detail.isAnyBillAccount" name="sex" value="1" title="否" @click="checkChange()">';
                             }else {
-                                html = '<input type="radio"  v-model="detail.isAnyBillAccount" name="sex" value="nv" title="是" > <input type="radio"  v-model="detail.isAnyBillAccount" name="sex" value="" title="否" checked>';
+                                html = '<input type="radio"  v-model="detail.isAnyBillAccount" name="sex" value="0" title="是" @click="checkChange()"> <input type="radio"  v-model="detail.isAnyBillAccount" name="sex" value="1" title="否" checked @click="checkChange()">';
                             }
                             $("#radio").html(html);
                             layui.form.render("radio");

@@ -163,8 +163,8 @@
             <div class="layui-inline">
                 <label class="layui-form-label">是否回款</label>
                 <div class="layui-input-block">
-                    <input v-model="detail.isAnyBillAccount" name="isAnyBillAccount" value="0" type="radio" title="是" checked="" >
-                    <input v-model="detail.isAnyBillAccount" name="isAnyBillAccount" value="1" type="radio" title="否">
+                    <input v-model="detail.isAnyBillAccount" name="sex" value="0" type="radio" title="是" checked="" >
+                    <input v-model="detail.isAnyBillAccount" name="sex" value="1" type="radio" title="否">
                 </div>
             </div>
 
@@ -730,6 +730,7 @@
             }
             app.detail.activityType = $("#activityTypes").val();
             app.detail.billCycle = $("#billCycle").val();
+            app.detail.isAnyBillAccount = $("input[name='sex']:checked").val();
 
             // if (app.detail.activityCode == ''){
             //     layer.msg('促销编码为空');
