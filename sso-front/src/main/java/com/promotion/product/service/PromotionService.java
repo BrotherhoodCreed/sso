@@ -420,9 +420,8 @@ public class PromotionService {
         DictionaryDo dictionaryDo = eatInType.stream().filter(t -> StringUtils.equals(t.getDescriptionCode(), finalPromotionBaseInfoDo.getActivityType())).findFirst().orElse(null);
         for (PromotionMapperDo promotionMapperDo : req.getPromotionMapperDos()) {
             if (StringUtils.equals(FormTypeEnums.EAT_IN.getIndex(), promotionBaseInfoDo1.getType())) {
-                if (FormTypeEnums.EAT_IN.getCode().equals(FormTypeEnums.EAT_IN.getCode()) {
-                    if (finalPromotionBaseInfoDo.getIsAnyBillAccount() == 0)){
-
+                if (FormTypeEnums.EAT_IN.getCode().equals(FormTypeEnums.EAT_IN.getCode())) {
+                    if (finalPromotionBaseInfoDo.getIsAnyBillAccount() == 0){
 
                         StoreAccountInfoDo storeAccountInfoDo = CollectionUtils.emptyIfNull(storeAccountInfoDoList).stream()
                                 .filter(t -> BooleanUtils.isTrue(t.getIsdefault()) && StringUtils.equals(t.getStcd(), promotionMapperDo.getRestaurantCode()))
