@@ -141,6 +141,20 @@ public class PromotionBaseInfoDo {
     private String billAccountNumber;
 
 
+    /**
+     * 是否存在回款行号  0是 1否
+     */
+    private Integer isAnyBillAccount;
+    /**
+     *套餐原价
+     */
+    private BigDecimal packageOriginalPrice;
+    /**
+     * 套餐费率
+     */
+    private BigDecimal packageDiscountRate;
+
+
 
     public Long getId() {
         return id;
@@ -430,6 +444,30 @@ public class PromotionBaseInfoDo {
         this.billAccountNumber = billAccountNumber;
     }
 
+    public Integer getIsAnyBillAccount() {
+        return isAnyBillAccount;
+    }
+
+    public void setIsAnyBillAccount(Integer isAnyBillAccount) {
+        this.isAnyBillAccount = isAnyBillAccount;
+    }
+
+    public BigDecimal getPackageOriginalPrice() {
+        return packageOriginalPrice;
+    }
+
+    public void setPackageOriginalPrice(BigDecimal packageOriginalPrice) {
+        this.packageOriginalPrice = packageOriginalPrice;
+    }
+
+    public BigDecimal getPackageDiscountRate() {
+        return packageDiscountRate;
+    }
+
+    public void setPackageDiscountRate(BigDecimal packageDiscountRate) {
+        this.packageDiscountRate = packageDiscountRate;
+    }
+
     @Override
     public String toString() {
         return "PromotionBaseInfoDo{" +
@@ -469,6 +507,9 @@ public class PromotionBaseInfoDo {
                 ", discountFee=" + discountFee +
                 ", billUserName='" + billUserName + '\'' +
                 ", billAccountNumber='" + billAccountNumber + '\'' +
+                ", isAnyBillAccount=" + isAnyBillAccount +
+                ", packageOriginalPrice=" + packageOriginalPrice +
+                ", packageDiscountRate=" + packageDiscountRate +
                 '}';
     }
 }

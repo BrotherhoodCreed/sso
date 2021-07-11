@@ -133,7 +133,8 @@ public class PromotionController {
         DictionaryDo execl_password = CollectionUtils.emptyIfNull(dictionarySerivce.queryDictionary("execl_password")).stream().findFirst().orElse(null);
         String pwd= execl_password!=null?execl_password.getDescriptionCode():"";
         long t1 = System.currentTimeMillis();
-        ExcelUtils.writeExcel(response, resultList, ExeclRespone.class,pwd);
+        String documentName="营销活动对接表-"+new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        ExcelUtils.writeExcel(response, resultList, ExeclRespone.class,pwd,documentName);
         long t2 = System.currentTimeMillis();
 
         System.out.println(String.format("write over! cost:%sms", (t2 - t1)));
@@ -147,9 +148,9 @@ public class PromotionController {
         long t1 = System.currentTimeMillis();
         DictionaryDo execl_password = CollectionUtils.emptyIfNull(dictionarySerivce.queryDictionary("execl_password")).stream().findFirst().orElse(null);
         String pwd= execl_password!=null?execl_password.getDescriptionCode():"";
-        ExcelUtils.writeExcel_Ts(response, resultList, ExeclResponeTs.class,pwd);
+        String documentName="营销活动对接表-"+new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        ExcelUtils.writeExcel_Ts(response, resultList, ExeclResponeTs.class,pwd,documentName);
         long t2 = System.currentTimeMillis();
-
         System.out.println(String.format("write over! cost:%sms", (t2 - t1)));
     }
 

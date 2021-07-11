@@ -367,7 +367,7 @@ public class PromotionService {
                 }
                 List<StoreAccountInfoDo> storeAccountInfoDoList = yuKuDao.selectStoreAccountinfo();
                 for (PromotionMapperDo mapperDo : promotionMapperDo) {
-                    if (FormTypeEnums.EAT_IN.getCode().equals(FormTypeEnums.EAT_IN.getCode())) {
+                    if (FormTypeEnums.EAT_IN.getCode().equals(type.getCode()) && savePromotionBaseInfoRequery.getIsAnyBillAccount()==0) {
                         List<DictionaryDo> eatInType = dictionarySerivce.queryDictionary("eat_in_type");
                         DictionaryDo dictionaryDo = eatInType.stream().filter(t -> StringUtils.equals(t.getDescriptionCode(), savePromotionBaseInfoRequery.getActivityType())).findFirst().orElse(null);
                         StoreAccountInfoDo storeAccountInfoDo = CollectionUtils.emptyIfNull(storeAccountInfoDoList).stream()
@@ -392,7 +392,6 @@ public class PromotionService {
                             mapperDo.setBillAccountNumber(shopDo.getAccountnumber());
                             mapperDo.setBillDepositBank(shopDo.getDepositbank());
                         }
-
                     }
                     mapperDo.setActivityCode(code);
                     promotionMapperDao.insert(mapperDo);

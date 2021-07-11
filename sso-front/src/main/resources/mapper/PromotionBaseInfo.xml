@@ -114,7 +114,10 @@
         a.coupon_effective_time as 'couponEffectiveTime',
         a.discount_fee as 'discountFee',
         b.bill_user_name as 'billUserName',
-        b.bill_account_number as 'billAccountNumber'
+        b.bill_account_number as 'billAccountNumber',
+        a.is_any_bill_account as 'isAnyBillAccount',
+        a.package_original_price as 'packageOriginalPrice',
+        a.package_discount_rate as 'packageDiscountRate'
         from tb_promotion_base_info as a
         left join tb_promotion_mapper as b
         ON a.activity_code=b.activity_code
@@ -219,6 +222,15 @@
             </if>
             <if test="billAccountNumber != null ">
                 bill_account_number=  #{billAccountNumber} ,
+            </if>
+            <if test="isAnyBillAccount != null ">
+                is_any_bill_account=  #{isAnyBillAccount} ,
+            </if>
+            <if test="packageOriginalPrice != null ">
+                package_original_price=  #{packageOriginalPrice} ,
+            </if>
+            <if test="packageDiscountRate != null ">
+                package_discount_rate=  #{packageDiscountRate} ,
             </if>
         </trim>
         <where>

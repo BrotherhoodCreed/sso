@@ -147,4 +147,18 @@ public class SavePromotionBaseInfoRequery {
      * '回款人账号'
      */
     private String billAccountNumber;
+
+    /**
+     * 是否存在回款行号  0是 1否
+     */
+    private Integer isAnyBillAccount;
+    /**
+     *套餐原价
+     */
+    private BigDecimal packageOriginalPrice;
+    /**
+     * 套餐费率
+     */
+    private BigDecimal packageDiscountRate;
+
 }

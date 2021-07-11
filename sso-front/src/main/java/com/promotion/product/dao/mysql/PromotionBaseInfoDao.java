@@ -56,7 +56,10 @@ public interface PromotionBaseInfoDao {
             "coupon_effective_time as 'couponEffectiveTime',\n" +
             "discount_fee as 'discountFee',\n" +
             "bill_user_name as 'billUserName',\n" +
-            "bill_account_number as 'billAccountNumber'\n" +
+            "bill_account_number as 'billAccountNumber',\n" +
+            " is_any_bill_account as 'isAnyBillAccount', \n" +
+            " package_original_price as 'packageOriginalPrice', \n" +
+            " package_discount_rate as 'packageDiscountRate' " +
             "from tb_promotion_base_info  \n" +
             "where deleted=0   AND   activity_code =#{activityCode}")
     PromotionBaseInfoDo selectOneData(@Param("activityCode") String activityCode);
@@ -96,7 +99,10 @@ public interface PromotionBaseInfoDao {
             "test_fee as 'testFee',\n" +
             "coupon_fee as 'couponFee',\n" +
             "coupon_effective_time as 'couponEffectiveTime',\n" +
-            "discount_fee as 'discountFee'\n" +
+            "discount_fee as 'discountFee',\n" +
+            " is_any_bill_account as 'isAnyBillAccount', \n" +
+            " package_original_price as 'packageOriginalPrice', \n" +
+            " package_discount_rate as 'packageDiscountRate' " +
             "from tb_promotion_base_info  \n" +
             "where deleted=0   AND    " +
             "activity_code in <foreach item='item' index='index' collection='aivityCode' open='(' separator=',' close=')'> " +
@@ -140,7 +146,10 @@ public interface PromotionBaseInfoDao {
             " coupon_effective_time,\n" +
             " discount_fee,\n" +
             " bill_user_name,\n" +
-            " bill_account_number\n" +
+            " bill_account_number,\n" +
+            " is_any_bill_account,\n" +
+            " package_original_price,\n" +
+            " package_discount_rate\n" +
             " )\n" +
             " values(" +
             "#{item.activityCode}," +
@@ -176,7 +185,10 @@ public interface PromotionBaseInfoDao {
             "#{item.couponEffectiveTime}," +
             "#{item.discountFee}," +
             "#{item.billUserName}," +
-            "#{item.billAccountNumber}" +
+            "#{item.billAccountNumber}," +
+            "#{item.isAnyBillAccount}," +
+            "#{item.packageOriginalPrice}," +
+            "#{item.packageDiscountRate}" +
             ")")
     Integer insert(@Param("item")PromotionBaseInfoDo promotionBaseInfoDo);
 

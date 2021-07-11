@@ -154,6 +154,30 @@
         </div>
     </div>
 
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">套餐原价</label>
+            <div class="layui-input-inline">
+                <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.packageOriginalPrice" @input="packageOriginalPriceChange" >
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">套餐折扣率</label>
+            <div class="layui-input-inline">
+                <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"   v-model="detail.packageDiscountRate" @input="packageDiscountRateChange">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">是否回款</label>
+            <div class="layui-input-block" >
+                <input v-model="detail.isAnyBillAccount" name="isAnyBillAccount" value="0" type="radio" title="是"  >
+                <input v-model="detail.isAnyBillAccount" name="isAnyBillAccount" value="1" type="radio" title="否" >
+            </div>
+        </div>
+
+    </div>
+
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label">其他</label>
         <div class="layui-input-block">
@@ -378,7 +402,10 @@ var d = laydate.render({
                 couponEffectiveTime:'',
                 discountFee:'',
                 billUserName:"",
-                billAccountNumber:""
+                billAccountNumber:"",
+                packageOriginalPrice:'',
+                packageDiscountRate:'',
+                isAnyBillAccount:''
             },
             promotionMapper : [],
             activityType:[],
@@ -397,6 +424,9 @@ var d = laydate.render({
             // $('.selectpicker').selectpicker('refresh');     //设置好内容后刷新，  多用于异步请求
         },
         methods: {
+            checkChange(e){
+              this.detail.isAnyBillAccount= this.valueChange(e);
+            },
             textChange(e){
                 let  val = e.target.value;
                 if(val.length>20){
@@ -423,6 +453,20 @@ var d = laydate.render({
             },
             sellingPriceChange:function (e){
                 this.detail.sellingPrice = this.valueChange(e);
+            },
+            packageOriginalPriceChange:function (e){
+                this.detail.packageOriginalPrice = this.valueChange(e);
+                if(this.detail.sellingPrice>0 && this.detail.packageOriginalPrice>0 ){
+                    // 截取当前数据到小数点后两位
+                    let realVal = parseFloat((this.detail.sellingPrice /this.detail.packageOriginalPrice)).toFixed(2);
+                    this.detail.packageDiscountRate= realVal;
+                }
+                else {
+                    this.detail.packageDiscountRate= null;
+                }
+            },
+            packageDiscountRateChange:function (e){
+                this.detail.packageDiscountRate = this.valueChange(e);
             },
             billPricePriceChange:function (e){
                 this.detail.billPrice = this.valueChange(e);

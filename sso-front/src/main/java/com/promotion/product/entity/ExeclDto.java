@@ -67,6 +67,21 @@ public class ExeclDto {
      */
     private String billAccountNumber;
 
+    /**
+     * 是否存在回款账号 0 是 1 否
+     */
+    private Boolean isAnyBillAccount;
+
+    /**
+     * 套餐原价
+     */
+    private BigDecimal packageOriginalPrice;
+
+    /**
+     * 套餐折扣价
+     */
+    private BigDecimal packageDiscountRate;
+
     public String getArea() {
         return area;
     }

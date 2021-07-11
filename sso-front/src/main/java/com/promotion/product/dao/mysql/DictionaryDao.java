@@ -13,7 +13,7 @@ public interface DictionaryDao {
     @Select("select id,description,description_code as 'descriptionCode',description_type  as 'descriptionType',deleted  from tb_dictionary where deleted=0 AND description_type = #{description_type}")
     List<DictionaryDo> select(@Param("description_type") String descriptionType);
 
-    @Select("select id,description,description_code as 'descriptionCode',description_type  as 'descriptionType',deleted  from tb_dictionary where deleted=0 ")
+    @Select("select id,description,description_code as 'descriptionCode',description_type  as 'descriptionType',deleted  from tb_dictionary")
     List<DictionaryDo> selectAll();
 
 

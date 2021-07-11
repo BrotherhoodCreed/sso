@@ -147,6 +147,29 @@
             </div>
         </div>
 
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">套餐原价</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.packageOriginalPrice" @input="packageOriginalPriceChange" >
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">套餐折扣率</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"   v-model="detail.packageDiscountRate" @input="packageDiscountRateChange">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否回款</label>
+                <div class="layui-input-block">
+                    <input v-model="detail.isAnyBillAccount" name="isAnyBillAccount" value="0" type="radio" title="是" checked="" >
+                    <input v-model="detail.isAnyBillAccount" name="isAnyBillAccount" value="1" type="radio" title="否">
+                </div>
+            </div>
+
+        </div>
+
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">其他</label>
             <div class="layui-input-block">
@@ -219,7 +242,10 @@
                 discountFee:'',
                 billUserName:"",
                 billAccountNumber:"",
-                thisTime:'${thisTime}'
+                thisTime:'${thisTime}',
+                packageOriginalPrice:'',
+                packageDiscountRate:'',
+                isAnyBillAccount:''
             },
             promotionMapper : [],
             items:[],
@@ -262,6 +288,20 @@
             },
             sellingPriceChange:function (e){
                 this.detail.sellingPrice = this.valueChange(e);
+            },
+            packageOriginalPriceChange:function (e){
+                this.detail.packageOriginalPrice = this.valueChange(e);
+                if(this.detail.sellingPrice>0 && this.detail.packageOriginalPrice>0 ){
+                    // 截取当前数据到小数点后两位
+                    let realVal = parseFloat((this.detail.sellingPrice /this.detail.packageOriginalPrice)).toFixed(2);
+                    this.detail.packageDiscountRate= realVal;
+                }
+                else {
+                    this.detail.packageDiscountRate= null;
+                }
+            },
+            packageDiscountRateChange:function (e){
+                this.detail.packageDiscountRate = this.valueChange(e);
             },
             billPricePriceChange:function (e){
                 this.detail.billPrice = this.valueChange(e);
@@ -394,9 +434,11 @@
         //         //detail.billPrice 回款单价
         //         //detail.handlingFee  手续费
         //         //detail.taxRate  手续费率
-        //         if(this.detail.billPrice!='' && this.detail.handlingFee!='' ){
-        //             this.detail.taxRate= detail.billPrice /detail.handlingFee;
-        //         }
+        //         // if(this.detail.sellingPrice>0 && this.detail.packageOriginalPrice>0 ){
+        //         //     // 截取当前数据到小数点后两位
+        //         //     let realVal = parseFloat(detail.billPrice /detail.handlingFee).toFixed(2);
+        //         //     this.detail.packageDiscountRate= realVal;
+        //         // }
         // },
     });
 

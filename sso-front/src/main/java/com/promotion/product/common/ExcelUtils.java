@@ -24,6 +24,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -224,7 +225,7 @@ public class ExcelUtils {
 
     }
 
-    public static <T> void writeExcel(HttpServletResponse response, List<T> dataList, Class<T> cls,String pwd){
+    public static <T> void writeExcel(HttpServletResponse response, List<T> dataList, Class<T> cls,String pwd,String name){
         Field[] fields = cls.getDeclaredFields();
         List<Field> fieldList = Arrays.stream(fields)
                 .filter(field -> {
@@ -284,7 +285,9 @@ public class ExcelUtils {
                     }
                     Cell cell = row1.createCell(aj.getAndIncrement());
                     if (value != null) {
-                        //setCell(wb, field, value, cell);
+                        CellStyle cellStyle = wb.createCellStyle();
+                        cellStyle.setWrapText(true);
+                        cell.setCellStyle(cellStyle);
                         setCell2(wb, field, value, cell);
                     }
                 });
@@ -294,15 +297,16 @@ public class ExcelUtils {
 //        wb.getSheet("Sheet1").createFreezePane(0, 1, 0, 1);
         CellRangeAddress region = new CellRangeAddress(1, 2, 0, 0);
         sheet.addMergedRegion(region);
+//        sheet.setColumnWidth(8, 252*30+323);
         //浏览器下载excel
-        buildExcelDocument("abbot.xlsx",wb,response);
+        buildExcelDocument(name,wb,response);
         //生成excel文件
 //        buildExcelFile(".\\default.xlsx",wb);
     }
 
 
 
-    public static <T> void writeExcel_Ts(HttpServletResponse response, List<ExeclResponeTs> dataList, Class<T> cls,String pwd){
+    public static <T> void writeExcel_Ts(HttpServletResponse response, List<ExeclResponeTs> dataList, Class<T> cls,String pwd,String name){
         Field[] fields = cls.getDeclaredFields();
         List<Field> fieldList = Arrays.stream(fields)
                 .filter(field -> {
@@ -372,8 +376,11 @@ public class ExcelUtils {
                         e.printStackTrace();
                     }
                     Cell cell = row1.createCell(aj.getAndIncrement());
-
+                    CellStyle cellStyle = wb.createCellStyle();
+                    cellStyle.setWrapText(true);
+                    cell.setCellStyle(cellStyle);
                     if (value != null) {
+
                         //setCell(wb, field, value, cell);
                         setCell2(wb, field, value, cell);
                     }
@@ -391,7 +398,7 @@ public class ExcelUtils {
 //        wb.getSheet("Sheet1").createFreezePane(0, 1, 0, 1);
 
         //浏览器下载excel
-        buildExcelDocument("abbot.xlsx",wb,response);
+        buildExcelDocument(name,wb,response);
         //生成excel文件
 //        buildExcelFile(".\\default.xlsx",wb);
     }
