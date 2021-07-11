@@ -437,9 +437,9 @@ public class PromotionService {
                             promotionMapperDo.setBillAccountNumber(storeAccountInfoDo.getAccountnumber());
                             promotionMapperDo.setBillUserName(storeAccountInfoDo.getUid());
                             promotionMapperDo.setBillDepositBank(storeAccountInfoDo.getDepositbank());
-                            row += promotionMapperDao.insert(promotionMapperDo);
                         }
                     }
+                    row += promotionMapperDao.insert(promotionMapperDo);
                 }
             } else {
                 row += promotionMapperDao.insert(promotionMapperDo);
