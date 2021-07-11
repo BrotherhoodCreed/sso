@@ -170,9 +170,9 @@
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">是否回款</label>
-            <div class="layui-input-block" >
-                <input v-model="detail.isAnyBillAccount" name="isAnyBillAccount" value="0" type="radio" title="是"  >
-                <input v-model="detail.isAnyBillAccount" name="isAnyBillAccount" value="1" type="radio" title="否" >
+            <div class="layui-input-block" id="radio">
+                <%--<input v-model="detail.isAnyBillAccount" name="isAnyBillAccount" value="0" type="radio" title="是"  >--%>
+                <%--<input v-model="detail.isAnyBillAccount" name="isAnyBillAccount" value="1" type="radio" title="否" >--%>
             </div>
         </div>
 
@@ -696,6 +696,16 @@ var d = laydate.render({
                         console.log(response.data);
                         if (10000 == response.data.code){
                             this.detail = response.data.data;
+                            var html = "";
+                            if(0 == this.detail.isAnyBillAccount){
+                                html = '<input type="radio"  v-model="detail.isAnyBillAccount" name="sex" value="nv" title="是" checked> <input type="radio"  v-model="detail.isAnyBillAccount" name="sex" value="" title="否">';
+                            }else {
+                                html = '<input type="radio"  v-model="detail.isAnyBillAccount" name="sex" value="nv" title="是" > <input type="radio"  v-model="detail.isAnyBillAccount" name="sex" value="" title="否" checked>';
+                            }
+                            $("#radio").html(html);
+                            layui.form.render("radio");
+
+
                             var salesEnd = new Date(this.detail.salesEndTime);
                             var aDefaultMaxDate ={
                                 year: salesEnd.getFullYear(),
