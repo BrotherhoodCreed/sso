@@ -120,32 +120,7 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label layui-required">销售单价</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.sellingPrice" @input="sellingPriceChange">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label layui-required">回款单价</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"   v-model="detail.billPrice" @input="billPricePriceChange">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label layui-required">手续费</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.handlingFee" @input="handlingFeeChange">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label ">手续费率(%)</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"  v-model="detail.taxRate" @input="taxRateChange">
-                </div>
-            </div>
-        </div>
+
 
         <div class="layui-form-item">
             <div class="layui-inline">
@@ -160,6 +135,9 @@
                     <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"   v-model="detail.packageDiscountRate" @input="packageDiscountRateChange">
                 </div>
             </div>
+
+        </div>
+        <div  class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">是否回款</label>
                 <div class="layui-input-block">
@@ -167,9 +145,37 @@
                     <input v-model="detail.isAnyBillAccount" name="sex" value="1" type="radio" title="否">
                 </div>
             </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label layui-required">销售单价</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" value="0"  v-model="detail.sellingPrice" @input="sellingPriceChange">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label layui-required">回款单价</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" value="0"  v-model="detail.billPrice" @input="billPricePriceChange">
+                </div>
+            </div>
 
         </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label layui-required">手续费</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" value="0"  v-model="detail.handlingFee" @input="handlingFeeChange">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label ">手续费率(%)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input" value="0"  v-model="detail.taxRate" @input="taxRateChange">
+                </div>
+            </div>
 
+        </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">其他</label>
             <div class="layui-input-block">

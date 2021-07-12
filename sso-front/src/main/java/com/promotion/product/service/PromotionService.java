@@ -172,6 +172,11 @@ public class PromotionService {
                 }
                 execlRespone.setBillUserName(execlDto.getBillUserName());
                 execlRespone.setBillAccountNumber(execlDto.getBillAccountNumber());
+                execlRespone.setIsAnyBillAccount(execlDto.getAnyBillAccount().equals(1)?"否":"是");
+                execlRespone.setPackageOriginalPrice(execlDto.getPackageOriginalPrice());
+                if(execlDto.getPackageDiscountRate()!=null){
+                    execlRespone.setPackageDiscountRate(execlDto.getPackageDiscountRate()+"%");
+                }
                 resultList.add(execlRespone);
             }
         }

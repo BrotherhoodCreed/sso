@@ -33,8 +33,10 @@ import org.apache.poi.poifs.crypt.EncryptionInfo;
 import org.apache.poi.ss.format.CellFormatType;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.aspectj.weaver.IWeaveRequestor;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTSheetProtection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -275,7 +277,8 @@ public class ExcelUtils {
             dataList.forEach(t -> {
                 Row row1 = sheet.createRow(ai.getAndIncrement());
                 AtomicInteger aj = new AtomicInteger();
-                fieldList.forEach(field -> {
+                for (int i = 0; i < fieldList.size(); i++) {
+                    Field field=fieldList.get(i);
                     Class<?> type = field.getType();
                     Object value = "";
                     try {
@@ -285,19 +288,20 @@ public class ExcelUtils {
                     }
                     Cell cell = row1.createCell(aj.getAndIncrement());
                     if (value != null) {
-                        CellStyle cellStyle = wb.createCellStyle();
-                        cellStyle.setWrapText(true);
-                        cell.setCellStyle(cellStyle);
-                        setCell2(wb, field, value, cell);
+                        int i1 = setCell2(wb, field, value, cell);
+                        sheet.setColumnWidth(i,i1);
+
                     }
-                });
+                }
             });
         }
 //        //冻结窗格
 //        wb.getSheet("Sheet1").createFreezePane(0, 1, 0, 1);
         CellRangeAddress region = new CellRangeAddress(1, 2, 0, 0);
         sheet.addMergedRegion(region);
-//        sheet.setColumnWidth(8, 252*30+323);
+        ((XSSFSheet)sheet).lockFormatColumns(false);
+        ((XSSFSheet)sheet).lockFormatRows(false);
+
         //浏览器下载excel
         buildExcelDocument(name,wb,response);
         //生成excel文件
@@ -366,8 +370,8 @@ public class ExcelUtils {
                     cellRangeAddressDto.setFirstRow(row1.getRowNum());
                     cellRangeAddressDto.setLastRow(row1.getRowNum());
                 }
-                for (Field field : fieldList) {
-
+                for (int i = 0; i < fieldList.size(); i++) {
+                    Field field=fieldList.get(i);
                     Class<?> type = field.getType();
                     Object value = "";
                     try {
@@ -376,15 +380,12 @@ public class ExcelUtils {
                         e.printStackTrace();
                     }
                     Cell cell = row1.createCell(aj.getAndIncrement());
-                    CellStyle cellStyle = wb.createCellStyle();
-                    cellStyle.setWrapText(true);
-                    cell.setCellStyle(cellStyle);
                     if (value != null) {
-
                         //setCell(wb, field, value, cell);
-                        setCell2(wb, field, value, cell);
-                    }
+                        int i1 = setCell2(wb, field, value, cell);
+                        sheet.setColumnWidth(i,i1);
 
+                    }
                 }
                 map.putIfAbsent(t.getActivityCode(),cellRangeAddressDto);
             });
@@ -394,6 +395,9 @@ public class ExcelUtils {
                 sheet.addMergedRegion(region);
             }
         }
+        ((XSSFSheet)sheet).lockFormatColumns(false);
+        ((XSSFSheet)sheet).lockFormatRows(false);
+
 //        //冻结窗格
 //        wb.getSheet("Sheet1").createFreezePane(0, 1, 0, 1);
 
@@ -435,10 +439,18 @@ public class ExcelUtils {
             cell.setCellValue(value.toString());
         }
     }
-    private static ExcelColumn setCell2(Workbook wb, Field field, Object value, Cell cell){
+    private static int setCell2(Workbook wb, Field field, Object value, Cell cell){
         ExcelColumn annotation = field.getAnnotation(ExcelColumn.class);
         CellStyle cellStyle = wb.createCellStyle();
+        cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        cellStyle.setWrapText(true);
         DataFormat dataFormat = wb.createDataFormat();
+        cellStyle.setLocked(true);
+        if(StringUtils.equals(annotation.value(),"活动描述")){
+            cellStyle.setLocked(false);
+        }
+
         switch (annotation.type()){
             case 1:
                 cellStyle.setDataFormat(dataFormat.getFormat("#,#0"));
@@ -457,10 +469,20 @@ public class ExcelUtils {
                 cell.setCellValue(v/100);
                 break;
             default:
+                cell.setCellStyle(cellStyle);
                 cell.setCellValue(value.toString());
                 break;
         }
-        return annotation;
+
+        int min=annotation.value().getBytes().length * 256 + 512;
+        int length = String.valueOf(value).getBytes().length * 256 + 512;
+        if(length<min){
+            length=min;
+        }
+        if (length > 15000) {
+            length = 15000;
+        }
+        return length;
     }
 
 

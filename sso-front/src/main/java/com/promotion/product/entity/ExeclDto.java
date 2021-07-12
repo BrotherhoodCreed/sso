@@ -70,7 +70,7 @@ public class ExeclDto {
     /**
      * 是否存在回款账号 0 是 1 否
      */
-    private Boolean isAnyBillAccount;
+    private Integer isAnyBillAccount;
 
     /**
      * 套餐原价
@@ -314,6 +314,30 @@ public class ExeclDto {
         this.billAccountNumber = billAccountNumber;
     }
 
+    public Integer getAnyBillAccount() {
+        return isAnyBillAccount;
+    }
+
+    public void setAnyBillAccount(Integer anyBillAccount) {
+        isAnyBillAccount = anyBillAccount;
+    }
+
+    public BigDecimal getPackageOriginalPrice() {
+        return packageOriginalPrice;
+    }
+
+    public void setPackageOriginalPrice(BigDecimal packageOriginalPrice) {
+        this.packageOriginalPrice = packageOriginalPrice;
+    }
+
+    public BigDecimal getPackageDiscountRate() {
+        return packageDiscountRate;
+    }
+
+    public void setPackageDiscountRate(BigDecimal packageDiscountRate) {
+        this.packageDiscountRate = packageDiscountRate;
+    }
+
     @Override
     public String toString() {
         return "ExeclDto{" +
@@ -346,6 +370,9 @@ public class ExeclDto {
                 ", discountFee=" + discountFee +
                 ", billUserName='" + billUserName + '\'' +
                 ", billAccountNumber='" + billAccountNumber + '\'' +
+                ", isAnyBillAccount=" + isAnyBillAccount +
+                ", packageOriginalPrice=" + packageOriginalPrice +
+                ", packageDiscountRate=" + packageDiscountRate +
                 '}';
     }
 }

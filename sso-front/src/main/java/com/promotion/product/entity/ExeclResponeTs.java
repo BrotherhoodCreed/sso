@@ -76,5 +76,20 @@ public class ExeclResponeTs {
     @ExcelColumn(value ="回款人账号",col = 21)
     private String billAccountNumber;
 
+    @ExcelColumn(value ="是否回款账号",col = 21)
+    private String isAnyBillAccount;
+
+    /**
+     * 套餐原价
+     */
+    @ExcelColumn(value ="套餐原价",col = 22)
+    private BigDecimal packageOriginalPrice;
+
+    /**
+     * 套餐折扣
+     */
+    @ExcelColumn(value ="套餐折扣",col = 23)
+    private String packageDiscountRate;
+
 
 }
