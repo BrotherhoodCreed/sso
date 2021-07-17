@@ -88,7 +88,7 @@ public class ExeclResponeTs {
     /**
      * 套餐折扣
      */
-    @ExcelColumn(value ="套餐折扣",col = 23)
+    @ExcelColumn(value ="套餐折扣",col = 23,type = 3)
     private String packageDiscountRate;
 
 

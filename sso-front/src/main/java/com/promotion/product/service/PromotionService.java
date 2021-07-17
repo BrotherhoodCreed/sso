@@ -401,7 +401,7 @@ public class PromotionService {
                         }
                     }
                     mapperDo.setActivityCode(code);
-                    if (savePromotionBaseInfoRequery.getIsAnyBillAccount() == 1) {
+                    if (FormTypeEnums.TAKE_OUT.getCode().equals(type.getCode()) || savePromotionBaseInfoRequery.getIsAnyBillAccount() == 1) {
                         mapperDo.setBillDepositBank(null);
                         mapperDo.setBillAccountNumber(null);
                         mapperDo.setBillUserName(null);

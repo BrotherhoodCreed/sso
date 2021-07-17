@@ -294,6 +294,14 @@
             },
             sellingPriceChange:function (e){
                 this.detail.sellingPrice = this.valueChange(e);
+                if(this.detail.sellingPrice>0 && this.detail.packageOriginalPrice>0 ){
+                    // 截取当前数据到小数点后两位
+                    let realVal = parseFloat((this.detail.sellingPrice /this.detail.packageOriginalPrice)).toFixed(2);
+                    this.detail.packageDiscountRate= realVal;
+                }
+                else {
+                    this.detail.packageDiscountRate= 0;
+                }
             },
             packageOriginalPriceChange:function (e){
                 this.detail.packageOriginalPrice = this.valueChange(e);
@@ -303,7 +311,7 @@
                     this.detail.packageDiscountRate= realVal;
                 }
                 else {
-                    this.detail.packageDiscountRate= null;
+                    this.detail.packageDiscountRate= 0;
                 }
             },
             packageDiscountRateChange:function (e){
