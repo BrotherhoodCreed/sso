@@ -8,6 +8,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collector;
@@ -463,10 +464,11 @@ public class ExcelUtils {
                 cell.setCellValue(Double.parseDouble(value.toString()));
                 break;
             case 3:
-                cellStyle.setDataFormat(dataFormat.getFormat("0%"));
+                cellStyle.setDataFormat(dataFormat.getFormat("#,##0.00%"));
                 cell.setCellStyle(cellStyle);
                 double v = Double.parseDouble(value.toString().replace("%", ""));
-                cell.setCellValue(v/100);
+                double A= v/100d;
+                cell.setCellValue(A);
                 break;
             default:
                 cell.setCellStyle(cellStyle);
