@@ -141,7 +141,7 @@
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">套餐折扣率</label>
+            <label class="layui-form-label">套餐折扣率%</label>
             <div class="layui-input-inline">
                 <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input"
                        v-model="detail.packageDiscountRate" @input="packageDiscountRateChange">
