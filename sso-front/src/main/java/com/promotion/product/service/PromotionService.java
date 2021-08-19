@@ -380,7 +380,11 @@ public class PromotionService {
                                     .findFirst().orElse(null);
                             log.info("堂食-取默认账号：查询账号结果：{}", JSONObject.toJSONString(storeAccountInfoDo));
                             if (dictionaryDo!=null &&   13L==dictionaryDo.getId()) {
-                                storeAccountInfoDo = storeAccountInfoDoList.stream().filter(t -> StringUtils.equals(t.getStcd(), mapperDo.getRestaurantCode())).filter(t->t.getType()==2).findFirst().orElse(null);
+                                List<StoreAccountInfoDo> storeAccountInfoDo1 = storeAccountInfoDoList.stream().filter(t -> StringUtils.equals(t.getStcd(), mapperDo.getRestaurantCode())).collect(Collectors.toList());
+                                if(storeAccountInfoDo1!=null && storeAccountInfoDo1.stream().anyMatch(t->t.getType()==2)){
+                                    storeAccountInfoDo = storeAccountInfoDo1.stream().filter(t->t.getType()==2).findFirst().orElse(null);
+                                }
+//                                storeAccountInfoDo = storeAccountInfoDoList.stream().filter(t -> StringUtils.equals(t.getStcd(), mapperDo.getRestaurantCode())).filter(t->t.getType()==2).findFirst().orElse(null);
                                 log.info("堂食-商场活动：查询账号结果：{}", JSONObject.toJSONString(storeAccountInfoDo));
                             }
                             if (Objects.nonNull(storeAccountInfoDo)) {
